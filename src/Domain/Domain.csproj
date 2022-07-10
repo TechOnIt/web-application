@@ -6,8 +6,4 @@
     <RootNamespace>$(SolutionName).$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
-
 </Project>

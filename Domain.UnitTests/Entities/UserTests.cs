@@ -1,11 +1,9 @@
 using iot.Domain.Entities.Identity;
-using Moq;
 using Shouldly;
 using System;
-using System.Reflection;
 using Xunit;
 
-namespace Domain.UnitTests
+namespace iot.Domain.UnitTests.Entities
 {
     public class UserTests
     {

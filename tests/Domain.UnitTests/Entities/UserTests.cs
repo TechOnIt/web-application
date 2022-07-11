@@ -1,5 +1,5 @@
+using FluentAssertions;
 using iot.Domain.Entities.Identity;
-using Shouldly;
 using System;
 using Xunit;
 
@@ -35,7 +35,7 @@ namespace iot.Domain.UnitTests.Entities
             user.PhoneNumber = model.PhoneNumber;
 
             // Assert
-            user.Username.ShouldBe(user.PhoneNumber);
+            user.Username.Should().Be(user.PhoneNumber);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace iot.Domain.UnitTests.Entities
             var user = new User();
 
             // Assert
-            user.Id.ShouldNotBe(Guid.Empty);
+            user.Id.Should().NotBe(Guid.Empty);
         }
     }
 }

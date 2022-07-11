@@ -1,5 +1,5 @@
-﻿using iot.Domain.ValueObjects;
-using Shouldly;
+﻿using FluentAssertions;
+using iot.Domain.ValueObjects;
 using Xunit;
 
 namespace iot.Domain.UnitTests.ValueObjects
@@ -9,7 +9,7 @@ namespace iot.Domain.UnitTests.ValueObjects
         #region Correct
         [Theory]
         [InlineData("123456")]
-        [InlineData("aaaaaa")]
+        [InlineData("aaabbb")]
         [InlineData("QQQQQQ")]
         [InlineData("Aa1234")]
         [InlineData("@#$Fg5")]
@@ -20,7 +20,7 @@ namespace iot.Domain.UnitTests.ValueObjects
             var passwordHash = PasswordHash.Parse(password);
 
             // Assert
-            passwordHash.Value.ShouldNotBeNull();
+            passwordHash.Value.Should().NotBe(null);
         }
         #endregion
 

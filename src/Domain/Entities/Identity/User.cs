@@ -32,21 +32,27 @@ namespace iot.Domain.Entities.Identity
         }
         #endregion
 
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Username { get; private set; }
         public string Email { get; set; }
         public bool ConfirmedEmail { get; set; }
+
+        private string _password;
         public string Password
         {
             get
             {
-                return Password;
+                if (string.IsNullOrEmpty(_password))
+                    _password = Password;
+
+                return _password;
             }
             set
             {
                 Password = EncodePassword(value);
             }
         }
+
         public DateTime RegisteredDateTime { get; private set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -95,11 +101,6 @@ namespace iot.Domain.Entities.Identity
             originalBytes = ASCIIEncoding.Default.GetBytes(Password);
             encodedBytes = md5.ComputeHash(originalBytes);
             return BitConverter.ToString(encodedBytes);
-        }
-
-        private void SetUserName()
-        {
-            Username = PhoneNumber;
         }
     }
 }

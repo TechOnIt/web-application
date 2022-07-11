@@ -41,22 +41,13 @@ namespace Domain.UnitTests
         }
 
         [Fact]
-        public void Password_Should_Always_Converted_To_Md5_Hash()
+        public void Id_Should_Not_Be_Null_If_Not_Define_In_Constructor()
         {
             // Arrange
             var user = new User();
 
-            // Act
-            user.Password = "12345678";
-
-            MethodInfo methodInfo = typeof(User)
-                .GetMethod("EncodePassword", BindingFlags.NonPublic | BindingFlags.Instance);
-            object[] parameters = { "12345678" };
-            object result = methodInfo.Invoke(user, parameters);
-
             // Assert
-            user.Password.ShouldBe(result.ToString());
-            user.Password.ShouldNotBeNull();
+            user.Id.ShouldNotBe(Guid.Empty);
         }
     }
 }

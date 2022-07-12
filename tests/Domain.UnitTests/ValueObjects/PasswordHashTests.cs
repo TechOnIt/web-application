@@ -34,7 +34,8 @@ namespace iot.Domain.UnitTests.ValueObjects
             var newPasswordHash = PasswordHash.Parse(newPassword);
 
             // Assert
-            oldPasswordHash.Should().Match<PasswordHash>(p => p == newPasswordHash);
+            oldPasswordHash.Should().Match<PasswordHash>(passwordHash => passwordHash == newPasswordHash);
+            oldPasswordHash.Should().Match<PasswordHash>(passwordHash => passwordHash.Equals(newPasswordHash));
         }
         #endregion
 
@@ -62,6 +63,20 @@ namespace iot.Domain.UnitTests.ValueObjects
 
             Assert.NotNull(exception);
             Assert.NotNull(exception.Message);
+        }
+
+        [Theory]
+        [InlineData("sdkoeh", "nkjbrS")]
+        public void Should_Not_Equal_With_Diffrent(string oldPassword, string newPassword)
+        {
+            // Arrange
+            var oldPasswordHash = PasswordHash.Parse(oldPassword);
+            var newPasswordHash = PasswordHash.Parse(newPassword);
+
+            // Assert
+            oldPasswordHash.Should().Match<PasswordHash>(passwordHash => passwordHash != newPasswordHash);
+            oldPasswordHash.Should().Match<PasswordHash>(passwordHash => !passwordHash.Equals(newPasswordHash));
+            oldPasswordHash.Should().Match<PasswordHash>(passwordHash => passwordHash.NotEquals(newPasswordHash));
         }
         #endregion
     }

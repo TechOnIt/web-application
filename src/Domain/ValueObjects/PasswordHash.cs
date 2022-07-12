@@ -1,8 +1,10 @@
-﻿using System;
+﻿using iot.Domain.Common;
+using System;
+using System.Collections.Generic;
 
 namespace iot.Domain.ValueObjects
 {
-    public class PasswordHash
+    public class PasswordHash : ValueObject
     {
         // Minimum password character length.
         private int _minimumLength = 6;
@@ -31,6 +33,16 @@ namespace iot.Domain.ValueObjects
         }
 
         public static bool operator ==(PasswordHash left, PasswordHash right) => left.Value == right.Value;
-        public static bool operator !=(PasswordHash left, PasswordHash right) => left.Value == right.Value;
+        public static bool operator !=(PasswordHash left, PasswordHash right) => left.Value != right.Value;
+
+        public override bool Equals(Object obj) => Value.Equals((obj as PasswordHash).Value);
+        public bool NotEquals(Object obj) => !Equals(obj);
+
+        public override int GetHashCode() => Value.GetHashCode();
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value;
+        }
     }
 }

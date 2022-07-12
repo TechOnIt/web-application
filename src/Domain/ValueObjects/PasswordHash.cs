@@ -9,6 +9,7 @@ namespace iot.Domain.ValueObjects
         // Maximum password character length.
         private int _maximumLength = 50;
 
+        #region Constructors
         PasswordHash() { }
         PasswordHash(string password)
         {
@@ -20,6 +21,7 @@ namespace iot.Domain.ValueObjects
                 throw new ArgumentOutOfRangeException($"Password characters cannot be more than {_maximumLength}.");
             Value = password;
         }
+        #endregion
 
         public string Value { get; private set; }
 

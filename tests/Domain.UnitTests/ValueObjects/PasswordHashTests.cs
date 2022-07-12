@@ -22,6 +22,20 @@ namespace iot.Domain.UnitTests.ValueObjects
             // Assert
             passwordHash.Value.Should().NotBe(null);
         }
+
+        [Theory]
+        [InlineData("123456", "123456")]
+        [InlineData("abcDefg", "abcDefg")]
+        [InlineData("aB8%h*9T", "aB8%h*9T")]
+        public void Should_Equal_With_Same_Type_And_Same_Value(string oldPassword, string newPassword)
+        {
+            // Arrange
+            var oldPasswordHash = PasswordHash.Parse(oldPassword);
+            var newPasswordHash = PasswordHash.Parse(newPassword);
+
+            // Assert
+            oldPasswordHash.Should().Be(newPasswordHash);
+        }
         #endregion
 
         #region error & exception

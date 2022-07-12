@@ -34,7 +34,7 @@ namespace iot.Domain.UnitTests.ValueObjects
             var newPasswordHash = PasswordHash.Parse(newPassword);
 
             // Assert
-            oldPasswordHash.Should().Be(newPasswordHash);
+            oldPasswordHash.Should().Match<PasswordHash>(p => p == newPasswordHash);
         }
         #endregion
 

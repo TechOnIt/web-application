@@ -67,7 +67,7 @@ namespace iot.Domain.UnitTests.ValueObjects
 
         [Theory]
         [InlineData("sdkoeh", "nkjbrS")]
-        public void Should_Not_Equal_With_Diffrent(string oldPassword, string newPassword)
+        public void Should_Not_Equal_With_Diffrent_Value(string oldPassword, string newPassword)
         {
             // Arrange
             var oldPasswordHash = PasswordHash.Parse(oldPassword);

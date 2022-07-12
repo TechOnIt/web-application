@@ -32,6 +32,7 @@ namespace iot.Domain.ValueObjects
             return new PasswordHash(password);
         }
 
+        #region Operator and Methods
         public static bool operator ==(PasswordHash left, PasswordHash right) => left.Value == right.Value;
         public static bool operator !=(PasswordHash left, PasswordHash right) => left.Value != right.Value;
 
@@ -44,5 +45,6 @@ namespace iot.Domain.ValueObjects
         {
             yield return Value;
         }
+        #endregion
     }
 }

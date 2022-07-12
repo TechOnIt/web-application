@@ -29,5 +29,8 @@ namespace iot.Domain.ValueObjects
         {
             return new PasswordHash(password);
         }
+
+        public static bool operator ==(PasswordHash left, PasswordHash right) => left.Value == right.Value;
+        public static bool operator !=(PasswordHash left, PasswordHash right) => left.Value == right.Value;
     }
 }

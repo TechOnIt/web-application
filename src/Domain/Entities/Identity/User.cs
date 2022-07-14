@@ -1,7 +1,5 @@
 ﻿using iot.Domain.ValueObjects;
 using System;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace iot.Domain.Entities.Identity
 {
@@ -67,8 +65,9 @@ namespace iot.Domain.Entities.Identity
         public bool IsBaned { get; private set; }
         public bool IsDeleted { get; private set; }
         public short MaxFailCount { get; private set; }
-        public DateTime? LockOutDateTime { get; set; }
+        public DateTime? LockOutDateTime { get; private set; }
 
+        #region Methods
         public void ConfirmEmail()
         {
             ConfirmedEmail = true;
@@ -89,14 +88,26 @@ namespace iot.Domain.Entities.Identity
         {
             IsDeleted = true;
         }
-        public void SetLockedOut(DateTime lockoutUntill)
+        public void SetLockOut(DateTime lockoutUntill)
         {
-            LockOutDateTime = 
+            if (lockoutUntill <= DateTime.Now)
+                throw new ArgumentOutOfRangeException("lockout cannot be in the past or present!");
+            LockOutDateTime = lockoutUntill;
+        }
+        public void RemoveLockout()
+        {
+            MaxFailCount = 0;
+            LockOutDateTime = null;
+        }
+        public void IncreaseMaxFailCount()
+        {
+            MaxFailCount++;
         }
 
         private void GenerateSecurityStamp()
         {
             ConcurrencyStamp = Guid.NewGuid().ToString("N").Substring(0, 10);
         }
+        #endregion
     }
 }

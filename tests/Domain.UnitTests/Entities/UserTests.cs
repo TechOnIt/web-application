@@ -19,10 +19,7 @@ public class UserTests
     public void UserName_Should_Equal_To_PhoneNumber()
     {
         // Arrange
-        var user = new User();
-
-        // Act
-        user.PhoneNumber = model.PhoneNumber;
+        var user = new User(email: model.Email, phoneNumber: model.PhoneNumber, password: "123456");
 
         // Assert
         user.Username.Should().Be(user.PhoneNumber);

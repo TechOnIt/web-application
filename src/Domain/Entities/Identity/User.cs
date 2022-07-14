@@ -30,30 +30,15 @@ namespace iot.Domain.Entities.Identity
 
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Username { get; private set; }
+        public PasswordHash Password { get; private set; }
         public string Email { get; private set; }
         public bool ConfirmedEmail { get; private set; }
-        public PasswordHash Password { get; private set; }
-        public DateTime RegisteredDateTime { get; private set; }
+        public string PhoneNumber { get; private set; }
+        public bool ConfirmedPhoneNumber { get; set; }
+
         public string Name { get; set; }
         public string Surname { get; set; }
-
-        private string _phoneNumber;
-        public string PhoneNumber
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_phoneNumber))
-                    return PhoneNumber;
-                else
-                    return _phoneNumber;
-            }
-            set
-            {
-                _phoneNumber = value;
-                Username = value;
-            }
-        }
-        public bool ConfirmedPhoneNumber { get; set; }
+        public DateTime RegisteredDateTime { get; private set; }
         public string ConcurrencyStamp { get; private set; }
         public bool IsBaned { get; set; }
         public bool IsDeleted { get; set; }

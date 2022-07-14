@@ -33,7 +33,7 @@ public class PasswordHash : ValueObject
     private static string _validation(string password)
     {
         // Validation
-        if (!string.IsNullOrEmpty(password))
+        if (string.IsNullOrEmpty(password))
             throw new ArgumentNullException("Password cannot be null or empty.");
         if (password.Length < _minimumLength)
             throw new ArgumentOutOfRangeException($"Password characters cannot be less than {_minimumLength}.");

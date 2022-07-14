@@ -84,7 +84,7 @@ namespace iot.Domain.Entities.Identity
         {
             IsBaned = false;
         }
-        public void Delete()
+        public void DeleteAccount()
         {
             IsDeleted = true;
         }

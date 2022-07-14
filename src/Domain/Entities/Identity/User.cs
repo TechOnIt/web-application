@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iot.Domain.ValueObjects;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -18,8 +19,8 @@ namespace iot.Domain.Entities.Identity
             ConfirmedEmail = false;
             PhoneNumber = phoneNumber;
             ConfirmedPhoneNumber = false;
-            Password = EncodePassword(password); // Encode password as MD5.
-            ConcurrencyStamp =
+            Password = PasswordHash.Parse(password); // Hash the password.
+            ConcurrencyStamp = "";
 
             Name = name;
             Surname = surname;
@@ -37,21 +38,7 @@ namespace iot.Domain.Entities.Identity
         public string Email { get; set; }
         public bool ConfirmedEmail { get; set; }
 
-        private string _password;
-        public string Password
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_password))
-                    _password = Password;
-
-                return _password;
-            }
-            set
-            {
-                Password = EncodePassword(value);
-            }
-        }
+        public PasswordHash Password { get; private set; }
 
         public DateTime RegisteredDateTime { get; private set; }
         public string Name { get; set; }
@@ -77,30 +64,39 @@ namespace iot.Domain.Entities.Identity
 
         public bool ConfirmedPhoneNumber { get; set; }
         public string ConcurrencyStamp { get; private set; }
-        public bool IsBaned { get; set; }
-        public bool IsDeleted { get; set; }
-        public short MaxFailCount { get; set; }
+        public bool IsBaned { get; private set; }
+        public bool IsDeleted { get; private set; }
+        public short MaxFailCount { get; private set; }
         public DateTime? LockOutDateTime { get; set; }
+
+        public void ConfirmEmail()
+        {
+            ConfirmedEmail = true;
+        }
+        public void ConfirmPhoneNumber()
+        {
+            ConfirmedPhoneNumber = true;
+        }
+        public void Ban()
+        {
+            IsBaned = true;
+        }
+        public void UnBan()
+        {
+            IsBaned = false;
+        }
+        public void Delete()
+        {
+            IsDeleted = true;
+        }
+        public void SetLockedOut(DateTime lockoutUntill)
+        {
+            LockOutDateTime = 
+        }
 
         private void GenerateSecurityStamp()
         {
             ConcurrencyStamp = Guid.NewGuid().ToString("N").Substring(0, 10);
-        }
-
-        private void SetPassword(string password)
-        {
-            Password = password;
-        }
-
-        private string EncodePassword(string Password)
-        {
-            Byte[] originalBytes;
-            Byte[] encodedBytes;
-            MD5 md5;
-            md5 = new MD5CryptoServiceProvider();
-            originalBytes = ASCIIEncoding.Default.GetBytes(Password);
-            encodedBytes = md5.ComputeHash(originalBytes);
-            return BitConverter.ToString(encodedBytes);
         }
     }
 }

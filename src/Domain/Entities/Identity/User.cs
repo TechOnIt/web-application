@@ -12,11 +12,8 @@ namespace iot.Domain.Entities.Identity
             Guid? id = null, string surname = null, string name = null)
         {
             Id = id ?? Guid.NewGuid();
-            Username = phoneNumber;
-            Email = email.ToLower().Trim();
-            ConfirmedEmail = false;
-            PhoneNumber = phoneNumber;
-            ConfirmedPhoneNumber = false;
+            SetEmail(email);
+            SetPhoneNumber(phoneNumber); // Also set phone number in username.
             Password = PasswordHash.Parse(password); // Hash the password.
             ConcurrencyStamp = "";
 
@@ -33,11 +30,9 @@ namespace iot.Domain.Entities.Identity
 
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Username { get; private set; }
-        public string Email { get; set; }
-        public bool ConfirmedEmail { get; set; }
-
+        public string Email { get; private set; }
+        public bool ConfirmedEmail { get; private set; }
         public PasswordHash Password { get; private set; }
-
         public DateTime RegisteredDateTime { get; private set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -58,35 +53,36 @@ namespace iot.Domain.Entities.Identity
                 Username = value;
             }
         }
-
-
         public bool ConfirmedPhoneNumber { get; set; }
         public string ConcurrencyStamp { get; private set; }
-        public bool IsBaned { get; private set; }
-        public bool IsDeleted { get; private set; }
+        public bool IsBaned { get; set; }
+        public bool IsDeleted { get; set; }
         public short MaxFailCount { get; private set; }
         public DateTime? LockOutDateTime { get; private set; }
 
         #region Methods
+        public void SetEmail(string email)
+        {
+            Email = email.Trim().ToLower();
+            ConfirmedEmail = false;
+        }
         public void ConfirmEmail()
         {
+            if (string.IsNullOrEmpty(Email))
+                throw new ArgumentNullException("While the email is empty, it cannot be verified.");
             ConfirmedEmail = true;
+        }
+        public void SetPhoneNumber(string phoneNumber)
+        {
+            PhoneNumber = phoneNumber;
+            Username = phoneNumber;
+            ConfirmedPhoneNumber = false;
         }
         public void ConfirmPhoneNumber()
         {
+            if (string.IsNullOrEmpty(PhoneNumber))
+                throw new ArgumentNullException("While the phone number is empty, it cannot be verified.");
             ConfirmedPhoneNumber = true;
-        }
-        public void Ban()
-        {
-            IsBaned = true;
-        }
-        public void UnBan()
-        {
-            IsBaned = false;
-        }
-        public void DeleteAccount()
-        {
-            IsDeleted = true;
         }
         public void SetLockOut(DateTime lockoutUntill)
         {
@@ -103,7 +99,6 @@ namespace iot.Domain.Entities.Identity
         {
             MaxFailCount++;
         }
-
         private void GenerateSecurityStamp()
         {
             ConcurrencyStamp = Guid.NewGuid().ToString("N").Substring(0, 10);

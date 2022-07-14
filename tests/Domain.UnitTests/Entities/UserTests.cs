@@ -1,7 +1,5 @@
-using FluentAssertions;
 using iot.Domain.Entities.Identity;
 using System;
-using Xunit;
 
 namespace iot.Domain.UnitTests.Entities;
 

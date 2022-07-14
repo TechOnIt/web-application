@@ -23,12 +23,13 @@ public class PasswordHash : ValueObject
     #endregion
 
     public string Value { get; private set; }
+
+    #region Methods
     public static PasswordHash Parse(string password)
     {
         return new PasswordHash(password);
     }
 
-    #region Methods
     private static string _validation(string password)
     {
         // Validation

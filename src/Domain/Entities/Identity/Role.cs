@@ -21,6 +21,7 @@ public class Role
     #region Methods
     public void SetName(string name)
     {
+        name = name.Trim();
         if(string.IsNullOrEmpty(name))
             throw new ArgumentNullException("Role name cannot be null or empty.");
         Name = name;

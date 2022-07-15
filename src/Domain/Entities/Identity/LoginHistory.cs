@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iot.Domain.ValueObjects;
+using System;
 
 namespace iot.Domain.Entities.Identity;
 
@@ -15,7 +16,7 @@ public class LoginHistory
 
     public Guid? Id { get; set; }
     public DateTime CreatedDateTime { get; set; }
-    public string Ip { get; set; }
+    public IPv4 Ip { get; set; }
 
     #region Relations
     public Guid UserId { get; set; }  // Foreign key

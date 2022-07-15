@@ -11,9 +11,9 @@ public class LoginHistory
     public LoginHistory(IPv4 ip, Guid userId)
     {
         Id = Guid.NewGuid();
-        CreatedDateTime = DateTime.Now;
         Ip = ip;
         UserId = userId;
+        CreatedDateTime = DateTime.Now;
     }
     #endregion
 

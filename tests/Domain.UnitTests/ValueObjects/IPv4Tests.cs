@@ -30,21 +30,15 @@ public class IPv4Tests
         ip.ToString().Should().Be(ipAddress);
     }
 
-    #region errors & exceptions
-    [Theory]
-    [InlineData("192")]
-    [InlineData("192.168")]
-    [InlineData("192.168.1")]
-    [InlineData("192.168.1.1234")]
-    public void Should_validate_address(string ipAddress)
+    [Fact]
+    public void Should_equals_with_same_type_and_value()
     {
         // Arrange
-        var exception = Record.Exception(() => IPv4.Parse(ipAddress));
+        var first = IPv4.Parse("192.168.1.1");
+        var second = IPv4.Parse("192.168.1.1");
 
         // Assert
-        Assert.NotNull(exception);
-        Assert.NotNull(exception.Message);
-
+        first.Should().Match<IPv4>(first => first == second);
     }
 
     [Theory]
@@ -58,5 +52,21 @@ public class IPv4Tests
         // Assert
         ipV4.ToString().Should().Be(ipAddress);
     }
+    #region errors & exceptions
+    [Theory]
+    [InlineData("192")]
+    [InlineData("192.168")]
+    [InlineData("192.168.1")]
+    [InlineData("192.168.1.1234")]
+    public void Should_validate_address_and_throw_exception(string ipAddress)
+    {
+        // Arrange
+        var exception = Record.Exception(() => IPv4.Parse(ipAddress));
+
+        // Assert
+        Assert.NotNull(exception);
+        Assert.NotNull(exception.Message);
+    }
+
     #endregion
 }

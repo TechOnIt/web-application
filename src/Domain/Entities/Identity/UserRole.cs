@@ -5,6 +5,8 @@ namespace iot.Domain.Entities.Identity
     public class UserRole
     {
         #region Constructors
+        UserRole() { }
+
         public UserRole(Guid userId, Guid roleId)
         {
             Id = Guid.NewGuid();
@@ -13,14 +15,14 @@ namespace iot.Domain.Entities.Identity
         }
         #endregion
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
         #region Relations
-        public Guid UserId { get; set; }
-        public Guid RoleId { get; set; }
+        public Guid UserId { get; private set; }
+        public Guid RoleId { get; private set; }
 
-        public virtual User User { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual User User { get; private set; }
+        public virtual Role Role { get; private set; }
         #endregion
     }
 }

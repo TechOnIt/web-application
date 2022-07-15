@@ -6,16 +6,15 @@ namespace iot.Domain.Entities.Identity
     public class User
     {
         #region Constructors
-        public User() { }
+        User() { }
 
-        public User(string email, string phoneNumber, string password,
-            Guid? id = null, string surname = null, string name = null)
+        public User(string email, string phoneNumber,
+            PasswordHash passwordHash = null, string surname = null, string name = null)
         {
-            Id = id ?? Guid.NewGuid();
+            Id = Guid.NewGuid();
             SetEmail(email);
             SetPhoneNumber(phoneNumber); // Also set phone number in username.
-            Password = PasswordHash.Parse(password); // Hash the password.
-            ConcurrencyStamp = "";
+            Password = passwordHash;
 
             Name = name;
             Surname = surname;
@@ -23,23 +22,22 @@ namespace iot.Domain.Entities.Identity
             RegisteredDateTime = DateTime.Now;
             IsBaned = false;
             IsDeleted = false;
-
-            GenerateSecurityStamp();
+            ConcurrencyStamp = Token.CreateNew(); // Create new stamp.
         }
         #endregion
 
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Username { get; private set; }
-        public PasswordHash Password { get; private set; }
+        public PasswordHash Password { get; private set; } // Must be nullable. maybe we use otp in future!
         public string Email { get; private set; }
         public bool ConfirmedEmail { get; private set; }
         public string PhoneNumber { get; private set; }
-        public bool ConfirmedPhoneNumber { get; set; }
+        public bool ConfirmedPhoneNumber { get; private set; }
 
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime RegisteredDateTime { get; private set; }
-        public string ConcurrencyStamp { get; private set; }
+        public Token ConcurrencyStamp { get; private set; }
         public bool IsBaned { get; set; }
         public bool IsDeleted { get; set; }
         public short MaxFailCount { get; private set; }
@@ -75,7 +73,7 @@ namespace iot.Domain.Entities.Identity
                 throw new ArgumentOutOfRangeException("lockout cannot be in the past or present!");
             LockOutDateTime = lockoutUntill;
         }
-        public void RemoveLockout()
+        public void UnLock()
         {
             MaxFailCount = 0;
             LockOutDateTime = null;
@@ -83,10 +81,6 @@ namespace iot.Domain.Entities.Identity
         public void IncreaseMaxFailCount()
         {
             MaxFailCount++;
-        }
-        private void GenerateSecurityStamp()
-        {
-            ConcurrencyStamp = Guid.NewGuid().ToString("N").Substring(0, 10);
         }
         #endregion
     }

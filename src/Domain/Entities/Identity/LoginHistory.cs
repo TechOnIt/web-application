@@ -1,25 +1,29 @@
-﻿using System;
+﻿using iot.Domain.ValueObjects;
+using System;
 
 namespace iot.Domain.Entities.Identity;
 
 public class LoginHistory
 {
     #region Constructures
-    public LoginHistory(DateTime createdDateTime, string ip, Guid? id)
+    LoginHistory() { }
+
+    public LoginHistory(IPv4 ip, Guid userId)
     {
-        CreatedDateTime = createdDateTime;
+        Id = Guid.NewGuid();
         Ip = ip;
-        Id = id ?? Guid.NewGuid();
+        UserId = userId;
+        CreatedDateTime = DateTime.Now;
     }
     #endregion
 
-    public Guid? Id { get; set; }
-    public DateTime CreatedDateTime { get; set; }
-    public string Ip { get; set; }
+    public Guid? Id { get; private set; }
+    public DateTime CreatedDateTime { get; private set; }
+    public IPv4 Ip { get; private set; }
 
     #region Relations
-    public Guid UserId { get; set; }  // Foreign key
+    public Guid UserId { get; private set; }  // Foreign key
 
-    public virtual User User { get; set; }
+    public virtual User User { get; private set; }
     #endregion
 }

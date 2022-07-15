@@ -8,13 +8,13 @@ namespace iot.Domain.Entities.Identity
         #region Constructors
         User() { }
 
-        public User(string email, string phoneNumber, string password,
-            string surname = null, string name = null)
+        public User(string email, string phoneNumber,
+            PasswordHash passwordHash = null, string surname = null, string name = null)
         {
             Id = Guid.NewGuid();
             SetEmail(email);
             SetPhoneNumber(phoneNumber); // Also set phone number in username.
-            Password = PasswordHash.Parse(password); // Hash the password.
+            Password = passwordHash;
 
             Name = name;
             Surname = surname;
@@ -28,7 +28,7 @@ namespace iot.Domain.Entities.Identity
 
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Username { get; private set; }
-        public PasswordHash Password { get; private set; }
+        public PasswordHash Password { get; private set; } // Must be nullable.
         public string Email { get; private set; }
         public bool ConfirmedEmail { get; private set; }
         public string PhoneNumber { get; private set; }

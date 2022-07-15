@@ -1,6 +1,3 @@
-using iot.Domain.Entities.Identity;
-using System;
-
 namespace iot.Domain.UnitTests.Entities;
 
 public class UserTests
@@ -9,7 +6,8 @@ public class UserTests
 
     public UserTests()
     {
-        model = new User(email: "test@gmail.com", phoneNumber: "09124133486", password: "123456",
+        model = new User(email: "test@gmail.com", phoneNumber: "09124133486",
+            passwordHash: PasswordHash.Parse("123456"),
             name: "testName", surname: "testSurname");
     }
 
@@ -17,7 +15,8 @@ public class UserTests
     public void UserName_Should_Equal_To_PhoneNumber()
     {
         // Arrange
-        var user = new User(email: model.Email, phoneNumber: model.PhoneNumber, password: "123456");
+        var user = new User(email: model.Email, phoneNumber: model.PhoneNumber,
+            passwordHash: PasswordHash.Parse("123456"));
 
         // Assert
         user.Username.Should().Be(user.PhoneNumber);
@@ -27,11 +26,13 @@ public class UserTests
     public void Concurrency_token_should_change_on_new()
     {
         // Arrange
-        var user = new User(email: "test@gmail.com", phoneNumber: "09124133486", password: "123456",
+        var user = new User(email: "test@gmail.com", phoneNumber: "09124133486",
+            passwordHash: PasswordHash.Parse("123456"),
             name: "testName", surname: "testSurname");
         string oldConcurrencyToken = user.ConcurrencyStamp.Value;
 
-        user = new User(email: "test@gmail.com", phoneNumber: "09124133486", password: "123456",
+        user = new User(email: "test@gmail.com", phoneNumber: "09124133486",
+            passwordHash: PasswordHash.Parse("123456"),
             name: "testName", surname: "testSurname");
         string newConcurrencyToken = user.ConcurrencyStamp.Value;
 

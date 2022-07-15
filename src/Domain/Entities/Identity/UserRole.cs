@@ -13,7 +13,7 @@ namespace iot.Domain.Entities.Identity
         }
         #endregion
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
         #region Relations
         public Guid UserId { get; set; }

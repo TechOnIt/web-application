@@ -9,31 +9,38 @@ public class IPv4 : ValueObject
     #region Constructors
     public IPv4() { }
 
-    public IPv4(string address)
+    public IPv4(byte firstOct, byte secondOct, byte thirdOct, byte fourthOct)
     {
-        Address = _validation(address);
+        FirstOct = firstOct;
+        SecondOct = secondOct;
+        ThirdOct = thirdOct;
+        FourthOct = fourthOct;
     }
     #endregion
 
-    public string Address { get; private set; }
+    public byte FirstOct { get; set; } = 0;
+    public byte SecondOct { get; set; } = 0;
+    public byte ThirdOct { get; set; } = 0;
+    public byte FourthOct { get; set; } = 0;
 
     #region Methods
     public static IPv4 Parse(string address)
     {
-        return new IPv4(address);
+        string[] ipScopes = address.Split('.');
+        return new IPv4(byte.Parse(ipScopes[0]), byte.Parse(ipScopes[1]), byte.Parse(ipScopes[2]), byte.Parse(ipScopes[3]));
     }
+    public override string ToString() => $"{FirstOct}.{SecondOct}.{ThirdOct}.{FourthOct}";
 
-    private static string _validation(string ipAddress)
+    private string _validation(string ipAddress)
     {
         // Validation
 
 
         return ipAddress;
     }
-
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return Address;
+        yield return FirstOct;
     }
     #endregion
 }

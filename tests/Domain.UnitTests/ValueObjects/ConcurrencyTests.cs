@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using iot.Domain.ValueObjects;
-using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace iot.Domain.UnitTests.ValueObjects
+﻿namespace iot.Domain.UnitTests.ValueObjects
 {
     public class ConcurrencyTests
     {
@@ -25,8 +16,8 @@ namespace iot.Domain.UnitTests.ValueObjects
         {
             var resultConcurrency = Concurrency.NewToken();
 
-            Assert.True(resultConcurrency.Length <17);
-            Assert.True(resultConcurrency.Length >15);
+            Assert.True(resultConcurrency.Length < 17);
+            Assert.True(resultConcurrency.Length > 15);
         }
 
 

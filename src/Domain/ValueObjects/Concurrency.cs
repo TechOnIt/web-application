@@ -2,36 +2,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace iot.Domain.ValueObjects
+namespace iot.Domain.ValueObjects;
+
+public class Concurrency : ValueObject
 {
-    public class Concurrency : ValueObject
+    #region constructure
+    public Concurrency()
     {
-        #region constructure
-        public Concurrency()
-        {
 
-        }
-        #endregion
+    }
+    #endregion
 
-        public static string Value { get; set; }
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789qwertyuiopasdfghjklzxcvbnm";
+    public static string Value { get; set; }
+    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789qwertyuiopasdfghjklzxcvbnm";
 
-        public static string NewToken()
-        {
-            var random = new Random();
+    public static string NewToken()
+    {
+        var random = new Random();
 
-            Value= new string(Enumerable.Repeat(chars, 16)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
+        Value = new string(Enumerable.Repeat(chars, 16)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
 
-            return Value;
-        }
+        return Value;
+    }
 
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Value;
     }
 }

@@ -1,6 +1,4 @@
-﻿using iot.Domain.ValueObjects;
-
-namespace iot.Domain.UnitTests.ValueObjects;
+﻿namespace iot.Domain.UnitTests.ValueObjects;
 
 public class TokenTests
 {
@@ -15,12 +13,12 @@ public class TokenTests
     }
 
     [Fact]
-    public void Should_have_12_character()
+    public void Should_have_16_character()
     {
         // Arrange
         var token = Token.CreateNew();
 
         // Assert
-        token.Value.Should().HaveLength(12);
+        token.Value.Should().HaveLength(16);
     }
 }

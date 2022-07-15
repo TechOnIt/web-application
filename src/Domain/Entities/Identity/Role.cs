@@ -10,12 +10,21 @@ public class Role
     public Role(string name)
     {
         Id = Guid.NewGuid();
+        SetName(name);
+    }
+    #endregion
+
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public string NormalizedName { get; private set; }
+
+    #region Methods
+    public void SetName(string name)
+    {
+        if(string.IsNullOrEmpty(name))
+            throw new ArgumentNullException("Role name cannot be null or empty.");
         Name = name;
         NormalizedName = name.ToLower();
     }
     #endregion
-
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string NormalizedName { get; set; }
 }

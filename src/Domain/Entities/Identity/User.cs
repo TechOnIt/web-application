@@ -6,12 +6,7 @@ namespace iot.Domain.Entities.Identity
     public class User
     {
         #region Constructors
-        public User()
-        {
-            Id = Guid.NewGuid();
-            RegisteredDateTime = DateTime.Now;
-            ConcurrencyStamp = Token.CreateNew(); // Create new stamp.
-        }
+        User() { }
 
         public User(string email, string phoneNumber, string password,
             string surname = null, string name = null)

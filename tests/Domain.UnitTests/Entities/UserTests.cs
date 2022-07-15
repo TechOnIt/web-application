@@ -24,24 +24,18 @@ public class UserTests
     }
 
     [Fact]
-    public void Id_Should_Not_Be_Null_If_Not_Define_In_Constructor()
-    {
-        // Arrange
-        var user = new User();
-
-        // Assert
-        user.Id.Should().NotBe(Guid.Empty);
-    }
-
-    [Fact]
     public void Concurrency_token_should_change_on_new()
     {
         // Arrange
-        var user = new User();
+        var user = new User(email: "test@gmail.com", phoneNumber: "09124133486", password: "123456",
+            name: "testName", surname: "testSurname");
         string oldConcurrencyToken = user.ConcurrencyStamp.Value;
-        user = new User();
+
+        user = new User(email: "test@gmail.com", phoneNumber: "09124133486", password: "123456",
+            name: "testName", surname: "testSurname");
         string newConcurrencyToken = user.ConcurrencyStamp.Value;
 
+        // Assert
         oldConcurrencyToken.Should().NotBe(newConcurrencyToken);
     }
 }

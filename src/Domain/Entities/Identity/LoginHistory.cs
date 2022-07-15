@@ -6,21 +6,24 @@ namespace iot.Domain.Entities.Identity;
 public class LoginHistory
 {
     #region Constructures
-    public LoginHistory(DateTime createdDateTime, IPv4 ip, Guid? id)
+    LoginHistory() { }
+
+    public LoginHistory(IPv4 ip, Guid userId)
     {
-        Id = id ?? Guid.NewGuid();
-        CreatedDateTime = createdDateTime;
+        Id = Guid.NewGuid();
+        CreatedDateTime = DateTime.Now;
         Ip = ip;
+        UserId = userId;
     }
     #endregion
 
-    public Guid? Id { get; set; }
-    public DateTime CreatedDateTime { get; set; }
-    public IPv4 Ip { get; set; }
+    public Guid? Id { get; private set; }
+    public DateTime CreatedDateTime { get; private set; }
+    public IPv4 Ip { get; private set; }
 
     #region Relations
-    public Guid UserId { get; set; }  // Foreign key
+    public Guid UserId { get; private set; }  // Foreign key
 
-    public virtual User User { get; set; }
+    public virtual User User { get; private set; }
     #endregion
 }

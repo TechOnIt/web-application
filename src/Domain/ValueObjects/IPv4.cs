@@ -29,15 +29,6 @@ public class IPv4 : ValueObject
         return new IPv4(byte.Parse(ipScopes[0]), byte.Parse(ipScopes[1]), byte.Parse(ipScopes[2]), byte.Parse(ipScopes[3]));
     }
     public override string ToString() => $"{FirstOct}.{SecondOct}.{ThirdOct}.{FourthOct}";
-
-    private string _validation(string ipAddress)
-    {
-        // Validation
-        if (string.IsNullOrEmpty(ipAddress))
-            return "0.0.0.0";
-
-        return ipAddress;
-    }
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return FirstOct;

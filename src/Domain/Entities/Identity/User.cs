@@ -28,7 +28,7 @@ namespace iot.Domain.Entities.Identity
 
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Username { get; private set; }
-        public PasswordHash Password { get; private set; } // Must be nullable.
+        public PasswordHash Password { get; private set; } // Must be nullable. maybe we use otp in future!
         public string Email { get; private set; }
         public bool ConfirmedEmail { get; private set; }
         public string PhoneNumber { get; private set; }

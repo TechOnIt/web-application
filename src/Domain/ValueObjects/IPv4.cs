@@ -1,5 +1,4 @@
 ﻿using iot.Domain.Common;
-using System;
 using System.Collections.Generic;
 
 namespace iot.Domain.ValueObjects;
@@ -34,7 +33,8 @@ public class IPv4 : ValueObject
     private string _validation(string ipAddress)
     {
         // Validation
-
+        if (string.IsNullOrEmpty(ipAddress))
+            return "0.0.0.0";
 
         return ipAddress;
     }
@@ -42,5 +42,10 @@ public class IPv4 : ValueObject
     {
         yield return FirstOct;
     }
+    #endregion
+
+    #region Operators
+    public static bool operator ==(IPv4 left, IPv4 right) => left.ToString() == right.ToString();
+    public static bool operator !=(IPv4 left, IPv4 right) => left.ToString() != right.ToString();
     #endregion
 }

@@ -30,6 +30,17 @@ public class IPv4Tests
         ip.ToString().Should().Be(ipAddress);
     }
 
+    [Fact]
+    public void Should_equals_with_same_type_and_value()
+    {
+        // Arrange
+        var first = IPv4.Parse("192.168.1.1");
+        var second = IPv4.Parse("192.168.1.1");
+
+        // Assert
+        first.Should().Match<IPv4>(first => first == second);
+    }
+
     #region errors & exceptions
     [Theory]
     [InlineData("192")]

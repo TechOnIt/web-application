@@ -32,4 +32,16 @@ public class UserTests
         // Assert
         user.Id.Should().NotBe(Guid.Empty);
     }
+
+    [Fact]
+    public void Concurrency_token_should_change_on_new()
+    {
+        // Arrange
+        var user = new User();
+        string oldConcurrencyToken = user.ConcurrencyStamp.Value;
+        user = new User();
+        string newConcurrencyToken = user.ConcurrencyStamp.Value;
+
+        oldConcurrencyToken.Should().NotBe(newConcurrencyToken);
+    }
 }

@@ -6,11 +6,11 @@ namespace iot.Domain.Entities.Identity;
 public class LoginHistory
 {
     #region Constructures
-    public LoginHistory(DateTime createdDateTime, string ip, Guid? id)
+    public LoginHistory(DateTime createdDateTime, IPv4 ip, Guid? id)
     {
+        Id = id ?? Guid.NewGuid();
         CreatedDateTime = createdDateTime;
         Ip = ip;
-        Id = id ?? Guid.NewGuid();
     }
     #endregion
 

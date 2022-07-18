@@ -1,4 +1,4 @@
-using iot.Application.Common.Services.LoginHistory.Create;
+using iot.Application.Common.Services.LoginHistoryService.Create;
 using MediatR;
 using System.Reflection;
 

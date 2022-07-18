@@ -1,7 +1,7 @@
 ﻿using iot.Domain.ValueObjects;
 using MediatR;
 
-namespace iot.Application.Common.Services.LoginHistory.Create;
+namespace iot.Application.Common.Services.LoginHistoryService.Create;
 
 public class LoginHistoryCreateCommand : IRequest
 {

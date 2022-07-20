@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace iot.Domain.Entities.Common
+namespace iot.Domain.Common
 {
-    public abstract class BaseAuditabelEntity 
+    public abstract class BaseAuditabelEntity
     {
         public DateTime CreatedDateTime { get; set; }
         public Guid? CreatedBy { get; set; } // nullabel

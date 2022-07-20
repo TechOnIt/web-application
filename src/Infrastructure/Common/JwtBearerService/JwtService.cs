@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace iot.Application.Services.JwtBearerService
+namespace iot.Infrastructure.Common.JwtBearerService
 {
     public class JwtService
     {

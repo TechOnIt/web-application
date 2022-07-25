@@ -19,18 +19,5 @@
             Assert.True(resultConcurrency.Length < 17);
             Assert.True(resultConcurrency.Length > 15);
         }
-
-
-        //[Theory]
-        //[MemberData(nameof(TokenTest))]
-        //public static IEnumerable<object[]> TokenTest()
-        //{
-        //    for (int i = 0; i < 5; i++)
-        //    {
-        //        yield return new object[] { Concurrency.NewToken() };
-        //        yield return new object[] { Concurrency.NewToken() };
-        //        yield return new object[] { Concurrency.NewToken() };
-        //    }
-        //}
     }
 }

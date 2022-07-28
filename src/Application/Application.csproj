@@ -31,7 +31,6 @@
   <ItemGroup>
     <Folder Include="Events\" />
     <Folder Include="Queries\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,10 @@
-﻿using iot.Domain.ValueObjects;
+﻿using iot.Domain.Common;
+using iot.Domain.ValueObjects;
 using System;
 
 namespace iot.Domain.Entities.Identity;
 
-public class User
+public class User : IEntity
 {
     #region Constructors
     User() { }

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using iot.Domain.Common;
+using System;
 
 namespace iot.Domain.Entities.Identity;
 
-public class Role
+public class Role : IEntity
 {
     #region
     Role() { }

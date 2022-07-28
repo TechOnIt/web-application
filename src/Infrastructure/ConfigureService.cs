@@ -1,5 +1,5 @@
 ﻿using iot.Application.Common.Exceptions;
-using iot.Application.Models;
+using iot.Application.Common.Models;
 using iot.Infrastructure.Common.JwtBearerService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

@@ -1,4 +1,4 @@
-﻿using iot.Application.Models;
+﻿using iot.Application.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

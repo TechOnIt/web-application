@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using iot.Application.Models;
+using iot.Application.Common.Models;
 using MediatR;
 
 namespace iot.Application.Commands.LoginHistories;

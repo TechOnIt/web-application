@@ -1,5 +1,5 @@
 ﻿using FluentValidation.AspNetCore;
-using iot.Application.Models;
+using iot.Application.Common.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace iot.Application;

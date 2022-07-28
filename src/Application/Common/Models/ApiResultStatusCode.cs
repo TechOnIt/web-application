@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iot.Application.Models
+namespace iot.Application.Common.Models
 {
     public enum ApiResultStatusCode
     {

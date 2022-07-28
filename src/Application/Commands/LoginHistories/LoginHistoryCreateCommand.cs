@@ -2,11 +2,20 @@
 using iot.Application.Models;
 using MediatR;
 
-namespace iot.Application.Common.Services.LoginHistoryService.Create;
+namespace iot.Application.Commands.LoginHistories;
 
 public class LoginHistoryCreateCommand : IRequest
 {
     public string Ip { get; set; }
+}
+
+public class LoginHistoryCreateCommandHandler : IRequestHandler<LoginHistoryCreateCommand>
+{
+
+    public Task<Unit> Handle(LoginHistoryCreateCommand request, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class LoginHistoryCreateCommandValidator : BaseFluentValidator<LoginHistoryCreateCommand>

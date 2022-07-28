@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.Services.LoginHistory.Create;
+﻿using iot.Application.Commands.LoginHistories;
 using iot.Domain.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,7 @@ public class HomeController : ControllerBase
     {
         var createLoginHistoryResult = await _mediator.Send(new LoginHistoryCreateCommand
         {
-            Ip = IPv4.Parse("192.168.1.100")
+            Ip = "192.168.1.100"
         });
 
         return Ok();

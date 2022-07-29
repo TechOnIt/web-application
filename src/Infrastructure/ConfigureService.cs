@@ -26,10 +26,7 @@ public static class AddCustomAuthenticationExtentions
 {
     public static IServiceCollection AddDbContextServices(this IServiceCollection services, JwtSettings jwtSettings)
     {
-        services
-            // Add Identity service.
-            .AddScoped<IIdentityContext, IdentityContext>()
-            ;
+        services.AddScoped<IIdentityContext, IdentityContext>(); // Add Identity service
         return services;
     }
 

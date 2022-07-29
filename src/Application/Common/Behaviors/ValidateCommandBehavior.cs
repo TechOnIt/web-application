@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,15 @@ namespace iot.Application.Common.Behaviors
 
         #region Constracture
         // a collection of all validation classes in project
-        private readonly IList<IValidator<TRequest>> _validators;
-        public ValidateCommandBehavior(IList<IValidator<TRequest>> validators)
+        // https://stackoverflow.com/questions/63216905/unable-to-resolve-fluent-validation-using-mediatr-without-structuremap
+        private readonly IEnumerable<IValidator<TRequest>> _validators;
+        private readonly ILogger<ValidateCommandBehavior<TRequest, TResponse>> _logger;
+
+        public ValidateCommandBehavior(IEnumerable<IValidator<TRequest>> validators,
+            ILogger<ValidateCommandBehavior<TRequest, TResponse>> logger)
         {
             _validators = validators;
+            _logger = logger;
         }
         #endregion
 
@@ -51,6 +57,10 @@ namespace iot.Application.Common.Behaviors
 
                 // throw errors as exception
                 throw new Exception(errorBuilder.ToString());
+            }
+            else
+            {
+                _logger.LogInformation($"Validation of the model was done successfully : {typeof(TRequest)}");
             }
 
             // In any case we will continue next operation

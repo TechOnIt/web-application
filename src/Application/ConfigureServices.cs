@@ -1,5 +1,4 @@
 ﻿using FluentValidation.AspNetCore;
-using iot.Application.Commands.Users;
 using iot.Application.Common.Behaviors;
 using iot.Application.Common.Models;
 using iot.Application.Repositories.SQL.Users;
@@ -17,11 +16,9 @@ public static class ConfigureServices
             fv.RegisterValidatorsFromAssemblyContaining<BaseFluentValidator<object>>();
         });
 
-
         services
             .AddScoped<IUserRepository, UserRepository>()
             ;
-
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>));
 

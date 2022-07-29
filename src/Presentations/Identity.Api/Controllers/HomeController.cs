@@ -21,13 +21,11 @@ public class HomeController : ControllerBase
     {
         var result = _mediator.Send(new UserCreateCommand
         {
-            Id= command.Id,
-            Username=command.Username,
-            PhoneNumber=command.PhoneNumber,
-            Email=command.Email,
-            Password=command.Password,
-            Name=command.Name,
-            Surname=command.Surname,
+            PhoneNumber = command.PhoneNumber,
+            Email = command.Email,
+            Password = command.Password,
+            Name = command.Name,
+            Surname = command.Surname
         });
 
         return Ok(result);

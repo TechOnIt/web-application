@@ -16,10 +16,10 @@ public class HomeController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    public IActionResult CreateUser(UserCreateCommand command)
+    [HttpPost]
+    public async Task<IActionResult> CreateUser([FromBody] UserCreateCommand command)
     {
-        var result = _mediator.Send(new UserCreateCommand
+        var result = await _mediator.Send(new UserCreateCommand
         {
             PhoneNumber = command.PhoneNumber,
             Email = command.Email,

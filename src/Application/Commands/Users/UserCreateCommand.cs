@@ -34,7 +34,9 @@ namespace iot.Application.Commands.Users
 
         public async Task<Guid> Handle(UserCreateCommand request, CancellationToken cancellationToken)
         {
-            var user = new User(request.Email, request.PhoneNumber, request.Password, request.Surname, request.Name);
+            var user = User.CreateNewInstance(request.Email, request.PhoneNumber);
+            user.Password = request.Password;
+            user.FullName = new FullName(request.Name, request.Surname);
             await _userRepository.AddAsync(user);
 
             return user.Id;

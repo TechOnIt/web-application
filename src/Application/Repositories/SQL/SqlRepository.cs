@@ -1,6 +1,6 @@
 ﻿using iot.Application.Common.Extentions;
 using iot.Application.Common.Interfaces.Context;
-using iot.Domain.Common;
+using iot.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

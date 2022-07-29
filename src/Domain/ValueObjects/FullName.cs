@@ -16,9 +16,8 @@ public class FullName : ValueObject
     }
     #endregion
 
-
-    public string Name { get; set; } // First name
-    public string Surname { get; set; } // Last name
+    public string Name { get; set; }
+    public string Surname { get; set; }
 
     public string GetName() => Name;
     public string GetSurname() => Surname;

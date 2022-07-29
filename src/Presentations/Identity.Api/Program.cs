@@ -1,4 +1,6 @@
+using iot.Application.Commands;
 using iot.Application.Commands.LoginHistories;
+using iot.Application.Queries;
 using MediatR;
 using System.Reflection;
 
@@ -9,6 +11,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Register CommandeHandlers
+builder.Services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
+
+//Register QueryHandlers
+builder.Services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
 
 
 builder.Services.AddMediatR(typeof(LoginHistoryCreateCommand).GetTypeInfo().Assembly);

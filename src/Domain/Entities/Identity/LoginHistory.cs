@@ -1,4 +1,4 @@
-﻿using iot.Domain.Common;
+﻿using iot.Domain.Interfaces;
 using iot.Domain.ValueObjects;
 using System;
 

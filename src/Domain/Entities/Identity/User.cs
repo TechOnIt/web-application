@@ -8,26 +8,9 @@ public class User : IEntity
 {
     #region Constructors
     User() { }
-
-    public User(string email, string phoneNumber,
-        PasswordHash passwordHash = null, string surname = null, string name = null)
-    {
-        Id = Guid.NewGuid();
-        SetEmail(email);
-        SetPhoneNumber(phoneNumber); // Also set phone number in username.
-        Password = passwordHash;
-
-        Name = name;
-        Surname = surname;
-        MaxFailCount = 0;
-        RegisteredDateTime = DateTime.Now;
-        IsBaned = false;
-        IsDeleted = false;
-        ConcurrencyStamp = Token.CreateNew(); // Create new stamp.
-    }
     #endregion
 
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; private set; }
     public string Username { get; private set; }
     public PasswordHash Password { get; private set; } // Must be nullable. maybe we use otp in future!
     public string Email { get; private set; }
@@ -35,8 +18,7 @@ public class User : IEntity
     public string PhoneNumber { get; private set; }
     public bool ConfirmedPhoneNumber { get; private set; }
 
-    public string Name { get; set; }
-    public string Surname { get; set; }
+    public FullName FullName { get; set; }
     public DateTime RegisteredDateTime { get; private set; }
     public Token ConcurrencyStamp { get; private set; }
     public bool IsBaned { get; set; }
@@ -45,8 +27,20 @@ public class User : IEntity
     public DateTime? LockOutDateTime { get; private set; }
 
     #region Methods
+    public static User CreateNewInstance(string email, string phoneNumber)
+    {
+        var instance = new User();
+        instance.Id = Guid.NewGuid();
+        instance.SetEmail(email);
+        instance.SetPhoneNumber(phoneNumber);
+
+        return instance;
+    }
+
     public void SetEmail(string email)
     {
+        if (email.Length < 6)
+            throw new ArgumentOutOfRangeException("Email must grater than 3 character.");
         Email = email.Trim().ToLower();
         ConfirmedEmail = false;
     }

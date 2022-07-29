@@ -1,4 +1,5 @@
 ﻿using iot.Application.Commands.LoginHistories;
+using iot.Application.Commands.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,23 @@ public class HomeController : ControllerBase
     public HomeController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet]
+    public IActionResult CreateUser(UserCreateCommand command)
+    {
+        var result = _mediator.Send(new UserCreateCommand
+        {
+            Id= command.Id,
+            Username=command.Username,
+            PhoneNumber=command.PhoneNumber,
+            Email=command.Email,
+            Password=command.Password,
+            Name=command.Name,
+            Surname=command.Surname,
+        });
+
+        return Ok(result);
     }
 
     [HttpGet]

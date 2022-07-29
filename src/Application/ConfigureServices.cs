@@ -8,13 +8,11 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services
-            // Fluent Validation
-            .AddFluentValidation(fv =>
-            {
+        services.AddFluentValidation(fv =>  // Fluent Validation
+        {
                 fv.RegisterValidatorsFromAssemblyContaining<BaseFluentValidator<object>>();
-            })
-            ;
+        });
+
         return services;
     }
 }

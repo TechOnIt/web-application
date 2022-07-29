@@ -6,7 +6,7 @@ namespace iot.Application.Commands.LoginHistories;
 
 public class LoginHistoryCreateCommand : IRequest
 {
-    public string Ip { get; set; }
+    public string? Ip { get; set; }
 }
 
 public class LoginHistoryCreateCommandHandler : IRequestHandler<LoginHistoryCreateCommand>

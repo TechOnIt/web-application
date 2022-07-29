@@ -1,5 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
 using iot.Application.Commands.Users;
+using iot.Application.Common.Behaviors;
 using iot.Application.Common.Models;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,9 +16,12 @@ public static class ConfigureServices
                 fv.RegisterValidatorsFromAssemblyContaining<BaseFluentValidator<object>>();
         });
 
-        services.AddTransient
-            (typeof(IPipelineBehavior<UserCreateCommand, Guid>),
-            typeof(UserCreateCommandValidationBehavior<UserCreateCommand, Guid>));
+
+        //services.AddTransient
+        //    (typeof(IPipelineBehavior<UserCreateCommand, Guid>),
+        //    typeof(UserCreateCommandValidationBehavior<UserCreateCommand, Guid>));
+
+        services.AddTransient(typeof(IPipelineBehavior<,>),typeof(ValidateCommandBehavior<,>));
 
         return services;
     }

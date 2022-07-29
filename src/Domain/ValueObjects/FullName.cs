@@ -8,7 +8,7 @@ public class FullName : ValueObject
 {
 
     #region Constructors
-    public FullName() { }
+    FullName() { }
     public FullName(string name, string surname)
     {
         Name = name;

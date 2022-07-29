@@ -7,7 +7,7 @@
         {
             var resultConcurrency = Concurrency.NewToken();
 
-            Assert.NotEmpty(resultConcurrency);
+            Assert.NotEmpty(resultConcurrency.Value);
             Assert.NotNull(resultConcurrency);
         }
 
@@ -16,8 +16,8 @@
         {
             var resultConcurrency = Concurrency.NewToken();
 
-            Assert.True(resultConcurrency.Length < 17);
-            Assert.True(resultConcurrency.Length > 15);
+            Assert.True(resultConcurrency.Value.Length < 17);
+            Assert.True(resultConcurrency.Value.Length > 15);
         }
     }
 }

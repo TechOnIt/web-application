@@ -1,5 +1,6 @@
 ﻿using iot.Application.Commands.LoginHistories;
 using iot.Application.Commands.Users;
+using iot.Application.Queries.Users.FindById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +17,10 @@ public class HomeController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    public IActionResult CreateUser(UserCreateCommand command)
+    [HttpPost]
+    public async Task<IActionResult> CreateUser(UserCreateCommand command)
     {
-        var result = _mediator.Send(new UserCreateCommand
+        var result = await _mediator.Send(new UserCreateCommand
         {
             Id= command.Id,
             Username=command.Username,
@@ -28,6 +29,18 @@ public class HomeController : ControllerBase
             Password=command.Password,
             Name=command.Name,
             Surname=command.Surname,
+        });
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    [Route("Home/FindUserById/{Id}")]
+    public async Task<IActionResult> FindUserById([FromRoute] Guid Id)
+    {
+        var result = await _mediator.Send(new FindUserByIdQuery
+        {
+            Id= Id
         });
 
         return Ok(result);

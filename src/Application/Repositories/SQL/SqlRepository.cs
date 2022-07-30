@@ -79,7 +79,6 @@ public class SqlRepository<TEntity> : ISqlRepository<TEntity>
 
     #endregion
 
-
     #region Async Method
     public async virtual Task<TEntity?> GetByIdAsync(CancellationToken cancellationToken, params object[] ids) =>
         await Entities.FindAsync(ids, cancellationToken);

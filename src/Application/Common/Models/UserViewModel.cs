@@ -21,6 +21,6 @@ public class UserViewModel
     public bool IsDeleted { get; set; }
     public short MaxFailCount { get; private set; }
 
-    public Token ConcurrencyStamp { get; private set; }
+    public Concurrency ConcurrencyStamp { get; private set; }
     public PasswordHash Password { get; private set; } 
 }

@@ -9,14 +9,14 @@ public class CreateUserCommandHandlerTest
     public async void Should_Insert_New_User_When_All_Data_Are_Valid()
     {
         // arrange
-        var _mediator = new Mock<IMediator>();
-        var _context = new Mock<IIdentityContext>();
+        //var _mediator = new Mock<IMediator>();
+        //var _context = new Mock<IIdentityContext>();
 
-        UserCreateCommand createCommand=new UserCreateCommand();
-        UserCreateCommandHandler handler = new UserCreateCommandHandler(_context.Object);
+        //UserCreateCommand createCommand=new UserCreateCommand();
+        //UserCreateCommandHandler handler = new UserCreateCommandHandler(_context.Object);
 
-        // act
-        var result = await handler.Handle(createCommand,new CancellationToken());
+        //// act
+        //var result = await handler.Handle(createCommand,new CancellationToken());
         
         // assert
         

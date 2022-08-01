@@ -18,11 +18,7 @@ public class HomeController : ControllerBase
     }
 
     [HttpPost]
-<<<<<<< HEAD
-    public async Task<IActionResult> CreateUser(UserCreateCommand command)
-=======
     public async Task<IActionResult> CreateUser([FromBody] UserCreateCommand command)
->>>>>>> eb60dc9a9f9614f85e11ee40ec4d02d492ffbaf1
     {
         var result = await _mediator.Send(new UserCreateCommand
         {

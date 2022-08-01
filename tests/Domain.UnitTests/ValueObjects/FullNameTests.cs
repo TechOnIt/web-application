@@ -122,5 +122,25 @@ namespace iot.Domain.UnitTests.ValueObjects
             // Assert
             result.ShouldBe(false);
         }
+
+        [Theory]
+        [InlineData("asfasfdsgsdgfhdfhdghflgshiuseyiusbdbvksjdgksdhkgsdgbdskjgsdhgkdshg","surname")]
+        public void Should_Throw_ArgumentOutOfRangeException_When_Name_Has_More_Than_50_Chars(string name,string surname)
+        {
+            var exception = Record.Exception(() => new FullName(name, surname));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData("name", "asfasfdsgsdgfhdfhdghflgshiuseyiusbdbvksjdgksdhkgsdgbdskjgsdhgkdshg")]
+        public void Should_Throw_ArgumentOutOfRangeException_When_Surname_Has_More_Than_50_Chars(string name, string surname)
+        {
+            var exception = Record.Exception(() => new FullName(name, surname));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<ArgumentOutOfRangeException>();
+        }
     }
 }

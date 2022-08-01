@@ -5,7 +5,7 @@ namespace iot.Domain.UnitTests.ValueObjects;
 public class IPv4Tests
 {
     [Fact]
-    public void Should_have_init_value()
+    public void Should_Returns_Empty_Ip4_Like_Default_Value()
     {
         // Arrange
         var initIp = new IPv4();

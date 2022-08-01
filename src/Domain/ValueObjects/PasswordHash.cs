@@ -14,7 +14,6 @@ public class PasswordHash : ValueObject
     private static int _maximumLength = 50;
 
     #region Constructors
-    PasswordHash() { }
     PasswordHash(string password)
     {
         string validatedPassword = _validation(password);
@@ -64,8 +63,5 @@ public class PasswordHash : ValueObject
     #region Operators
     public static bool operator ==(PasswordHash left, PasswordHash right) => left.Value == right.Value;
     public static bool operator !=(PasswordHash left, PasswordHash right) => left.Value != right.Value;
-
-    public override bool Equals(Object obj) => Value.Equals((obj as PasswordHash).Value);
-    public bool NotEquals(Object obj) => !Equals(obj);
     #endregion
 }

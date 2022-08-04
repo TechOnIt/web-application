@@ -33,11 +33,19 @@ namespace iot.Application.Commands.Users
 
         public async Task<Guid> Handle(UserCreateCommand request, CancellationToken cancellationToken)
         {
+            // Create new user instance.
             var user = User.CreateNewInstance(request.Email, request.PhoneNumber);
+            // Set password hash.
             user.Password = PasswordHash.Parse(request.Password);
+            // Set full name.
             user.FullName = new FullName(request.Name, request.Surname);
-            await _userRepository.AddAsync(user);
-
+            // Add to database.
+            bool wasSaved = await _userRepository.AddAsync(user);
+            if (wasSaved)
+            {
+                // TODO:
+                // Log error.
+            }
             return user.Id;
         }
     }

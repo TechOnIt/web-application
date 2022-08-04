@@ -1,20 +1,18 @@
-﻿using FluentValidation;
-using iot.Application.Common.Models;
+﻿using iot.Application.Common.Models;
 using MediatR;
 
 namespace iot.Application.Commands.LoginHistories;
 
-public class LoginHistoryCreateCommand : IRequest
+public class LoginHistoryCreateCommand : Command<Result<Unit>>
 {
     public string? Ip { get; set; }
 }
 
-public class LoginHistoryCreateCommandHandler : IRequestHandler<LoginHistoryCreateCommand>
+public class LoginHistoryCreateCommandHandler : CommandHandler<LoginHistoryCreateCommand, Result<Unit>>
 {
-
-    public Task<Unit> Handle(LoginHistoryCreateCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Unit>> Handle(LoginHistoryCreateCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Result.Ok(await Task.FromResult(Unit.Value));
     }
 }
 
@@ -22,11 +20,9 @@ public class LoginHistoryCreateCommandValidator : BaseFluentValidator<LoginHisto
 {
     public LoginHistoryCreateCommandValidator()
     {
-        When(loginHistory => string.IsNullOrEmpty(loginHistory.Ip), () =>
-        {
-            RuleFor(loginHistory => loginHistory.Ip)
+        RuleFor(loginHistory => loginHistory.Ip)
                 .NotEmpty()
-                .WithMessage("آی پی دستگاه اجباری است");
-        });
+                .WithMessage("آی پی دستگاه اجباری است")
+                ;
     }
 }

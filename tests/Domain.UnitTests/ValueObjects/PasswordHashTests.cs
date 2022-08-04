@@ -74,7 +74,6 @@ public class PasswordHashTests
         // Assert
         oldPasswordHash.Should().Match<PasswordHash>(passwordHash => passwordHash != newPasswordHash);
         oldPasswordHash.Should().Match<PasswordHash>(passwordHash => !passwordHash.Equals(newPasswordHash));
-        oldPasswordHash.Should().Match<PasswordHash>(passwordHash => passwordHash.NotEquals(newPasswordHash));
     }
     #endregion
 }

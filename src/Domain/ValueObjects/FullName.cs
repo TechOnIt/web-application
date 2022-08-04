@@ -8,50 +8,43 @@ public class FullName : ValueObject
 {
 
     #region Constructors
-    FullName() { }
     public FullName(string name, string surname)
     {
-        Name = name;
-        Surname = surname;
+        if (name.Length > 50)
+        {
+            throw new ArgumentOutOfRangeException("name can not be more than 50 characters");
+        }
+        else
+        {
+            Name = name;
+        }
+
+        if (surname.Length > 50)
+        {
+            throw new ArgumentOutOfRangeException("surname can not be more than 50 characters");
+        }
+        else
+        {
+            Surname = surname;
+        }
     }
     #endregion
 
-    public string Name { get; set; }
-    public string Surname { get; set; }
+    public string Name { get; }
+    public string Surname { get; }
 
     public string GetName() => Name;
     public string GetSurname() => Surname;
     public string GetFullName() => $"{Name} {Surname}";
 
     #region Overrides
-    public static bool operator ==(FullName left, FullName right) => left.ToString() == right.ToString();
-    public static bool operator !=(FullName left, FullName right) => left.ToString() != right.ToString();
+    public static bool operator ==(FullName left, FullName right) => $"{left.Name}{left.Surname}" == $"{right.Name}{right.Surname}";
+    public static bool operator !=(FullName left, FullName right) => $"{left.Name}{left.Surname}" != $"{right.Name}{right.Surname}";
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Name;
         yield return Surname;
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Name, Surname);
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(obj, null))
-        {
-            return false;
-        }
-
-        bool result = default;
-        if (ReferenceEquals(this, obj))
-        {
-            result =true;
-        }
-
-        return result;
     }
     #endregion
 }

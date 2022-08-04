@@ -1,5 +1,5 @@
 ﻿using iot.Application.Commands.LoginHistories;
-using iot.Application.Commands.Users;
+using iot.Application.Commands.Users.Management;
 using iot.Application.Queries.Users.FindById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +16,7 @@ public class HomeController : BaseController
     #endregion
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] UserCreateCommand command)
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         => await RunCommandAsync(command);
 
     [HttpGet]

@@ -1,13 +1,11 @@
-﻿using FluentResults;
-using FluentValidation;
-using iot.Application.Common.Models;
+﻿using iot.Application.Common.Models;
 using iot.Application.Repositories.SQL.Users;
 using iot.Domain.Entities.Identity;
 using iot.Domain.ValueObjects;
 
-namespace iot.Application.Commands.Users;
+namespace iot.Application.Commands.Users.Management;
 
-public class UserCreateCommand : Command<Result<Guid>>
+public class CreateUserCommand : Command<Result<Guid>>
 {
     public string PhoneNumber { get; set; }
     public string Password { get; set; }
@@ -16,18 +14,18 @@ public class UserCreateCommand : Command<Result<Guid>>
     public string? Surname { get; set; }
 }
 
-public class UserCreateCommandHandler : CommandHandler<UserCreateCommand, Result<Guid>>
+public class CreateUserCommandHandler : CommandHandler<CreateUserCommand, Result<Guid>>
 {
     #region DI & Ctor's
     public IUserRepository _userRepository { get; set; }
 
-    public UserCreateCommandHandler(IUserRepository userRepository)
+    public CreateUserCommandHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(UserCreateCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         // Create new user instance.
         var newUser = User.CreateNewInstance(request.Email, request.PhoneNumber);
@@ -50,9 +48,9 @@ public class UserCreateCommandHandler : CommandHandler<UserCreateCommand, Result
     }
 }
 
-public class UserCreateCommandValidator : BaseFluentValidator<UserCreateCommand>
+public class CreateUserCommandValidator : BaseFluentValidator<CreateUserCommand>
 {
-    public UserCreateCommandValidator()
+    public CreateUserCommandValidator()
     {
         RuleFor(u => u.Name)
             .NotEmpty()

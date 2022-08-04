@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\Roles\Management\" />
     <Folder Include="Events\" />
   </ItemGroup>
 

@@ -15,20 +15,20 @@ public interface ISqlRepository<TEntity> where TEntity : class, IEntity
     List<TEntity> GetAll(bool asNoTracking);
     Task<List<TEntity>> GetAllAsync(bool asNoTracking, CancellationToken stoppingToken = default);
 
-    void Add(TEntity entity, bool saveNow = true);
-    Task AddAsync(TEntity entity, bool saveNow = true, CancellationToken stoppingToken = default);
-    void AddRange(IEnumerable<TEntity> entities, bool saveNow = true);
-    Task AddRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true, CancellationToken stoppingToken = default);
+    bool Add(TEntity entity, bool saveNow = true);
+    Task<bool> AddAsync(TEntity entity, bool saveNow = true, CancellationToken stoppingToken = default);
+    bool AddRange(IEnumerable<TEntity> entities, bool saveNow = true);
+    Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true, CancellationToken stoppingToken = default);
 
-    void Update(TEntity entity, bool saveNow = true);
-    Task UpdateAsync(TEntity entity, bool saveNow = true, CancellationToken stoppingToken = default);
-    void UpdateRange(IEnumerable<TEntity> entities, bool saveNow = true);
-    Task UpdateRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true, CancellationToken stoppingToken = default);
+    bool Update(TEntity entity, bool saveNow = true);
+    Task<bool> UpdateAsync(TEntity entity, bool saveNow = true, CancellationToken stoppingToken = default);
+    bool UpdateRange(IEnumerable<TEntity> entities, bool saveNow = true);
+    Task<bool> UpdateRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true, CancellationToken stoppingToken = default);
 
-    void Delete(TEntity entity, bool saveNow = true);
-    Task DeleteAsync(TEntity entity, bool saveNow = true, CancellationToken stoppingToken = default);
-    void DeleteRange(IEnumerable<TEntity> entities, bool saveNow = true);
-    Task DeleteRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true, CancellationToken stoppingToken = default);
+    bool Delete(TEntity entity, bool saveNow = true);
+    Task<bool> DeleteAsync(TEntity entity, bool saveNow = true, CancellationToken stoppingToken = default);
+    bool DeleteRange(IEnumerable<TEntity> entities, bool saveNow = true);
+    Task<bool> DeleteRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true, CancellationToken stoppingToken = default);
 
     bool IsExists(Expression<Func<TEntity, bool>> expression);
     Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> expression, CancellationToken stoppingToken = default);

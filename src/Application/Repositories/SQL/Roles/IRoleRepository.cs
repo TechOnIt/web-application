@@ -1,8 +1,6 @@
-﻿using iot.Domain.Entities.Identity;
+﻿namespace iot.Application.Repositories.SQL.Roles;
 
-namespace iot.Application.Repositories.SQL.Roles;
-
-internal interface IRoleRepository : ISqlRepository<Role>
+public interface IRoleRepository : ISqlRepository<Role>
 {
 
 }

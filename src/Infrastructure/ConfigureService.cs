@@ -5,6 +5,7 @@ using iot.Infrastructure.Common.JwtBearerService;
 using iot.Infrastructure.Persistence.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -24,8 +25,13 @@ public static class ConfigureService
 
 public static class AddCustomAuthenticationExtentions
 {
-    public static IServiceCollection AddDbContextServices(this IServiceCollection services, JwtSettings jwtSettings)
+    public static IServiceCollection AddDbContextServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddDbContext<IdentityContext>(o =>
+        {
+            o.UseSqlServer(configuration.GetConnectionString("Development"));
+        });
+
         services.AddScoped<IIdentityContext, IdentityContext>(); // Add Identity service
         return services;
     }

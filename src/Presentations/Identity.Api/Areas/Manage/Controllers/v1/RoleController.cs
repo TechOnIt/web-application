@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iot.Application.Commands.Roles.Management;
+using Microsoft.AspNetCore.Mvc;
 
 namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
-[Route("v1/[controller]")]
+[Area("Manage"), Route("[area]/v1/[controller]/")]
 public class RoleController : BaseController
 {
     #region DI & Ctor's
@@ -13,7 +14,10 @@ public class RoleController : BaseController
     #endregion
 
     #region Command
-
+    [HttpPost]
+    [Route("create")]
+    public async Task<IActionResult> Create([FromBody] CreateRoleCommand command)
+        => await RunCommandAsync(command);
     #endregion
 
     #region Queries

@@ -1,8 +1,5 @@
-using iot.Application.Commands;
-using iot.Application.Commands.LoginHistories;
-using iot.Application.Queries;
-using MediatR;
-using System.Reflection;
+using iot.Application;
+using iot.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,14 +9,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Register CommandeHandlers
-builder.Services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
-
-//Register QueryHandlers
-builder.Services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
-
-
-builder.Services.AddMediatR(typeof(LoginHistoryCreateCommand).GetTypeInfo().Assembly);
+// Infrastructure.
+builder.Services.AddDbContextServices();
+// Logics
+builder.Services.AddApplicationServices();
+builder.Services.AddMediatRServices();
 
 var app = builder.Build();
 

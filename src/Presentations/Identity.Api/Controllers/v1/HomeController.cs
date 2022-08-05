@@ -19,8 +19,8 @@ public class HomeController : BaseController
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         => await RunCommandAsync(command);
 
-    [HttpGet]
-    [Route("Home/FindUserById/{Id}")]
-    public async Task<IActionResult> FindUserById([FromRoute] FindUserByIdQuery query)
-        => await RunQueryAsync(query);
+    //[HttpGet]
+    //[Route("Home/FindUserById/{Id}")]
+    //public async Task<IActionResult> FindUserById([FromRoute] FindUserByIdQuery query)
+    //    => await RunQueryAsync(query);
 }

@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Infrastructure.
-builder.Services.AddDbContextServices();
+builder.Services.AddDbContextServices(builder.Configuration);
 // Logics
 builder.Services.AddApplicationServices();
 builder.Services.AddMediatRServices();

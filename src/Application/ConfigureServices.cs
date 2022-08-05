@@ -31,13 +31,6 @@ public static class ConfigureServices
 
     public static IServiceCollection AddMediatRServices(this IServiceCollection services)
     {
-        //services.AddMediatR(Assembly.GetExecutingAssembly());
-        //Register CommandeHandlers
-        services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
-
-        //Register QueryHandlers
-        services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
-
         return services;
     }
 

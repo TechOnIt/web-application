@@ -1,5 +1,8 @@
 using iot.Application;
+using iot.Application.Commands;
+using iot.Application.Queries;
 using iot.Infrastructure;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,11 @@ builder.Services.AddDbContextServices(builder.Configuration);
 // Logics
 builder.Services.AddApplicationServices();
 builder.Services.AddMediatRServices();
+//Register CommandeHandlers
+builder.Services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
+
+//Register QueryHandlers
+builder.Services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
 
 var app = builder.Build();
 

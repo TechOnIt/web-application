@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Infrastructure.
-builder.Services.AddDbContextServices(builder.Configuration);
+builder.Services.AddIdentityDbContextServices(builder.Configuration);
 // Logics
 builder.Services.AddApplicationServices();
 builder.Services.AddMediatRServices();

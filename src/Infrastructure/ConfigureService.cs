@@ -25,14 +25,15 @@ public static class ConfigureService
 
 public static class AddCustomAuthenticationExtentions
 {
-    public static IServiceCollection AddDbContextServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddIdentityDbContextServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<IIdentityContext, IdentityContext>(); // Add Identity service
+        string cs = configuration.GetConnectionString("Development");
         services.AddDbContext<IdentityContext>(o =>
         {
-            o.UseSqlServer(configuration.GetConnectionString("Development"));
+            o.UseSqlServer(cs);
         });
 
-        services.AddScoped<IIdentityContext, IdentityContext>(); // Add Identity service
         return services;
     }
 

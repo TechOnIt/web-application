@@ -8,16 +8,20 @@ namespace iot.Infrastructure.Persistence.Context;
 
 public class IdentityContext : DbContext, IIdentityContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-    }
+    public IdentityContext(DbContextOptions<IdentityContext> options)
+        : base(options) { }
 
+#nullable disable
     public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<LoginHistory> LoginHistories { get; set; }
+#nullable enable
+
+    public override int SaveChanges()
+    {
+        return base.SaveChanges();
+    }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {

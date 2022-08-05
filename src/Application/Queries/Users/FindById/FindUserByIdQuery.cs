@@ -1,8 +1,6 @@
-﻿using FluentResults;
-using iot.Application.Common.Models;
+﻿using iot.Application.Common.Models;
 using iot.Application.Repositories.SQL.Users;
 using Mapster;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace iot.Application.Queries.Users.FindById;
@@ -13,7 +11,7 @@ public class FindUserByIdQuery : Query<Result<UserViewModel>>
     public Guid Id { get; set; }
 }
 
-public class FindByIdQueryHandler : IRequestHandler<FindUserByIdQuery, Result<UserViewModel>>
+public class FindByIdQueryHandler : QueryHandler<FindUserByIdQuery, Result<UserViewModel>>
 {
     #region DI & Ctor's
     private readonly IUserRepository _userRepository;

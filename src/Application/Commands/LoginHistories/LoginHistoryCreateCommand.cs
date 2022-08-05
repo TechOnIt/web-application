@@ -10,7 +10,14 @@ public class LoginHistoryCreateCommand : Command<Result<Unit>>
 
 public class LoginHistoryCreateCommandHandler : CommandHandler<LoginHistoryCreateCommand, Result<Unit>>
 {
-    public async Task<Result<Unit>> Handle(LoginHistoryCreateCommand request, CancellationToken cancellationToken)
+    #region DI & Ctor
+    public LoginHistoryCreateCommandHandler(IMediator mediator)
+        : base(mediator)
+    {
+
+    }
+    #endregion
+    protected override async Task<Result<Unit>> HandleAsync(LoginHistoryCreateCommand request, CancellationToken cancellationToken)
     {
         return Result.Ok(await Task.FromResult(Unit.Value));
     }

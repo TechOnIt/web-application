@@ -9,15 +9,17 @@ public class CreateRoleCommand : Command<Result<Guid>>
 
 public class CreateRoleCommandHanlder : CommandHandler<CreateRoleCommand, Result<Guid>>
 {
-    #region DI & Ctor's
+    #region DI & Ctor
     private readonly IRoleRepository _roleRepository;
-    public CreateRoleCommandHanlder(IRoleRepository roleRepository)
+
+    public CreateRoleCommandHanlder(IMediator mediator, IRoleRepository roleRepository)
+        : base(mediator)
     {
         _roleRepository = roleRepository;
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
+    protected override async Task<Result<Guid>> HandleAsync(CreateRoleCommand request, CancellationToken cancellationToken)
     {
         return Result.Ok();
     }

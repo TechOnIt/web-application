@@ -53,34 +53,33 @@ public class CreateUserCommandValidator : BaseFluentValidator<CreateUserCommand>
 {
     public CreateUserCommandValidator()
     {
-        RuleFor(u => u.Name)
+        RuleFor(u => u.PhoneNumber)
             .NotEmpty()
-            .WithMessage("name can not be empty !")
+            .Length(11)
+            .NotNull()
             ;
 
-        RuleFor(u => u.Surname)
+        RuleFor(u => u.Password)
             .NotEmpty()
-            .WithMessage("Surname can not be empty !")
+            .MinimumLength(4)
+            .MaximumLength(300)
             ;
 
         RuleFor(u => u.Email)
             .NotEmpty()
             .NotNull()
+            .MinimumLength(5)
+            .MaximumLength(200)
             .Matches(RegexConstant.Email)
-            .WithMessage("Email is required !")
             ;
 
-        RuleFor(u => u.PhoneNumber)
-            .NotEmpty()
-            .Length(11)
-            .WithMessage("PhoneNumber must be 11 character.")
-            .NotNull()
-            .WithMessage("PhoneNumber is required !")
+        RuleFor(u => u.Name)
+            .MaximumLength(50)
             ;
 
-        RuleFor(u => u.Password)
+        RuleFor(u => u.Surname)
+            .MaximumLength(50)
             .NotEmpty()
-            .WithMessage("Password can not be empty!")
             ;
     }
 }

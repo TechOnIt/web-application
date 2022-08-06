@@ -15,8 +15,15 @@ public class RoleController : BaseController
 
     #region Command
     [HttpPost]
-    [Route("create")]
     public async Task<IActionResult> Create([FromBody] CreateRoleCommand command)
+        => await RunCommandAsync(command);
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromBody] UpdateRoleCommand command)
+        => await RunCommandAsync(command);
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(DeleteRoleCommand command)
         => await RunCommandAsync(command);
     #endregion
 

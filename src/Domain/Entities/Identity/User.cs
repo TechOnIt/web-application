@@ -1,5 +1,8 @@
-﻿using iot.Domain.Interfaces;
+﻿
+using iot.Domain.Interfaces;
 using iot.Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
 namespace iot.Domain.Entities.Identity;
@@ -18,7 +21,7 @@ public class User : IEntity
 
     public FullName FullName { get; set; }
     public DateTime RegisteredDateTime { get; private set; }
-    public Concurrency ConcurrencyStamp { get; private set; }
+    public Concurrency ConcurrencyStamp { get; set; }
     public bool IsBaned { get; set; }
     public bool IsDeleted { get; set; }
     public short MaxFailCount { get; private set; }
@@ -80,4 +83,12 @@ public class User : IEntity
         MaxFailCount++;
     }
     #endregion
+}
+
+public class UserConfiguration : IEntityTypeConfiguration<User>
+{
+    public void Configure(EntityTypeBuilder<User> b)
+    {
+
+    }
 }

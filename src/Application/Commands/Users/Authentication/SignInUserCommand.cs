@@ -1,6 +1,6 @@
 ﻿using iot.Application.Repositories.SQL.Users;
 
-namespace iot.Application.Commands.Users.Auth;
+namespace iot.Application.Commands.Users.Authentication;
 
 public class SignInUserCommand : Command<Result>
 {

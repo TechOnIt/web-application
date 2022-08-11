@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace iot.Application.Common.Models;
+﻿namespace iot.Application.Common.Models;
 
 public class BaseFluentValidator<T> : AbstractValidator<T>
 {

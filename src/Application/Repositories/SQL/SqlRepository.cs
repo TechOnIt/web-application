@@ -1,20 +1,17 @@
 ﻿using iot.Application.Common.Extentions;
-using iot.Application.Common.Interfaces.Context;
-using iot.Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace iot.Application.Repositories.SQL;
 
-public class SqlRepository<TEntity> : ISqlRepository<TEntity>
-        where TEntity : class, IEntity
+public class SqlRepository<TEntity,TContext> : ISqlRepository<TEntity>
+        where TEntity : class where TContext : DbContext
 {
-    protected readonly IIdentityContext _context;
+    protected readonly TContext _context;
     public DbSet<TEntity> Entities { get; }
     public virtual IQueryable<TEntity> Table => Entities;
     public virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
 
-    public SqlRepository(IIdentityContext context)
+    public SqlRepository(TContext context)
     {
         _context = context;
         Entities = _context.Set<TEntity>();

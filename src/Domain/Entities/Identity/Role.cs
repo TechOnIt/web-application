@@ -1,9 +1,10 @@
 ﻿using iot.Domain.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace iot.Domain.Entities.Identity;
 
-public class Role : IEntity
+public class Role
 {
     #region
     Role() { }
@@ -28,5 +29,9 @@ public class Role : IEntity
         Name = name;
         NormalizedName = name.ToLower();
     }
+    #endregion
+
+    #region relations
+    public virtual ICollection<UserRole> UserRoles { get; set; }
     #endregion
 }

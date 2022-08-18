@@ -7,7 +7,7 @@ namespace iot.Application.UnitOfWorks;
 public class UnitOfWork : IUnitOfWorks
 {
     #region constructor
-    public IdentityContext _context { get; }
+    public IIdentityContext _context { get; }
     public UnitOfWork(IdentityContext context)
     {
         _context = context;

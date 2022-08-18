@@ -1,7 +1,4 @@
-﻿using iot.Application.Commands.LoginHistories;
-using iot.Application.Commands.Users.Management;
-using iot.Application.Queries.Users.FindById;
-using MediatR;
+﻿using iot.Application.Commands.Users.Management.CreateUser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iot.Identity.Api.Controllers.v1;

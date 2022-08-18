@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Commands.Users.UpdateUser;
+﻿namespace iot.Application.Commands.Users.Management.UpdateUser;
 
 public class UpdateUserCommandValidator : BaseFluentValidator<UpdateUserCommand>
 {

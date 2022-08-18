@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace iot.Application.Commands.Users.CreateUser;
+namespace iot.Application.Commands.Users.Management.CreateUser;
 
 public class CreateUserCommand : IRequest<Result<Guid>>, ICommittableRequest
 {
@@ -11,7 +11,7 @@ public class CreateUserCommand : IRequest<Result<Guid>>, ICommittableRequest
     public string? Surname { get; set; }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<Guid>> 
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<Guid>>
 {
     #region Constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -48,10 +48,10 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
                 // Log error.
             }
         }
-        catch(Exception exp)
+        catch (Exception exp)
         {
             await transAction.RollbackAsync();
-            _logger.Log(LogLevel.Critical,exp.Message);
+            _logger.Log(LogLevel.Critical, exp.Message);
         }
 
         return Result.Ok(newUser.Id);

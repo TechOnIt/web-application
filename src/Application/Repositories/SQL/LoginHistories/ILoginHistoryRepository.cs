@@ -2,6 +2,6 @@
 
 namespace iot.Application.Repositories.SQL.LoginHistories;
 
-internal interface ILoginHistoryRepository : ISqlRepository<LoginHistory>
+public interface ILoginHistoryRepository : ISqlRepository<LoginHistory>
 {
 }

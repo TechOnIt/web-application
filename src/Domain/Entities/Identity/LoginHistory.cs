@@ -1,10 +1,10 @@
-﻿using iot.Domain.Interfaces;
+﻿using iot.Domain.Common;
 using iot.Domain.ValueObjects;
 using System;
 
 namespace iot.Domain.Entities.Identity;
 
-public class LoginHistory
+public class LoginHistory : IEntity
 {
     #region Constructures
     LoginHistory() { }

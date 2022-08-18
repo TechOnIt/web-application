@@ -1,10 +1,10 @@
-﻿using iot.Domain.Interfaces;
+﻿using iot.Domain.Common;
 using System;
 using System.Collections.Generic;
 
 namespace iot.Domain.Entities.Identity;
 
-public class Role
+public class Role : IEntity
 {
     #region
     Role() { }
@@ -24,7 +24,7 @@ public class Role
     public void SetName(string name)
     {
         name = name.Trim();
-        if(string.IsNullOrEmpty(name))
+        if (string.IsNullOrEmpty(name))
             throw new ArgumentNullException("Role name cannot be null or empty.");
         Name = name;
         NormalizedName = name.ToLower();

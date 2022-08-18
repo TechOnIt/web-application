@@ -1,19 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace iot.Application.Commands.Users.BanUser;
+namespace iot.Application.Commands.Users.Management.ForceDelete;
 
-public class BanUserCommand : IRequest<Result>, ICommittableRequest
+public class ForceDeleteUserCommand : IRequest<Result>, ICommittableRequest
 {
-    public string? Id { get; set; }
+    public string Id { get; set; }
 }
 
-public class BanUserCommandHandler : IRequestHandler<BanUserCommand, Result> 
+public class ForceDeleteUserCommandHandler : IRequestHandler<ForceDeleteUserCommand, Result>
 {
-    #region constructor
+    #region Constructor
     private readonly IUnitOfWorks _unitOfWorks;
-    private readonly ILogger<BanUserCommandHandler> _logger;
-
-    public BanUserCommandHandler(IUnitOfWorks unitOfWorks, ILogger<BanUserCommandHandler> logger)
+    private readonly ILogger<ForceDeleteUserCommandHandler> _logger;
+    public ForceDeleteUserCommandHandler(IUnitOfWorks unitOfWorks, ILogger<ForceDeleteUserCommandHandler> logger)
     {
         _unitOfWorks = unitOfWorks;
         _logger = logger;
@@ -21,7 +20,7 @@ public class BanUserCommandHandler : IRequestHandler<BanUserCommand, Result>
 
     #endregion
 
-    public async Task<Result> Handle(BanUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ForceDeleteUserCommand request, CancellationToken cancellationToken)
     {
         // map id to guid instance.
         var userId = Guid.Parse(request.Id);
@@ -35,9 +34,8 @@ public class BanUserCommandHandler : IRequestHandler<BanUserCommand, Result>
 
         try
         {
-            // ban user & save.
-            user.SetIsBaned(true);
-            bool saveWasSuccess = await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, saveNow: true, cancellationToken);
+            // Delete user account.
+            bool saveWasSuccess = await _unitOfWorks.SqlRepository<User>().DeleteAsync(user, saveNow: true, cancellationToken);
             await transAction.CommitAsync();
 
             if (saveWasSuccess == false)
@@ -49,8 +47,8 @@ public class BanUserCommandHandler : IRequestHandler<BanUserCommand, Result>
         }
         catch (Exception exp)
         {
-            _logger.Log(LogLevel.Critical,exp.Message);
             await transAction.RollbackAsync();
+            _logger.Log(LogLevel.Critical, exp.Message);
         }
 
         return Result.Ok();

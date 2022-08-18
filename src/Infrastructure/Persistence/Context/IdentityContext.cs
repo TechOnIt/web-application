@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace iot.Infrastructure.Persistence.Context;
 
-public class IdentityContext : DbContext
+public class IdentityContext : DbContext, IIdentityContext
 {
     public IdentityContext(DbContextOptions<IdentityContext> options)
         : base(options) { }

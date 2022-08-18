@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iot.Application.Commands.Users.RemoveUserAccount
+namespace iot.Application.Commands.Users.Management.RemoveUserAccount
 {
     public class RemoveUserAccountCommand : IRequest<Result>, ICommittableRequest
     {
         public string Id { get; set; }
     }
 
-    public class RemoveUserAccountCommandHandler : IRequestHandler<RemoveUserAccountCommand, Result> 
+    public class RemoveUserAccountCommandHandler : IRequestHandler<RemoveUserAccountCommand, Result>
     {
         #region Constructor
         private readonly IUnitOfWorks _unitOfWorks;
@@ -28,7 +28,7 @@ namespace iot.Application.Commands.Users.RemoveUserAccount
 
             // find user by id.
             var user = await _unitOfWorks.SqlRepository<User>().GetByIdAsync(cancellationToken, userId);
-            
+
             if (user == null)
                 return Result.Fail("User was not found!");
 

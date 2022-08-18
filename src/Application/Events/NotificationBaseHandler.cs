@@ -1,4 +1,4 @@
-﻿namespace Application.Events;
+﻿namespace iot.Application.Events;
 
 public abstract class NotificationBaseHandler<TRequest> : INotificationHandler<TRequest>
     where TRequest : INotification

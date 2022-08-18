@@ -1,4 +1,4 @@
-﻿namespace Application.Events;
+﻿namespace iot.Application.Events;
 
 public class BaseNotification : INotification
 {

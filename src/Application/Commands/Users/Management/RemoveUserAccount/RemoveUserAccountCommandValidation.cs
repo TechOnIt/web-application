@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Commands.Users.RemoveUserAccount;
+﻿namespace iot.Application.Commands.Users.Management.RemoveUserAccount;
 
 public class RemoveUserAccountCommandValidation : BaseFluentValidator<RemoveUserAccountCommand>
 {

@@ -1,12 +1,11 @@
-﻿
-using iot.Domain.Interfaces;
+﻿using iot.Domain.Common;
 using iot.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 
 namespace iot.Domain.Entities.Identity;
 
-public class User
+public class User : IEntity
 {
     public User()
     {

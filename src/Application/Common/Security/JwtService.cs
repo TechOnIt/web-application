@@ -1,11 +1,12 @@
 ﻿using iot.Application.Common.Interfaces;
+using iot.Infrastructure.Common.JwtBearerService;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace iot.Infrastructure.Common.JwtBearerService
+namespace iot.Application.Common.Security
 {
     public class JwtService : IJwtService
     {
@@ -15,7 +16,7 @@ namespace iot.Infrastructure.Common.JwtBearerService
         /// <param name="expireDateTime">
         /// Expire date & time.
         /// </param>
-        public string GenerateTokenWithClaims(List<Claim> claims,int expireDateTime=20)
+        public string GenerateTokenWithClaims(List<Claim> claims, int expireDateTime = 20)
         {
             var secretKey = Encoding.UTF8.GetBytes(JwtSettings.SecretKey);
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature);

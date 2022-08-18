@@ -2,7 +2,7 @@
 using iot.Application.Repositories.SQL.Users;
 using iot.Infrastructure.Persistence.Context;
 
-namespace iot.Infrastructure.UnitOfWorks;
+namespace iot.Application.UnitOfWorks;
 
 public class UnitOfWork : IUnitOfWorks
 {

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iot.Application.Commands.Users.Queries.Commands;
+namespace iot.Application.Queries.Users.GetAllUsers.Commands;
 
 public class AllUsersCommand : IRequest<IList<UserViewModel>>
 {

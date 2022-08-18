@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Commands.Users.BanUser;
+﻿namespace iot.Application.Commands.Users.Management.BanUser;
 
 public class BanUserValidation : BaseFluentValidator<BanUserCommand>
 {

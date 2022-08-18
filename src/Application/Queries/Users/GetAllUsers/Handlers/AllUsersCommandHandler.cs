@@ -1,8 +1,8 @@
-﻿using iot.Application.Commands.Users.Queries.Commands;
+﻿using iot.Application.Queries.Users.GetAllUsers.Commands;
 using iot.Application.Repositories.SQL.Users;
 using Mapster;
 
-namespace iot.Application.Commands.Users.Queries.Handlers
+namespace iot.Application.Queries.Users.GetAllUsers.Handlers
 {
     public class AllUsersCommandHandler : IRequestHandler<AllUsersCommand, IList<UserViewModel>>
     {

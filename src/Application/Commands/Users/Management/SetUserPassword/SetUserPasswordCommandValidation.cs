@@ -1,6 +1,6 @@
 ﻿namespace iot.Application.Commands.Users.Management.SetUserPassword;
 
-public class SetUserPasswordCommandValidation : BaseFluentValidator<SetPasswordUserCommand>
+public class SetUserPasswordCommandValidation : BaseFluentValidator<SetUserPasswordCommand>
 {
     public SetUserPasswordCommandValidation()
     {

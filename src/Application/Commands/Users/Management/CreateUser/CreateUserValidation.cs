@@ -1,5 +1,4 @@
-﻿
-namespace iot.Application.Commands.Users.CreateUser;
+﻿namespace iot.Application.Commands.Users.Management.CreateUser;
 
 public class CreateUserValidation : BaseFluentValidator<CreateUserCommand>
 {

@@ -1,11 +1,10 @@
-﻿using iot.Application.Common.Interfaces.Context;
-using iot.Application.Common.Interfaces.Dependency;
+﻿using iot.Infrastructure.Persistence.Context;
 
 namespace iot.Application.Repositories.SQL.LoginHistories
 {
-    internal sealed class LoginHistoryRepository : SqlRepository<LoginHistory>, ILoginHistoryRepository, IScopedDependency
+    public sealed class LoginHistoryRepository : SqlRepository<LoginHistory>, ILoginHistoryRepository
     {
-        public LoginHistoryRepository(IIdentityContext context)
+        public LoginHistoryRepository(IdentityContext context)
             : base(context) { }
     }
 }

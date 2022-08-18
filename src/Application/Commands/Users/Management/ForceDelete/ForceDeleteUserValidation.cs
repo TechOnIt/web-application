@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Commands.Users.ForceDelete;
+﻿namespace iot.Application.Commands.Users.Management.ForceDelete;
 
 public class ForceDeleteUserValidation : BaseFluentValidator<ForceDeleteUserCommand>
 {

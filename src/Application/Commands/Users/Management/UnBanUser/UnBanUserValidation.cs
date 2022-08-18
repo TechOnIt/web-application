@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Commands.Users.UnBanUser;
+﻿namespace iot.Application.Commands.Users.Management.UnBanUser;
 
 public class UnBanUserValidation : BaseFluentValidator<UnBanUserCommand>
 {

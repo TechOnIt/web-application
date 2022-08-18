@@ -4,7 +4,7 @@ using System;
 
 namespace iot.Domain.Entities.Identity;
 
-public class LoginHistory : IEntity
+public class LoginHistory
 {
     #region Constructures
     LoginHistory() { }

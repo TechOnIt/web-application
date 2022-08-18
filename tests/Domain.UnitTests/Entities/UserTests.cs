@@ -7,8 +7,8 @@ public class UserTests
     public UserTests()
     {
         model = User.CreateNewInstance(email: "test@gmail.com", phoneNumber: "09124133486");
-        model.Password = PasswordHash.Parse("123456");
-        model.FullName = new FullName(name: "testName", surname: "testSurname");
+        model.SetPassword(PasswordHash.Parse("123456"));
+        model.SetFullName(new FullName(name: "testName", surname: "testSurname"));
     }
 
     [Fact]
@@ -16,7 +16,7 @@ public class UserTests
     {
         // Arrange
         var user = User.CreateNewInstance(email: model.Email, model.PhoneNumber);
-        user.Password = PasswordHash.Parse("123456");
+        user.SetPassword(PasswordHash.Parse("123456"));
 
         // Assert
         user.Username.Should().Be(user.PhoneNumber);
@@ -27,14 +27,14 @@ public class UserTests
     {
         // Arrange
         var user = User.CreateNewInstance(email: "test@gmail.com", phoneNumber: "09124133486");
-        user.Password = PasswordHash.Parse("123456");
-        user.FullName = new FullName(name: "testName", surname: "testSurname");
+        user.SetPassword(PasswordHash.Parse("123456"));
+        user.SetFullName(new FullName(name: "testName", surname: "testSurname"));
 
         string oldConcurrencyToken = user.ConcurrencyStamp.Value;
 
         user = User.CreateNewInstance(email: "test@gmail.com", phoneNumber: "09124133486");
-        user.Password = PasswordHash.Parse("123456");
-        user.FullName = new FullName(name: "testName", surname: "testSurname");
+        user.SetPassword(PasswordHash.Parse("123456"));
+        user.SetFullName(new FullName(name: "testName", surname: "testSurname"));
 
         string newConcurrencyToken = user.ConcurrencyStamp.Value;
 

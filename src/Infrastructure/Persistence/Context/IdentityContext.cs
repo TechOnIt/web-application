@@ -1,12 +1,10 @@
-﻿using iot.Application.Common.Interfaces.Context;
-using iot.Domain.Entities.Identity;
+﻿using iot.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 namespace iot.Infrastructure.Persistence.Context;
 
-public class IdentityContext : DbContext, IIdentityContext
+public class IdentityContext : DbContext
 {
     public IdentityContext(DbContextOptions<IdentityContext> options)
         : base(options) { }
@@ -17,17 +15,6 @@ public class IdentityContext : DbContext, IIdentityContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<LoginHistory> LoginHistories { get; set; }
 #nullable enable
-
-    public override int SaveChanges()
-    {
-        return base.SaveChanges();
-    }
-
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
-    {
-        return base.SaveChangesAsync(cancellationToken);
-    }
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

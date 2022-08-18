@@ -1,19 +1,33 @@
-﻿using iot.Application.Common.Interfaces.Context;
-using iot.Application.Common.Interfaces.Dependency;
+﻿using iot.Infrastructure.Persistence.Context;
+using System.Linq.Expressions;
 
 namespace iot.Application.Repositories.SQL.Users;
 
-internal sealed class UserRepository : SqlRepository<User>, IUserRepository, IScopedDependency
+internal sealed class UserRepository : IUserRepository
 {
-    #region DI & Ctor's
-    private readonly IIdentityContext _context;
-    public UserRepository(IIdentityContext context)
-        : base(context)
+    #region Constructor
+    private readonly IdentityContext _context;
+    public UserRepository(IdentityContext context)
     {
         _context = context;
     }
     #endregion
 
     public async Task<User?> FindByUsernameAsync(string username, CancellationToken cancellationToken = default)
-        => await TableNoTracking.FirstOrDefaultAsync(user => user.Username == username, cancellationToken);
+        => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Username.ToLower().Trim() == username.ToLower().Trim(), cancellationToken);
+
+    public async Task<IList<User>> GetAllUsersByFilterAsync(Expression<Func<User, bool>> filter = null, CancellationToken cancellationToken = default)
+    {
+        if (filter != null)
+        {
+            IQueryable<User> query = _context.Users;
+            query = query.Where(filter);
+
+            return await query.AsNoTracking().ToListAsync(cancellationToken);
+        }
+        else
+        {
+            return await _context.Users.AsNoTracking().ToListAsync(cancellationToken);
+        }
+    }
 }

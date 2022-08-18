@@ -1,10 +1,8 @@
-﻿using iot.Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace iot.Application.Repositories.SQL;
 
-public interface ISqlRepository<TEntity> where TEntity : class, IEntity
+public interface ISqlRepository<TEntity> where TEntity : class
 {
     DbSet<TEntity> Entities { get; }
     IQueryable<TEntity> Table { get; }

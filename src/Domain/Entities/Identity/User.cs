@@ -1,29 +1,30 @@
 ﻿
 using iot.Domain.Interfaces;
 using iot.Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
+using System.Collections.Generic;
 
 namespace iot.Domain.Entities.Identity;
 
-public class User : IEntity
+public class User
 {
-    User() { }
+    public User()
+    {
 
+    }
     public Guid Id { get; private set; }
     public string Username { get; private set; }
-    public PasswordHash Password { get; set; } // Must be nullable. maybe we use otp in future!
+    public PasswordHash Password { get; private set; } // Must be nullable. maybe we use otp in future!
     public string Email { get; private set; }
     public bool ConfirmedEmail { get; private set; }
     public string PhoneNumber { get; private set; }
     public bool ConfirmedPhoneNumber { get; private set; }
 
-    public FullName FullName { get; set; }
+    public FullName FullName { get; private set; }
     public DateTime RegisteredDateTime { get; private set; }
-    public Concurrency ConcurrencyStamp { get; set; }
-    public bool IsBaned { get; set; }
-    public bool IsDeleted { get; set; }
+    public Concurrency ConcurrencyStamp { get; private set; }
+    public bool IsBaned { get; private set; }
+    public bool IsDeleted { get; private set; }
     public short MaxFailCount { get; private set; }
     public DateTime? LockOutDateTime { get; private set; }
 
@@ -39,7 +40,32 @@ public class User : IEntity
         instance.IsBaned = false;
         instance.IsDeleted = false;
         instance.MaxFailCount = 0;
-        return instance;
+        return instance; ;
+    }
+
+    public void SetIsDelete(bool value)
+    {
+        IsDeleted = value;
+    }
+
+    public void RefreshConcurrencyStamp()
+    {
+        ConcurrencyStamp = Concurrency.NewToken();
+    }
+
+    public void SetPassword(PasswordHash password)
+    {
+        Password = password;
+    }
+
+    public void SetFullName(FullName fullname)
+    {
+        FullName = fullname;
+    }
+
+    public void SetIsBaned(bool isBane)
+    {
+        IsBaned = isBane;
     }
 
     public void SetEmail(string email)
@@ -83,12 +109,8 @@ public class User : IEntity
         MaxFailCount++;
     }
     #endregion
-}
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
-{
-    public void Configure(EntityTypeBuilder<User> b)
-    {
-
-    }
+    #region relations
+    public virtual ICollection<UserRole> UserRoles { get; set; }
+    #endregion
 }

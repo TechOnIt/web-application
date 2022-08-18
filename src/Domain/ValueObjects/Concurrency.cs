@@ -8,7 +8,6 @@ namespace iot.Domain.ValueObjects;
 public class Concurrency : ValueObject
 {
     private const string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789qwertyuiopasdfghjklzxcvbnm";
-    Concurrency() { }
 
     // all value objcets must be immutable
     // its mean : we cant change properties value without constructor

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace iot.Infrastructure.Persistence.Context;
+namespace iot.Infrastructure.Persistence.Context.Identity;
 
 public class IdentityContext : DbContext, IIdentityContext
 {

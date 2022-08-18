@@ -1,4 +1,4 @@
-﻿using iot.Infrastructure.Persistence.Context;
+﻿using iot.Infrastructure.Persistence.Context.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

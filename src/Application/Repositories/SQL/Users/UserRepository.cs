@@ -1,4 +1,4 @@
-﻿using iot.Infrastructure.Persistence.Context;
+﻿using iot.Infrastructure.Persistence.Context.Identity;
 using System.Linq.Expressions;
 
 namespace iot.Application.Repositories.SQL.Users;
@@ -6,8 +6,8 @@ namespace iot.Application.Repositories.SQL.Users;
 internal sealed class UserRepository : IUserRepository
 {
     #region Constructor
-    private readonly IdentityContext _context;
-    public UserRepository(IdentityContext context)
+    private readonly IIdentityContext _context;
+    public UserRepository(IIdentityContext context)
     {
         _context = context;
     }

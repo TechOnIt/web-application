@@ -1,7 +1,6 @@
-﻿using iot.Domain.Entities.Identity;
+﻿namespace iot.Application.Repositories.SQL.LoginHistories;
 
-namespace iot.Application.Repositories.SQL.LoginHistories;
-
-public interface ILoginHistoryRepository : ISqlRepository<LoginHistory>
+public interface ILoginHistoryRepository
 {
+
 }

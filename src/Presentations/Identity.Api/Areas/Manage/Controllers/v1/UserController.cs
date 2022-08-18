@@ -1,4 +1,10 @@
 ﻿using iot.Application.Commands.Users.Management;
+using iot.Application.Commands.Users.Management.BanUser;
+using iot.Application.Commands.Users.Management.CreateUser;
+using iot.Application.Commands.Users.Management.ForceDelete;
+using iot.Application.Commands.Users.Management.SetUserPassword;
+using iot.Application.Commands.Users.Management.UnBanUser;
+using iot.Application.Commands.Users.Management.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +31,7 @@ public class UserController : BaseController
 
 
     [HttpPatch]
-    public async Task<IActionResult> SetPassword([FromBody] SetPasswordUserCommand command)
+    public async Task<IActionResult> SetPassword([FromBody] SetUserPasswordCommand command)
         => await RunCommandAsync(command);
 
     [HttpPatch("{id}")]

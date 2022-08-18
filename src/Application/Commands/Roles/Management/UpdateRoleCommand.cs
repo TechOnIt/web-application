@@ -11,12 +11,13 @@ public class UpdateRoleCommand : Command<Result>
 public class UpdateRoleCommandHandler : CommandHandler<UpdateRoleCommand, Result>
 {
     #region DI $ Ctor
-    private readonly IRoleRepository _roleRepository;
+    private readonly IUnitOfWorks _unitOfWorks;
 
-    public UpdateRoleCommandHandler(IMediator mediator, IRoleRepository roleRepository)
+    public UpdateRoleCommandHandler(IMediator mediator,
+        IUnitOfWorks unitOfWorks)
         : base(mediator)
     {
-        _roleRepository = roleRepository;
+        _unitOfWorks = unitOfWorks;
     }
     #endregion
 
@@ -24,13 +25,13 @@ public class UpdateRoleCommandHandler : CommandHandler<UpdateRoleCommand, Result
     {
         // Find role by id.
         var roleId = Guid.Parse(request.Id);
-        var role = await _roleRepository.GetByIdAsync(cancellationToken, roleId);
+        var role = await _unitOfWorks.SqlRepository<Role>().GetByIdAsync(cancellationToken, roleId);
         if (role == null)
             return Result.Fail("Role was not found!");
 
         // Map role name.
         role.SetName(request.Name);
-        bool saveWasSucceded = await _roleRepository.UpdateAsync(role, saveNow: true, cancellationToken);
+        bool saveWasSucceded = await _unitOfWorks.SqlRepository<Role>().UpdateAsync(role, saveNow: true, cancellationToken);
         if (saveWasSucceded == false)
         {
             // TODO:

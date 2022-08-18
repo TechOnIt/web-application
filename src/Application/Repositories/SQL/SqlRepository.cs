@@ -1,10 +1,11 @@
 ﻿using iot.Application.Common.Extentions;
+using iot.Infrastructure.Persistence.Context;
 using System.Linq.Expressions;
 
 namespace iot.Application.Repositories.SQL;
 
-public class SqlRepository<TEntity,TContext> : ISqlRepository<TEntity>
-        where TEntity : class where TContext : DbContext
+public class SqlRepository<TEntity, TContext> : ISqlRepository<TEntity>
+        where TEntity : class where TContext : IContext
 {
     protected readonly TContext _context;
     public DbSet<TEntity> Entities { get; }

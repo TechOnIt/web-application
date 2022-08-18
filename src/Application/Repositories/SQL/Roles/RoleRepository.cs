@@ -1,12 +1,15 @@
-﻿using iot.Infrastructure.Persistence.Context;
+﻿using iot.Infrastructure.Persistence.Context.Identity;
 
 namespace iot.Application.Repositories.SQL.Roles;
 
-public sealed class RoleRepository : SqlRepository<Role, IdentityContext>, IRoleRepository
+public sealed class RoleRepository : IRoleRepository
 {
     #region DI & Ctor's
-    public RoleRepository(IdentityContext _context)
-        : base(_context) { }
+    private readonly IIdentityContext _context;
+    public RoleRepository(IIdentityContext context)
+    {
+        _context = context;
+    }
     #endregion
 
 }

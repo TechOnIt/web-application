@@ -7,17 +7,18 @@ namespace iot.Application.Queries.Users.GetAllUsers.Handlers
     public class AllUsersCommandHandler : IRequestHandler<AllUsersCommand, IList<UserViewModel>>
     {
         #region constructor
-        private readonly IUserRepository _userRepository;
-        public AllUsersCommandHandler(IUserRepository userRepository)
+        private readonly IUnitOfWorks _unitOfWork;
+
+        public AllUsersCommandHandler(IUnitOfWorks unitOfWork)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
         #endregion
 
         public async Task<IList<UserViewModel>> Handle(AllUsersCommand request, CancellationToken cancellationToken)
         {
             IList<UserViewModel> viewModel = new List<UserViewModel>();
-            var getUsers = await _userRepository.GetAllUsersAsync(request.ExpressionCondition);
+            var getUsers = await _unitOfWork.UserRepository.GetAllUsersByFilterAsync(cancellationToken: cancellationToken);
 
             if (getUsers != null)
                 viewModel = getUsers.Adapt<IList<UserViewModel>>();

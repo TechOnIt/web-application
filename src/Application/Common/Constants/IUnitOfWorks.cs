@@ -1,14 +1,16 @@
 ﻿using iot.Application.Repositories.SQL;
+using iot.Application.Repositories.SQL.Roles;
 using iot.Application.Repositories.SQL.Users;
-using iot.Infrastructure.Persistence.Context;
+using iot.Infrastructure.Persistence.Context.Identity;
 
-namespace iot.Application.Common.Constants
+namespace iot.Application.Common.Constants;
+
+public interface IUnitOfWorks
 {
-    public interface IUnitOfWorks
-    {
-        ISqlRepository<TEntity> SqlRepository<TEntity>() where TEntity : class;
-        IUserRepository UserRepository { get; }
-        IIdentityContext _context { get; }
-        Task SaveAsync();
-    }
+    Task SaveAsync(CancellationToken stoppingToken = default);
+    ISqlRepository<TEntity> SqlRepository<TEntity>() where TEntity : class;
+    IIdentityContext _context { get; }
+
+    IUserRepository UserRepository { get; }
+    IRoleRepository RoleRepository { get; }
 }

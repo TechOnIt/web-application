@@ -1,6 +1,7 @@
 ﻿using iot.Application.Repositories.SQL;
+using iot.Application.Repositories.SQL.Roles;
 using iot.Application.Repositories.SQL.Users;
-using iot.Infrastructure.Persistence.Context;
+using iot.Infrastructure.Persistence.Context.Identity;
 
 namespace iot.Application.UnitOfWorks;
 
@@ -8,7 +9,8 @@ public class UnitOfWork : IUnitOfWorks
 {
     #region constructor
     public IIdentityContext _context { get; }
-    public UnitOfWork(IdentityContext context)
+
+    public UnitOfWork(IIdentityContext context)
     {
         _context = context;
     }
@@ -17,7 +19,7 @@ public class UnitOfWork : IUnitOfWorks
     #region sql_Generic_Repository
     public ISqlRepository<TEntity> SqlRepository<TEntity>() where TEntity : class
     {
-        ISqlRepository<TEntity> repository = new SqlRepository<TEntity, IdentityContext>(_context);
+        ISqlRepository<TEntity> repository = new SqlRepository<TEntity, IIdentityContext>(_context);
         return repository;
     }
     #endregion
@@ -35,12 +37,25 @@ public class UnitOfWork : IUnitOfWorks
             return _userRepository;
         }
     }
+
+    private IRoleRepository _roleRepository;
+    public IRoleRepository RoleRepository
+    {
+        get
+        {
+            if (_roleRepository == null)
+            {
+                _roleRepository = new RoleRepository(_context);
+            }
+            return _roleRepository;
+        }
+    }
     #endregion
 
-    #region EntityFramWork_Methods
-    public async Task SaveAsync()
+    #region EF Methods
+    public async Task SaveAsync(CancellationToken stoppingToken = default)
     {
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(stoppingToken);
     }
     #endregion
 }

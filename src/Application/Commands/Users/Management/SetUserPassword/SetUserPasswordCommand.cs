@@ -41,10 +41,14 @@ public class SetUserPasswordCommandHandler : IRequestHandler<SetUserPasswordComm
             // Update user.
             await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
 
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.CommitAsync();
         }
         catch
         {
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.RollbackAsync();
             return Result.Fail("An error was occured. try again later.");
         }

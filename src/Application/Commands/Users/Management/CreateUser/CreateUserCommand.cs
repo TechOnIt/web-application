@@ -35,6 +35,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
         // Set full name.
         newUser.SetFullName(new FullName(request.Name, request.Surname));
 
+        // TODO:
+        // Move transaction to pipeline...
         var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
 
         try
@@ -45,6 +47,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
         }
         catch (Exception exp)
         {
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.RollbackAsync();
             _logger.Log(LogLevel.Critical, exp.Message);
         }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace iot.Application.Commands.Users.Management.RemoveUserAccount
+﻿namespace iot.Application.Commands.Users.Management.RemoveUserAccount
 {
     public class RemoveUserAccountCommand : IRequest<Result>, ICommittableRequest
     {

@@ -36,11 +36,15 @@ public class ForceDeleteUserCommandHandler : IRequestHandler<ForceDeleteUserComm
         {
             // Delete user account.
             await _unitOfWorks.SqlRepository<User>().DeleteAsync(user, cancellationToken);
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.CommitAsync();
 
         }
         catch (Exception exp)
         {
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.RollbackAsync();
             _logger.Log(LogLevel.Critical, exp.Message);
         }

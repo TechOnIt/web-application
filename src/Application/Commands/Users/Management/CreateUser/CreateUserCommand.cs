@@ -22,6 +22,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
         _unitOfWorks = unitOfWorks;
         _logger = logger;
     }
+    #endregion
 
     public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
@@ -39,14 +40,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
         try
         {
             // Add new to database.
-            bool wasSaved = await _unitOfWorks.SqlRepository<User>().AddAsync(newUser, saveNow: true, cancellationToken);
+            await _unitOfWorks.SqlRepository<User>().AddAsync(newUser, cancellationToken);
             await transAction.CommitAsync();
-
-            if (wasSaved)
-            {
-                // TODO:
-                // Log error.
-            }
         }
         catch (Exception exp)
         {
@@ -56,6 +51,5 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
 
         return Result.Ok(newUser.Id);
     }
-    #endregion
 }
 

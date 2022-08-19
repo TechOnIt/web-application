@@ -35,15 +35,9 @@ public class ForceDeleteUserCommandHandler : IRequestHandler<ForceDeleteUserComm
         try
         {
             // Delete user account.
-            bool saveWasSuccess = await _unitOfWorks.SqlRepository<User>().DeleteAsync(user, saveNow: true, cancellationToken);
+            await _unitOfWorks.SqlRepository<User>().DeleteAsync(user, cancellationToken);
             await transAction.CommitAsync();
 
-            if (saveWasSuccess == false)
-            {
-                // TODO:
-                // add error log.
-                return Result.Fail("An error was occured. try again later.");
-            }
         }
         catch (Exception exp)
         {

@@ -31,13 +31,7 @@ public class UpdateRoleCommandHandler : CommandHandler<UpdateRoleCommand, Result
 
         // Map role name.
         role.SetName(request.Name);
-        bool saveWasSucceded = await _unitOfWorks.SqlRepository<Role>().UpdateAsync(role, saveNow: true, cancellationToken);
-        if (saveWasSucceded == false)
-        {
-            // TODO:
-            // Add log error.
-            return Result.Fail("an error was occured.");
-        }
+        await _unitOfWorks.SqlRepository<Role>().UpdateAsync(role, cancellationToken);
         return Result.Ok();
     }
 }

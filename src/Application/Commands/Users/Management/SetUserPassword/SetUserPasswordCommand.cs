@@ -33,14 +33,13 @@ public class SetUserPasswordCommandHandler : IRequestHandler<SetUserPasswordComm
         // Set new password.
         user.SetPassword(PasswordHash.Parse(request.Password));
 
+        // TODO:
+        // Move transaction to pipeline...
         var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
         try
         {
             // Update user.
-            bool saveWasSuccess = await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, saveNow: true, cancellationToken);
-
-            if (saveWasSuccess == false)
-                return Result.Fail("An error was occured. try again later.");
+            await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
 
             await transAction.CommitAsync();
         }

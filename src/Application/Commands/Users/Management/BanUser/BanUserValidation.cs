@@ -8,6 +8,6 @@ public class BanUserValidation : BaseFluentValidator<BanUserCommand>
             .NotEmpty()
             .Matches(RegexConstant.Guid)
             .MaximumLength(100)
-    ;
+            ;
     }
 }

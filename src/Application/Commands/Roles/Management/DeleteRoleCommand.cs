@@ -27,13 +27,7 @@ public class DeleteRoleCommandHandler : CommandHandler<DeleteRoleCommand, Result
         if (role == null)
             return Result.Fail("Role was not found!");
 
-        bool saveWasSucceded = await _unitOfWorks.SqlRepository<Role>().DeleteAsync(role, saveNow: true, cancellationToken);
-        if (saveWasSucceded == false)
-        {
-            // TODO:
-            // Add log error.
-            return Result.Fail("an error was occured.");
-        }
+        await _unitOfWorks.SqlRepository<Role>().DeleteAsync(role, cancellationToken);
         return Result.Ok();
     }
 }

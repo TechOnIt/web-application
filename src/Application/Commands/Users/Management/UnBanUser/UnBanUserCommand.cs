@@ -31,21 +31,17 @@ public class UnBanUserCommandHandler : IRequestHandler<UnBanUserCommand, Result>
         if (user == null)
             return Result.Fail("User was not found!");
 
+        // TODO:
+        // Move transaction to pipeline...
         var trasnAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
 
         try
         {
             // ban user & save.
             user.SetIsBaned(false);
-            bool saveWasSuccess = await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, saveNow: true, cancellationToken);
+            await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
 
             await trasnAction.CommitAsync();
-            if (saveWasSuccess == false)
-            {
-                // TODO:
-                // add error log.
-                return Result.Fail("An error was occured. try again later.");
-            }
         }
         catch (Exception exp)
         {

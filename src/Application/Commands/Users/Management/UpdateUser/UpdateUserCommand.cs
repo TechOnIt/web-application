@@ -49,17 +49,16 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
             // change stamp automaticly.
             user.RefreshConcurrencyStamp();
 
-            bool wasSaved = await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, true, cancellationToken);
-            if (wasSaved == false)
-            {
-                // TODO:
-                // Add error log.
-                return Result.Fail("UnAhead Error Happent .");
-            }
+            await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
+
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.CommitAsync();
         }
         catch
         {
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.RollbackAsync();
             Result.Fail("an Error ocured .");
         }

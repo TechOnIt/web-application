@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.Users.Management.SetUserPassword;
+﻿using iot.Application.Repositories.UnitOfWorks.Identity;
+
+namespace iot.Application.Commands.Users.Management.SetUserPassword;
 
 public class SetUserPasswordCommand : IRequest<Result>, ICommittableRequest
 {

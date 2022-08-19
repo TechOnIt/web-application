@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.Roles.Management.UpdateRole;
+﻿using iot.Application.Repositories.UnitOfWorks.Identity;
+
+namespace iot.Application.Commands.Roles.Management.UpdateRole;
 
 public class UpdateRoleCommand : IRequest<Result>, ICommittableRequest
 {

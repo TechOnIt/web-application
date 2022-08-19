@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.Users.Management.RemoveUserAccount
+﻿using iot.Application.Repositories.UnitOfWorks.Identity;
+
+namespace iot.Application.Commands.Users.Management.RemoveUserAccount
 {
     public class RemoveUserAccountCommand : IRequest<Result>, ICommittableRequest
     {

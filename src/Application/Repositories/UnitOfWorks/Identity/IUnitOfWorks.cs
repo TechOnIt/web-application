@@ -3,7 +3,7 @@ using iot.Application.Repositories.SQL.Roles;
 using iot.Application.Repositories.SQL.Users;
 using iot.Infrastructure.Persistence.Context.Identity;
 
-namespace iot.Application.Common.Constants;
+namespace iot.Application.Repositories.UnitOfWorks.Identity;
 
 public interface IUnitOfWorks
 {

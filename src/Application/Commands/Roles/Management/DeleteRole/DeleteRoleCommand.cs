@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.Roles.Management.DeleteRole;
+﻿using iot.Application.Repositories.UnitOfWorks.Identity;
+
+namespace iot.Application.Commands.Roles.Management.DeleteRole;
 
 public class DeleteRoleCommand : IRequest<Result>, ICommittableRequest
 {

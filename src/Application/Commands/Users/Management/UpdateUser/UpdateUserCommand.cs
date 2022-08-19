@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.Users.Management.UpdateUser;
+﻿using iot.Application.Repositories.UnitOfWorks.Identity;
+
+namespace iot.Application.Commands.Users.Management.UpdateUser;
 
 public class UpdateUserCommand : IRequest<Result<string>>, ICommittableRequest
 {

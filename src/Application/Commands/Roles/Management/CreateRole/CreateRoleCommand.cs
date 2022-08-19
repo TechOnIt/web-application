@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.Roles.Management.CreateRole;
+﻿using iot.Application.Repositories.UnitOfWorks.Identity;
+
+namespace iot.Application.Commands.Roles.Management.CreateRole;
 
 public class CreateRoleCommand : IRequest<Result<Guid>>, ICommittableRequest
 {

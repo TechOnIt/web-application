@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
-[Area("Manage"), Route("[area]/v1/[controller]/")]
+[Area("manage"), Route("v1/[area]/[controller]")]
 public class UserController : BaseController
 {
     #region DI & Ctor's
@@ -24,33 +24,33 @@ public class UserController : BaseController
     #endregion
 
     #region Commands
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
     => await RunCommandAsync(command);
 
-    [HttpPost]
+    [HttpPost("update")]
     public async Task<IActionResult> Update([FromBody] UpdateUserCommand command)
         => await RunCommandAsync(command);
 
 
-    [HttpPatch]
+    [HttpPatch("set-password")]
     public async Task<IActionResult> SetPassword([FromBody] SetUserPasswordCommand command)
         => await RunCommandAsync(command);
 
-    [HttpPatch("{id}")]
+    [HttpPatch("ban/{id}")]
     public async Task<IActionResult> Ban([FromRoute] string id)
         => await RunCommandAsync(new BanUserCommand() { Id = id });
 
-    [HttpPatch("{id}")]
+    [HttpPatch("unban/{id}")]
     public async Task<IActionResult> UnBan([FromRoute] string id)
         => await RunCommandAsync(new UnBanUserCommand() { Id = id });
 
 
-    [HttpDelete("{id}")]
+    [HttpDelete("remove-account/{id}")]
     public async Task<IActionResult> RemoveAccount([FromRoute] string id)
         => await RunCommandAsync(new RemoveUserAccountCommand() { Id = id });
 
-    [HttpDelete("{id}")]
+    [HttpDelete("force-delete/{id}")]
     public async Task<IActionResult> ForceDelete([FromRoute] string id)
         => await RunCommandAsync(new ForceDeleteUserCommand() { Id = id });
     #endregion

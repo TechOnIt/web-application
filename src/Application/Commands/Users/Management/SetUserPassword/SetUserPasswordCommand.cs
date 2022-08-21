@@ -1,4 +1,5 @@
-﻿using iot.Application.Repositories.UnitOfWorks.Identity;
+﻿using iot.Application.Common.Interfaces;
+using iot.Application.Repositories.UnitOfWorks.Identity;
 
 namespace iot.Application.Commands.Users.Management.SetUserPassword;
 

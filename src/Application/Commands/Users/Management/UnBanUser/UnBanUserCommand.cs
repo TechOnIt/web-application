@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using iot.Application.Common.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace iot.Application.Commands.Users.Management.UnBanUser;
 

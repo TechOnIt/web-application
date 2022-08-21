@@ -1,6 +1,6 @@
 ﻿using FluentResults;
 using iot.Application.Commands;
-using iot.Application.Common.Constants;
+using iot.Application.Common.Interfaces;
 using iot.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

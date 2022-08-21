@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
-[Area("Manage"), Route("[area]/v1/[controller]/")]
+[Area("manage"), Route("v1/[area]/[controller]")]
 public class RoleController : BaseController
 {
     #region DI & Ctor's
@@ -16,11 +16,11 @@ public class RoleController : BaseController
     #endregion
 
     #region Command
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateRoleCommand command)
         => await RunCommandAsync(command);
 
-    [HttpPost]
+    [HttpPost("update")]
     public async Task<IActionResult> Update([FromBody] UpdateRoleCommand command)
         => await RunCommandAsync(command);
 

@@ -1,4 +1,5 @@
-﻿using iot.Application.Repositories.UnitOfWorks.Identity;
+﻿using iot.Application.Common.Interfaces;
+using iot.Application.Repositories.UnitOfWorks.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace iot.Application.Commands.Users.Management.CreateUser;

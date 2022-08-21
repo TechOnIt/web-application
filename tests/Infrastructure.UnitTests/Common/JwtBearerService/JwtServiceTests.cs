@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.Security;
+﻿using iot.Application.Common.Security.JwtBearer;
 using System.Security.Claims;
 
 namespace Infrastructure.UnitTests.Common.JwtBearerService;
@@ -11,10 +11,10 @@ public class JwtServiceTests
     {
         // arrange
         var service = new JwtService();
-
+        var expireDateTime = DateTime.Now.AddMinutes(expireTime);
         // act
-        var result = service.GenerateTokenWithClaims(claims, expireTime);
-        var anyException = Record.Exception(() => service.GenerateTokenWithClaims(claims, expireTime));
+        var result = service.GenerateTokenWithClaims(claims, expireDateTime);
+        var anyException = Record.Exception(() => service.GenerateTokenWithClaims(claims, expireDateTime));
 
         // assert
         Assert.NotNull(result);

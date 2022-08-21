@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.Constants;
+﻿namespace iot.Application.Common.Interfaces;
 
 public interface ICommittableRequest
 {

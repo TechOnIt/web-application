@@ -1,4 +1,5 @@
-﻿using iot.Application.Repositories.SQL;
+﻿using iot.Application.Common.Security.JwtBearer;
+using iot.Application.Repositories.SQL;
 using iot.Application.Repositories.SQL.Roles;
 using iot.Application.Repositories.SQL.Users;
 using iot.Infrastructure.Persistence.Context.Identity;
@@ -9,6 +10,7 @@ public class UnitOfWork : IUnitOfWorks
 {
     #region constructor
     public IIdentityContext _context { get; }
+    private IJwtService _jwtSerice;
 
     public UnitOfWork(IIdentityContext context)
     {
@@ -32,7 +34,7 @@ public class UnitOfWork : IUnitOfWorks
         {
             if (_userRepository == null)
             {
-                _userRepository = new UserRepository(_context);
+                _userRepository = new UserRepository(_context, _jwtSerice);
             }
             return _userRepository;
         }

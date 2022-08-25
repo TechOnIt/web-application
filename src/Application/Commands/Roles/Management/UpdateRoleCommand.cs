@@ -1,4 +1,6 @@
-﻿using iot.Application.Repositories.SQL.Roles;
+﻿using iot.Application.Common.Interfaces;
+using iot.Application.Repositories.SQL.Roles;
+using iot.Application.Repositories.UnitOfWorks.Identity;
 
 namespace iot.Application.Commands.Roles.Management;
 
@@ -23,22 +25,23 @@ public class UpdateRoleCommandHandler : CommandHandler<UpdateRoleCommand, Result
 
     protected override async Task<Result> HandleAsync(UpdateRoleCommand request, CancellationToken cancellationToken)
     {
-        // Find role by id.
-        var roleId = Guid.Parse(request.Id);
-        var role = await _unitOfWorks.SqlRepository<Role>().GetByIdAsync(cancellationToken, roleId);
-        if (role == null)
-            return Result.Fail("Role was not found!");
-
-        // Map role name.
-        role.SetName(request.Name);
-        bool saveWasSucceded = await _unitOfWorks.SqlRepository<Role>().UpdateAsync(role, saveNow: true, cancellationToken);
-        if (saveWasSucceded == false)
+        try
         {
-            // TODO:
-            // Add log error.
-            return Result.Fail("an error was occured.");
+            // Find role by id.
+            var roleId = Guid.Parse(request.Id);
+            var role = await _unitOfWorks.SqlRepository<Role>().GetByIdAsync(cancellationToken, roleId);
+            if (role == null)
+                return Result.Fail("Role was not found!");
+
+            // Map role name.
+            role.SetName(request.Name);
+            await _unitOfWorks.SqlRepository<Role>().UpdateAsync(role, cancellationToken);
+            return Result.Ok();
         }
-        return Result.Ok();
+        catch (Exception exp)
+        {
+            return Result.Fail($"an error was occured : {exp.Message}");
+        }
     }
 }
 

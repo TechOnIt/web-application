@@ -1,10 +1,12 @@
 ﻿using FluentValidation.AspNetCore;
-using iot.Application.Commands.Roles.Management;
+using iot.Application.Commands.Roles.Management.CreateRole;
 using iot.Application.Common.Behaviors;
 using iot.Application.Common.Exceptions;
+using iot.Application.Repositories.SQL;
 using iot.Application.Repositories.SQL.LoginHistories;
 using iot.Application.Repositories.SQL.Roles;
 using iot.Application.Repositories.SQL.Users;
+using iot.Application.Repositories.UnitOfWorks.Identity;
 using iot.Infrastructure.Common.JwtBearerService;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,6 +24,7 @@ public static class ConfigureServices
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services
+            .AddScoped<IUnitOfWorks, UnitOfWork>()
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<ILoginHistoryRepository, LoginHistoryRepository>()
@@ -65,7 +68,7 @@ public static class ConfigureServices
         return services;
     }
 
-    public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, JwtSettings jwtSettings)
+    public static IServiceCollection AddCustomAuthenticationServices(this IServiceCollection services, JwtSettings jwtSettings)
     {
         services
             .AddAuthentication(options =>

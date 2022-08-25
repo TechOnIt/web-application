@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Infrastructure.
+// Infrastructure & Database.
 builder.Services.AddIdentityDbContextServices(builder.Configuration);
 // Logics
 builder.Services.AddApplicationServices();
@@ -22,6 +22,11 @@ builder.Services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
 
 //Register QueryHandlers
 builder.Services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
+
+builder.Services.AddFluentValidationServices();
+
+
+//builder.Services.AddCustomAuthenticationServices(builder.Configuration, );
 
 var app = builder.Build();
 

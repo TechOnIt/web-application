@@ -1,4 +1,7 @@
-﻿namespace iot.Application.Commands.Users.Management.SetUserPassword;
+﻿using iot.Application.Common.Interfaces;
+using iot.Application.Repositories.UnitOfWorks.Identity;
+
+namespace iot.Application.Commands.Users.Management.SetUserPassword;
 
 public class SetUserPasswordCommand : IRequest<Result>, ICommittableRequest
 {
@@ -33,19 +36,22 @@ public class SetUserPasswordCommandHandler : IRequestHandler<SetUserPasswordComm
         // Set new password.
         user.SetPassword(PasswordHash.Parse(request.Password));
 
+        // TODO:
+        // Move transaction to pipeline...
         var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
         try
         {
             // Update user.
-            bool saveWasSuccess = await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, saveNow: true, cancellationToken);
+            await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
 
-            if (saveWasSuccess == false)
-                return Result.Fail("An error was occured. try again later.");
-
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.CommitAsync();
         }
         catch
         {
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.RollbackAsync();
             return Result.Fail("An error was occured. try again later.");
         }

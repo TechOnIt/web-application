@@ -1,5 +1,8 @@
-﻿using iot.Infrastructure.Persistence.Context.Identity;
+﻿using iot.Application.Common.DTOs.Users.Authentication;
+using iot.Application.Common.Security.JwtBearer;
+using iot.Infrastructure.Persistence.Context.Identity;
 using System.Linq.Expressions;
+using System.Security.Claims;
 
 namespace iot.Application.Repositories.SQL.Users;
 
@@ -7,16 +10,34 @@ internal sealed class UserRepository : IUserRepository
 {
     #region Constructor
     private readonly IIdentityContext _context;
-    public UserRepository(IIdentityContext context)
+    private readonly IJwtService _jwtService;
+
+    public UserRepository(IIdentityContext context,
+        IJwtService jwtService)
     {
         _context = context;
+        _jwtService = jwtService;
     }
     #endregion
 
     public async Task<User?> FindByUsernameAsync(string username, CancellationToken cancellationToken = default)
         => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Username.ToLower().Trim() == username.ToLower().Trim(), cancellationToken);
 
-    public async Task<IList<User>> GetAllUsersByFilterAsync(Expression<Func<User, bool>> filter = null, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// Find user by email or phone number with roles (AsNoTracking).
+    /// </summary>
+    /// <param name="identity">Email or Phone number</param>
+    /// <returns>An specific user.</returns>
+    public async Task<User?> FindByIdentityWithRolesAsync(string identity, CancellationToken stoppingToken = default)
+    => await _context.Users
+        .Where(u => u.Email == identity.Trim().ToLower() || u.PhoneNumber == identity.Trim())
+        .Include(u => u.UserRoles)
+        .ThenInclude(ur => ur.Role)
+        .AsNoTracking()
+        .FirstOrDefaultAsync(stoppingToken);
+
+    public async Task<IList<User>?> GetAllUsersByFilterAsync(Expression<Func<User, bool>>? filter = null,
+        CancellationToken cancellationToken = default)
     {
         if (filter != null)
         {
@@ -29,5 +50,52 @@ internal sealed class UserRepository : IUserRepository
         {
             return await _context.Users.AsNoTracking().ToListAsync(cancellationToken);
         }
+    }
+
+    /// <summary>
+    /// Generate access token with Jwt Bearer.
+    /// </summary>
+    /// <param name="user">User instance with roles for generate access token.</param>
+    /// <returns>Access token dto.</returns>
+    public async Task<AccessToken> GenerateAccessToken(User user, CancellationToken stoppingToken = default)
+    {
+        // TODO:
+        // Make async task.
+        // Check user is not ban or lock.
+
+        var accessToken = new AccessToken();
+
+        // Add identity claims.
+        var claims = new List<Claim>()
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        };
+
+        #region Refresh Token
+        // Refresh token expire date time.
+        var refreshTokenExpireAt = DateTime.Now.AddHours(3);
+        accessToken.RefreshTokenExpireAt = refreshTokenExpireAt.ToString("yyyy/MM/dd HH:mm:ss");
+        // Generate refresh token.
+        accessToken.RefreshToken = _jwtService.GenerateTokenWithClaims(claims);
+        #endregion
+
+        #region Token
+        claims.Add(new Claim(ClaimTypes.Name, user.Username));
+
+        // Add roles in claims.
+        if (user.UserRoles != null || user.UserRoles?.Count > 0)
+            foreach (var userRole in user.UserRoles)
+                if (userRole.Role != null)
+                    claims.Add(new Claim(ClaimTypes.Role, userRole.Role.Name.ToString()));
+
+        // Token expire date time.
+        var tokenExpiredAt = DateTime.Now.AddMinutes(5);
+        accessToken.TokenExpireAt = tokenExpiredAt.ToString("yyyy/MM/dd HH:mm:ss");
+        // Generate token.
+        accessToken.Token = _jwtService.GenerateTokenWithClaims(claims,
+            tokenExpiredAt);
+        #endregion
+
+        return accessToken;
     }
 }

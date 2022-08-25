@@ -1,5 +1,6 @@
 ﻿using iot.Application.Queries.Users.GetAllUsers.Commands;
 using iot.Application.Repositories.SQL.Users;
+using iot.Application.Repositories.UnitOfWorks.Identity;
 using Mapster;
 
 namespace iot.Application.Queries.Users.GetAllUsers.Handlers

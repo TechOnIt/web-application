@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using iot.Application.Common.Interfaces;
+using iot.Application.Repositories.UnitOfWorks.Identity;
 
 namespace iot.Application.Commands.Users.Management.RemoveUserAccount
 {
@@ -35,17 +32,13 @@ namespace iot.Application.Commands.Users.Management.RemoveUserAccount
             // delete user & save.
             user.SetIsDelete(true);
 
+            // TODO:
+            // Move transaction to pipeline...
             var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
 
             try
             {
-                bool saveWasSuccess = await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, saveNow: true, cancellationToken);
-                if (saveWasSuccess == false)
-                {
-                    // TODO:
-                    // add error log.
-                    return Result.Fail("An error was occured. try again later.");
-                }
+                await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
             }
             catch (Exception)
             {

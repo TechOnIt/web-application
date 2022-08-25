@@ -11,12 +11,10 @@ public static class ConfigureService
     {
         return services;
     }
-}
 
-public static class AddCustomAuthenticationExtentions
-{
     public static IServiceCollection AddIdentityDbContextServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<IIdentityContext, IdentityContext>();
         string cs = configuration.GetConnectionString("Development");
         services.AddDbContext<IdentityContext>(o =>
         {

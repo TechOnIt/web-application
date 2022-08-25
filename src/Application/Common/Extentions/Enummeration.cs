@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
-namespace iot.Application.Common.Constants
+namespace iot.Application.Common.Extentions
 {
     public abstract class Enumeration : IComparable
     {

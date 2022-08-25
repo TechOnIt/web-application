@@ -3,21 +3,19 @@
 namespace iot.Identity.Api.Controllers.v1;
 
 [Route("v1/[controller]")]
-public class GeneralController : BaseController
+public class AuthenticationController : BaseController
 {
     #region DI & Ctor
-    public GeneralController(IMediator mediator)
+    public AuthenticationController(IMediator mediator)
         : base(mediator)
     {
     }
     #endregion
 
     #region Command
-    //[HttpPost]
-    //public async Task<IActionResult> SignIn([FromBody] )
-    //{
-
-    //}
+    //[HttpPost("signin")]
+    //public async Task Signin()
+    //    => await RunCommandAsync();
     #endregion
 
     #region Queries

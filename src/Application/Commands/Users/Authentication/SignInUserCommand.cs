@@ -1,45 +1,57 @@
-﻿using iot.Application.Repositories.SQL.Users;
+﻿using iot.Application.Common.DTOs.Users.Authentication;
+using iot.Application.Repositories.SQL.Users;
 
 namespace iot.Application.Commands.Users.Authentication;
 
-public class SignInUserCommand : Command<Result>
+public sealed class SignInUserCommand : IRequest<Result<AccessToken>>
 {
     public string Username { get; set; }
     public string Password { get; set; }
 }
 
-public class SignInUserCommandHandler : CommandHandler<SignInUserCommand, Result>
+public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand, Result<AccessToken>>
 {
     #region DI & Ctor
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWorks _unitOfWorks;
 
-    public SignInUserCommandHandler(IMediator mediator, IUserRepository userRepository)
-        : base(mediator)
+    public SignInUserCommandHandler(IUnitOfWorks unitOfWorks)
     {
-        _userRepository = userRepository;
+        _unitOfWorks = unitOfWorks;
     }
     #endregion
 
-    protected override async Task<Result> HandleAsync(SignInUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AccessToken>> Handle(SignInUserCommand request, CancellationToken cancellationToken)
     {
-        var passwordHash = PasswordHash.Parse(request.Password);
-        // Find user by username.
-        var user = await _userRepository.FindByUsernameAsync(username: request.Username);
-        if (user == null || user.Password != passwordHash)
+        // Find user by Email or Phone number with roles.
+        var user = await _unitOfWorks.UserRepository.FindByIdentityWithRolesAsync(identity: request.Username, cancellationToken);
+        if (user == null || user.Password != PasswordHash.Parse(request.Password))
             return Result.Fail("Username or password is wrong!");
-        
-        // TODO:
-        // Generate access token for user.
 
-        return Result.Ok();
+        // Generate access token.
+        var accessToken = await _unitOfWorks.UserRepository.GenerateAccessToken(user);
+        if (accessToken == null)
+            return Result.Fail("An error has occured!");
+
+        return Result.Ok(accessToken);
     }
 }
 
-public class SignInUserCommandValidator : BaseFluentValidator<SignInUserCommand>
+public sealed class SignInUserCommandValidator : BaseFluentValidator<SignInUserCommand>
 {
     public SignInUserCommandValidator()
     {
-        // TODO:
-        
+        RuleFor(u => u.Username)
+            .NotEmpty()
+            .MinimumLength(IdentitySettingConstant.MinimumUsernameLength)
+            .MaximumLength(IdentitySettingConstant.MaximumUsernameLength)
+            ;
+
+        RuleFor(u => u.Password)
+            .MinimumLength(IdentitySettingConstant.MinimumPasswordLength)
+            .MaximumLength(IdentitySettingConstant.MaximumPasswordLength)
+            // TODO:
+            // Uncomment this for strong password!
+            //.Matches(RegexConstant.Password)
+            ;
     }
 }

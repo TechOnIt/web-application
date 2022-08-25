@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using iot.Application.Common.Interfaces;
+using iot.Application.Repositories.UnitOfWorks.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace iot.Application.Commands.Users.Management.CreateUser;
 
@@ -22,6 +24,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
         _unitOfWorks = unitOfWorks;
         _logger = logger;
     }
+    #endregion
 
     public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
@@ -34,28 +37,25 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
         // Set full name.
         newUser.SetFullName(new FullName(request.Name, request.Surname));
 
+        // TODO:
+        // Move transaction to pipeline...
         var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
 
         try
         {
             // Add new to database.
-            bool wasSaved = await _unitOfWorks.SqlRepository<User>().AddAsync(newUser, saveNow: true, cancellationToken);
+            await _unitOfWorks.SqlRepository<User>().AddAsync(newUser, cancellationToken);
             await transAction.CommitAsync();
-
-            if (wasSaved)
-            {
-                // TODO:
-                // Log error.
-            }
         }
         catch (Exception exp)
         {
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.RollbackAsync();
             _logger.Log(LogLevel.Critical, exp.Message);
         }
 
         return Result.Ok(newUser.Id);
     }
-    #endregion
 }
 

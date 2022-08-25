@@ -1,6 +1,6 @@
 ﻿using FluentResults;
 using iot.Application.Commands;
-using iot.Application.Common.Constants;
+using iot.Application.Common.Interfaces;
 using iot.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,19 +19,19 @@ public class BaseController : ControllerBase
     }
     #endregion
 
-    //protected async Task<IActionResult> RunCommandAsync(Command<Result> request)
-    //{
-    //    var result = await _mediator.Send(request);
-
-    //    if (result.IsSuccess)
-    //        return Ok(result);
-    //    return BadRequest();
-    //}
-
     protected async Task<IActionResult> RunCommandAsync<TRequest>(TRequest request) 
         where TRequest : ICommittableRequest
     {
         var result= await _mediator.Send(request) as Result; 
+
+        if (result.IsSuccess)
+            return Ok(result);
+        return BadRequest();
+    }
+
+    protected async Task<IActionResult> RunCommandAsync(Command<Result> request)
+    {
+        var result = await _mediator.Send(request);
 
         if (result.IsSuccess)
             return Ok(result);

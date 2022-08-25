@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using iot.Application.Common.Interfaces;
+using iot.Application.Repositories.UnitOfWorks.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace iot.Application.Commands.Users.Management.ForceDelete;
 
@@ -35,18 +37,16 @@ public class ForceDeleteUserCommandHandler : IRequestHandler<ForceDeleteUserComm
         try
         {
             // Delete user account.
-            bool saveWasSuccess = await _unitOfWorks.SqlRepository<User>().DeleteAsync(user, saveNow: true, cancellationToken);
+            await _unitOfWorks.SqlRepository<User>().DeleteAsync(user, cancellationToken);
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.CommitAsync();
 
-            if (saveWasSuccess == false)
-            {
-                // TODO:
-                // add error log.
-                return Result.Fail("An error was occured. try again later.");
-            }
         }
         catch (Exception exp)
         {
+            // TODO:
+            // Move transaction to pipeline...
             await transAction.RollbackAsync();
             _logger.Log(LogLevel.Critical, exp.Message);
         }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using iot.Application.Common.Interfaces;
+using iot.Application.Repositories.UnitOfWorks.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace iot.Application.Commands.Users.Management.BanUser;
 
@@ -37,15 +39,8 @@ public class BanUserCommandHandler : IRequestHandler<BanUserCommand, Result>
         {
             // ban user & save.
             user.SetIsBaned(true);
-            bool saveWasSuccess = await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, saveNow: true, cancellationToken);
+            await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
             await transAction.CommitAsync();
-
-            if (saveWasSuccess == false)
-            {
-                // TODO:
-                // add error log.
-                return Result.Fail("An error was occured. try again later.");
-            }
         }
         catch (Exception exp)
         {

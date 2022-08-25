@@ -2,7 +2,7 @@
 
 namespace iot.Application.Commands.Roles.Management;
 
-public class UpdateRoleCommand : Command<Result>
+public class UpdateRoleCommand : Command<Result> ,ICommittableRequest
 {
     public string Id { get; set; }
     public string Name { get; set; }

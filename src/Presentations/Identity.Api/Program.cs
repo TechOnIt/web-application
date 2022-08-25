@@ -47,3 +47,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 await app.RunAsync();
+
+
+
+public static partial class Program { }

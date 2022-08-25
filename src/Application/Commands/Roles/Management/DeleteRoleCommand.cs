@@ -2,7 +2,7 @@
 
 namespace iot.Application.Commands.Roles.Management;
 
-public class DeleteRoleCommand : Command<Result>
+public class DeleteRoleCommand : Command<Result> ,ICommittableRequest
 {
     public string Id { get; set; }
 }

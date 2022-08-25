@@ -14,7 +14,7 @@ public class PasswordHash : ValueObject
     private static int _maximumLength = 50;
 
     #region Constructors
-    PasswordHash(string password)
+    public PasswordHash(string password)
     {
         string validatedPassword = _validation(password);
         Value = _encode(validatedPassword);

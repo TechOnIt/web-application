@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
-[Area("Manage"), Route("[area]/v1/[controller]/")]
+[Area("Manage"), Route("[area]/v1/[controller]/[action]")]
 public class UserController : BaseController
 {
     #region DI & Ctor's

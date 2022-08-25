@@ -1,16 +1,4 @@
-﻿using FluentResults;
-using iot.Application.Commands;
-using iot.Application.Commands.Users.Management;
-using iot.Application.Commands.Users.Management.BanUser;
-using iot.Application.Commands.Users.Management.CreateUser;
-using iot.Application.Commands.Users.Management.ForceDelete;
-using iot.Application.Commands.Users.Management.RemoveUserAccount;
-using iot.Application.Commands.Users.Management.SetUserPassword;
-using iot.Application.Commands.Users.Management.UnBanUser;
-using iot.Application.Commands.Users.Management.UpdateUser;
-using Microsoft.AspNetCore.Mvc;
-
-namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
+﻿namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
 [Area("Manage"), Route("[area]/v1/[controller]/[action]")]
 public class UserController : BaseController

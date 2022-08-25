@@ -1,11 +1,4 @@
-﻿using FluentResults;
-using iot.Application.Commands;
-using iot.Application.Common.Interfaces;
-using iot.Application.Queries;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-
-namespace iot.Identity.Api.Controllers;
+﻿namespace iot.Identity.Api.Controllers;
 
 [ApiController]
 public class BaseController : ControllerBase
@@ -19,10 +12,10 @@ public class BaseController : ControllerBase
     }
     #endregion
 
-    protected async Task<IActionResult> RunCommandAsync<TRequest>(TRequest request) 
+    protected async Task<IActionResult> RunCommandAsync<TRequest>(TRequest request)
         where TRequest : ICommittableRequest
     {
-        var result= await _mediator.Send(request) as Result; 
+        var result = await _mediator.Send(request) as Result;
 
         if (result.IsSuccess)
             return Ok(result);

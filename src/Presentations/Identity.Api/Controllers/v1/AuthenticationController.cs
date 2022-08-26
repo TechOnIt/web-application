@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iot.Application.Commands.Users.Authentication.SignInCommands;
+using iot.Application.Commands.Users.Authentication.SignUpCommands;
 
 namespace iot.Identity.Api.Controllers.v1;
 
-[Route("v1/[controller]")]
+[Route("v1/[controller]/[action]")]
 public class AuthenticationController : BaseController
 {
     #region DI & Ctor
@@ -13,9 +14,21 @@ public class AuthenticationController : BaseController
     #endregion
 
     #region Command
-    //[HttpPost("signin")]
-    //public async Task Signin()
-    //    => await RunCommandAsync();
+
+    [HttpPost]
+    public async Task<IActionResult> Signin([FromBody] SignInUserCommand userLoginInformation)
+        => await RunCommandAsyncT(userLoginInformation);
+
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> SignOut()
+    {
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SignUp([FromBody] SignupUserCommand userSignUpInformation)
+        =>await RunCommandAsyncT(userSignUpInformation);
+
     #endregion
 
     #region Queries

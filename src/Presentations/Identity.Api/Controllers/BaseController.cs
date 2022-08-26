@@ -12,6 +12,17 @@ public class BaseController : ControllerBase
     }
     #endregion
 
+
+    protected async Task<IActionResult> RunCommandAsyncT<TRequest>(TRequest request)
+        where TRequest : class
+    {
+        var result = await _mediator.Send(request) as Result;
+
+        if (result.IsSuccess)
+            return Ok(result);
+        return BadRequest();
+    }
+
     protected async Task<IActionResult> RunCommandAsync<TRequest>(TRequest request)
         where TRequest : ICommittableRequest
     {

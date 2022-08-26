@@ -1,18 +1,16 @@
-﻿namespace iot.Application.Commands.Users.Authentication;
+﻿using Mapster;
 
-public sealed class SignupUserCommand : IRequest<Result>
-{
-    public string? PhoneNumber { get; set; }
-    public string? Password { get; set; }
-    public string? RepeatPassword { get; set; }
-}
+namespace iot.Application.Commands.Users.Authentication.SignUpCommands;
 
 internal sealed class SignupUserCommandHandler : IRequestHandler<SignupUserCommand, Result>
 {
     private readonly IUnitOfWorks _unitOfWorks;
-    public SignupUserCommandHandler(IUnitOfWorks unitOfWorks)
+    private readonly IMediator _mediator;
+
+    public SignupUserCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
     {
         _unitOfWorks = unitOfWorks;
+        _mediator = mediator;
     }
 
     public async Task<Result> Handle(SignupUserCommand request, CancellationToken cancellationToken)
@@ -20,8 +18,14 @@ internal sealed class SignupUserCommandHandler : IRequestHandler<SignupUserComma
         // Check username is unique?
         bool userIsExist = await _unitOfWorks.SqlRepository<User>()
             .IsExistsAsync(u => u.Username == request.PhoneNumber);
+
         if (userIsExist)
-            return Result.Fail("Username not exist.");
+            return Result.Fail("duplicate username");
+        else
+        {
+            await _unitOfWorks.SqlRepository<User>().AddAsync(request.Adapt<User>());
+            await _mediator.Publish(new SignUpUserNotification());
+        }
 
         return Result.Ok();
     }

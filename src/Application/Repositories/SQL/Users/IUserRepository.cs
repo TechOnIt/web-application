@@ -16,6 +16,9 @@ public interface IUserRepository
     Task<IList<User>?> GetAllUsersByFilterAsync(Expression<Func<User, bool>>? filter = null,
         CancellationToken cancellationToken = default);
 
+
+    Task<(string Message, AccessToken Token)> UserSignInByPasswordAsync(string phoneNumber, string password, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// Generate access token for authorize.
     /// </summary>

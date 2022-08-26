@@ -53,16 +53,46 @@ internal sealed class UserRepository : IUserRepository
     }
 
     /// <summary>
+    /// this method is for signinuserwith password - it is like signinPassword in identityframwork
+    /// we should design a result class for this situation
+    /// </summary>
+    /// <param name="phoneNumber"></param>
+    /// <param name="password"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Tuple</returns>
+    public async Task<(string Message, AccessToken Token)> UserSignInByPasswordAsync(string phoneNumber,string password,CancellationToken cancellationToken=default)
+    {
+        // Find user by just Phone number with roles.
+        var user = await _context.Users
+        .Where(u => u.PhoneNumber == phoneNumber.Trim())
+        .Include(u => u.UserRoles)
+        .ThenInclude(ur => ur.Role)
+        .AsNoTracking()
+        .FirstOrDefaultAsync(cancellationToken);
+
+        string message = string.Empty;
+
+        if (user == null)
+            message= "Not found user !";
+        else if (user.IsBaned is true)
+            message= "Username or password is wrong!";
+        else if (user.LockOutDateTime != null)
+            message= "user is locked !";
+        else if (user.Password != PasswordHash.Parse(password))
+            message= "password is wrong!";
+
+        AccessToken token = await GenerateAccessToken(user, cancellationToken);
+        return (message, token);
+    }
+
+
+    /// <summary>
     /// Generate access token with Jwt Bearer.
     /// </summary>
     /// <param name="user">User instance with roles for generate access token.</param>
     /// <returns>Access token dto.</returns>
     public async Task<AccessToken> GenerateAccessToken(User user, CancellationToken stoppingToken = default)
     {
-        // TODO:
-        // Make async task.
-        // Check user is not ban or lock.
-
         var accessToken = new AccessToken();
 
         // Add identity claims.

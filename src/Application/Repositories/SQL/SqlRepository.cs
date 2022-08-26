@@ -67,7 +67,7 @@ public class SqlRepository<TEntity, TContext> : ISqlRepository<TEntity>
         await (asNoTracking ? TableNoTracking : Entities).ToListAsync(cancellationToken);
     public async Task<bool> IsExistsAsync(Expression<Func<TEntity, bool>> expression, CancellationToken stoppingToken = default)
     {
-        return await Entities.AnyAsync(expression, stoppingToken);
+        return await Entities.AsNoTracking().AnyAsync(expression, stoppingToken);
     }
 
     public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)

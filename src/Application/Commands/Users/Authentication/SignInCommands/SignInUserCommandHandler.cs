@@ -1,38 +1,29 @@
 ﻿using iot.Application.Common.DTOs.Users.Authentication;
-using iot.Application.Repositories.SQL.Users;
 
-namespace iot.Application.Commands.Users.Authentication;
-
-public sealed class SignInUserCommand : IRequest<Result<AccessToken>>
-{
-    public string Username { get; set; }
-    public string Password { get; set; }
-}
+namespace iot.Application.Commands.Users.Authentication.SignInCommands;
 
 public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand, Result<AccessToken>>
 {
     #region DI & Ctor
     private readonly IUnitOfWorks _unitOfWorks;
+    private readonly IMediator _mediator;
 
-    public SignInUserCommandHandler(IUnitOfWorks unitOfWorks)
+    public SignInUserCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
     {
         _unitOfWorks = unitOfWorks;
+        _mediator = mediator;
     }
     #endregion
 
     public async Task<Result<AccessToken>> Handle(SignInUserCommand request, CancellationToken cancellationToken)
     {
-        // Find user by Email or Phone number with roles.
-        var user = await _unitOfWorks.UserRepository.FindByIdentityWithRolesAsync(identity: request.Username, cancellationToken);
-        if (user == null || user.Password != PasswordHash.Parse(request.Password))
-            return Result.Fail("Username or password is wrong!");
+        var signinPassword = await _unitOfWorks.UserRepository.UserSignInByPasswordAsync(request.Username, request.Password, cancellationToken);
 
-        // Generate access token.
-        var accessToken = await _unitOfWorks.UserRepository.GenerateAccessToken(user);
-        if (accessToken == null)
-            return Result.Fail("An error has occured!");
+        if(signinPassword.Token is null)
+            return Result.Fail(signinPassword.Message);
 
-        return Result.Ok(accessToken);
+        await _mediator.Publish(new SignInUserNotifications()); // notification events
+        return Result.Ok(signinPassword.Token);
     }
 }
 

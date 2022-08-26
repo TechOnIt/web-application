@@ -12,19 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Infrastructure & Database.
-builder.Services.AddIdentityDbContextServices(builder.Configuration);
-// Logics
-builder.Services.AddApplicationServices();
-builder.Services.AddMediatRServices();
-//Register CommandeHandlers
-builder.Services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
-
-//Register QueryHandlers
-builder.Services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
-
-builder.Services.AddFluentValidationServices();
-
+ConfigureServices(builder.Services);
 
 //builder.Services.AddCustomAuthenticationServices(builder.Configuration, );
 
@@ -53,6 +41,23 @@ app.UseEndpoints(endpoints =>
 });
 await app.RunAsync();
 
+void ConfigureServices(IServiceCollection services) // clean code 
+{
+    // Infrastructure & Database.
+    services.AddIdentityDbContextServices(builder.Configuration);
+    // Logics
 
+    services.AddApplicationServices();
+    services.AddMediatRServices();
+
+    //Register CommandeHandlers
+    services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
+
+    //Register QueryHandlers
+    services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
+
+    services.AddFluentValidationServices();
+
+}
 
 public static partial class Program { }

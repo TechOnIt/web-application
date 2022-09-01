@@ -40,14 +40,8 @@ public class CreateNewUser
 
     public async Task ThenResponseShouldBe200Ok()
     {
-        var returnResult = FluentResults.Result.Ok(new Guid());
-
         //_mediator.Setup(i => i.Send(new CreateUserCommand(), It.IsAny<System.Threading.CancellationToken>()))
-        //    .ReturnsAsync(FluentResults.Result.Ok(new Guid()));
-        //Task.FromResult(handHeldWrapperDataViewMoq)
-
-        _mediator.Setup(i => i.Send(new CreateUserCommand(), It.IsAny<System.Threading.CancellationToken>()))
-                .Returns(Task.FromResult(returnResult));
+                //.Returns(Task.FromResult(FluentResults.Result<Guid>(Guid.NewGuid())));
 
 
         var result = (OkObjectResult)await _userController.Create(this._command);

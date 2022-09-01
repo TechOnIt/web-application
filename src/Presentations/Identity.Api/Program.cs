@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using iot.Application;
 using iot.Application.Commands;
 using iot.Application.Queries;
@@ -27,6 +28,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseIpRateLimiting();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
@@ -39,6 +42,8 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllers();
 });
+
+
 await app.RunAsync();
 
 void ConfigureServices(IServiceCollection services) // clean code 
@@ -58,6 +63,43 @@ void ConfigureServices(IServiceCollection services) // clean code
 
     services.AddFluentValidationServices();
 
+    #region Api Limit-rate
+    services.AddMemoryCache();
+    services.Configure<IpRateLimitOptions>(options =>
+    {
+        options.EnableEndpointRateLimiting = true;
+        options.StackBlockedRequests = false;
+        options.HttpStatusCode = 429;
+        options.RealIpHeader = "X-Real-IP";
+        options.ClientIdHeader = "X-ClientId";
+        options.GeneralRules = new List<RateLimitRule>
+        {
+            new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Authentication/Signin",
+                Period = "10s",
+                Limit = 1,
+            },
+            new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Authentication/SignOut",
+                Period = "10s",
+                Limit = 1,
+            },
+            new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Authentication/SignUp",
+                Period = "10s",
+                Limit = 1,
+            }
+        };
+    });
+    services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+    services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+    services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+    services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+    services.AddInMemoryRateLimiting();
+    #endregion
 }
 
 public static partial class Program { }

@@ -16,6 +16,7 @@ public class AuthenticationController : BaseController
     #region Command
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Signin([FromBody] SignInUserCommand userLoginInformation)
         => await RunCommandAsyncT(userLoginInformation);
 

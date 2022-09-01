@@ -1,4 +1,5 @@
 ﻿using iot.Domain.Common;
+using iot.Domain.Entities.Product;
 using iot.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -111,5 +112,6 @@ public class User : IEntity
 
     #region relations
     public virtual ICollection<UserRole> UserRoles { get; set; }
+    public virtual ICollection<Structure> Structures { get; set; }
     #endregion
 }

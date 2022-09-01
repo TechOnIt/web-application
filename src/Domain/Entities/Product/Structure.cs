@@ -10,12 +10,13 @@ public class Structure
 {
 
     #region immutable constructure
-    public Structure(Guid id, Concurrency apiKey, string description, bool isActive, DateTime createDate, DateTime? modifyDate, StuctureType structureType)
+    public Structure(Guid id,string name, string description, DateTime createDate, DateTime? modifyDate, StuctureType structureType)
     {
         Id = id;
-        ApiKey = apiKey;
+        Name = name;
+        ApiKey = Concurrency.NewToken();
         Description = description;
-        IsActive = isActive;
+        IsActive = true;
         CreateDate = createDate;
         ModifyDate = modifyDate;
         Type = structureType;

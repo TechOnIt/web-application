@@ -4,10 +4,10 @@ namespace iot.Domain.Enums;
 
 public class DeviceType : Enumeration
 {
-    public static readonly StuctureType Thermometer = new(1, nameof(Thermometer));
-    public static readonly StuctureType HumidityMeter = new (2, nameof(HumidityMeter));
-    public static readonly StuctureType Lamp = new(3, nameof(Lamp));
-    public static readonly StuctureType CoolingFan = new (4, nameof(CoolingFan));
+    public static readonly DeviceType Thermometer = new(1, nameof(Thermometer));
+    public static readonly DeviceType HumidityMeter = new (2, nameof(HumidityMeter));
+    public static readonly DeviceType Lamp = new(3, nameof(Lamp));
+    public static readonly DeviceType CoolingFan = new (4, nameof(CoolingFan));
 
     public DeviceType()
     {

@@ -32,6 +32,9 @@ public class Sensor
     {
         SensorType = SensorType.FromValue<SensorType>(value);
     }
+
+    public SensorType GetSensorType()
+        => SensorType;
     #endregion
 
     #region relations & foreignkeys

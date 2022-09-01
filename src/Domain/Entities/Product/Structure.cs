@@ -1,7 +1,7 @@
 ﻿using iot.Domain.Enums;
 using iot.Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace iot.Domain.Entities.Product;
@@ -42,6 +42,19 @@ public class Structure
     {
         Type = newType;
     }
+
+    public void SetStructureType(string typeName)
+    {
+        Type = StuctureType.FromDisplayName<StuctureType>(typeName);
+    }
+
+    public void SetStructureType(int value)
+    {
+        Type = StuctureType.FromValue<StuctureType>(value);
+    }
+
+    public StuctureType GetStuctureType()
+        => Type;
 
     public void SetApiKey()
     {

@@ -24,11 +24,7 @@ public static class ConfigureServices
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services
-            .AddScoped<IUnitOfWorks, UnitOfWork>()
-            .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<ILoginHistoryRepository, LoginHistoryRepository>()
-            ;
+            .AddScoped<IUnitOfWorks, UnitOfWork>();
 
         services
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>))

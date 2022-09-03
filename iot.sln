@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.UnitTests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.UnitTests", "tests\Application.UnitTests\Application.UnitTests.csproj", "{54FA9F91-F672-46D8-ADB2-899DD9498959}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests", "tests\WebApi.Tests\TestProject1\WebApi.Tests.csproj", "{4755A124-841B-4F96-93D6-7A2418526DAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Tests", "tests\WebApi.Tests\TestProject1\WebApi.Tests.csproj", "{4755A124-841B-4F96-93D6-7A2418526DAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desk.Api", "src\Presentations\Desk.Api\Desk.Api.csproj", "{16690216-D62E-4FF4-BFCB-5E2D0CD8E021}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{4755A124-841B-4F96-93D6-7A2418526DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4755A124-841B-4F96-93D6-7A2418526DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4755A124-841B-4F96-93D6-7A2418526DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16690216-D62E-4FF4-BFCB-5E2D0CD8E021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16690216-D62E-4FF4-BFCB-5E2D0CD8E021}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16690216-D62E-4FF4-BFCB-5E2D0CD8E021}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16690216-D62E-4FF4-BFCB-5E2D0CD8E021}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{7B4607AA-AD45-4139-85E3-D6EB224B1A99} = {768E65F1-85E8-4AAD-AEBA-EB43B978F555}
 		{54FA9F91-F672-46D8-ADB2-899DD9498959} = {768E65F1-85E8-4AAD-AEBA-EB43B978F555}
 		{4755A124-841B-4F96-93D6-7A2418526DAD} = {768E65F1-85E8-4AAD-AEBA-EB43B978F555}
+		{16690216-D62E-4FF4-BFCB-5E2D0CD8E021} = {1657E8FF-8204-41A8-B43F-5FA4E518FA1B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B6025CF-38B6-4390-8C05-9E134BB37E6E}

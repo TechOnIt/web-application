@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.Extentions;
+﻿using iot.Domain.Common;
 using iot.Domain.Entities.Product;
 using iot.Domain.Enums;
 using Microsoft.EntityFrameworkCore;

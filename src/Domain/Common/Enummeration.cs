@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace iot.Application.Common.Extentions;
+namespace iot.Domain.Common;
 
 // https://lostechies.com/jimmybogard/2008/08/12/enumeration-classes/
 public abstract class Enumeration : IComparable // Jimmy Bogard. Enumeration classes

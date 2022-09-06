@@ -1,4 +1,4 @@
-﻿namespace TestProject1.UserApi.Test;
+﻿namespace WebApi.Tests.UserApi.Test;
 
 public class UpdateExistingUser
 {

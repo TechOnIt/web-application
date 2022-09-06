@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.Extentions;
+﻿using iot.Domain.Common;
 
 namespace iot.Domain.Enums;
 

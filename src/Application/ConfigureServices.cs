@@ -34,6 +34,9 @@ public static class ConfigureServices
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>));
         services.AddScoped(typeof(IRequestPostProcessor<,>), typeof(CommitCommandBehavior<,>));
 
+        // Add cache service.
+        services.AddDistributedMemoryCache();
+
         return services;
     }
 

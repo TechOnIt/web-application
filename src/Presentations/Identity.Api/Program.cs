@@ -1,7 +1,5 @@
 using AspNetCoreRateLimit;
 using iot.Application;
-using iot.Application.Commands;
-using iot.Application.Queries;
 using iot.Infrastructure;
 using System.Reflection;
 

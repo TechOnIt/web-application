@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Structures\Management\DeleteStructure\" />
     <Folder Include="Commands\Structures\Management\UpdateStructure\" />
   </ItemGroup>
 

@@ -1,8 +1,7 @@
-﻿using iot.Domain.Common;
-using iot.Domain.Entities.Product;
+﻿using iot.Domain.Entities.Product;
 using Mapster;
 using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
 
 namespace iot.Application.Queries.Structures.GetAllByFilter;
 

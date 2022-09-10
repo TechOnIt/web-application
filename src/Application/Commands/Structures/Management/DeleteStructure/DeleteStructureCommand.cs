@@ -1,4 +1,5 @@
-﻿using iot.Domain.Entities.Product;
+﻿using iot.Application.Common.Interfaces;
+using iot.Domain.Entities.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace iot.Application.Commands.Structures.Management.DeleteStructure;
 
-public class DeleteStructureCommand : IRequest<Result>
+public class DeleteStructureCommand : IRequest<Result> , ICommittableRequest
 {
     public Guid StructureId { get; set; }
 }

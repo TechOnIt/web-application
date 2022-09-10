@@ -1,9 +1,10 @@
-﻿using iot.Domain.Entities.Product;
+﻿using iot.Application.Common.Interfaces;
+using iot.Domain.Entities.Product;
 using iot.Domain.Enums;
 
 namespace iot.Application.Commands.Structures.Management.UpdateStructure;
 
-public class UpdateStructureCommand : IRequest<Result>
+public class UpdateStructureCommand : IRequest<Result> , ICommittableRequest
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

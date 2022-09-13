@@ -1,4 +1,5 @@
 ﻿using iot.Application.Common.Interfaces;
+using iot.Application.Events.ProductNotifications;
 using iot.Domain.Enums;
 
 namespace iot.Application.Commands.Device.CreateDevice;
@@ -35,6 +36,7 @@ public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, R
             var model = new Domain.Entities.Product.Device(request.Pin, request.DeviceType, request.IsHigh, request.PlaceId);
             await repo.AddAsync(model);
 
+            await _mediator.Publish(new DeviceNotifications());
 
             return Result.Ok(model.Id);
         }

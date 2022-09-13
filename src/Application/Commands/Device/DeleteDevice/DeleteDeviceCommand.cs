@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.Device.DeleteDevice;
+﻿using iot.Application.Events.ProductNotifications;
+
+namespace iot.Application.Commands.Device.DeleteDevice;
 
 public class DeleteDeviceCommand : IRequest<Result>
 {
@@ -30,6 +32,9 @@ public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, R
             else
             {
                 await repo.DeleteAsync(getDevice);
+
+                await _mediator.Publish(new DeviceNotifications());
+
                 return Result.Ok();
             }
         }

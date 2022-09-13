@@ -33,6 +33,11 @@ public class Sensor
         SensorType = SensorType.FromValue<SensorType>(value);
     }
 
+    public void SetSensorType(SensorType sensorType)
+    {
+        SensorType = sensorType;
+    }
+
     public SensorType GetSensorType()
         => SensorType;
     #endregion

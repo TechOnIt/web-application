@@ -1,4 +1,5 @@
 ﻿using iot.Application.Common.Interfaces;
+using iot.Application.Events.ProductNotifications;
 using iot.Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,9 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, R
                 findDevice.SetDeviceType(request.DeviceType);
 
                 await repo.UpdateAsync(findDevice);
+
+                await _mediator.Publish(new DeviceNotifications());
+
                 return Result.Ok(findDevice.Id);
             }
         }

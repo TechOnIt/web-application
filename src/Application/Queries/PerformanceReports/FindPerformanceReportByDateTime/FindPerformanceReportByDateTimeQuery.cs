@@ -33,7 +33,7 @@ public class FindPerformanceReportByDateTimeQueryHandler : IRequestHandler<FindP
                 .Where(a => a.RecordDateTime > request.MinDate && a.RecordDateTime < request.MaxDate).ToList();
 
             if (getReports is null || getReports.Count() == 0)
-                return Result.Fail($"there was no repoprt between {request.MinDate.ToShortDateString()} and {request.MaxDate.ToShortDateString()}");
+                return Result.Fail($"there was no repoprt between {request.MinDate.ToShortDateString()} and {request.MaxDate}");
 
             var model= getReports.Adapt<IList<PerformanceReportViewModel>>();
             return Result.Ok(model);

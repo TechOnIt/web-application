@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace iot.Domain.Entities.Product;
 
 public class PerformanceReport
@@ -15,7 +14,7 @@ public class PerformanceReport
 
     public PerformanceReport()
     {
-
+        RecordDateTime = DateTime.Now;
     }
     #endregion
 

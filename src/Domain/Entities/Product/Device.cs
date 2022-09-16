@@ -6,9 +6,9 @@ namespace iot.Domain.Entities.Product;
 public class Device
 {
     #region constructure
-    public Device(Guid id,int pin, DeviceType deviceType, bool isHigh, Guid placeId)
+    public Device(int pin, DeviceType deviceType, bool isHigh, Guid placeId)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         Pin = pin;  
         DeviceType = deviceType;    
         IsHigh = isHigh;
@@ -17,16 +17,21 @@ public class Device
 
     public Device()
     {
-
+        Id = Guid.NewGuid();
     }
     #endregion
 
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; }
     public int Pin { get; set; }
     public DeviceType DeviceType { get; private set; }
     public bool IsHigh { get; set; }
 
     #region methods
+
+    public Guid GetDeviceId()
+    {
+        return this.Id;
+    }
 
     public void SetDeviceType(string typeName)
     {
@@ -36,6 +41,11 @@ public class Device
     public void SetDeviceType(int value)
     {
         DeviceType = DeviceType.FromValue<DeviceType>(value);
+    }
+
+    public void SetDeviceType(DeviceType deviceType)
+    {
+        DeviceType = deviceType;
     }
 
     public DeviceType GetDeviceType()

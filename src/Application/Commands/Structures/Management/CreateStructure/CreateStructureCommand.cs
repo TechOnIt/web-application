@@ -1,12 +1,8 @@
 ﻿using iot.Application.Common.Interfaces;
+using iot.Application.Events.ProductNotifications;
 using iot.Domain.Entities.Product;
 using iot.Domain.Enums;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iot.Application.Commands.Structures.Management.CreateStructure;
 
@@ -22,11 +18,13 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
     #region constructure
     private readonly IUnitOfWorks _unitOfWorks;
     private readonly ILogger<CreateStructureCommandHandler> _logger;
+    private readonly IMediator _mediator;
 
-    public CreateStructureCommandHandler(IUnitOfWorks unitOfWorks, ILogger<CreateStructureCommandHandler> logger)
+    public CreateStructureCommandHandler(IUnitOfWorks unitOfWorks, ILogger<CreateStructureCommandHandler> logger, IMediator mediator)
     {
         _unitOfWorks = unitOfWorks;
         _logger = logger;
+        _mediator = mediator;
     }
 
     #endregion
@@ -40,6 +38,7 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
             var structure = new Structure(newId, request.Name, request.Description, DateTime.Now, null, request.Type);
 
             await _unitOfWorks.SqlRepository<Structure>().AddAsync(structure);
+            await _mediator.Publish(new StructureNotifications(), cancellationToken);
             return Result.Ok(structure.ApiKey);
         }
         catch (Exception exp)

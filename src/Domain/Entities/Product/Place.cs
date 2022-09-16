@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iot.Domain.Entities.Product;
 
@@ -25,11 +22,23 @@ public class Place
     }
     #endregion
 
+    #region methods
+    public void SetModifyDate()
+    {
+        this.ModifyDate = DateTime.Now;
+    }
+
+    public DateTime GetModifyDate()
+    {
+        return (DateTime)this.ModifyDate;
+    }
+    #endregion
+
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public DateTime CreateDate { get;private set; }
-    public DateTime? ModifyDate { get; set; }
+    public DateTime? ModifyDate { get; private set; }
 
     #region relations and foreignkeys
     public Guid StuctureId { get; set; }

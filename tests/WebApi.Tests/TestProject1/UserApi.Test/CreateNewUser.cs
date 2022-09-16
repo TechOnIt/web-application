@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using FluentResults;
 using iot.Application.Commands.Users.Management.CreateUser;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,9 +41,10 @@ public class CreateNewUser
 
     public async Task ThenResponseShouldBe200Ok()
     {
-        //_mediator.Setup(i => i.Send(new CreateUserCommand(), It.IsAny<System.Threading.CancellationToken>()))
-                //.Returns(Task.FromResult(FluentResults.Result<Guid>(Guid.NewGuid())));
+        var mockData = new Mock<IMediator>();
 
+        mockData.Setup(x => x.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(FluentResults.Result.Ok() as FluentResults.Result);
 
         var result = (OkObjectResult)await _userController.Create(this._command);
         result.StatusCode.Should().Be(200);

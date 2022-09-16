@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Desk.Api.Controllers.v1;
+namespace iot.Desk.Api.Controllers.v1;
 
 public class StructureController : BaseController
 {

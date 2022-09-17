@@ -1,6 +1,6 @@
 ﻿using iot.Application.Common.Interfaces;
 using iot.Application.Events.ProductNotifications;
-using iot.Domain.Entities.Product;
+using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
 using Microsoft.Extensions.Logging;
 

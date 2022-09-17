@@ -23,7 +23,7 @@ public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, Res
 	#endregion
 	public async Task<Result<Guid>> Handle(DeletePlaceCommand request, CancellationToken cancellationToken)
     {
-		var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Place>();
+		var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.StructureAggregate.Place>();
 
 		try
 		{

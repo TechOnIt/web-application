@@ -1,4 +1,4 @@
-﻿using iot.Domain.Entities.Product;
+﻿using iot.Domain.Entities.Product.StructureAggregate;
 using Mapster;
 using System.Linq.Expressions;
 

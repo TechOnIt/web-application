@@ -1,5 +1,5 @@
 ﻿using iot.Domain.Common;
-using iot.Domain.Entities.Product;
+using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

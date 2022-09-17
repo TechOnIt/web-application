@@ -31,7 +31,7 @@ public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, Res
             if (request.Id == null || request.Id == Guid.Empty)
                 request.Id = Guid.NewGuid();
 
-            await _unitOfWorks.SqlRepository<Domain.Entities.Product.Place>()
+            await _unitOfWorks.SqlRepository<Domain.Entities.Product.StructureAggregate.Place>()
                 .AddAsync(new Domain.Entities.Product.Place(request.Id,request.Name,request.Description,DateTime.Now,DateTime.Now,request.StuctureId));
 
             await _mediator.Publish(new PlaceNotifications());

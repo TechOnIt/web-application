@@ -1,4 +1,4 @@
-﻿using iot.Domain.Entities.Product;
+﻿using iot.Domain.Entities.Product.StructureAggregate;
 using Mapster;
 
 namespace iot.Application.Queries.Structures.FindBy;

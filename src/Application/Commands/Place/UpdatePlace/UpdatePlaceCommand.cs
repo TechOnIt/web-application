@@ -25,7 +25,7 @@ public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, Res
 
     public async Task<Result<Guid>> Handle(UpdatePlaceCommand request, CancellationToken cancellationToken)
     {
-        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Place>();
+        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.StructureAggregate.Place>();
 
         try
         {

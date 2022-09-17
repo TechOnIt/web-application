@@ -1,5 +1,5 @@
 ﻿using iot.Application.Common.Interfaces;
-using iot.Domain.Entities.Product;
+using iot.Domain.Entities.Product.StructureAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,7 @@
 ﻿using iot.Application.Common.Security.JwtBearer;
 using iot.Application.Repositories.SQL;
 using iot.Application.Repositories.SQL.Roles;
+using iot.Application.Repositories.SQL.StructureAggregateRepository;
 using iot.Application.Repositories.SQL.Users;
 using iot.Infrastructure.Persistence.Context.Identity;
 
@@ -50,6 +51,22 @@ public class UnitOfWork : IUnitOfWorks
                 _roleRepository = new RoleRepository(_context);
             }
             return _roleRepository;
+        }
+    }
+    #endregion
+
+    #region StructureRepository
+    private IStructureRepository _structureRepository;
+    public IStructureRepository StructureRepository
+    {
+        get
+        {
+            if(_structureRepository is null)
+            {
+                _structureRepository = new StructureRepository(_context);
+            }
+
+            return _structureRepository;
         }
     }
     #endregion

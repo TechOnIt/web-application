@@ -1,5 +1,5 @@
 ﻿using iot.Domain.Common;
-using iot.Domain.Entities.Product;
+using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;

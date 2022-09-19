@@ -1,10 +1,4 @@
 ﻿using iot.Application.Common.Interfaces;
-using iot.Domain.Entities.Product.StructureAggregate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iot.Application.Commands.Structures.Management.DeleteStructure;
 
@@ -28,10 +22,10 @@ public class DeleteStructureCommandHandler : IRequestHandler<DeleteStructureComm
     {
         try
         {
-            var findStructure = await _unitOfWorks.SqlRepository<Structure>().Table.FirstOrDefaultAsync(a => a.Id == request.StructureId);
+            var findStructure = await _unitOfWorks.StructureRepository.GetStructureByIdAsync(request.StructureId,cancellationToken);
             if (findStructure != null)
             {
-                await _unitOfWorks.SqlRepository<Structure>().DeleteAsync(findStructure,cancellationToken);
+                _unitOfWorks.StructureRepository.DeleteStructure(findStructure);
                 return Result.Ok();
             }
             else

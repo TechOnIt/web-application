@@ -1,14 +1,15 @@
 ﻿using iot.Application.Common.Interfaces;
 using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
+using Mapster;
 
 namespace iot.Application.Commands.Structures.Management.UpdateStructure;
 
 public class UpdateStructureCommand : IRequest<Result> , ICommittableRequest
 {
     public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
     public bool IsActive { get; set; }
     public StuctureType Type { get; set; }
 }
@@ -25,22 +26,15 @@ public class UpdatetructureCommandHandler : IRequestHandler<UpdateStructureComma
 
     public async Task<Result> Handle(UpdateStructureCommand request, CancellationToken cancellationToken)
     {
-        var repo = _unitOfWorks.SqlRepository<Structure>();
-
         try
         {
-            var findStructure = await repo.Table.FirstOrDefaultAsync(a=>a.Id==request.Id);
+            var findStructure = await _unitOfWorks.StructureRepository.GetStructureByIdAsyncAsNoTracking(request.Id,cancellationToken);
             if (findStructure == null)
                 return Result.Fail("Structure not found !");
             else
             {
-                findStructure.Name = request.Name;
-                findStructure.SetStructureType(request.Type);
-                findStructure.Description = request.Description;
-                findStructure.IsActive = request.IsActive;
-                findStructure.ModifyDate = DateTime.Now;
-
-                await repo.UpdateAsync(findStructure);
+                var model = request.Adapt<Structure>();
+                await _unitOfWorks.StructureRepository.UpdateStructureAsync(model,cancellationToken);
                 return Result.Ok();
             }
         }

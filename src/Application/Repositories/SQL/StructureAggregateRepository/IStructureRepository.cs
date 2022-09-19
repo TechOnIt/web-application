@@ -1,10 +1,5 @@
 ﻿using iot.Domain.Entities.Product.StructureAggregate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iot.Application.Repositories.SQL.StructureAggregateRepository;
 
@@ -12,6 +7,7 @@ public interface IStructureRepository
 {
     Task CreateStructureWithPlacesAsync(Structure structure,IList<Place> places,CancellationToken cancellationToken);
     Task CreateStructureAsync(Structure structure, CancellationToken cancellationToken);
+    Task CreatePlaceAsync(Place place,Guid StructureId, CancellationToken cancellationToken);
 
     Task UpdatePlaceAsync(Guid structureId,Place place,CancellationToken cancellationToken);
     Task UpdateStructureAsync(Structure structure, CancellationToken cancellationToken);
@@ -26,6 +22,9 @@ public interface IStructureRepository
     Task<Structure> GetStructureByUserIdAsync(Guid userId, CancellationToken cancellationToken);
     Task<Place> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken);
     Task<Structure> GetStructureByIdAsync(Guid structureId, CancellationToken cancellationToken);
+
+    Task<Place> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken);
+    Task<Structure> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken);
 
     Task<IList<Structure>> GetAllStructuresByFilterAsync(CancellationToken cancellationToken, Expression<Func<Structure, bool>> filter = null);
     Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>> filter = null);

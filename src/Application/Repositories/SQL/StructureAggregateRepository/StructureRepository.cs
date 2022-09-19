@@ -1,11 +1,6 @@
 ﻿using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Infrastructure.Persistence.Context.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace iot.Application.Repositories.SQL.StructureAggregateRepository;
 
@@ -27,6 +22,18 @@ public class StructureRepository : IStructureRepository
         if (places is not null)
         {
             structure.AddRangePlace(places);
+        }
+    }
+
+    public async Task CreatePlaceAsync(Place place,Guid StructureId, CancellationToken cancellationToken)
+    {
+        var getstructure = await _context.Structures
+            .FirstOrDefaultAsync(a=>a.Id == StructureId,cancellationToken);
+
+        if(getstructure is not null)
+        {
+            getstructure.AddPlace(place);
+            _context.Structures.Update(getstructure);
         }
     }
 
@@ -77,17 +84,9 @@ public class StructureRepository : IStructureRepository
             return new List<Structure>();
     }
 
-
     public async Task UpdatePlaceAsync(Guid structureId, Place place,CancellationToken cancellationToken)
     {
-        var getPlace = await _context.Places.FirstOrDefaultAsync(a => a.StuctureId == structureId && a.Id == place.Id, cancellationToken);
-        if(getPlace is not null)
-        {
-            getPlace.Description = place.Description;
-            getPlace.Name = place.Name;
-            getPlace.SetModifyDate();
-            _context.Places.Update(getPlace);
-        }
+        _context.Places.Update(place);
     }
 
     public async Task UpdateStructureAsync(Structure structure, CancellationToken cancellationToken)
@@ -105,8 +104,6 @@ public class StructureRepository : IStructureRepository
             _context.Structures.Update(getStructure);
         }
     }
-
-
 
     public async Task<IList<Structure>> GetAllStructuresByFilterAsync(CancellationToken cancellationToken, Expression<Func<Structure, bool>> filter = null)
     {
@@ -144,4 +141,10 @@ public class StructureRepository : IStructureRepository
 
         return await places.ToListAsync(cancellationToken);
     }
+
+    public async Task<Place> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken)
+        => await _context.Places.AsNoTracking().FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken);
+
+    public async Task<Structure> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken)
+        => await _context.Structures.AsNoTracking().FirstOrDefaultAsync(a=>a.Id==structureId,cancellationToken);
 }

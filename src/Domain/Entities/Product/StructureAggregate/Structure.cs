@@ -82,12 +82,12 @@ public class Structure // this class is aggregate root of Structure aggregate
 
     public void AddPlace(Place place)
     {
-        Places.Add(place);
+        this.Places.Add(place);
     }
 
     public void RemovePlace(Place place)
     {
-        Places.Remove(place);
+        this.Places.Remove(place);
     }
 
     public void SetPlaceModifyDate(Place place)

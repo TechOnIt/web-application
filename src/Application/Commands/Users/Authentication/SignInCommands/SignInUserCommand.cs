@@ -1,10 +1,11 @@
 ﻿using iot.Application.Common.DTOs.Users.Authentication;
-using iot.Application.Common.Interfaces;
+using iot.Application.Common.Security.JwtBearer;
+using MediatR;
 
 namespace iot.Application.Commands.Users.Authentication.SignInCommands;
 
-public sealed class SignInUserCommand : IRequest<Result<AccessToken>>
+public class SignInUserCommand : MediatR.IRequest<Result<AccessToken>>
 {
-    public string Username { get; set; }
-    public string Password { get; set; }
+    public string? Username { get; set; }
+    public string? Password { get; set; }
 }

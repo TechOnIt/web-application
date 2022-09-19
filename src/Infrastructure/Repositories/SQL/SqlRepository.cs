@@ -1,5 +1,6 @@
 ﻿using iot.Application.Common.Extentions;
 using iot.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace iot.Application.Repositories.SQL;

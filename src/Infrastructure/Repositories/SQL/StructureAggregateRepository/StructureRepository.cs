@@ -1,5 +1,6 @@
 ﻿using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Infrastructure.Persistence.Context.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace iot.Application.Repositories.SQL.StructureAggregateRepository;

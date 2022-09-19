@@ -20,8 +20,7 @@ public class StructureViewModel
             Id = viewModel.Id,
             Name = viewModel.Name,
             Description = viewModel.Description,
-            IsActive = viewModel.IsActive,
-            ModifyDate = viewModel.ModifyDate
+            IsActive = viewModel.IsActive
         };
     }
 }

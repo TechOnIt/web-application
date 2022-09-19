@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.DTOs.Users.Authentication;
+﻿using iot.Domain.Entities.Identity;
 using System.Linq.Expressions;
 
 namespace iot.Application.Repositories.SQL.Users;
@@ -15,14 +15,4 @@ public interface IUserRepository
     Task<User?> FindByIdentityWithRolesAsync(string identity, CancellationToken stoppingToken = default);
     Task<IList<User>?> GetAllUsersByFilterAsync(Expression<Func<User, bool>>? filter = null,
         CancellationToken cancellationToken = default);
-
-
-    Task<(string Message, AccessToken Token)> UserSignInByPasswordAsync(string phoneNumber, string password, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Generate access token for authorize.
-    /// </summary>
-    /// <param name="user">User instance with roles.</param>
-    /// <returns>Access token & refresh token with expiration date time.</returns>
-    Task<AccessToken> GenerateAccessToken(User user, CancellationToken stoppingToken = default);
 }

@@ -15,4 +15,6 @@ public interface IUserRepository
     Task<User?> FindByIdentityWithRolesAsync(string identity, CancellationToken stoppingToken = default);
     Task<IList<User>?> GetAllUsersByFilterAsync(Expression<Func<User, bool>>? filter = null,
         CancellationToken cancellationToken = default);
+
+    Task<User?> FindUserByPhoneNumberWithRolesAsyncNoTracking(string phonenumber, CancellationToken cancellationToken);
 }

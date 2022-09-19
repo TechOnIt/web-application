@@ -32,6 +32,14 @@ internal sealed class UserRepository : IUserRepository
         .AsNoTracking()
         .FirstOrDefaultAsync(stoppingToken);
 
+    public async Task<User?> FindUserByPhoneNumberWithRolesAsyncNoTracking(string phonenumber,CancellationToken cancellationToken)
+        => await _context.Users
+        .Where(u => u.PhoneNumber == phonenumber.Trim())
+        .Include(u => u.UserRoles)
+        .ThenInclude(ur => ur.Role)
+        .AsNoTracking()
+        .FirstOrDefaultAsync(cancellationToken);
+
     public async Task<IList<User>?> GetAllUsersByFilterAsync(Expression<Func<User, bool>>? filter = null,
         CancellationToken cancellationToken = default)
     {

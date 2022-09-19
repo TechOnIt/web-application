@@ -44,47 +44,46 @@ public class JwtService : IJwtService
         return tokenHandler.WriteToken(securityToken);
     }
 
-    ///// <summary>
-    ///// Generate access token with Jwt Bearer.
-    ///// </summary>
-    ///// <param name="user">User instance with roles for generate access token.</param>
-    ///// <returns>Access token dto.</returns>
-    //public async Task<AccessToken> GenerateAccessToken(User user, CancellationToken stoppingToken = default)
-    //{
-    //    var accessToken = new AccessToken();
+    /// <summary>
+    /// Generate access token with Jwt Bearer.
+    /// </summary>
+    /// <param name="user">User instance with roles for generate access token.</param>
+    /// <returns>Access token dto.</returns>
+    public async Task<AccessToken> GenerateAccessToken(User user, CancellationToken stoppingToken = default)
+    {
+        var accessToken = new AccessToken();
 
-    //    // Add identity claims.
-    //    var claims = new List<Claim>()
-    //    {
-    //        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-    //    };
+        // Add identity claims.
+        var claims = new List<Claim>()
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        };
 
-    //    #region Refresh Token
-    //    // Refresh token expire date time.
-    //    var refreshTokenExpireAt = DateTime.Now.AddHours(3);
-    //    accessToken.RefreshTokenExpireAt = refreshTokenExpireAt.ToString("yyyy/MM/dd HH:mm:ss");
-    //    // Generate refresh token.
-    //    accessToken.RefreshToken = _jwtService.GenerateTokenWithClaims(claims);
-    //    #endregion
+        #region Refresh Token
+        // Refresh token expire date time.
+        var refreshTokenExpireAt = DateTime.Now.AddHours(3);
+        accessToken.RefreshTokenExpireAt = refreshTokenExpireAt.ToString("yyyy/MM/dd HH:mm:ss");
+        // Generate refresh token.
+        accessToken.RefreshToken = GenerateTokenWithClaims(claims);
+        #endregion
 
-    //    #region Token
-    //    claims.Add(new Claim(ClaimTypes.Name, user.Username));
+        #region Token
+        claims.Add(new Claim(ClaimTypes.Name, user.Username));
 
-    //    // Add roles in claims.
-    //    if (user.UserRoles != null || user.UserRoles?.Count > 0)
-    //        foreach (var userRole in user.UserRoles)
-    //            if (userRole.Role != null)
-    //                claims.Add(new Claim(ClaimTypes.Role, userRole.Role.Name.ToString()));
+        // Add roles in claims.
+        if (user.UserRoles != null || user.UserRoles?.Count > 0)
+            foreach (var userRole in user.UserRoles)
+                if (userRole.Role != null)
+                    claims.Add(new Claim(ClaimTypes.Role, userRole.Role.Name.ToString()));
 
-    //    // Token expire date time.
-    //    var tokenExpiredAt = DateTime.Now.AddMinutes(5);
-    //    accessToken.TokenExpireAt = tokenExpiredAt.ToString("yyyy/MM/dd HH:mm:ss");
-    //    // Generate token.
-    //    accessToken.Token = _jwtService.GenerateTokenWithClaims(claims,
-    //        tokenExpiredAt);
-    //    #endregion
+        // Token expire date time.
+        var tokenExpiredAt = DateTime.Now.AddMinutes(5);
+        accessToken.TokenExpireAt = tokenExpiredAt.ToString("yyyy/MM/dd HH:mm:ss");
+        // Generate token.
+        accessToken.Token = GenerateTokenWithClaims(claims,
+            tokenExpiredAt);
+        #endregion
 
-    //    return accessToken;
-    //}
-
+        return accessToken;
+    }
 }

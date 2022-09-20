@@ -30,6 +30,8 @@ public class IdentityService : IIdentityService
             AccessToken token = await _jwtService.GenerateAccessToken(user, cancellationToken);
             if (token.Token is null)
                 message = "user is not authenticated !";
+            else
+                message = status.message;
 
             return (token, message);
         }

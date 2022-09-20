@@ -40,7 +40,7 @@ public class User : IEntity
         instance.IsBaned = false;
         instance.IsDeleted = false;
         instance.MaxFailCount = 0;
-        return instance; ;
+        return instance; 
     }
 
     public void SetIsDelete(bool value)

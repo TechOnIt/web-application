@@ -7,6 +7,8 @@ using iot.Application.Repositories.SQL.LoginHistories;
 using iot.Application.Repositories.SQL.Roles;
 using iot.Application.Repositories.SQL.Users;
 using iot.Application.Repositories.UnitOfWorks.Identity;
+using iot.Application.Services.Authenticateion;
+using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 using iot.Infrastructure.Common.JwtBearerService;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -63,6 +65,13 @@ public static class ConfigureServices
             // Users.management
             .AddScoped<IValidator<CreateRoleCommand>, CreateRoleCommandValidator>()
             ;
+
+        return services;
+    }
+
+    public static IServiceCollection AuthenticationCustomServices(this IServiceCollection services)
+    {
+        services.AddTransient<IIdentityService, IdentityService>();
 
         return services;
     }

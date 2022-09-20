@@ -9,12 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\**" />
-    <EmbeddedResource Remove="Services\**" />
-    <None Remove="Services\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.9.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />
     <PackageReference Include="Mapster" Version="7.3.0" />
@@ -29,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Extentions\" />
     <Folder Include="Events\IdentityNotifications\" />
   </ItemGroup>
 

@@ -2,7 +2,6 @@
 using iot.Application.Common.Security.JwtBearer;
 using iot.Application.Repositories.UnitOfWorks.Identity;
 using iot.Application.Services.Authenticateion;
-using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 using iot.Domain.Entities.Identity;
 using iot.Domain.ValueObjects;
 using TestStack.BDDfy;

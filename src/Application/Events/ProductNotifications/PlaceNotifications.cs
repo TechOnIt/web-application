@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Events.ProductNotifications;
+﻿using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
+
+namespace iot.Application.Events.ProductNotifications;
 
 public class PlaceNotifications : INotification
 {
@@ -14,6 +16,14 @@ public class PlaceSmsNotificationHandler : INotificationHandler<PlaceNotificatio
 
 public class PlaceEmailNotificationHandler : INotificationHandler<PlaceNotifications>
 {
+    #region constructor
+    private readonly ISmtpEmailService emailService;
+    public PlaceEmailNotificationHandler(ISmtpEmailService emailService)
+    {
+        this.emailService = emailService;
+    }
+
+    #endregion
     public async Task Handle(PlaceNotifications notification, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;

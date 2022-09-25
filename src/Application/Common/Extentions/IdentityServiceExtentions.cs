@@ -1,4 +1,5 @@
 ﻿using iot.Application.Common.Enums.IdentityServiceEnums;
+using iot.Infrastructure.Common.Notifications.Results;
 
 namespace iot.Application.Common.Extentions;
 
@@ -45,6 +46,9 @@ public static class IdentityServiceExtentions
 
         return (SigInStatus.Succeeded,SucceededUserValidations);
     }
+
+    public static bool SendSuccessfully(this SendStatus status)
+        => status == SendStatus.Successeded ? true : false;
 
     public static bool IsSucceeded(this SigInStatus status)
         => status == SigInStatus.Succeeded ? true : false;

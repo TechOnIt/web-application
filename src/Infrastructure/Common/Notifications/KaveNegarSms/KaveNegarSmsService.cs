@@ -5,12 +5,12 @@ namespace iot.Infrastructure.Common.Notifications.KaveNegarSms;
 
 public class KaveNegarSmsService : IKaveNegarSmsService
 {
-    public async Task<(SendStatus Status, string Message)> SendAuthSmsAsync(string to, string apiKey, string code)
+    public async Task<(SendStatus Status, string Message)> SendAuthSmsAsync(string to, string apiKey, string template, string code)
     {
         try
         {
             HttpClient httpClient = new HttpClient();
-            var httpResponse = await httpClient.GetAsync($"https://api.kavenegar.com/v1/{apiKey}/verify/lookup.json?receptor={to}&token={code}&template=AuthVerify");
+            var httpResponse = await httpClient.GetAsync($"https://api.kavenegar.com/v1/{apiKey}/verify/lookup.json?receptor={to}&token={code}&template={template}");
             var contents = await httpResponse.Content.ReadAsStringAsync();
 
             var result = JsonSerializer.Deserialize<KavenegarResult>(contents);

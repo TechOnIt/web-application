@@ -19,6 +19,7 @@ public class User : IEntity
     public bool ConfirmedEmail { get; private set; }
     public string PhoneNumber { get; private set; }
     public bool ConfirmedPhoneNumber { get; private set; }
+    public int OtpCode { get; private set; }
 
     public FullName FullName { get; private set; }
     public DateTime RegisteredDateTime { get; private set; }
@@ -42,32 +43,26 @@ public class User : IEntity
         instance.MaxFailCount = 0;
         return instance; 
     }
-
     public void SetIsDelete(bool value)
     {
         IsDeleted = value;
     }
-
     public void RefreshConcurrencyStamp()
     {
         ConcurrencyStamp = Concurrency.NewToken();
     }
-
     public void SetPassword(PasswordHash password)
     {
         Password = password;
     }
-
     public void SetFullName(FullName fullname)
     {
         FullName = fullname;
     }
-
     public void SetIsBaned(bool isBane)
     {
         IsBaned = isBane;
     }
-
     public void SetEmail(string email)
     {
         if (email.Length < 6)
@@ -107,6 +102,13 @@ public class User : IEntity
     public void IncreaseMaxFailCount()
     {
         MaxFailCount++;
+    }
+    public int GetUserOtp()
+        => this.OtpCode;
+    public int NewOtpCode()
+    {
+        this.OtpCode= new Random().Next(1000, 9000);
+        return this.OtpCode;
     }
     #endregion
 

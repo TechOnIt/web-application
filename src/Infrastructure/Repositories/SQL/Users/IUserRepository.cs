@@ -17,4 +17,7 @@ public interface IUserRepository
         CancellationToken cancellationToken = default);
 
     Task<User?> FindUserByPhoneNumberWithRolesAsyncNoTracking(string phonenumber, CancellationToken cancellationToken);
+    Task<User> CreateNewUser(User user, CancellationToken cancellationToken);
+    Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber);
+    Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber);
 }

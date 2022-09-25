@@ -55,4 +55,22 @@ internal sealed class UserRepository : IUserRepository
             return await _context.Users.AsNoTracking().ToListAsync(cancellationToken);
         }
     }
+
+    public async Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber)
+        => await _context.Users.AsNoTracking().AnyAsync(a => a.PhoneNumber == phonenumber);
+
+    public async Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber)
+    {
+        var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(a=>a.PhoneNumber==phonenumber);
+        return user.Email;
+    }
+
+    public async Task<User> CreateNewUser(User user,CancellationToken cancellationToken)
+    {
+        if(user.ConcurrencyStamp is null)
+            user.RefreshConcurrencyStamp();
+        
+        var newUser= await _context.Users.AddAsync(user);
+        return newUser.Entity;
+    }
 }

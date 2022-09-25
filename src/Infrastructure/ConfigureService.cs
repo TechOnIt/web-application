@@ -1,4 +1,5 @@
-﻿using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
+﻿using iot.Infrastructure.Common.Notifications.KaveNegarSms;
+using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
 using iot.Infrastructure.Persistence.Context.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ public static class ConfigureService
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddTransient<ISmtpEmailService,SmtpEmailService>();
+        services.AddTransient<IKaveNegarSmsService, KaveNegarSmsService>();
 
         return services;
     }

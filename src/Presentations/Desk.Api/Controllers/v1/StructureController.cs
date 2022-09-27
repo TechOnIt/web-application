@@ -1,24 +1,112 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iot.Application.Commands.Structures.Management.CreateStructure;
+using iot.Application.Commands.Structures.Management.DeleteStructure;
+using iot.Application.Commands.Structures.Management.UpdateStructure;
+using iot.Application.Common.Exceptions;
+using iot.Application.Common.Models;
+using iot.Application.Queries.Structures.GetAllByFilter;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace iot.Desk.Api.Controllers.v1;
 
 public class StructureController : BaseController
 {
+    #region constructors
+    private readonly IMediator _mediator;
+    public StructureController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    #endregion
+
     #region Commands
     [HttpPost]
-    public async Task<IActionResult> Create(CancellationToken stoppingToken = default) => Ok();
+    [ValidateAntiForgeryToken]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> Create([FromBody] CreateStructureCommand structure)
+    {
+        if (!User.Identity.IsAuthenticated)
+            return Unauthorized();
+
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var cancellation = new CancellationToken();
+            var result = await _mediator.Send(structure, cancellation);
+            return Ok(result);
+        }
+        catch (Exception exp)
+        {
+            throw new Exception(exp.Message);
+        }
+    }
 
     [HttpPatch]
-    public async Task<IActionResult> Update(CancellationToken stoppingToken = default) => Ok();
+    [ValidateAntiForgeryToken]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> Update([FromBody] UpdateStructureCommand structure)
+    {
+        if (!User.Identity.IsAuthenticated)
+            return Unauthorized();
+
+        try
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var stoppingToken = new CancellationToken();
+            var result = await _mediator.Send(structure, stoppingToken);
+
+            return Ok(result);
+        }
+        catch (Exception exp)
+        {
+            throw new Exception(exp.Message);
+        }
+    }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string id, CancellationToken stoppingToken = default) => Ok();
+    [ValidateAntiForgeryToken]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> Delete(string id)
+    {
+        if (!User.Identity.IsAuthenticated)
+            return Unauthorized();
+
+        try
+        {
+            var cancellOperation = new CancellationToken();
+            var result = await _mediator.Send(new DeleteStructureCommand() { StructureId = Guid.Parse(id) });
+            return Ok(result);
+        }
+        catch (Exception exp)
+        {
+            throw new Exception(exp.Message);
+        }
+    }
     #endregion
 
     #region Queries
+
     [HttpGet]
-    public async Task<IActionResult> GetAll(int page = 1, string keyword = null,
-    CancellationToken stoppingToken = default)
-    => Ok();
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> GetAll()
+    {
+        if (!User.Identity.IsAuthenticated)
+            return Unauthorized();
+
+        try
+        {
+            var result = await _mediator.Send(new GetAllByFilterStructureCommand());
+            return Ok(result);
+        }
+        catch (AppException exp)
+        {
+            throw new AppException(ApiResultStatusCode.ServerError, exp.Message);
+        }
+    }
     #endregion
 }

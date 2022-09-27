@@ -13,6 +13,7 @@ namespace iot.Application.Common.Exceptions
         public HttpStatusCode HttpStatusCode { get; set; }
         public ApiResultStatusCode ApiStatusCode { get; set; }
         public object AdditionalData { get; set; }
+        public StructureException StructureException { get; set; }
 
         public AppException(ApiResultStatusCode statusCode, string message, HttpStatusCode httpStatusCode, Exception exception, object additionalData)
            : base(message, exception)
@@ -89,6 +90,11 @@ namespace iot.Application.Common.Exceptions
 
         public AppException(ApiResultStatusCode statusCode, string message, HttpStatusCode httpStatusCode, Exception exception)
             : this(statusCode, message, httpStatusCode, exception, null)
+        {
+        }
+
+        public AppException(ApiResultStatusCode statusCode, string message,StructureException structureException)
+            : this(statusCode, message, structureException,null)
         {
         }
     }

@@ -36,8 +36,4 @@ public class AuthenticationController : BaseController
     public async Task<IActionResult> SignInOtp([FromBody] SignInWithOtpSmsCommand otpCode)
     => await RunCommandAsyncT(otpCode);
     #endregion
-
-    #region Queries
-
-    #endregion
 }

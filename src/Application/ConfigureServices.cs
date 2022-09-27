@@ -2,6 +2,8 @@
 using iot.Application.Commands.Roles.Management.CreateRole;
 using iot.Application.Common.Behaviors;
 using iot.Application.Common.Exceptions;
+using iot.Application.Reports;
+using iot.Application.Reports.Contracts;
 using iot.Application.Repositories.SQL;
 using iot.Application.Repositories.SQL.LoginHistories;
 using iot.Application.Repositories.SQL.Roles;
@@ -158,6 +160,14 @@ public static class ConfigureServices
 
                 };
             });
+
+        return services;
+    }
+
+    public static IServiceCollection AddReportServices(this IServiceCollection services)
+    {
+        services.AddTransient<IUserReports, UserReports>();
+        services.AddTransient<IStructureAggregateReports, StructureAggregateReports>();
 
         return services;
     }

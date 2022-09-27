@@ -1,4 +1,5 @@
 ﻿using iot.Domain.Entities.Identity;
+using iot.Domain.Entities.Product;
 using iot.Domain.Entities.Product.StructureAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -19,4 +20,7 @@ public interface IIdentityContext : IContext
 
     public DbSet<Structure> Structures { get; set; }
     public DbSet<Place> Places { get; set; }
+    public DbSet<Device> Devices { get; set; }
+    public DbSet<Sensor> Sensors { get; set; }
+    public DbSet<PerformanceReport> PerformanceReports { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using iot.Domain.Entities.Identity;
+using iot.Domain.Entities.Product;
 using iot.Domain.Entities.Product.StructureAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -20,7 +21,11 @@ public class IdentityContext : DbContext, IIdentityContext
     #region products
     public DbSet<Structure> Structures {get;set;}
     public DbSet<Place> Places { get; set; }
+    public DbSet<Device> Devices { get; set; }
+    public DbSet<Sensor> Sensors { get; set; }
+    public DbSet<PerformanceReport> PerformanceReports { get; set; }
     #endregion
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

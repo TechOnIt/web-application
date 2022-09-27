@@ -1,6 +1,5 @@
 ﻿using iot.Domain.Enums;
 using iot.Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;

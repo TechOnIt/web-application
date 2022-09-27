@@ -16,6 +16,8 @@ internal sealed class UserRepository : IUserRepository
     }
     #endregion
 
+    public async Task<User?> FindUserByUserIdAsNoTrackingAsync(Guid userId)
+        => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Id == userId);
     public async Task<User?> FindByUsernameAsync(string username, CancellationToken cancellationToken = default)
         => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Username.ToLower().Trim() == username.ToLower().Trim(), cancellationToken);
 

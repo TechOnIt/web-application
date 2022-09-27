@@ -20,4 +20,5 @@ public interface IUserRepository
     Task<User> CreateNewUser(User user, CancellationToken cancellationToken);
     Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber);
     Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber);
+    Task<User?> FindUserByUserIdAsNoTrackingAsync(Guid userId);
 }

@@ -30,7 +30,7 @@ public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, R
             if (request.Id == null || request.Id == Guid.Empty)
                 request.Id = Guid.NewGuid();
 
-            await _unitOfWorks.SqlRepository<iot.Domain.Entities.Product.Sensor>()
+            await _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>()
                 .AddAsync(new iot.Domain.Entities.Product.Sensor(request.Id,request.SensorType,request.PlaceId));
 
             await _mediator.Publish(new SensorNotifications());

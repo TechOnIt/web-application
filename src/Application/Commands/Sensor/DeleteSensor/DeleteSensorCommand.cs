@@ -25,7 +25,7 @@ public class DeleteSensorCommandHandler : IRequestHandler<DeleteSensorCommand, R
     {
         try
         {
-            var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Sensor>();
+            var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>();
 
             var sesnsor = await repo.Table.FirstOrDefaultAsync(a => a.Id == request.Id);
             if (sesnsor is null)

@@ -1,5 +1,6 @@
 ﻿using iot.Domain.Entities.Identity;
 using iot.Domain.Entities.Product;
+using iot.Domain.Entities.Product.SensorAggregate;
 using iot.Domain.Entities.Product.StructureAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;

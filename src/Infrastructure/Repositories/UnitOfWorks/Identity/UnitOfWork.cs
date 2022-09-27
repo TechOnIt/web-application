@@ -3,6 +3,7 @@ using iot.Application.Repositories.SQL.Roles;
 using iot.Application.Repositories.SQL.StructureAggregateRepository;
 using iot.Application.Repositories.SQL.Users;
 using iot.Infrastructure.Persistence.Context.Identity;
+using iot.Infrastructure.Repositories.SQL.SensorAggregate;
 
 namespace iot.Application.Repositories.UnitOfWorks.Identity;
 
@@ -65,6 +66,20 @@ public class UnitOfWork : IUnitOfWorks
             }
 
             return _structureRepository;
+        }
+    }
+    #endregion
+
+    #region SensorRepository
+    private ISensorRepository _sensorRepository;
+    public ISensorRepository SensorRepository
+    {
+        get
+        {
+            if (_sensorRepository == null)
+                _sensorRepository = new SensorRepository(_context);
+
+            return _sensorRepository;
         }
     }
     #endregion

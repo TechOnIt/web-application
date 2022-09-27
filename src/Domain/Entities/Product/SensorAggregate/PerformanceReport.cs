@@ -1,16 +1,15 @@
 ﻿using System;
 
-namespace iot.Domain.Entities.Product;
+namespace iot.Domain.Entities.Product.SensorAggregate;
 
 public class PerformanceReport
 {
     #region constructure
-
-    public PerformanceReport(Guid id,int value,DateTime recordDateTime)
+    public PerformanceReport(Guid id, int value, DateTime recordDateTime)
     {
-        Id= id;
-        Value= value;
-        RecordDateTime= recordDateTime;
+        Id = id;
+        Value = value;
+        RecordDateTime = recordDateTime;
     }
 
     public PerformanceReport()
@@ -24,7 +23,6 @@ public class PerformanceReport
     public DateTime RecordDateTime { get; set; }
 
     #region relations
-    //public virtual ICollection<Device> Devices { get; set; }
-    
+    public Guid SensorId { get; set; }
     #endregion
 }

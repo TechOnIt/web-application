@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Queries.Sensors.FindBy;
+﻿using iot.Domain.Entities.Product.SensorAggregate;
+
+namespace iot.Application.Queries.Sensors.FindBy;
 
 public class FindSesnsorByIdQuery : IRequest<Result<SensorViewModel>>
 {
@@ -19,7 +21,7 @@ public class FindSesnsorByIdQueryHandler : IRequestHandler<FindSesnsorByIdQuery,
     {
         try
         {
-            var getSensor = await _unitOfWorks.SqlRepository<Domain.Entities.Product.Sensor>()
+            var getSensor = await _unitOfWorks.SqlRepository<Sensor>()
                 .TableNoTracking.FirstOrDefaultAsync(a => a.Id == request.Id);
 
             if (getSensor is null)

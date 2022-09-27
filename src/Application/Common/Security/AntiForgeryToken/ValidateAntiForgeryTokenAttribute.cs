@@ -6,6 +6,8 @@ using IAuthorizationFilter = System.Web.Http.Filters.IAuthorizationFilter;
 
 namespace iot.Application.Common.Security.AntiForgeryToken;
 
+// https://stackoverflow.com/questions/11476883/web-api-and-validateantiforgerytoken
+
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 public sealed class ValidateAntiForgeryTokenAttribute : FilterAttribute, IAuthorizationFilter
 {

@@ -1,4 +1,4 @@
-﻿using iot.Domain.Entities.Product;
+﻿using iot.Domain.Entities.Product.SensorAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

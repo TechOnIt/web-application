@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using iot.Domain.Entities.Product.SensorAggregate;
+using Mapster;
 
 namespace iot.Application.Queries.PerformanceReports.FindPerformanceReportById;
 
@@ -23,7 +24,7 @@ public class FindPerformanceReportByIdCommandHandler : IRequestHandler<FindPerfo
     {
         try
         {
-            var getReport = await _unitOfWorks.SqlRepository<Domain.Entities.Product.PerformanceReport>()
+            var getReport = await _unitOfWorks.SqlRepository<PerformanceReport>()
                 .TableNoTracking.FirstOrDefaultAsync(a => a.Id == request.Id);
 
             if (getReport is null)

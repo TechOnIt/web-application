@@ -1,4 +1,4 @@
-﻿using iot.Domain.Entities.Product;
+﻿using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
 using Shouldly;
 
@@ -15,11 +15,11 @@ public class StructureTests
         var sType = new StuctureType();
 
         // act
-        structure.SetStructureType(StuctureType.Farm);
+        structure.SetStructureType(StuctureType.Home);
 
         // assert
         structure.Type.ShouldNotBeNull();
-        structure.Type.ShouldBe(StuctureType.Farm);
+        structure.Type.ShouldBe(StuctureType.Home);
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public class StructureTests
         // assert
         result.ShouldNotBeNull();
         result.Value.ShouldBe(2);
-        result.ShouldBe(StuctureType.Garden);
+        result.ShouldBe(StuctureType.Home);
     }
 
     [Fact]

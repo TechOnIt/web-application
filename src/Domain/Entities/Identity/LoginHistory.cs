@@ -24,7 +24,6 @@ public class LoginHistory : IEntity
 
     #region Relations
     public Guid UserId { get; private set; }  // Foreign key
-
     public virtual User User { get; private set; }
     #endregion
 }

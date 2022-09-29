@@ -6,7 +6,7 @@ namespace iot.Application.Commands.PerformanceReport.DeletePerformanceReport;
 
 public class DeletePerformanceReportByfilterCommand : IRequest<Result>,ICommittableRequest
 {
-    public Expression<Func<Domain.Entities.Product.PerformanceReport,bool>> Filter { get; set; }
+    public Expression<Func<Domain.Entities.Product.SensorAggregate.PerformanceReport,bool>> Filter { get; set; }
 }
 
 public class DeletePerformanceReportByfilterCommandHandler : IRequestHandler<DeletePerformanceReportByfilterCommand, Result>
@@ -24,7 +24,7 @@ public class DeletePerformanceReportByfilterCommandHandler : IRequestHandler<Del
 
     public async Task<Result> Handle(DeletePerformanceReportByfilterCommand request, CancellationToken cancellationToken)
     {
-        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.PerformanceReport>();
+        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.PerformanceReport>();
 
         try
         {

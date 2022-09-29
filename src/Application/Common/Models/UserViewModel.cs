@@ -7,6 +7,30 @@ namespace iot.Application.Common.Models;
 
 public class UserViewModel
 {
+
+    public UserViewModel()
+    {
+
+    }
+
+    /// <summary>
+    /// constructor for sign up
+    /// </summary>
+    /// <param name="Username"></param>
+    /// <param name="phonenumber"></param>
+    public UserViewModel(string username,string phonenumber,string password)
+    {
+        this.Username = username;
+        this.PhoneNumber = phonenumber;
+        this.Password = PasswordHash.Parse(password);
+        ConfirmedEmail = false;
+        ConfirmedPhoneNumber = false;
+        RegisteredDateTime = DateTime.Now;
+        IsBaned = false;
+        IsDeleted = false;
+        MaxFailCount = 3;
+    }
+
     public Guid Id { get; set; } = Guid.NewGuid();
     public string? Username { get; private set; }
     public string? Name { get; set; }

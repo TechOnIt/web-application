@@ -6,6 +6,7 @@ namespace iot.Application.Commands.Place.DeletePlace;
 public class DeletePlaceCommand : IRequest<Result<Guid>>,ICommittableRequest
 {
     public Guid Id { get; set; }
+	public Guid StructureId { get; set; }
 }
 
 public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, Result<Guid>>
@@ -21,17 +22,17 @@ public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, Res
 	}
 
 	#endregion
+
 	public async Task<Result<Guid>> Handle(DeletePlaceCommand request, CancellationToken cancellationToken)
     {
-		var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Place>();
-
 		try
 		{
-			var place = await repo.Table.FirstOrDefaultAsync(a => a.Id == request.Id);
+			var place = await _unitOfWorks.StructureRepository.GetPlaceByIdAsync(request.Id,cancellationToken);
 			if (place is null)
 				return Result.Fail($"can not find place with id : {request.Id}");
 
-			await repo.DeleteAsync(place);
+			await _unitOfWorks.StructureRepository.DeletePlaceAsync(request.StructureId,place,cancellationToken);
+
 			await _mediator.Publish(new PlaceNotifications());
 			return Result.Ok(request.Id);
 		}

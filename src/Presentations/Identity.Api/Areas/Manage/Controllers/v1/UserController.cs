@@ -1,4 +1,6 @@
-﻿namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
+﻿using iot.Application.Queries.Users.GetAllUsers;
+
+namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
 [Area("Manage"), Route("[area]/v1/[controller]/[action]")]
 public class UserController : BaseController
@@ -13,37 +15,52 @@ public class UserController : BaseController
 
     #region Commands
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
     => await RunCommandAsync(command);
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Update([FromBody] UpdateUserCommand command)
         => await RunCommandAsync(command);
 
 
     [HttpPatch]
-    public async Task<IActionResult> SetPassword([FromBody] SetUserPasswordCommand command)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> SetPassword([FromBody] SetUserPasswordCommand command)
         => await RunCommandAsync(command);
 
     [HttpPatch("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Ban([FromRoute] string id)
         => await RunCommandAsync(new BanUserCommand() { Id = id });
 
     [HttpPatch("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> UnBan([FromRoute] string id)
         => await RunCommandAsync(new UnBanUserCommand() { Id = id });
 
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> RemoveAccount([FromRoute] string id)
         => await RunCommandAsync(new RemoveUserAccountCommand() { Id = id });
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> ForceDelete([FromRoute] string id)
         => await RunCommandAsync(new ForceDeleteUserCommand() { Id = id });
     #endregion
 
     #region Queries
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetUsers([FromQuery] string? phoneNumber,string? email)
+    {
+        var filters = new GetUsersCommand() {PhoneNumber=phoneNumber,Email= email };
+        return await RunCommandAsyncT(filters);
+    }
 
     #endregion
 }

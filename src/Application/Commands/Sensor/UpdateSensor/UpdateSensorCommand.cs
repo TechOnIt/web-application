@@ -27,7 +27,7 @@ public class UpdateSensorCommandHandler : IRequestHandler<UpdateSensorCommand, R
 
     public async Task<Result<Guid>> Handle(UpdateSensorCommand request, CancellationToken cancellationToken)
     {
-        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Sensor>();
+        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>();
         try
         {
             var sesnor = await repo.Table.FirstOrDefaultAsync(a=>a.Id==request.Id);

@@ -1,4 +1,4 @@
-﻿using iot.Domain.Entities.Product;
+﻿using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
 namespace iot.Application.Common.Models;
 
@@ -20,8 +20,7 @@ public class StructureViewModel
             Id = viewModel.Id,
             Name = viewModel.Name,
             Description = viewModel.Description,
-            IsActive = viewModel.IsActive,
-            ModifyDate = viewModel.ModifyDate
+            IsActive = viewModel.IsActive
         };
     }
 }

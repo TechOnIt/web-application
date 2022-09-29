@@ -8,6 +8,11 @@ namespace iot.Domain.ValueObjects;
 
 public class PasswordHash : ValueObject
 {
+    public PasswordHash()
+    {
+
+    }
+
     // Minimum password character length.
     private static int _minimumLength = 6;
     // Maximum password character length.
@@ -61,7 +66,17 @@ public class PasswordHash : ValueObject
     #endregion
 
     #region Operators
-    public static bool operator ==(PasswordHash left, PasswordHash right) => left.Value == right.Value;
+    //public static bool operator ==(PasswordHash left, PasswordHash right) => left.Value == right.Value;
+    public static bool operator ==(PasswordHash left, PasswordHash right)
+    {
+        //https://stackoverflow.com/questions/4219261/overriding-operator-how-to-compare-to-null
+        if (left is null)
+        {
+            return right is null;
+        }
+
+        return left.Equals(right);
+    }
     public static bool operator !=(PasswordHash left, PasswordHash right) => left.Value != right.Value;
     #endregion
 }

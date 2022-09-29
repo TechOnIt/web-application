@@ -1,4 +1,4 @@
-﻿using iot.Domain.Entities.Product;
+﻿using iot.Domain.Entities.Product.SensorAggregate;
 using Shouldly;
 
 namespace iot.Domain.UnitTests.Entities;

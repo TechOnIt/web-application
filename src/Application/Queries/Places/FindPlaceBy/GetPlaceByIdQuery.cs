@@ -1,4 +1,5 @@
-﻿using Mapster;
+﻿using iot.Domain.Entities.Product.StructureAggregate;
+using Mapster;
 
 namespace iot.Application.Queries.Places.FindPlaceBy;
 
@@ -21,7 +22,7 @@ public class GetPlaceByIdQueryHandler : IRequestHandler<GetPlaceByIdQuery, Resul
     {
         try
         {
-            var getPlace = await _unitOfWorks.SqlRepository<Domain.Entities.Product.Place>()
+            var getPlace = await _unitOfWorks.SqlRepository<Place>()
                 .TableNoTracking.FirstOrDefaultAsync(a => a.Id == request.Id);
 
             if (getPlace is null)

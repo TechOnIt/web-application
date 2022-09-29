@@ -1,6 +1,9 @@
 using AspNetCoreRateLimit;
 using iot.Application;
+using iot.Application.Common.DTOs.Settings;
 using iot.Infrastructure;
+using Microsoft.AspNetCore.Builder;
+using System.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +14,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-ConfigureServices(builder.Services);
+builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
+builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
 
-//builder.Services.AddCustomAuthenticationServices(builder.Configuration, );
+ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
@@ -41,17 +45,12 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-
 await app.RunAsync();
 
 void ConfigureServices(IServiceCollection services) // clean code 
 {
-    // Infrastructure & Database.
-    services.AddIdentityDbContextServices(builder.Configuration);
-    // Logics
-
+    services.AddInfrastructureServices();
     services.AddApplicationServices();
-    services.AddMediatRServices();
 
     //Register CommandeHandlers
     services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
@@ -100,4 +99,4 @@ void ConfigureServices(IServiceCollection services) // clean code
     #endregion
 }
 
-public static partial class Program { }
+public static partial class Program {}

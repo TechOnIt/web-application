@@ -1,4 +1,5 @@
-﻿using iot.Infrastructure.Common.JwtBearerService;
+﻿using iot.Application.Common.DTOs.Users.Authentication;
+using iot.Infrastructure.Common.JwtBearerService;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace iot.Application.Common.Security.JwtBearer;
 
-public class JwtService : IJwtService
+public class JwtService : IJwtService,IDisposable
 {
     /// <summary>
     /// Generate JWT Token with claims.
@@ -41,5 +42,69 @@ public class JwtService : IJwtService
         var tokenHandler = new JwtSecurityTokenHandler();
         var securityToken = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(securityToken);
+    }
+
+    /// <summary>
+    /// Generate access token with Jwt Bearer.
+    /// </summary>
+    /// <param name="user">User instance with roles for generate access token.</param>
+    /// <returns>Access token dto.</returns>
+    public async Task<AccessToken> GenerateAccessToken(User user, CancellationToken stoppingToken = default)
+    {
+        var accessToken = new AccessToken();
+
+        // Add identity claims.
+        var claims = new List<Claim>()
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        };
+
+        #region Refresh Token
+        // Refresh token expire date time.
+        var refreshTokenExpireAt = DateTime.Now.AddHours(3);
+        accessToken.RefreshTokenExpireAt = refreshTokenExpireAt.ToString("yyyy/MM/dd HH:mm:ss");
+        // Generate refresh token.
+        accessToken.RefreshToken = GenerateTokenWithClaims(claims);
+        #endregion
+
+        #region Token
+        claims.Add(new Claim(ClaimTypes.Name, user.Username));
+
+        // Add roles in claims.
+        if (user.UserRoles != null || user.UserRoles?.Count > 0)
+            foreach (var userRole in user.UserRoles)
+                if (userRole.Role != null)
+                    claims.Add(new Claim(ClaimTypes.Role, userRole.Role.Name.ToString()));
+
+        // Token expire date time.
+        var tokenExpiredAt = DateTime.Now.AddMinutes(5);
+        accessToken.TokenExpireAt = tokenExpiredAt.ToString("yyyy/MM/dd HH:mm:ss");
+        // Generate token.
+        accessToken.Token = GenerateTokenWithClaims(claims,
+            tokenExpiredAt);
+        #endregion
+
+        return accessToken;
+    }
+
+    bool disposed;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing)
+            {
+                //dispose managed resources
+            }
+        }
+        //dispose unmanaged resources
+        disposed = true;
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }

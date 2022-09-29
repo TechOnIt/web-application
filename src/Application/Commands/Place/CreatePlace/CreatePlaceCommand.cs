@@ -6,8 +6,8 @@ namespace iot.Application.Commands.Place.CreatePlace;
 public class CreatePlaceCommand : IRequest<Result<Guid>>,ICommittableRequest
 {
     public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
     public Guid StuctureId { get; set; }
 }
 
@@ -28,14 +28,15 @@ public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, Res
     {
         try
         {
-            if (request.Id == null || request.Id == Guid.Empty)
+            if (request.Id == Guid.Empty)
                 request.Id = Guid.NewGuid();
 
-            await _unitOfWorks.SqlRepository<Domain.Entities.Product.Place>()
-                .AddAsync(new Domain.Entities.Product.Place(request.Id,request.Name,request.Description,DateTime.Now,DateTime.Now,request.StuctureId));
+            var newPlace = new Domain.Entities.Product.StructureAggregate
+                .Place(request.Id, request.Name, request.Description, DateTime.Now, DateTime.Now, request.StuctureId);
+
+            await _unitOfWorks.StructureRepository.CreatePlaceAsync(newPlace,request.StuctureId,cancellationToken);
 
             await _mediator.Publish(new PlaceNotifications());
-
             return Result.Ok(request.Id);
         }
         catch (Exception exp)

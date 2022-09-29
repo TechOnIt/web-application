@@ -1,5 +1,6 @@
-﻿using iot.Infrastructure.Persistence.Context.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using iot.Infrastructure.Common.Notifications.KaveNegarSms;
+using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
+using iot.Infrastructure.Persistence.Context.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,19 +8,11 @@ namespace iot.Infrastructure;
 
 public static class ConfigureService
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        return services;
-    }
-
-    public static IServiceCollection AddIdentityDbContextServices(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddScoped<IIdentityContext, IdentityContext>();
-        string cs = configuration.GetConnectionString("Development");
-        services.AddDbContext<IdentityContext>(o =>
-        {
-            o.UseSqlServer(cs);
-        });
+        services.AddTransient<IdentityContext>();
+        services.AddTransient<ISmtpEmailService,SmtpEmailService>();
+        services.AddTransient<IKaveNegarSmsService, KaveNegarSmsService>();
 
         return services;
     }

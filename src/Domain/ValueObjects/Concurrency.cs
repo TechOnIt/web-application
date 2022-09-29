@@ -7,6 +7,11 @@ namespace iot.Domain.ValueObjects;
 
 public class Concurrency : ValueObject
 {
+    public Concurrency()
+    {
+
+    }
+
     private const string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789qwertyuiopasdfghjklzxcvbnm";
 
     // all value objcets must be immutable
@@ -36,8 +41,18 @@ public class Concurrency : ValueObject
     }
 
     #region Operator's
-    public static bool operator ==(Concurrency c1, Concurrency c2) => c1.Value == c2.Value;
-    public static bool operator !=(Concurrency c1, Concurrency c2) => c1.Value != c2.Value;
+    //public static bool operator ==(Concurrency left, Concurrency right) => left.Value == right.Value;
+    public static bool operator ==(Concurrency left, Concurrency right)
+    {
+        if (left is null)
+        {
+            return right is null;
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(Concurrency left, Concurrency right) => left.Value != right.Value;
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;

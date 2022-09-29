@@ -1,6 +1,6 @@
 ﻿using iot.Application.Common.Interfaces;
 using iot.Application.Events.ProductNotifications;
-using iot.Domain.Entities.Product;
+using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
 using Microsoft.Extensions.Logging;
 
@@ -36,8 +36,8 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
         {
             var newId = Guid.NewGuid();
             var structure = new Structure(newId, request.Name, request.Description, DateTime.Now, null, request.Type);
-
-            await _unitOfWorks.SqlRepository<Structure>().AddAsync(structure);
+            
+            await _unitOfWorks.StructureRepository.CreateStructureAsync(structure,cancellationToken);
             await _mediator.Publish(new StructureNotifications(), cancellationToken);
             return Result.Ok(structure.ApiKey);
         }

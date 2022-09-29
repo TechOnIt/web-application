@@ -6,8 +6,8 @@ namespace iot.Application.Commands.Place.UpdatePlace;
 public class UpdatePlaceCommand : IRequest<Result<Guid>>,ICommittableRequest
 {
     public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
     public Guid StuctureId { get; set; }
 }
 
@@ -25,11 +25,9 @@ public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, Res
 
     public async Task<Result<Guid>> Handle(UpdatePlaceCommand request, CancellationToken cancellationToken)
     {
-        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Place>();
-
         try
         {
-            var getPlace = await repo.Table.FirstOrDefaultAsync(a => a.Id == request.Id);
+            var getPlace = await _unitOfWorks.StructureRepository.GetPlaceByIdAsync(request.Id,cancellationToken);
             if (getPlace is null)
                 return Result.Fail($"can not find place with id : {request.Id}");
 
@@ -38,7 +36,8 @@ public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, Res
             getPlace.Description = request.Description;
             getPlace.SetModifyDate();
 
-            await repo.UpdateAsync(getPlace);
+            await _unitOfWorks.StructureRepository.UpdatePlaceAsync(request.StuctureId,getPlace,cancellationToken);
+
             await _mediator.Publish(new PlaceNotifications());
             return Result.Ok(request.Id);
         }

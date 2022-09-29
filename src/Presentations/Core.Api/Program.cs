@@ -1,3 +1,8 @@
+using iot.Application.Commands;
+using iot.Application.Queries;
+using MediatR;
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Infrastructure & Database.
@@ -6,6 +11,12 @@ builder.Services.AddIdentityDbContextServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 
 // Add services to the container.
+//Register CommandeHandlers
+builder.Services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
+
+//Register QueryHandlers
+builder.Services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

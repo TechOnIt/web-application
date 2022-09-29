@@ -8,9 +8,9 @@ namespace iot.Application.Repositories.SQL.Users;
 internal sealed class UserRepository : IUserRepository
 {
     #region Constructor
-    private readonly IIdentityContext _context;
+    private readonly IdentityContext _context;
 
-    public UserRepository(IIdentityContext context)
+    public UserRepository(IdentityContext context)
     {
         _context = context;
     }

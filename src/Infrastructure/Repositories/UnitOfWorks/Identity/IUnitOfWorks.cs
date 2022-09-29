@@ -11,7 +11,7 @@ public interface IUnitOfWorks
 {
     Task SaveAsync(CancellationToken stoppingToken = default);
     ISqlRepository<TEntity> SqlRepository<TEntity>() where TEntity : class;
-    IIdentityContext _context { get; }
+    IdentityContext _context { get; }
 
     IStructureRepository StructureRepository { get; }
     IUserRepository UserRepository { get; }

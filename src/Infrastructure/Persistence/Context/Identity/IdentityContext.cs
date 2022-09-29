@@ -3,11 +3,12 @@ using iot.Domain.Entities.Product;
 using iot.Domain.Entities.Product.SensorAggregate;
 using iot.Domain.Entities.Product.StructureAggregate;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 namespace iot.Infrastructure.Persistence.Context.Identity;
 
-public class IdentityContext : DbContext, IIdentityContext
+public class IdentityContext : DbContext
 {
     public IdentityContext(DbContextOptions<IdentityContext> options)
         : base(options) { }
@@ -31,5 +32,14 @@ public class IdentityContext : DbContext, IIdentityContext
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("Development"));
     }
 }

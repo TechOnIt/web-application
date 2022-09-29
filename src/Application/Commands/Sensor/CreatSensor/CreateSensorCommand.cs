@@ -31,7 +31,7 @@ public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, R
                 request.Id = Guid.NewGuid();
 
             await _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>()
-                .AddAsync(new iot.Domain.Entities.Product.Sensor(request.Id,request.SensorType,request.PlaceId));
+                .AddAsync(new iot.Domain.Entities.Product.SensorAggregate.Sensor(request.Id,request.SensorType,request.PlaceId));
 
             await _mediator.Publish(new SensorNotifications());
 

@@ -1,6 +1,5 @@
 using AspNetCoreRateLimit;
 using iot.Application;
-using iot.Infrastructure;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,10 +45,6 @@ await app.RunAsync();
 
 void ConfigureServices(IServiceCollection services) // clean code 
 {
-    // Infrastructure & Database.
-    services.AddIdentityDbContextServices(builder.Configuration);
-    // Logics
-
     services.AddApplicationServices();
     services.AddMediatRServices();
 

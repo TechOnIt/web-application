@@ -5,8 +5,8 @@ namespace iot.Application.Repositories.SQL.LoginHistories;
 public sealed class LoginHistoryRepository : ILoginHistoryRepository
 {
     #region DI & Ctor
-    private readonly IIdentityContext _context;
-    public LoginHistoryRepository(IIdentityContext context)
+    private readonly IdentityContext _context;
+    public LoginHistoryRepository(IdentityContext context)
     {
         _context = context;
     }

@@ -10,9 +10,9 @@ namespace iot.Application.Repositories.UnitOfWorks.Identity;
 public class UnitOfWork : IUnitOfWorks
 {
     #region constructor
-    public IIdentityContext _context { get; }
+    public IdentityContext _context { get; }
 
-    public UnitOfWork(IIdentityContext context)
+    public UnitOfWork(IdentityContext context)
     {
         _context = context;
     }
@@ -21,7 +21,7 @@ public class UnitOfWork : IUnitOfWorks
     #region sql_Generic_Repository
     public ISqlRepository<TEntity> SqlRepository<TEntity>() where TEntity : class
     {
-        ISqlRepository<TEntity> repository = new SqlRepository<TEntity, IIdentityContext>(_context);
+        ISqlRepository<TEntity> repository = new SqlRepository<TEntity, IdentityContext>(_context);
         return repository;
     }
     #endregion

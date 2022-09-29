@@ -5,8 +5,8 @@ namespace iot.Application.Repositories.SQL.Roles;
 public sealed class RoleRepository : IRoleRepository
 {
     #region DI & Ctor's
-    private readonly IIdentityContext _context;
-    public RoleRepository(IIdentityContext context)
+    private readonly IdentityContext _context;
+    public RoleRepository(IdentityContext context)
     {
         _context = context;
     }

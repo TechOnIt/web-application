@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 namespace iot.Application.Repositories.SQL;
 
 public class SqlRepository<TEntity, TContext> : ISqlRepository<TEntity>
-        where TEntity : class where TContext : IContext
+        where TEntity : class where TContext : DbContext
 {
     #region DI & Ctor
     protected readonly TContext _context;

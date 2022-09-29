@@ -30,7 +30,7 @@ public class AuthenticationServiceTest
     }
 
     private IdentityService Subject()
-        => new IdentityService(_unitOfWorks.Object, _jwtService.Object);
+        => new IdentityService(_unitOfWorks.Object, _jwtService.Object,null);
     #endregion
 
     #region model

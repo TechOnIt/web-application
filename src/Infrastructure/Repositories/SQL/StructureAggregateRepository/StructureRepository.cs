@@ -8,8 +8,8 @@ namespace iot.Application.Repositories.SQL.StructureAggregateRepository;
 public class StructureRepository : IStructureRepository
 {
     #region constructor
-    private readonly IIdentityContext _context;
-    public StructureRepository(IIdentityContext context)
+    private readonly IdentityContext _context;
+    public StructureRepository(IdentityContext context)
     {
         _context = context;
     }

@@ -115,5 +115,6 @@ public class User : IEntity
     #region relations
     public virtual ICollection<UserRole> UserRoles { get; set; }
     public virtual ICollection<Structure> Structures { get; set; }
+    public virtual ICollection<LoginHistory> LoginHistories { get; set; }
     #endregion
 }

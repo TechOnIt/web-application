@@ -14,15 +14,22 @@ public class PerformanceReport
 
     public PerformanceReport()
     {
-        RecordDateTime = DateTime.Now;
+
     }
     #endregion
 
     public Guid Id { get; set; }
     public int Value { get; set; }
-    public DateTime RecordDateTime { get; set; }
+
+    private DateTime? _RecordDateTime;
+    public DateTime RecordDateTime 
+    {
+        get { return _RecordDateTime??DateTime.Now; }
+        set { _RecordDateTime = value; } 
+    }
 
     #region relations
     public Guid SensorId { get; set; }
+    public Sensor Sensor { get; set; }
     #endregion
 }

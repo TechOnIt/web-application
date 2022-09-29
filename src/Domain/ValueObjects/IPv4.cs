@@ -9,25 +9,48 @@ public class IPv4 : ValueObject
 
     public IPv4(byte firstOct, byte secondOct, byte thirdOct, byte fourthOct)
     {
-        FirstOct  = firstOct;
+        FirstOct = firstOct;
         SecondOct = secondOct;
-        ThirdOct  = thirdOct;
+        ThirdOct = thirdOct;
         FourthOct = fourthOct;
     }
 
     public IPv4()
     {
-        FirstOct= 0;
-        SecondOct= 0;
-        ThirdOct= 0;
-        FourthOct = 0;
     }
     #endregion
 
-    public byte FirstOct { get; private set; }
-    public byte SecondOct { get; private set; } 
-    public byte ThirdOct { get; private set; } 
-    public byte FourthOct { get; private set; } 
+    private byte? _FirstOct;
+    private byte? _SecondOct;
+    private byte? _ThirdOct;
+    private byte? _FourthOct;
+
+    public byte FirstOct
+    {
+        get { return _FirstOct ?? 0; }
+        private set { _FirstOct = value; }
+    }
+
+    public byte SecondOct
+    {
+        get { return _SecondOct ?? 0; }
+        private set { _SecondOct = value; }
+    }
+
+    public byte ThirdOct
+    {
+        get { return _ThirdOct ?? 0; }
+        private set { _ThirdOct = value; }
+    }
+
+    public byte FourthOct
+    {
+        get { return _FourthOct ?? 0; }
+        private set
+        {
+            _FourthOct = value;
+        }
+    }
 
     #region Methods
     public static IPv4 Parse(string address)

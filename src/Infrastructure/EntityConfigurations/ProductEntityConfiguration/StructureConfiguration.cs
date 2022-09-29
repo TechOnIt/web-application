@@ -3,9 +3,8 @@ using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
-namespace iot.Domain.EntityConfigurations.ProductEntityConfiguration;
+namespace iot.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 
 public class StructureConfiguration : IEntityTypeConfiguration<Structure>
 {

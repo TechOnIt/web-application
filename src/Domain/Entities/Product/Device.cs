@@ -1,4 +1,5 @@
-﻿using iot.Domain.Enums;
+﻿using iot.Domain.Entities.Product.StructureAggregate;
+using iot.Domain.Enums;
 using System;
 
 namespace iot.Domain.Entities.Product;
@@ -17,11 +18,17 @@ public class Device
 
     public Device()
     {
-        Id = Guid.NewGuid();
     }
     #endregion
 
-    public Guid Id { get; private set; }
+    private Guid? _Id;
+    public Guid Id 
+    {
+        get { return _Id ?? Guid.NewGuid(); }
+        private set { _Id = value; }
+    }
+
+
     public int Pin { get; set; }
     public DeviceType DeviceType { get; private set; }
     public bool IsHigh { get; set; }
@@ -54,5 +61,6 @@ public class Device
 
     #region relations & foreignkeys
     public Guid PlaceId { get; set; }
+    public Place Place { get; set; }
     #endregion
 }

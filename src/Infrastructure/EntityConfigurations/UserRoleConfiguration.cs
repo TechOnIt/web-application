@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace iot.Domain.EntityConfigurations
+namespace iot.Infrastructure.EntityConfigurations
 {
     public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
     {

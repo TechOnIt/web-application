@@ -24,7 +24,6 @@ public class Structure // this class is aggregate root of Structure aggregate
 
     public Structure()
     {
-        CreateDate = DateTime.Now;
     }
     #endregion
 
@@ -34,7 +33,14 @@ public class Structure // this class is aggregate root of Structure aggregate
     public bool IsActive { get; set; }
     public StuctureType Type { get; private set; }
     public Concurrency ApiKey { get; private set; }
-    public DateTime CreateDate { get; private set; }
+
+    private DateTime? _CreateDate;
+    public DateTime CreateDate
+    {
+        get { return _CreateDate??DateTime.Now; }
+        private set { _CreateDate = value; }
+    }
+
     public DateTime? ModifyDate { get;private set; }
 
     #region immutable options

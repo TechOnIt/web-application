@@ -4,7 +4,7 @@ using iot.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace iot.Domain.EntityConfigurations.ProductEntityConfiguration;
+namespace iot.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 
 public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
 {
@@ -14,7 +14,7 @@ public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
         builder.Property(a => a.SensorType).IsRequired();
 
         builder.HasMany(a => a.Reports)
-            .WithOne("Sensor") // shadow property made by entityframwork
+            .WithOne(a=>a.Sensor) 
             .HasForeignKey(a => a.SensorId);
 
         builder

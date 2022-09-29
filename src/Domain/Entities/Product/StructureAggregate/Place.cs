@@ -18,7 +18,6 @@ public class Place
 
     public Place()
     {
-        CreateDate = DateTime.Now;
     }
     #endregion
 
@@ -37,7 +36,16 @@ public class Place
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public DateTime CreateDate { get; private set; }
+
+
+    private DateTime? _CreateDate;
+    public DateTime CreateDate 
+    {
+        get { return _CreateDate ?? DateTime.Now; }
+        private set { _CreateDate = value; }
+    }
+
+
     public DateTime? ModifyDate { get; private set; }
 
     #region relations and foreignkeys

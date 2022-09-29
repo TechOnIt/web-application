@@ -1,9 +1,8 @@
 ﻿using iot.Domain.Entities.Product.SensorAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
-namespace iot.Domain.EntityConfigurations.ProductEntityConfiguration;
+namespace iot.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 
 public class PerformanceReportConfiguration : IEntityTypeConfiguration<PerformanceReport>
 {

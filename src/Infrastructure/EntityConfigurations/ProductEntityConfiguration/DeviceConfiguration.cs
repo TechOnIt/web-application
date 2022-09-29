@@ -3,9 +3,8 @@ using iot.Domain.Entities.Product;
 using iot.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
-namespace iot.Domain.EntityConfigurations.ProductEntityConfiguration;
+namespace iot.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 
 public class DeviceConfiguration : IEntityTypeConfiguration<Device>
 {
@@ -13,9 +12,9 @@ public class DeviceConfiguration : IEntityTypeConfiguration<Device>
     {
         builder.HasKey(a => a.Id);
 
-        builder.HasOne("Place") // shadow property
-            .WithMany("Devices")
-            .HasForeignKey("PlaceId");
+        builder.HasOne(a=>a.Place) // shadow property
+            .WithMany(a=>a.Devices)
+            .HasForeignKey(a=>a.PlaceId);
 
         builder.Property(a => a.Pin).IsRequired();
 

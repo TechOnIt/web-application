@@ -1,6 +1,6 @@
 ﻿using iot.Application.Common.Security.JwtBearer;
 using iot.Application.Common.ViewModels.Structures.Authentication;
-using iot.Domain.Entities.Product;
+using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Infrastructure.Persistence.Context.Identity;
 using System.Security.Claims;
 
@@ -9,10 +9,10 @@ namespace iot.Application.Repositories.SQL.Structures;
 internal sealed class StructureRepository : IStructureRepository
 {
     #region DI & Ctor
-    private readonly IIdentityContext _context;
+    private readonly IdentityContext _context;
     private readonly IJwtService _jwtService;
 
-    public StructureRepository(IIdentityContext context, IJwtService jwtService)
+    public StructureRepository(IdentityContext context, IJwtService jwtService)
     {
         _context = context;
         _jwtService = jwtService;

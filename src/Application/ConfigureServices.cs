@@ -16,9 +16,12 @@ using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 using iot.Infrastructure.Common.JwtBearerService;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Security.Claims;
@@ -44,12 +47,28 @@ public static class ConfigureServices
         // Add cache service.
         services.AddDistributedMemoryCache();
 
+        services.AddCustomAuthenticationServices();
+        services.AddReportServices();
+        services.AuthenticationCustomServices();
+
+        //services.ConfigureWritable<SiteSettings>(Configuration.GetSection("SiteSettings"));
+        //services.TryAddTransient(typeof(IAppSettingsService<>), typeof(AppSettingsService<>));
+
         return services;
     }
 
-    public static IServiceCollection AddMediatRServices(this IServiceCollection services)
+    public static void ConfigureWritable<T>(
+            this IServiceCollection services,
+            IConfigurationSection section,
+            string file = "appsettings.json") where T : class, new()
     {
-        return services;
+        services.AddTransient<IAppSettingsService<T>>(provider =>
+        {
+            var configuration = (IConfigurationRoot)provider.GetService<IConfiguration>();
+            var environment = provider.GetService<IWebHostEnvironment>();
+            var options = provider.GetService<IOptionsMonitor<T>>();
+            return new AppSettingsService<T>(environment, options, configuration, section.Key, file);
+        });
     }
 
     public static IServiceCollection AddFluentValidationServices(this IServiceCollection services)
@@ -76,13 +95,15 @@ public static class ConfigureServices
 
     public static IServiceCollection AuthenticationCustomServices(this IServiceCollection services)
     {
-        services.AddTransient<IIdentityService, IdentityService>();
+        services.TryAddTransient<IIdentityService, IdentityService>();
 
         return services;
     }
 
-    public static IServiceCollection AddCustomAuthenticationServices(this IServiceCollection services, JwtSettings jwtSettings)
+    public static IServiceCollection AddCustomAuthenticationServices(this IServiceCollection services)
     {
+        var jwtSettings = new JwtSettings();
+
         services
             .AddAuthentication(options =>
             {

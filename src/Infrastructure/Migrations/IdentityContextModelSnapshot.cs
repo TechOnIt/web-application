@@ -303,6 +303,12 @@ namespace iot.Infrastructure.Migrations
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
 
+                            b1.Property<string>("Name")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Surname")
+                                .HasColumnType("nvarchar(max)");
+
                             b1.HasKey("UserId");
 
                             b1.ToTable("Users");

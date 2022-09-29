@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace iot.Infrastructure.Migrations
 {
-    public partial class First_Build : Migration
+    public partial class First_Migratin_Build : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,6 +47,8 @@ namespace iot.Infrastructure.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConfirmedPhoneNumber = table.Column<bool>(type: "bit", nullable: false),
                     OtpCode = table.Column<int>(type: "int", nullable: false),
+                    FullName_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName_Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RegisteredDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ConcurrencyStamp_Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsBaned = table.Column<bool>(type: "bit", nullable: false),

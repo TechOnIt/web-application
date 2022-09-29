@@ -16,17 +16,19 @@ public class BaseController : ControllerBase
     protected async Task<IActionResult> RunCommandAsyncT<TRequest>(TRequest request)
         where TRequest : class
     {
-        var result = await _mediator.Send(request) as Result;
+        //var result = await _mediator.Send(request) as Result;
+        var commandResult = await _mediator.Send(request);
 
-        if (result.IsSuccess)
-            return Ok(result);
+        if (commandResult is not null)
+            return Ok(commandResult);
+
         return BadRequest();
     }
 
     protected async Task<IActionResult> RunCommandAsync<TRequest>(TRequest request)
         where TRequest : ICommittableRequest
     {
-        var result = await _mediator.Send(request) as Result;
+        var result = await _mediator.Send(request) as Result<Guid>;
 
         if (result.IsSuccess)
             return Ok(result);

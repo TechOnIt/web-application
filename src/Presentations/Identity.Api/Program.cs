@@ -1,7 +1,8 @@
 using AspNetCoreRateLimit;
 using iot.Application;
 using iot.Application.Common.DTOs.Settings;
-using iot.Application.Services.AssemblyServices;
+using iot.Infrastructure;
+using Microsoft.AspNetCore.Builder;
 using System.Configuration;
 using System.Reflection;
 
@@ -14,9 +15,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
+builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
+
 ConfigureServices(builder.Services);
 
-//builder.Services.AddCustomAuthenticationServices(builder.Configuration, );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,8 +49,8 @@ await app.RunAsync();
 
 void ConfigureServices(IServiceCollection services) // clean code 
 {
+    services.AddInfrastructureServices();
     services.AddApplicationServices();
-    services.AddMediatRServices();
 
     //Register CommandeHandlers
     services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
@@ -97,4 +99,4 @@ void ConfigureServices(IServiceCollection services) // clean code
     #endregion
 }
 
-public static partial class Program { }
+public static partial class Program {}

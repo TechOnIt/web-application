@@ -57,7 +57,7 @@ public class User : IEntity
     }
     public void SetFullName(FullName fullname)
     {
-        FullName = fullname;
+        this.FullName = fullname;
     }
     public void SetIsBaned(bool isBane)
     {

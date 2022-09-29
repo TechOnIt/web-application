@@ -7,7 +7,7 @@ using System.Text;
 
 namespace iot.Application.Common.Security.JwtBearer;
 
-public class JwtService : IJwtService
+public class JwtService : IJwtService,IDisposable
 {
     /// <summary>
     /// Generate JWT Token with claims.
@@ -85,5 +85,26 @@ public class JwtService : IJwtService
         #endregion
 
         return accessToken;
+    }
+
+    bool disposed;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing)
+            {
+                //dispose managed resources
+            }
+        }
+        //dispose unmanaged resources
+        disposed = true;
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }

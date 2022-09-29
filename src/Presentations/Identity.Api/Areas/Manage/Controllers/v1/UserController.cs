@@ -54,10 +54,13 @@ public class UserController : BaseController
 
     #region Queries
 
-    [HttpPost]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetUsers([FromBody] GetUsersCommand filters)
-        =>await RunCommandAsyncT(filters);
+    public async Task<IActionResult> GetUsers([FromQuery] string? phoneNumber,string? email)
+    {
+        var filters = new GetUsersCommand() {PhoneNumber=phoneNumber,Email= email };
+        return await RunCommandAsyncT(filters);
+    }
 
     #endregion
 }

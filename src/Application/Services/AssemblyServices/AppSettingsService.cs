@@ -46,6 +46,12 @@ public class AppSettingsService<T> : IAppSettingsService<T> where T : class, new
 
         jObject[_section] = JObject.Parse(JsonConvert.SerializeObject(sectionObject));
         File.WriteAllText(physicalPath, JsonConvert.SerializeObject(jObject, Newtonsoft.Json.Formatting.Indented));
+
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .Build();
+
         _configuration.Reload();
     }
 }

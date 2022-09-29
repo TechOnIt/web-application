@@ -12,8 +12,8 @@ using iot.Infrastructure.Persistence.Context.Identity;
 namespace iot.Infrastructure.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20220929085512_First_Build")]
-    partial class First_Build
+    [Migration("20220929190941_First_Migratin_Build")]
+    partial class First_Migratin_Build
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -304,6 +304,12 @@ namespace iot.Infrastructure.Migrations
                         {
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Surname")
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("UserId");
 

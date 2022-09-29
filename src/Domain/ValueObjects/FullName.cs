@@ -8,6 +8,11 @@ public class FullName : ValueObject
 {
 
     #region Constructors
+    public FullName()
+    {
+
+    }
+
     public FullName(string name, string surname)
     {
         if (name.Length > 50)

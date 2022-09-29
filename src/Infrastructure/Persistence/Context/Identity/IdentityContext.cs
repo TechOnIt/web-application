@@ -10,9 +10,6 @@ namespace iot.Infrastructure.Persistence.Context.Identity;
 
 public class IdentityContext : DbContext
 {
-    public IdentityContext(DbContextOptions<IdentityContext> options)
-        : base(options) { }
-
 #nullable disable
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
@@ -40,6 +37,8 @@ public class IdentityContext : DbContext
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")
             .Build();
-        optionsBuilder.UseSqlServer(configuration.GetConnectionString("Development"));
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("IdentityDevelopment"));
+        //optionsBuilder.UseSqlServer(configuration.GetConnectionString("DeskDevelopment"));
+        //optionsBuilder.UseSqlServer(configuration.GetConnectionString("CoreDevelopment"));
     }
 }

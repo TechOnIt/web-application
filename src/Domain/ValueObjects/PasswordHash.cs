@@ -8,6 +8,11 @@ namespace iot.Domain.ValueObjects;
 
 public class PasswordHash : ValueObject
 {
+    public PasswordHash()
+    {
+
+    }
+
     // Minimum password character length.
     private static int _minimumLength = 6;
     // Maximum password character length.

@@ -1,5 +1,8 @@
 using AspNetCoreRateLimit;
 using iot.Application;
+using iot.Application.Common.DTOs.Settings;
+using iot.Application.Services.AssemblyServices;
+using System.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,10 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
 ConfigureServices(builder.Services);
 
 //builder.Services.AddCustomAuthenticationServices(builder.Configuration, );
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,7 +42,6 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllers();
 });
-
 
 await app.RunAsync();
 

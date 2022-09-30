@@ -2,7 +2,7 @@
 using iot.Application.Commands.Structures.Management.DeleteStructure;
 using iot.Application.Commands.Structures.Management.UpdateStructure;
 using iot.Application.Common.Exceptions;
-using iot.Application.Common.Models;
+using iot.Application.Common.Frameworks.ApiResultFrameWork;
 using iot.Application.Queries.Structures.GetAllByFilter;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

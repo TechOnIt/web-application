@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace iot.Application.Common.Models;
+namespace iot.Application.Common.Frameworks.ApiResultFrameWork;
 
 public class ApiResult
 {

@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.Models;
+﻿using iot.Application.Common.Frameworks.ApiResultFrameWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;

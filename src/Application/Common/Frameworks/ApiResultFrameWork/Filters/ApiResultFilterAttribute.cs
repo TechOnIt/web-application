@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
+// https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-6.0
 namespace iot.Application.Common.Frameworks.ApiResultFrameWork.Filters
 {
     public class ApiResultFilterAttribute : ActionFilterAttribute

@@ -12,7 +12,7 @@ public class ApiResult
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string> Message { get; set; }
 
-    public ApiResult(ApiResultStatusCode statusCode, List<string> message = null)
+    public ApiResult(ApiResultStatusCode statusCode, List<string>? message = null)
     {
         StatusCode = statusCode;
         Message = message ?? statusCode.ToDisplays();
@@ -76,7 +76,7 @@ public class ApiResult<TData> : ApiResult
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public TData data { get; set; }
 
-    public ApiResult(ApiResultStatusCode statusCode, TData _data, List<string> message = null)
+    public ApiResult(ApiResultStatusCode statusCode, TData _data, List<string>? message = null)
         : base(statusCode, message)
     {
         data = _data;

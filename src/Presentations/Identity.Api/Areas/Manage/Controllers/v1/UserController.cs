@@ -1,4 +1,5 @@
-﻿using iot.Application.Queries.Users.GetAllUsers;
+﻿using iot.Application.Common.Frameworks.ApiResultFrameWork.Filters;
+using iot.Application.Queries.Users.GetAllUsers;
 
 namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
@@ -54,7 +55,7 @@ public class UserController : BaseController
 
     #region Queries
 
-    [HttpGet]
+    [HttpGet, ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetUsers([FromQuery] string? phoneNumber,string? email)
     {

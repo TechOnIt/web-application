@@ -4,6 +4,10 @@ using iot.Application.Repositories.SQL.StructureAggregateRepository;
 using iot.Application.Repositories.SQL.Users;
 using iot.Infrastructure.Persistence.Context.Identity;
 using iot.Infrastructure.Repositories.SQL.SensorAggregate;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using iot.Infrastructure.Common.Extentions;
 
 namespace iot.Application.Repositories.UnitOfWorks.Identity;
 
@@ -85,9 +89,42 @@ public class UnitOfWork : IUnitOfWorks
     #endregion
 
     #region EF Methods
-    public async Task SaveAsync(CancellationToken stoppingToken = default)
+    public async Task SaveAsync(CancellationToken stoppingToken = default,bool fixArabicChars=false)
     {
+        if (fixArabicChars)
+            _cleanString();
+
         await _context.SaveChangesAsync(stoppingToken);
+    }
+    #endregion
+
+    #region private methods
+    private void _cleanString()
+    {
+        var changedEntities = _context.ChangeTracker.Entries()
+            .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified);
+        foreach (var item in changedEntities)
+        {
+            if (item.Entity == null)
+                continue;
+
+            var properties = item.Entity.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.CanRead && p.CanWrite && p.PropertyType == typeof(string));
+
+            foreach (var property in properties)
+            {
+                var propName = property.Name;
+                var val = (string)property.GetValue(item.Entity, null);
+
+                if (!string.IsNullOrWhiteSpace(val))
+                {
+                    var newVal = val.Fa2En().FixPersianChars();
+                    if (newVal == val)
+                        continue;
+                    property.SetValue(item.Entity, newVal, null);
+                }
+            }
+        }
     }
     #endregion
 }

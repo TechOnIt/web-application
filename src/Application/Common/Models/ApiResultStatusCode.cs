@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace iot.Application.Common.Models
+namespace iot.Application.Common.Models;
+
+public enum ApiResultStatusCode
 {
-    public enum ApiResultStatusCode
-    {
-        [Display(Name = "Succeded")]
-        Success = 0,
+    Success = 0,
 
-        [Display(Name = "server error")]
-        ServerError = 1,
+    [Display(Name = "Internal server error has occured.")]
+    ServerError = 1,
 
-        [Display(Name = "not valid data")]
-        BadRequest = 2,
+    [Display(Name = "Not valid data")]
+    BadRequest = 2,
 
-        [Display(Name = "not found")]
-        NotFound = 3,
+    [Display(Name = "Not found any content.")]
+    NotFound = 3,
 
-        [Display(Name = "list is empty")]
-        ListEmpty = 4,
+    [Display(Name = "List is empty")]
+    ListEmpty = 4,
 
-        [Display(Name = "somthing went wrong during processing")]
-        LogicError = 5,
+    [Display(Name = "Somthing went wrong during processing.")]
+    LogicError = 5,
 
-        [Display(Name = "unAuthorized")]
-        UnAuthorized = 6
-    }
+    [Display(Name = "You are not authorized to access!")]
+    UnAuthorized = 6,
+
+    [Display(Name = "You dont have permission to access!")]
+    Forbiden = 403,
 }

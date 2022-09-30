@@ -9,7 +9,7 @@ namespace iot.Application.Repositories.UnitOfWorks.Identity;
 
 public interface IUnitOfWorks
 {
-    Task SaveAsync(CancellationToken stoppingToken = default);
+    Task SaveAsync(CancellationToken stoppingToken = default,bool fixArabicChars = false);
     ISqlRepository<TEntity> SqlRepository<TEntity>() where TEntity : class;
     IdentityContext _context { get; }
 

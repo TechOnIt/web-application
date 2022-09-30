@@ -9,6 +9,7 @@ public class StructureRepository : IStructureRepository
 {
     #region constructor
     private readonly IdentityContext _context;
+
     public StructureRepository(IdentityContext context)
     {
         _context = context;
@@ -26,12 +27,12 @@ public class StructureRepository : IStructureRepository
         }
     }
 
-    public async Task CreatePlaceAsync(Place place,Guid StructureId, CancellationToken cancellationToken)
+    public async Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken)
     {
         var getstructure = await _context.Structures
-            .FirstOrDefaultAsync(a=>a.Id == StructureId,cancellationToken);
+            .FirstOrDefaultAsync(a => a.Id == StructureId, cancellationToken);
 
-        if(getstructure is not null)
+        if (getstructure is not null)
         {
             getstructure.AddPlace(place);
             _context.Structures.Update(getstructure);
@@ -74,7 +75,7 @@ public class StructureRepository : IStructureRepository
         => await _context.Structures.FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken) ?? new Structure();
 
     public async Task<Structure> GetStructureByUserIdAsync(Guid userId, CancellationToken cancellationToken)
-        => await _context.Structures.FirstOrDefaultAsync(a => a.UserId == userId, cancellationToken)??new Structure();
+        => await _context.Structures.FirstOrDefaultAsync(a => a.UserId == userId, cancellationToken) ?? new Structure();
 
     public async Task<IList<Structure>> GetStructuresByUserIdAsync(Guid userId, CancellationToken cancellationToken)
     {
@@ -85,7 +86,7 @@ public class StructureRepository : IStructureRepository
             return new List<Structure>();
     }
 
-    public async Task UpdatePlaceAsync(Guid structureId, Place place,CancellationToken cancellationToken)
+    public async Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken)
     {
         _context.Places.Update(place);
     }
@@ -93,10 +94,10 @@ public class StructureRepository : IStructureRepository
     public async Task UpdateStructureAsync(Structure structure, CancellationToken cancellationToken)
     {
         var getStructure = await _context.Structures
-            .FirstOrDefaultAsync(a=>a.Id==structure.Id,cancellationToken);
-        if(getStructure is not null)
+            .FirstOrDefaultAsync(a => a.Id == structure.Id, cancellationToken);
+        if (getStructure is not null)
         {
-            getStructure.Description= structure.Description;
+            getStructure.Description = structure.Description;
             getStructure.SetStructureType(structure.Type);
             getStructure.IsActive = structure.IsActive;
             getStructure.Name = structure.Name;
@@ -110,7 +111,7 @@ public class StructureRepository : IStructureRepository
     {
         int sCount = await _context.Structures.AsNoTracking().CountAsync();
         IQueryable<Structure> query = default;
-        if(sCount > 1000)
+        if (sCount > 1000)
         {
             query = _context.Structures.AsNoTracking().AsParallel().WithDegreeOfParallelism(4).AsQueryable();
             if (filter != null)
@@ -135,7 +136,7 @@ public class StructureRepository : IStructureRepository
     public async Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>> filter = null)
     {
         var places = _context.Places.AsNoTracking();
-        if(filter != null)
+        if (filter != null)
         {
             places = places.Where(filter);
         }
@@ -147,5 +148,5 @@ public class StructureRepository : IStructureRepository
         => await _context.Places.AsNoTracking().FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken);
 
     public async Task<Structure> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken)
-        => await _context.Structures.AsNoTracking().FirstOrDefaultAsync(a=>a.Id==structureId,cancellationToken);
+        => await _context.Structures.AsNoTracking().FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
 }

@@ -2,7 +2,7 @@
 
 namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
-[Area("Manage"), Route("[area]/v1/[controller]/[action]")]
+[Area("Manage"), Route("v1/[area]/[controller]/[action]")]
 public class UserController : BaseController
 {
     #region DI & Ctor's

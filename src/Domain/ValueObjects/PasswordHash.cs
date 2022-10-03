@@ -1,6 +1,10 @@
 ﻿using iot.Domain.Common;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -47,16 +51,16 @@ public class PasswordHash : ValueObject
         // initializing
         return password;
     }
-    private static string _encode(string password)
-    {
-        Byte[] originalBytes;
-        Byte[] encodedBytes;
-        MD5 md5;
-        md5 = new MD5CryptoServiceProvider();
-        originalBytes = ASCIIEncoding.Default.GetBytes(password);
-        encodedBytes = md5.ComputeHash(originalBytes);
-        return BitConverter.ToString(encodedBytes);
-    }
+    //private static string _encode(string password)
+    //{
+    //    Byte[] originalBytes;
+    //    Byte[] encodedBytes;
+    //    MD5 md5;
+    //    md5 = new MD5CryptoServiceProvider();
+    //    originalBytes = ASCIIEncoding.Default.GetBytes(password);
+    //    encodedBytes = md5.ComputeHash(originalBytes);
+    //    return BitConverter.ToString(encodedBytes);
+    //}
 
     public override int GetHashCode() => Value.GetHashCode();
     protected override IEnumerable<object> GetEqualityComponents()
@@ -78,5 +82,54 @@ public class PasswordHash : ValueObject
         return left.Equals(right);
     }
     public static bool operator !=(PasswordHash left, PasswordHash right) => left.Value != right.Value;
+    #endregion
+
+    #region highe level encryption
+
+    public static string _encode(string userPassword)
+    {
+        var saltBytes = Generate128BitSalt();
+        var hashPasswordBytes =
+            KeyDerivation.Pbkdf2(
+                password: userPassword,
+                salt: saltBytes,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 1000,
+                numBytesRequested: 256 / 8);
+
+        return String.Concat(
+            Convert.ToBase64String(saltBytes),
+            " ",
+            Convert.ToBase64String(hashPasswordBytes));
+    }
+
+    public bool VerifyPasswordHash(string password)
+    {
+        var splitHash = this.Value.Split(" ");
+
+        var saltHash = Convert.FromBase64String(splitHash[0]);
+        var passwordHashed = Convert.FromBase64String(splitHash[1]);
+
+        var newhashPasswordBytes =
+            KeyDerivation.Pbkdf2(
+            password: password,
+            salt: saltHash,
+            prf: KeyDerivationPrf.HMACSHA1,
+            iterationCount: 1000,
+            numBytesRequested: 256 / 8);
+
+        return passwordHashed.SequenceEqual(newhashPasswordBytes);
+    }
+
+    private static byte[] Generate128BitSalt()
+    {
+        var salt = new byte[128 / 8];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(salt);
+        }
+
+        return salt;
+    }
     #endregion
 }

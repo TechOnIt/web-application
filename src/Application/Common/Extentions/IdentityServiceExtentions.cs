@@ -40,8 +40,11 @@ public static class IdentityServiceExtentions
             return (SigInStatus.LockUser,LockUser);
         else if (!string.IsNullOrWhiteSpace(password))
         {
-            if (user.Password != PasswordHash.Parse(password))
-                return (SigInStatus.WrongPassowrd,WrongPassowrd);
+            //if (user.Password != PasswordHash.Parse(password))
+            //    return (SigInStatus.WrongPassowrd,WrongPassowrd);
+
+            if (!user.Password.VerifyPasswordHash(password))
+                return (SigInStatus.WrongPassowrd, WrongPassowrd);
         }
 
         return (SigInStatus.Succeeded,SucceededUserValidations);

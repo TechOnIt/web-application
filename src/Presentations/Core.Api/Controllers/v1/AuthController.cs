@@ -1,5 +1,6 @@
 ﻿using iot.Application.Commands.Structures.Authentication.SignInCommands;
 using MediatR;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iot.Core.Api.Controllers.v1;

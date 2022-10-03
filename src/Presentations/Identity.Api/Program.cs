@@ -9,6 +9,13 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddHsts(opts =>
+{
+    opts.MaxAge = TimeSpan.FromDays(365);
+    opts.IncludeSubDomains = true;
+    opts.Preload = true;
+});
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -26,6 +33,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.UseHsts(); // https://git.ir/pluralsight-protecting-sensitive-data-from-exposure-in-asp-net-and-asp-net-core-applications/ episode 13
 }
 
 app.UseHttpsRedirection();
@@ -88,6 +99,54 @@ void ConfigureServices(IServiceCollection services) // clean code
                 Endpoint = "POST:/v1/Authentication/SignUp",
                 Period = "10s",
                 Limit = 1,
+            },
+            new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Manage/User/Create",
+                Period = "10s",
+                Limit = 1,
+            },
+             new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Manage/User/Update",
+                Period = "10s",
+                Limit = 1,
+            },
+             new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Manage/User/SetPassword",
+                Period = "10s",
+                Limit = 1,
+            },
+             new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Manage/User/Ban",
+                Period = "10s",
+                Limit = 1,
+            },
+            new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Manage/User/UnBan",
+                Period = "10s",
+                Limit = 1,
+            },
+             new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Manage/User/RemoveAccount",
+                Period = "10s",
+                Limit = 1,
+            },
+             new RateLimitRule
+            {
+                Endpoint = "POST:/v1/Manage/User/ForceDelete",
+                Period = "10s",
+                Limit = 1,
+            },
+            new RateLimitRule
+            {
+                Endpoint = "Get:/v1/Manage/User/GetUsers",
+                Period = "10s",
+                Limit = 1,
             }
         };
     });
@@ -99,4 +158,4 @@ void ConfigureServices(IServiceCollection services) // clean code
     #endregion
 }
 
-public static partial class Program {}
+public static partial class Program { }

@@ -22,7 +22,7 @@ public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, R
 
     public async Task<Result> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
     {
-        var repo = _unitOfWorks.SqlRepository<iot.Domain.Entities.Product.Device>();
+        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Device>();
 
         try
         {

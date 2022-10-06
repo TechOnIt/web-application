@@ -1,19 +1,15 @@
 ﻿using FluentValidation.AspNetCore;
 using iot.Application.Commands.Roles.Management.CreateRole;
 using iot.Application.Common.Behaviors;
-using iot.Application.Common.DTOs.Settings;
 using iot.Application.Common.Exceptions;
 using iot.Application.Common.Frameworks.ApiResultFrameWork;
 using iot.Application.Reports;
 using iot.Application.Reports.Contracts;
-using iot.Application.Repositories.SQL;
-using iot.Application.Repositories.SQL.LoginHistories;
-using iot.Application.Repositories.SQL.Roles;
-using iot.Application.Repositories.SQL.Users;
-using iot.Application.Repositories.UnitOfWorks.Identity;
 using iot.Application.Services.AssemblyServices;
 using iot.Application.Services.Authenticateion;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+using iot.Infrastructure.Common.Encryptions;
+using iot.Infrastructure.Common.Encryptions.Contracts;
 using iot.Infrastructure.Common.JwtBearerService;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -97,6 +93,7 @@ public static class ConfigureServices
     public static IServiceCollection AuthenticationCustomServices(this IServiceCollection services)
     {
         services.TryAddTransient<IIdentityService, IdentityService>();
+        services.TryAddTransient<IRoleService, RoleService>();
 
         return services;
     }

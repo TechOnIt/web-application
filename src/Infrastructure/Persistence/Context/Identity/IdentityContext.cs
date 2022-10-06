@@ -2,6 +2,8 @@
 using iot.Domain.Entities.Product;
 using iot.Domain.Entities.Product.SensorAggregate;
 using iot.Domain.Entities.Product.StructureAggregate;
+using iot.Domain.Entities.Secyrity;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
@@ -43,5 +45,10 @@ public class IdentityContext : DbContext
     public DbSet<Device> Devices { get; set; }
     public DbSet<Sensor> Sensors { get; set; }
     public DbSet<PerformanceReport> PerformanceReports { get; set; }
+
+    #endregion
+
+    #region keysStor for data protection
+    public DbSet<AesKey> AesKeys { get; set; }
     #endregion
 }

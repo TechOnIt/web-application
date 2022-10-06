@@ -1,6 +1,4 @@
-﻿using iot.Domain.ValueObjects;
-
-namespace iot.Application.Common.Models;
+﻿namespace iot.Application.Common.Models;
 
 // I Removed {} for Namespace because we its better to do in c# 10 and .net 6
 // https://dotnetcoretutorials.com/2021/09/20/file-scoped-namespaces-in-c-10/
@@ -36,7 +34,9 @@ public class UserViewModel
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public string? Email { get; private set; }
-    public string? PhoneNumber { get; private set; }
+
+    private string _phoneNumber;
+    public string? PhoneNumber {get;private set;}
     public bool ConfirmedEmail { get; private set; }
     public bool ConfirmedPhoneNumber { get; private set; }
     public DateTime RegisteredDateTime { get; private set; }

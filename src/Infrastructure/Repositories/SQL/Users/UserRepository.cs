@@ -1,4 +1,5 @@
 ﻿using iot.Domain.Entities.Identity;
+using iot.Infrastructure.Common.Encryptions;
 using iot.Infrastructure.Persistence.Context.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -9,23 +10,20 @@ internal sealed class UserRepository : IUserRepository
 {
     #region Constructor
     private readonly IdentityContext _context;
+    private Encryptor aesEncryptor;
 
     public UserRepository(IdentityContext context)
     {
         _context = context;
+        aesEncryptor = new Encryptor(GetUserKey());
     }
     #endregion
 
     public async Task<User?> FindUserByUserIdAsNoTrackingAsync(Guid userId)
         => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Id == userId);
     public async Task<User?> FindByUsernameAsync(string username, CancellationToken cancellationToken = default)
-        => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Username.ToLower().Trim() == username.ToLower().Trim(), cancellationToken);
+        => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => aesEncryptor.Decrypt(a.Username) == username.ToLower().Trim(), cancellationToken);
 
-    /// <summary>
-    /// Find user by email or phone number with roles (AsNoTracking).
-    /// </summary>
-    /// <param name="identity">Email or Phone number</param>
-    /// <returns>An specific user.</returns>
     public async Task<User?> FindByIdentityWithRolesAsync(string identity, CancellationToken stoppingToken = default)
     => await _context.Users
         .Where(u => u.Email == identity.Trim().ToLower() || u.PhoneNumber == identity.Trim())
@@ -34,9 +32,9 @@ internal sealed class UserRepository : IUserRepository
         .AsNoTracking()
         .FirstOrDefaultAsync(stoppingToken);
 
-    public async Task<User?> FindUserByPhoneNumberWithRolesAsyncNoTracking(string phonenumber,CancellationToken cancellationToken)
-        => await _context.Users
-        .Where(u => u.PhoneNumber == phonenumber.Trim())
+    public async Task<User?> FindUserByPhoneNumberWithRolesAsyncNoTracking(string phonenumber, CancellationToken cancellationToken)
+    => await _context.Users
+        .Where(u => aesEncryptor.Decrypt(u.PhoneNumber) == phonenumber.Trim())
         .Include(u => u.UserRoles)
         .ThenInclude(ur => ur.Role)
         .AsNoTracking()
@@ -59,20 +57,30 @@ internal sealed class UserRepository : IUserRepository
     }
 
     public async Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber)
-        => await _context.Users.AsNoTracking().AnyAsync(a => a.PhoneNumber == phonenumber);
+        => await _context.Users
+            .AsNoTracking()
+            .AnyAsync(a => aesEncryptor.Decrypt(a.PhoneNumber) == phonenumber);
 
     public async Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber)
     {
-        var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(a=>a.PhoneNumber==phonenumber);
+        var user = await _context.Users.AsNoTracking().FirstAsync(a => aesEncryptor.Decrypt(a.PhoneNumber) == phonenumber);
         return user.Email;
     }
 
-    public async Task<User> CreateNewUser(User user,CancellationToken cancellationToken)
+    public async Task<User> CreateNewUser(User user, CancellationToken cancellationToken)
     {
-        if(user.ConcurrencyStamp is null)
+        if (user.ConcurrencyStamp is null)
             user.RefreshConcurrencyStamp();
-        
-        var newUser= await _context.Users.AddAsync(user);
+
+        var newUser = await _context.Users.AddAsync(user);
         return newUser.Entity;
     }
+
+    #region privates
+    private string GetUserKey()
+    {
+        var key = _context.AesKeys.AsNoTracking().First(a => a.Title == "UserKey");
+        return key.Key;
+    }
+    #endregion
 }

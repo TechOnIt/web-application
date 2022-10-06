@@ -1,5 +1,6 @@
 ﻿using iot.Application.Common.Interfaces;
-using iot.Application.Repositories.UnitOfWorks.Identity;
+using iot.Infrastructure.Common.Encryptions.Contracts;
+using iot.iot.Infrastructure.Common.Encryptions.SecurityTypes;
 using Microsoft.Extensions.Logging;
 
 namespace iot.Application.Commands.Users.Management.CreateUser;
@@ -17,19 +18,22 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
 {
     #region Constructor
     private readonly IUnitOfWorks _unitOfWorks;
+    private readonly IEncryptionHandlerService _encryptionHandler;
     private readonly ILogger<CreateUserCommandHandler> _logger;
 
-    public CreateUserCommandHandler(IUnitOfWorks unitOfWorks, ILogger<CreateUserCommandHandler> logger)
+    public CreateUserCommandHandler(IUnitOfWorks unitOfWorks, ILogger<CreateUserCommandHandler> logger, IEncryptionHandlerService encryptionHandler)
     {
         _unitOfWorks = unitOfWorks;
         _logger = logger;
+        _encryptionHandler = encryptionHandler;
     }
     #endregion
 
     public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         // Create new user instance.
-        var newUser = User.CreateNewInstance(request.Email, request.PhoneNumber);
+        var newUser = 
+            User.CreateNewInstance(request.Email, await _encryptionHandler.GetEncryptAsync(sensitiveDataType:SensitiveEntities.Users, request.PhoneNumber,cancellationToken));
 
         // Set password hash.
         newUser.SetPassword(PasswordHash.Parse(request.Password));

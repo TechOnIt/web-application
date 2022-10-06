@@ -2,7 +2,9 @@
 using iot.Application.Repositories.SQL.Roles;
 using iot.Application.Repositories.SQL.StructureAggregateRepository;
 using iot.Application.Repositories.SQL.Users;
+using iot.Infrastructure.Common.Encryptions.Contracts;
 using iot.Infrastructure.Persistence.Context.Identity;
+using iot.Infrastructure.Repositories.SQL.Device;
 using iot.Infrastructure.Repositories.SQL.SensorAggregate;
 
 namespace iot.Application.Repositories.UnitOfWorks.Identity;
@@ -17,4 +19,5 @@ public interface IUnitOfWorks
     IUserRepository UserRepository { get; }
     IRoleRepository RoleRepository { get; }
     ISensorRepository SensorRepository { get; }
+    IDeviceRepositry DeviceRepositry { get; }
 }

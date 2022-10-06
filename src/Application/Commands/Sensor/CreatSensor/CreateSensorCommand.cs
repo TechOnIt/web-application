@@ -5,7 +5,7 @@ namespace iot.Application.Commands.Sensor.CreatSensor;
 
 public class CreateSensorCommand : IRequest<Result<Guid>>,ICommittableRequest
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
     public SensorType? SensorType { get; private set; }
     public Guid PlaceId { get; set; }
 }
@@ -31,11 +31,11 @@ public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, R
                 request.Id = Guid.NewGuid();
 
             await _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>()
-                .AddAsync(new iot.Domain.Entities.Product.SensorAggregate.Sensor(request.Id,request.SensorType,request.PlaceId));
+                .AddAsync(new Domain.Entities.Product.SensorAggregate.Sensor((Guid)request.Id,request.SensorType,request.PlaceId));
 
             await _mediator.Publish(new SensorNotifications());
 
-            return Result.Ok(request.Id);
+            return Result.Ok((Guid)request.Id);
         }
         catch (Exception exp)
         {

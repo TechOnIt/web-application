@@ -5,6 +5,7 @@ using iot.Application.Common.Exceptions;
 using iot.Application.Common.Frameworks.ApiResultFrameWork;
 using iot.Application.Queries.Structures.GetAllByFilter;
 using MediatR;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iot.Desk.Api.Controllers.v1;
@@ -13,9 +14,12 @@ public class StructureController : BaseController
 {
     #region constructors
     private readonly IMediator _mediator;
-    public StructureController(IMediator mediator)
+    private readonly IDataProtector _dataProtectionProvider;
+
+    public StructureController(IMediator mediator, IDataProtectionProvider dataProtectionProvider)
     {
         _mediator = mediator;
+        _dataProtectionProvider = dataProtectionProvider.CreateProtector("RouteData");
     }
 
     #endregion
@@ -29,19 +33,9 @@ public class StructureController : BaseController
         if (!User.Identity.IsAuthenticated)
             return Unauthorized();
 
-        try
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var cancellation = new CancellationToken();
-            var result = await _mediator.Send(structure, cancellation);
-            return Ok(result);
-        }
-        catch (Exception exp)
-        {
-            throw new Exception(exp.Message);
-        }
+        var cancellation = new CancellationToken();
+        var result = await _mediator.Send(structure, cancellation);
+        return Ok(result);
     }
 
     [HttpPatch]
@@ -52,20 +46,10 @@ public class StructureController : BaseController
         if (!User.Identity.IsAuthenticated)
             return Unauthorized();
 
-        try
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        var stoppingToken = new CancellationToken();
+        var result = await _mediator.Send(structure, stoppingToken);
 
-            var stoppingToken = new CancellationToken();
-            var result = await _mediator.Send(structure, stoppingToken);
-
-            return Ok(result);
-        }
-        catch (Exception exp)
-        {
-            throw new Exception(exp.Message);
-        }
+        return Ok(result);
     }
 
     [HttpDelete("{id}")]
@@ -76,16 +60,9 @@ public class StructureController : BaseController
         if (!User.Identity.IsAuthenticated)
             return Unauthorized();
 
-        try
-        {
-            var cancellOperation = new CancellationToken();
-            var result = await _mediator.Send(new DeleteStructureCommand() { StructureId = Guid.Parse(id) });
-            return Ok(result);
-        }
-        catch (Exception exp)
-        {
-            throw new Exception(exp.Message);
-        }
+        var cancellOperation = new CancellationToken();
+        var result = await _mediator.Send(new DeleteStructureCommand() { StructureId = Guid.Parse(id) });
+        return Ok(result);
     }
     #endregion
 

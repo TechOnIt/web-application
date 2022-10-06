@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using iot.Infrastructure.Common.Extentions;
+using iot.Infrastructure.Repositories.SQL.Device;
+using iot.Infrastructure.Common.Encryptions.Contracts;
 
 namespace iot.Application.Repositories.UnitOfWorks.Identity;
 
@@ -64,7 +66,7 @@ public class UnitOfWork : IUnitOfWorks
     {
         get
         {
-            if(_structureRepository is null)
+            if (_structureRepository is null)
             {
                 _structureRepository = new StructureRepository(_context);
             }
@@ -88,8 +90,23 @@ public class UnitOfWork : IUnitOfWorks
     }
     #endregion
 
+    #region DeviceRepository
+    private IDeviceRepositry _deviceRepositry;
+    public IDeviceRepositry DeviceRepositry
+    {
+        get
+        {
+            if (_deviceRepositry == null)
+            {
+                _deviceRepositry = new DeviceRepositry(_context);
+            }
+            return _deviceRepositry;
+        }
+    }
+    #endregion
+
     #region EF Methods
-    public async Task SaveAsync(CancellationToken stoppingToken = default,bool fixArabicChars=false)
+    public async Task SaveAsync(CancellationToken stoppingToken = default, bool fixArabicChars = false)
     {
         if (fixArabicChars)
             _cleanString();

@@ -31,7 +31,7 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, R
     #endregion
     public async Task<Result<Guid>> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken)
     {
-        var repo = _unitOfWorks.SqlRepository<iot.Domain.Entities.Product.Device>();
+        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Device>();
 
         try
         {

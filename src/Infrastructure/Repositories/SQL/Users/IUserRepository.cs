@@ -21,4 +21,9 @@ public interface IUserRepository
     Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber);
     Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber);
     Task<User?> FindUserByUserIdAsNoTrackingAsync(Guid userId);
+    Task<User?> FindUserByUserIdAsync(Guid userId);
+    Task DeleteUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken);
+    Task DeleteUserByIdAsync(Guid userId, CancellationToken cancellationToken);
+    Task<bool> IsExistsUserByIdAsync(Guid userId,CancellationToken cancellationToken);
+    Task UpdateUserAsync(User user, CancellationToken cancellationToken);
 }

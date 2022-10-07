@@ -1,5 +1,4 @@
 ﻿using iot.Application.Common.Interfaces;
-using iot.Application.Repositories.UnitOfWorks.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace iot.Application.Commands.Users.Management.ForceDelete;
@@ -27,17 +26,19 @@ public class ForceDeleteUserCommandHandler : IRequestHandler<ForceDeleteUserComm
         // map id to guid instance.
         var userId = Guid.Parse(request.Id);
 
+        //var result = await _unitOfWorks.UserRepository
+
         // find user by id.
-        var user = await _unitOfWorks.SqlRepository<User>().GetByIdAsync(cancellationToken, userId);
-        if (user == null)
-            return Result.Fail("User was not found!");
+        //var user = await _unitOfWorks.SqlRepository<User>().GetByIdAsync(cancellationToken, userId);
+        //if (user == null)
+        //    return Result.Fail("User was not found!");
 
         var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
 
         try
         {
             // Delete user account.
-            await _unitOfWorks.SqlRepository<User>().DeleteAsync(user, cancellationToken);
+            //await _unitOfWorks.SqlRepository<User>().DeleteAsync(user, cancellationToken);
             // TODO:
             // Move transaction to pipeline...
             await transAction.CommitAsync();

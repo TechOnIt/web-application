@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace iot.Application.Common.Exceptions;
 
-namespace iot.Application.Common.Exceptions;
-
-public class StructureException : Exception
+public class StructureException : AppException
 {
 	public StructureException()
 	{

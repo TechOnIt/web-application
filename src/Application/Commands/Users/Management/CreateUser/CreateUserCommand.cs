@@ -1,6 +1,7 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Infrastructure.Common.Encryptions.Contracts;
-using iot.iot.Infrastructure.Common.Encryptions.SecurityTypes;
+﻿using iot.Application.Common.Enums.IdentityServiceEnums;
+using iot.Application.Common.Exceptions;
+using iot.Application.Common.Interfaces;
+using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 using Microsoft.Extensions.Logging;
 
 namespace iot.Application.Commands.Users.Management.CreateUser;
@@ -17,49 +18,34 @@ public class CreateUserCommand : IRequest<Result<Guid>>, ICommittableRequest
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<Guid>>
 {
     #region Constructor
-    private readonly IUnitOfWorks _unitOfWorks;
-    private readonly IEncryptionHandlerService _encryptionHandler;
+    private readonly IUserService _userService;
     private readonly ILogger<CreateUserCommandHandler> _logger;
 
-    public CreateUserCommandHandler(IUnitOfWorks unitOfWorks, ILogger<CreateUserCommandHandler> logger, IEncryptionHandlerService encryptionHandler)
+    public CreateUserCommandHandler(IUserService userService, ILogger<CreateUserCommandHandler> logger)
     {
-        _unitOfWorks = unitOfWorks;
+        _userService = userService;
         _logger = logger;
-        _encryptionHandler = encryptionHandler;
     }
     #endregion
 
     public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        // Create new user instance.
-        var newUser = 
-            User.CreateNewInstance(request.Email, await _encryptionHandler.GetEncryptAsync(sensitiveDataType:SensitiveEntities.Users, request.PhoneNumber,cancellationToken));
-
-        // Set password hash.
-        newUser.SetPassword(PasswordHash.Parse(request.Password));
-
-        // Set full name.
-        newUser.SetFullName(new FullName(request.Name, request.Surname));
-
-        // TODO:
-        // Move transaction to pipeline...
-        var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
+        var userViewModel = new UserViewModel(request.PhoneNumber, request.PhoneNumber, request.Password,request.Name,request.Surname,request.Email);
 
         try
         {
-            // Add new to database.
-            await _unitOfWorks.SqlRepository<User>().AddAsync(newUser, cancellationToken);
-            await transAction.CommitAsync();
-        }
-        catch (Exception exp)
-        {
-            // TODO:
-            // Move transaction to pipeline...
-            await transAction.RollbackAsync();
-            _logger.Log(LogLevel.Critical, exp.Message);
-        }
+            var result = await _userService.CreateUserAsync(userViewModel,cancellationToken);
+            if (result.Status.IsDuplicate())
+                return Result.Fail("user with this phonenumber has already been registered in the system");
+            else if (result.Status.IsFailed())
+                return Result.Fail("An error occurred");
 
-        return Result.Ok(newUser.Id);
+            return Result.Ok((Guid)result.UserId);
+        }
+        catch (AppException exp)
+        {
+            throw new CommandException(IdentityCrudStatus.ServerError,$"{DateTime.Now}",exp,null);
+        }
     }
 }
 

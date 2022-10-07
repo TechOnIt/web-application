@@ -9,7 +9,7 @@ public class IdentityCrudStatus : Enumeration
     public static readonly IdentityCrudStatus CantRemove = new(3, nameof(CantRemove));
     public static readonly IdentityCrudStatus Succeeded = new(4, nameof(Succeeded));
     public static readonly IdentityCrudStatus Failed = new(5,nameof(Failed));
-
+    public static readonly IdentityCrudStatus ServerError = new(6, nameof(ServerError));
 
     public IdentityCrudStatus()
     {

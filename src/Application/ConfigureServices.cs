@@ -3,6 +3,7 @@ using iot.Application.Commands.Roles.Management.CreateRole;
 using iot.Application.Common.Behaviors;
 using iot.Application.Common.Exceptions;
 using iot.Application.Common.Frameworks.ApiResultFrameWork;
+using iot.Application.Common.Frameworks.Middlewares;
 using iot.Application.Reports;
 using iot.Application.Reports.Contracts;
 using iot.Application.Services.AssemblyServices;
@@ -13,6 +14,7 @@ using iot.Infrastructure.Common.Encryptions.Contracts;
 using iot.Infrastructure.Common.JwtBearerService;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -94,6 +96,7 @@ public static class ConfigureServices
     {
         services.TryAddTransient<IIdentityService, IdentityService>();
         services.TryAddTransient<IRoleService, RoleService>();
+        services.TryAddTransient<IUserService, UserService>();
 
         return services;
     }
@@ -192,5 +195,10 @@ public static class ConfigureServices
         services.AddTransient<IStructureAggregateReports, StructureAggregateReports>();
 
         return services;
+    }
+
+    public static void UseCustomExceptionHandler(this WebApplication app)
+    {
+        app.UseMiddleware<CustomExceptionHandlerMiddleware>();
     }
 }

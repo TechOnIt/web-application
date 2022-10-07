@@ -41,6 +41,16 @@ public class FullName : ValueObject
     public string GetName() => Name;
     public string GetSurname() => Surname;
     public string GetFullName() => $"{Name} {Surname}";
+    public void SetFullName(string name, string surname)
+    {
+        if (name is null || surname is null)
+            throw new ArgumentNullException($"name or surname can not be null in this case");
+        if(string.IsNullOrWhiteSpace(name))
+            throw new ArgumentNullException($"the parameter name can not be null or empty");
+
+        this.Name = name;
+        this.Surname = surname;
+    }
 
     #region Overrides
     //public static bool operator ==(FullName left, FullName right) => $"{left.Name}{left.Surname}" == $"{right.Name}{right.Surname}";

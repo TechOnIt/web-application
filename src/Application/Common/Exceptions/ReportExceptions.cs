@@ -1,6 +1,6 @@
 ﻿namespace iot.Application.Common.Exceptions;
 
-public class ReportExceptions : Exception
+public class ReportExceptions : AppException
 {
 	#region properties
 	public Guid? UserId { get; set; }

@@ -21,6 +21,10 @@ internal sealed class UserRepository : IUserRepository
 
     public async Task<User?> FindUserByUserIdAsNoTrackingAsync(Guid userId)
         => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Id == userId);
+
+    public async Task<User?> FindUserByUserIdAsync(Guid userId)
+    => await _context.Users.FirstOrDefaultAsync(a => a.Id == userId);
+
     public async Task<User?> FindByUsernameAsync(string username, CancellationToken cancellationToken = default)
         => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => aesEncryptor.Decrypt(a.Username) == username.ToLower().Trim(), cancellationToken);
 
@@ -59,7 +63,10 @@ internal sealed class UserRepository : IUserRepository
     public async Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber)
         => await _context.Users
             .AsNoTracking()
-            .AnyAsync(a => aesEncryptor.Decrypt(a.PhoneNumber) == phonenumber);
+            .AnyAsync(a => a.PhoneNumber == phonenumber);
+
+    public async Task<bool> IsExistsUserByIdAsync(Guid userId, CancellationToken cancellationToken)
+        => await _context.Users.AsNoTracking().AnyAsync(a => a.Id == userId, cancellationToken);
 
     public async Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber)
     {
@@ -67,13 +74,49 @@ internal sealed class UserRepository : IUserRepository
         return user.Email;
     }
 
-    public async Task<User> CreateNewUser(User user, CancellationToken cancellationToken)
+    public async Task<User?> CreateNewUser(User user, CancellationToken cancellationToken)
     {
         if (user.ConcurrencyStamp is null)
             user.RefreshConcurrencyStamp();
 
         var newUser = await _context.Users.AddAsync(user);
         return newUser.Entity;
+    }
+
+    public async Task DeleteUserByIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        var getUser = await _context.Users.FindAsync(userId, cancellationToken);
+
+        getUser.SetIsDelete(true);
+        getUser.SetIsBaned(true);
+        getUser.RefreshConcurrencyStamp();
+
+        _context.Users.Update(getUser);
+        await Task.CompletedTask;
+    }
+
+    public async Task DeleteUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken)
+    {
+        var getUser = await _context.Users.FirstAsync(a => aesEncryptor.Decrypt(a.PhoneNumber) == phonenumber, cancellationToken);
+
+        getUser.SetIsDelete(true);
+        getUser.SetIsBaned(true);
+        getUser.RefreshConcurrencyStamp();
+
+        _context.Users.Update(getUser);
+        await Task.CompletedTask;
+    }
+
+    public async Task UpdateUserAsync(User user, CancellationToken cancellationToken)
+    {
+        var getUser = await _context.Users.FindAsync(user.Id, cancellationToken);
+
+        getUser.SetEmail(user.Email);
+        getUser.SetFullName(user.FullName);
+        getUser.RefreshConcurrencyStamp();
+
+        _context.Users.Update(user);
+        await Task.CompletedTask;
     }
 
     #region privates

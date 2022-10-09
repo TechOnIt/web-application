@@ -21,6 +21,10 @@ public class SignInStructureCommandHandler : IRequestHandler<SignInStructureComm
         //    return Result.Fail(signinPassword.Message);
 
         //return Result.Ok(signinPassword.Token);
-        return Result.Ok();
+        var result = new StructureAccessToken();
+        result.Token = "aaaa";
+        result.RefreshToken = "bbbb";
+
+        return Result.Ok(result);
     }
 }

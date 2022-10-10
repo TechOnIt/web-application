@@ -33,6 +33,9 @@ public class Device
     public DeviceType DeviceType { get; private set; }
     public bool IsHigh { get; set; }
 
+    //Concurrency : from entityframework
+    public byte[] RowVersion { get; set; }
+
     #region methods
 
     public Guid GetDeviceId()

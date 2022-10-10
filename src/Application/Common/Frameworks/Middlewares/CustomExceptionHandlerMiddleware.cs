@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Net;
 using System.Text.Json;
 
@@ -74,6 +75,18 @@ public class CustomExceptionHandlerMiddleware
         {
             logger.LogError(exception, exception.Message);
             SetUnAuthorizeResponse(exception);
+            await WriteToResponseAsync();
+        }
+        catch (DbUpdateConcurrencyException exception)
+        {
+            logger.LogError(exception, exception.Message);
+
+            var entityProprttyValues=exception.Entries.Single().GetDatabaseValues();
+            if (entityProprttyValues is null)
+                message = "the data being updated has been deleted by an other user !";
+            else
+                message = "the data being updated has already been updated by an other user !";
+
             await WriteToResponseAsync();
         }
         catch (Exception exception)

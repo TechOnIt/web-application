@@ -1,4 +1,5 @@
 ﻿using iot.Infrastructure.Persistence.Context.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace iot.Infrastructure.Repositories.SQL.Device;
 
@@ -16,26 +17,50 @@ public class DeviceRepositry : IDeviceRepositry
 
     public async Task<Domain.Entities.Product.Device> CreateDeviceAsync(Domain.Entities.Product.Device device, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var result = await _context.Devices.AddAsync(device, cancellationToken);
+        return result.Entity;
     }
 
-    public async Task<Domain.Entities.Product.Device> DeleteDeviceByIdAsync(Guid DeviceId, CancellationToken cancellationToken)
+    public async Task DeleteDeviceByIdAsync(Guid DeviceId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-    }
+        var getDevice = await _context.Devices.FirstOrDefaultAsync(a=>a.Id==DeviceId);
 
-    public async Task<Domain.Entities.Product.Device> FindDeviceByIdAsync(Guid deviceId, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+        if (getDevice is null)
+            await Task.CompletedTask;
 
-    public async Task<Domain.Entities.Product.Device> FindDeviceByIdAsyncAsNoTracking(Guid deviceId, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
+        if(!cancellationToken.IsCancellationRequested)
+            _context.Entry<Domain.Entities.Product.Device>(getDevice).State = EntityState.Deleted;
+
+        await Task.CompletedTask;
     }
 
     public async Task<Domain.Entities.Product.Device> UpdateDeviceAsync(Domain.Entities.Product.Device device, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        if (!cancellationToken.IsCancellationRequested)
+            _context.Entry<Domain.Entities.Product.Device>(device).State = EntityState.Modified;
+
+        return await Task.FromResult(device);
+    }
+
+    public async Task<Domain.Entities.Product.Device?> FindDeviceByIdAsync(Guid deviceId, CancellationToken cancellationToken)
+    {
+        var getDevice = await _context.Devices.FirstOrDefaultAsync(a=>a.Id==deviceId,cancellationToken);
+
+        if (getDevice is null)
+            return await Task.FromResult<Domain.Entities.Product.Device?>(null);
+
+        return await Task.FromResult(getDevice);
+    }
+
+    public async Task<Domain.Entities.Product.Device?> FindDeviceByIdAsyncAsNoTracking(Guid deviceId, CancellationToken cancellationToken)
+    {
+        var getDevice = await _context.Devices
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => a.Id == deviceId, cancellationToken);
+
+        if (getDevice is null)
+            return await Task.FromResult<Domain.Entities.Product.Device?>(null);
+
+        return await Task.FromResult<Domain.Entities.Product.Device?>(getDevice);
     }
 }

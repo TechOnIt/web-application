@@ -3,7 +3,6 @@ using iot.Domain.Entities.Product;
 using iot.Domain.Entities.Product.SensorAggregate;
 using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Entities.Secyrity;
-using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
@@ -23,6 +22,8 @@ public class IdentityContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        optionsBuilder.LogTo(Console.WriteLine);
+
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")

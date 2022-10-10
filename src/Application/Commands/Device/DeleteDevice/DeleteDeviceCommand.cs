@@ -1,4 +1,5 @@
 ﻿using iot.Application.Events.ProductNotifications;
+using iot.Application.Services.ProductServices.ProductContracts;
 
 namespace iot.Application.Commands.Device.DeleteDevice;
 
@@ -10,11 +11,11 @@ public class DeleteDeviceCommand : IRequest<Result>
 public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, Result>
 {
     #region constructure
-    private readonly IUnitOfWorks _unitOfWorks;
+    private readonly IDeviceService _deviceService;
     private readonly IMediator _mediator;
-    public DeleteDeviceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
+    public DeleteDeviceCommandHandler(IDeviceService deviceService, IMediator mediator)
     {
-        _unitOfWorks = unitOfWorks;
+        _deviceService = deviceService;
         _mediator = mediator;
     }
 
@@ -22,21 +23,18 @@ public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, R
 
     public async Task<Result> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
     {
-        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Device>();
-
         try
         {
-            var getDevice = await repo.Table.FirstOrDefaultAsync(a=>a.Id==request.DeviceId);
-            if (getDevice == null)
+            var isExists = await _deviceService.FindDeviceByIdAsyncAsNoTracking(request.DeviceId, cancellationToken);
+            if (isExists is null)
                 return Result.Fail($"can not find device with Id : {request.DeviceId}");
-            else
-            {
-                await repo.DeleteAsync(getDevice);
 
-                await _mediator.Publish(new DeviceNotifications());
+            bool getDevice = await _deviceService.DeleteDeviceByIdAsync(request.DeviceId, cancellationToken);
+            if (!getDevice)
+                return Result.Fail("an error occured !");
 
-                return Result.Ok();
-            }
+            await _mediator.Publish(new DeviceNotifications());
+            return Result.Ok();
         }
         catch (Exception exp)
         {

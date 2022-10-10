@@ -1,6 +1,8 @@
 ﻿using iot.Application.Common.Interfaces;
 using iot.Application.Events.ProductNotifications;
+using iot.Application.Services.ProductServices.ProductContracts;
 using iot.Domain.Enums;
+using Mapster;
 
 namespace iot.Application.Commands.Device.CreateDevice;
 
@@ -15,12 +17,12 @@ public class CreateDeviceCommand : IRequest<Result<Guid>>, ICommittableRequest
 public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, Result<Guid>>
 {
     #region Constructure
-    private readonly IUnitOfWorks _unitOfWorks;
+    private readonly IDeviceService _deviceService;
     private readonly IMediator _mediator;
 
-    public CreateDeviceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
+    public CreateDeviceCommandHandler(IDeviceService deviceService, IMediator mediator)
     {
-        _unitOfWorks = unitOfWorks;
+        _deviceService = deviceService;
         _mediator = mediator;
     }
 
@@ -29,16 +31,17 @@ public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, R
 
     public async Task<Result<Guid>> Handle(CreateDeviceCommand request, CancellationToken cancellationToken)
     {
-        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.Device>();
-
         try
         {
             var model = new Domain.Entities.Product.Device(request.Pin, request.DeviceType, request.IsHigh, request.PlaceId);
-            await repo.AddAsync(model);
+            var createResult = await _deviceService.CreateDeviceAsync(model.Adapt<DeviceViewModel>(), cancellationToken);
 
             await _mediator.Publish(new DeviceNotifications());
 
-            return Result.Ok(model.Id);
+            if (createResult is null)
+                return Result.Fail("an error occured !");
+            else
+                return Result.Ok(createResult.Id);
         }
         catch (Exception exp)
         {

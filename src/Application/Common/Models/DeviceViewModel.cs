@@ -5,6 +5,17 @@ namespace iot.Application.Common.Models;
 
 public class DeviceViewModel
 {
+
+    public DeviceViewModel()
+    {
+
+    }
+
+    public DeviceViewModel(Guid id,Guid placeId,int pin,DeviceType deviceType,bool isHight)
+    {
+
+    }
+
     public Guid Id { get; set; }
     public int Pin { get; set; }
     public DeviceType DeviceType { get; set; }

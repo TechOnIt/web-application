@@ -9,6 +9,8 @@ using iot.Application.Reports.Contracts;
 using iot.Application.Services.AssemblyServices;
 using iot.Application.Services.Authenticateion;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+using iot.Application.Services.ProductServices;
+using iot.Application.Services.ProductServices.ProductContracts;
 using iot.Infrastructure.Common.Encryptions;
 using iot.Infrastructure.Common.Encryptions.Contracts;
 using iot.Infrastructure.Common.JwtBearerService;
@@ -50,6 +52,7 @@ public static class ConfigureServices
         services.AddReportServices();
         services.AuthenticationCustomServices();
 
+        services.TryAddTransient<IDeviceService, DeviceService>();
         //services.ConfigureWritable<SiteSettings>(Configuration.GetSection("SiteSettings"));
         //services.TryAddTransient(typeof(IAppSettingsService<>), typeof(AppSettingsService<>));
 

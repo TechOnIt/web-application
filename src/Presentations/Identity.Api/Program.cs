@@ -2,73 +2,94 @@ using AspNetCoreRateLimit;
 using iot.Application;
 using iot.Application.Common.DTOs.Settings;
 using iot.Infrastructure;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
-using System.Configuration;
+using NLog;
+using NLog.Web;
 using System.Reflection;
 
-var builder = WebApplication.CreateBuilder(args);
+var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+logger.Debug("init main");
 
-builder.Services.AddControllers();
-builder.Services.AddHsts(opts =>
+try
 {
-    opts.MaxAge = TimeSpan.FromDays(365);
-    opts.IncludeSubDomains = true;
-    opts.Preload = true;
-});
+    var builder = WebApplication.CreateBuilder(args);
 
-//https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.dataprotection.idataprotectionprovider?view=aspnetcore-6.0
-//builder.Services.AddDataProtection()
-//    .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
+    builder.Services.AddControllers();
+    builder.Services.AddHsts(opts =>
+    {
+        opts.MaxAge = TimeSpan.FromDays(365);
+        opts.IncludeSubDomains = true;
+        opts.Preload = true;
+    });
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    //https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.dataprotection.idataprotectionprovider?view=aspnetcore-6.0
+    //builder.Services.AddDataProtection()
+    //    .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
 
-//https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
-builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
-builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
+    // Add services to the container.
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
 
-ConfigureServices(builder.Services);
+    builder.Logging.ClearProviders();
+    builder.Host.UseNLog();
 
-var app = builder.Build();
 
-//middlewares
-// if you want to catch all exceptions by custom middleware Uncomment the following line
-// And if you don't need it, then comment the following line
-app.UseCustomExceptionHandler();
+    //https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
+    builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
+    builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    ConfigureServices(builder.Services);
+
+    var app = builder.Build();
+
+    //middlewares
+    // if you want to catch all exceptions by custom middleware Uncomment the following line
+    // And if you don't need it, then comment the following line
+    app.UseCustomExceptionHandler();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+    else
+    {
+        // client exception handle : https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-6.0#exception-handler-lambda
+        app.UseHsts(); // https://git.ir/pluralsight-protecting-sensitive-data-from-exposure-in-asp-net-and-asp-net-core-applications/ episode 13
+    }
+
+    app.UseHttpsRedirection();
+    app.UseRouting();
+    app.UseIpRateLimiting();
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        endpoints.MapControllerRoute(
+        name: "areas",
+        pattern: "{area:exists}/{controller=General}/{action=Index}/{id?}");
+
+        endpoints.MapControllers();
+    });
+
+    await app.RunAsync();
 }
-else
+catch (Exception ex)
 {
-    // client exception handle : https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-6.0#exception-handler-lambda
-    app.UseHsts(); // https://git.ir/pluralsight-protecting-sensitive-data-from-exposure-in-asp-net-and-asp-net-core-applications/ episode 13
+    // NLog: catch setup errors
+    logger.Error(ex, "Stopped program because of exception");
+    throw;
+}
+finally
+{
+    // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+    NLog.LogManager.Shutdown();
 }
 
-app.UseHttpsRedirection();
-app.UseRouting();
-app.UseIpRateLimiting();
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-    endpoints.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=General}/{action=Index}/{id?}");
-
-    endpoints.MapControllers();
-});
-
-await app.RunAsync();
 
 void ConfigureServices(IServiceCollection services) // clean code 
 {

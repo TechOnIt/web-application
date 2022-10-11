@@ -7,9 +7,11 @@ namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 public class UserController : BaseController
 {
     #region DI & Ctor's
-    public UserController(IMediator mediator)
+    private readonly ILogger<UserController> _logger;
+    public UserController(IMediator mediator, ILogger<UserController> logger)
         : base(mediator)
     {
+        _logger = logger;
     }
 
     #endregion
@@ -30,8 +32,8 @@ public class UserController : BaseController
 
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ResponseCache(Duration =0,Location =ResponseCacheLocation.None,NoStore =true)]
-        public async Task<IActionResult> SetPassword([FromBody] SetUserPasswordCommand command)
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public async Task<IActionResult> SetPassword([FromBody] SetUserPasswordCommand command)
         => await RunCommandAsync(command);
 
     [HttpPatch("{id}")]
@@ -65,9 +67,9 @@ public class UserController : BaseController
     [HttpGet, ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public async Task<IActionResult> GetUsers([FromQuery] string? phoneNumber,string? email)
+    public async Task<IActionResult> GetUsers([FromQuery] string? phoneNumber, string? email)
     {
-        var filters = new GetUsersCommand() {PhoneNumber=phoneNumber,Email= email };
+        var filters = new GetUsersCommand() { PhoneNumber = phoneNumber, Email = email };
         return await RunCommandAsyncT(filters);
     }
 

@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace iot.Infrastructure;
 
@@ -18,6 +21,8 @@ public static class ConfigureService
         services.AddTransient<ISmtpEmailService, SmtpEmailService>();
         services.AddTransient<IKaveNegarSmsService, KaveNegarSmsService>();
         services.AddTransient<IEncryptionHandlerService, EncryptionHandlerService>();
+
+
 
         //services.AddDataProtection()
         //    .PersistKeysToFileSystem(new DirectoryInfo(""))

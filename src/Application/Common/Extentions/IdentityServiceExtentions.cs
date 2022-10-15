@@ -1,4 +1,5 @@
 ﻿using iot.Application.Common.Enums.IdentityServiceEnums;
+using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.Notifications.Results;
 
 namespace iot.Application.Common.Extentions;
@@ -13,7 +14,7 @@ public static class IdentityServiceExtentions
     const string SucceededUserValidations = "Welcome !";
     #endregion
 
-    public static SigInStatus GetUserSignInStatusResult(this User user,string password="")
+    public static SigInStatus GetUserSignInStatusResult(this User user, string password = "")
     {
         if (user == null)
             return SigInStatus.NotFound;
@@ -30,24 +31,21 @@ public static class IdentityServiceExtentions
         return SigInStatus.Succeeded;
     }
 
-    public static (SigInStatus Status,string message) GetUserSignInStatusResultWithMessage(this User user, string password = "")
+    public static (SigInStatus Status, string message) GetUserSignInStatusResultWithMessage(this User user, string password = "")
     {
         if (user == null)
-            return (SigInStatus.NotFound,NotFound);
+            return (SigInStatus.NotFound, NotFound);
         else if (user.IsBaned is true)
-            return (SigInStatus.WrongInformations,WrongInformations);
+            return (SigInStatus.WrongInformations, WrongInformations);
         else if (user.LockOutDateTime != null)
-            return (SigInStatus.LockUser,LockUser);
+            return (SigInStatus.LockUser, LockUser);
         else if (!string.IsNullOrWhiteSpace(password))
         {
-            //if (user.Password != PasswordHash.Parse(password))
-            //    return (SigInStatus.WrongPassowrd,WrongPassowrd);
-
             if (!user.Password.VerifyPasswordHash(password))
                 return (SigInStatus.WrongPassowrd, WrongPassowrd);
         }
 
-        return (SigInStatus.Succeeded,SucceededUserValidations);
+        return (SigInStatus.Succeeded, SucceededUserValidations);
     }
 
     public static bool SendSuccessfully(this SendStatus status)

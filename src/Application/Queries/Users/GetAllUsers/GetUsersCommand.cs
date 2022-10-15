@@ -1,5 +1,7 @@
 ﻿using iot.Application.Common.Exceptions;
+using iot.Application.Common.ViewModels.Users;
 using iot.Application.Reports.Contracts;
+using iot.Domain.Entities.Identity.UserAggregate;
 using System.Linq.Expressions;
 
 namespace iot.Application.Queries.Users.GetAllUsers;

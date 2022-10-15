@@ -1,6 +1,9 @@
 ﻿using iot.Application.Common.Enums.IdentityServiceEnums;
+using iot.Application.Common.ViewModels.Users;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.Encryptions.Contracts;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 
 namespace iot.Application.Services.Authenticateion;

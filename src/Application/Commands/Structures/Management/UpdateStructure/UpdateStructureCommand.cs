@@ -1,6 +1,7 @@
 ﻿using iot.Application.Common.Interfaces;
 using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 
 namespace iot.Application.Commands.Structures.Management.UpdateStructure;

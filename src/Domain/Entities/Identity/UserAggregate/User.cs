@@ -3,10 +3,11 @@ using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace iot.Domain.Entities.Identity;
+namespace iot.Domain.Entities.Identity.UserAggregate;
 
-public class User : IEntity
+public class User
 {
     public User()
     {
@@ -41,7 +42,7 @@ public class User : IEntity
         instance.IsBaned = false;
         instance.IsDeleted = false;
         instance.MaxFailCount = 0;
-        return instance; 
+        return instance;
     }
     public void SetIsDelete(bool value)
     {
@@ -57,7 +58,7 @@ public class User : IEntity
     }
     public void SetFullName(FullName fullname)
     {
-        this.FullName = fullname;
+        FullName = fullname;
     }
     public void SetIsBaned(bool isBane)
     {
@@ -104,12 +105,21 @@ public class User : IEntity
         MaxFailCount++;
     }
     public int GetUserOtp()
-        => this.OtpCode;
+        => OtpCode;
     public int NewOtpCode()
     {
-        this.OtpCode= new Random().Next(1000, 9000);
-        return this.OtpCode;
+        OtpCode = new Random().Next(1000, 9000);
+        return OtpCode;
     }
+
+    #region Login History Aggregate
+    public IList<LoginHistory> GetLoginHistories()
+        => this.LoginHistories.ToList();
+    public void AddLoginHistory(LoginHistory loginHistory)
+        => this.LoginHistories.Add(loginHistory);
+    public void DeleteLoginHistory(LoginHistory loginHistory)
+        => this.LoginHistories.Remove(loginHistory);
+    #endregion
     #endregion
 
     #region relations

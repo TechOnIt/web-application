@@ -17,12 +17,12 @@ public static class ConfigureService
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        services.AddTransient<IdentityContext>();
-        services.AddTransient<ISmtpEmailService, SmtpEmailService>();
-        services.AddTransient<IKaveNegarSmsService, KaveNegarSmsService>();
+        services.AddScoped<IdentityContext>();
+
+        services.AddTransient<ISmtpEmailService, SmtpEmailService>()
+            .AddTransient<IKaveNegarSmsService, KaveNegarSmsService>();
+
         services.AddTransient<IEncryptionHandlerService, EncryptionHandlerService>();
-
-
 
         //services.AddDataProtection()
         //    .PersistKeysToFileSystem(new DirectoryInfo(""))
@@ -31,19 +31,6 @@ public static class ConfigureService
         //    "<ClientId>",
         //    "<clientSecret>"
         //    );
-
-        return services;
-    }
-    public static IServiceCollection AddIdentityDbContextServices(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddScoped<IdentityContext>();
-
-        //string cs = configuration.GetConnectionString("Development");
-        //if (cs != null)
-        //    services.AddDbContext<IdentityContext>(o =>
-        //    {
-        //        o.UseSqlServer(cs);
-        //    });
 
         // using Microsoft.AspNetCore.DataProtection;
         //services.AddDataProtection()

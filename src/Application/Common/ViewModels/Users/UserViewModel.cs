@@ -1,7 +1,4 @@
-﻿namespace iot.Application.Common.Models;
-
-// I Removed {} for Namespace because we its better to do in c# 10 and .net 6
-// https://dotnetcoretutorials.com/2021/09/20/file-scoped-namespaces-in-c-10/
+﻿namespace iot.Application.Common.ViewModels.Users;
 
 public class UserViewModel
 {
@@ -34,9 +31,9 @@ public class UserViewModel
 
     public UserViewModel(string username, string phonenumber, string password)
     {
-        this.Username = username;
-        this.PhoneNumber = phonenumber;
-        this.Password = PasswordHash.Parse(password);
+        Username = username;
+        PhoneNumber = phonenumber;
+        Password = PasswordHash.Parse(password);
         ConfirmedEmail = false;
         ConfirmedPhoneNumber = false;
         RegisteredDateTime = DateTime.Now;
@@ -50,13 +47,13 @@ public class UserViewModel
     /// </summary>
     /// <param name="Username"></param>
     /// <param name="phonenumber"></param>
-    public UserViewModel(string username,string phonenumber,string password,string name,string surname,string email="")
+    public UserViewModel(string username, string phonenumber, string password, string name, string surname, string email = "")
     {
-        this.Username = username;
-        this.PhoneNumber = phonenumber;
-        this.Password = PasswordHash.Parse(password);
-        this.Email = email;
-        this.ConcurrencyStamp = Concurrency.NewToken();
+        Username = username;
+        PhoneNumber = phonenumber;
+        Password = PasswordHash.Parse(password);
+        Email = email;
+        ConcurrencyStamp = Concurrency.NewToken();
         Name = name;
         Surname = surname;
         ConfirmedEmail = false;
@@ -71,12 +68,12 @@ public class UserViewModel
     public string? Username { get; private set; }
 
     private FullName _fullname;
-    public FullName FullName 
+    public FullName FullName
     {
         get
         {
-            if(_fullname is null)
-                _fullname = new FullName(this.Name, this.Surname);
+            if (_fullname is null)
+                _fullname = new FullName(Name, Surname);
 
             return _fullname;
         }
@@ -89,7 +86,7 @@ public class UserViewModel
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public string? Email { get; private set; }
-    public string? PhoneNumber {get;private set;}
+    public string? PhoneNumber { get; private set; }
     public bool ConfirmedEmail { get; private set; }
     public bool ConfirmedPhoneNumber { get; private set; }
     public DateTime RegisteredDateTime { get; private set; }
@@ -99,15 +96,15 @@ public class UserViewModel
     public short MaxFailCount { get; private set; }
 
     public Concurrency ConcurrencyStamp { get; private set; }
-    public PasswordHash Password { get; private set; } 
+    public PasswordHash Password { get; private set; }
 
     public void SetOrchangePhonenumber(string phonenumber)
     {
-        this.PhoneNumber = phonenumber;
+        PhoneNumber = phonenumber;
     }
 
     public void SetEmail(string email)
     {
-        this.Email = email;
+        Email = email;
     }
 }

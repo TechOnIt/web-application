@@ -5,6 +5,14 @@ namespace iot.Infrastructure.Common.Notifications.SmtpClientEmail;
 
 public class SmtpEmailService : ISmtpEmailService
 {
+    /// <summary>
+    /// Send bulk email to multy addresses.
+    /// </summary>
+    /// <param name="from">From email address.</param>
+    /// <param name="toCollection">Email addresses reciever.</param>
+    /// <param name="subject">Email title.</param>
+    /// <param name="htmlBody">Email body as html format.</param>
+    /// <param name="settings">SMTP client setting.</param>
     public async Task<SendStatus> SendBulkEmailAsync(string from, string[] toCollection, string subject, string htmlBody, SmtpClient settings)
     {
         try
@@ -35,6 +43,14 @@ public class SmtpEmailService : ISmtpEmailService
         }
     }
 
+    /// <summary>
+    /// Send an email to a specific address.
+    /// </summary>
+    /// <param name="from">From email address.</param>
+    /// <param name="to">Email address reciever.</param>
+    /// <param name="subject">Email title.</param>
+    /// <param name="htmlBody">Email body as html format.</param>
+    /// <param name="settings">SMTP client setting.</param>
     public async Task<SendStatus> SendEmailAsync(string from, string to, string subject, string htmlBody, SmtpClient settings)
     {
         try

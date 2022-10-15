@@ -4,13 +4,13 @@ namespace iot.Infrastructure.Common.Extentions;
 
 public static class CryptoTransformExtention
 {
-    public static byte[] Encrypt(this ICryptoTransform cryptoTransform,string plainText)
+    public static byte[] Encrypt(this ICryptoTransform cryptoTransform, string plainText)
     {
-        using(MemoryStream msEncrypt=new MemoryStream())
+        using (MemoryStream msEncrypt = new MemoryStream())
         {
-            using(CryptoStream csEncrypt =new CryptoStream(msEncrypt,cryptoTransform,CryptoStreamMode.Write))
+            using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, cryptoTransform, CryptoStreamMode.Write))
             {
-                using(StreamWriter swEncrypt=new StreamWriter(csEncrypt))
+                using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
                 {
                     swEncrypt.Write(plainText);
                 }

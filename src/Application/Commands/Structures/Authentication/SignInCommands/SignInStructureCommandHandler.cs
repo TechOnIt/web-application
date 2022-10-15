@@ -1,4 +1,5 @@
 ﻿using iot.Application.Common.ViewModels.Structures.Authentication;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 
 namespace iot.Application.Commands.Structures.Authentication.SignInCommands;
 

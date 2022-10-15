@@ -1,5 +1,6 @@
 ﻿using iot.Application.Common.Interfaces;
 using iot.Application.Events.ProductNotifications;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 
 namespace iot.Application.Commands.Place.CreatePlace;
 

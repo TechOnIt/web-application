@@ -2,9 +2,9 @@
 using iot.Domain.ValueObjects;
 using System;
 
-namespace iot.Domain.Entities.Identity;
+namespace iot.Domain.Entities.Identity.UserAggregate;
 
-public class LoginHistory : IEntity
+public class LoginHistory
 {
     #region Constructures
     LoginHistory() { }

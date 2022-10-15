@@ -1,8 +1,10 @@
 ﻿using iot.Application.Common.DTOs.Users.Authentication;
-using iot.Application.Common.Extentions;
 using iot.Application.Common.Security.JwtBearer;
+using iot.Application.Common.ViewModels.Users;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.Notifications.KaveNegarSms;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 
 namespace iot.Application.Services.Authenticateion;
@@ -11,13 +13,11 @@ public class IdentityService : IIdentityService
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
-    //private readonly IJwtService _jwtService;
     private readonly IKaveNegarSmsService _kavenegarAuthService;
 
-    public IdentityService(IUnitOfWorks unitOfWorks, /*IJwtService jwtService,*/ IKaveNegarSmsService kavenegarAuthService)
+    public IdentityService(IUnitOfWorks unitOfWorks, IKaveNegarSmsService kavenegarAuthService)
     {
         _unitOfWorks = unitOfWorks;
-        //_jwtService = jwtService;
         _kavenegarAuthService = kavenegarAuthService;
     }
 
@@ -77,6 +77,7 @@ public class IdentityService : IIdentityService
 
         if (status.Status.IsSucceeded())
         {
+            // TODO:Ashkan
             var _jwtService = new JwtService();
 
             AccessToken token = await _jwtService.GenerateAccessToken(user, cancellationToken);
@@ -127,6 +128,8 @@ public class IdentityService : IIdentityService
         await _unitOfWorks.SqlRepository<User>().UpdateAsync(user);
         await _unitOfWorks.SaveAsync();
 
+        // TODO:Ashkan
+        // Add using this.
         var _jwtService = new JwtService();
         var token = await _jwtService.GenerateAccessToken(user, cancellationToken);
 

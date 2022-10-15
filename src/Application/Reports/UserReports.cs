@@ -1,6 +1,10 @@
 ﻿using iot.Application.Common.Exceptions;
+using iot.Application.Common.ViewModels;
+using iot.Application.Common.ViewModels.Users;
 using iot.Application.Reports.Contracts;
+using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Domain.Entities.Product.StructureAggregate;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 using System.Linq.Expressions;
 using System.Reflection;

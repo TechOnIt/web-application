@@ -1,4 +1,5 @@
 ﻿using iot.Application.Common.DTOs.Users.Authentication;
+using iot.Domain.Entities.Identity.UserAggregate;
 using System.Security.Claims;
 
 namespace iot.Application.Common.Security.JwtBearer;

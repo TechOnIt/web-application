@@ -1,5 +1,5 @@
 ﻿using iot.Application.Common.Interfaces;
-using iot.Application.Repositories.UnitOfWorks.Identity;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 
 namespace iot.Application.Commands.Roles.Management.DeleteRole;
 

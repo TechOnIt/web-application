@@ -14,6 +14,7 @@ using iot.Application.Services.ProductServices.ProductContracts;
 using iot.Infrastructure.Common.Encryptions;
 using iot.Infrastructure.Common.Encryptions.Contracts;
 using iot.Infrastructure.Common.JwtBearerService;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -106,6 +107,8 @@ public static class ConfigureServices
 
     public static IServiceCollection AddCustomAuthenticationServices(this IServiceCollection services)
     {
+        // TODO:
+        // Refactor
         var jwtSettings = new JwtSettings();
 
         services

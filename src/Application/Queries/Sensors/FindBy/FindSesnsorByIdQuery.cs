@@ -1,4 +1,6 @@
-﻿using iot.Domain.Entities.Product.SensorAggregate;
+﻿using iot.Application.Common.ViewModels;
+using iot.Domain.Entities.Product.SensorAggregate;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 
 namespace iot.Application.Queries.Sensors.FindBy;
 

@@ -1,6 +1,8 @@
 ﻿using iot.Application.Common.Exceptions;
+using iot.Application.Common.ViewModels;
 using iot.Application.Reports.Contracts;
 using iot.Domain.Entities.Product.StructureAggregate;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 using System.Linq.Expressions;
 
@@ -16,12 +18,16 @@ public class StructureAggregateReports : IStructureAggregateReports
     }
 
     #endregion
+
     public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure,bool>> filter,CancellationToken cancellationToken)
     {
         try
         {
-            IQueryable<Structure> query = _unitOfWorks._context.Structures.Where(filter);
-            var executeQuery = await query.AsNoTracking().ToListAsync(cancellationToken);
+            IQueryable<Structure> query = _unitOfWorks._context.Structures
+                .Where(filter);
+            var executeQuery = await query
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
 
             return executeQuery.Adapt<IList<StructureViewModel>>();
         }
@@ -30,7 +36,6 @@ public class StructureAggregateReports : IStructureAggregateReports
             throw new StructureException($"server error : {exp.Message}");
         }
     }
-
     
     public async Task<IList<StructureViewModel>> GetstructuresAsync(CancellationToken cancellationToken)
     {
@@ -53,7 +58,6 @@ public class StructureAggregateReports : IStructureAggregateReports
         return structures;
     }
 
-    
     public IList<StructureViewModel>? GetstructuresSync(CancellationToken cancellationToken)
     {
         if (!cancellationToken.IsCancellationRequested)
@@ -74,10 +78,16 @@ public class StructureAggregateReports : IStructureAggregateReports
         return null;
     }
 
-    
+    /// <summary>
+    /// TODO
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <param name="degreeOfParallelism"></param>
+    /// <returns></returns>
+    /// <exception cref="StructureException"></exception>
     public async Task<IList<StructureViewModel>> GetstructuresParallel(CancellationToken cancellationToken, int degreeOfParallelism = 3)
     {
-        IList<StructureViewModel> structures = new List<StructureViewModel>();
+        IList<StructureViewModel> structures = new();
 
         try
         {

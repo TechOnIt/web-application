@@ -1,4 +1,5 @@
-﻿using iot.Application.Reports.Contracts;
+﻿using iot.Application.Common.ViewModels;
+using iot.Application.Reports.Contracts;
 using iot.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
 

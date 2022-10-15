@@ -22,7 +22,7 @@ public static class NotificationExtentions
         Client.Credentials = Credential;
         Client.Host = appSettings.Value.EmailSettings.Host;
         Client.Port = appSettings.Value.EmailSettings.Port;
-        Client.EnableSsl = true;
+        Client.EnableSsl = enabledSll;
 
         return Client;
     }

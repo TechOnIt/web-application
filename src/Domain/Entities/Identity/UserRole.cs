@@ -1,9 +1,10 @@
 ﻿using iot.Domain.Common;
+using iot.Domain.Entities.Identity.UserAggregate;
 using System;
 
 namespace iot.Domain.Entities.Identity;
 
-public class UserRole : IEntity
+public class UserRole
 {
     #region Constructors
     UserRole() { }

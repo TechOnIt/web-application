@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace iot.Infrastructure.Common.Extentions;
+﻿namespace iot.Infrastructure.Common.Extentions;
 
 public static class StringExtentionsInfra
 {
-    public static string Fa2En(this string str)
+    public static string NumberFa2En(this string str)
     {
         return str.Replace("۰", "0")
             .Replace("۱", "1")
@@ -41,8 +35,6 @@ public static class StringExtentionsInfra
             .Replace("ﮑ", "ک")
             .Replace("ك", "ک")
             .Replace("ي", "ی")
-            .Replace(" ", " ")
-            .Replace("‌", " ")
-            .Replace("ھ", "ه");//.Replace("ئ", "ی");
+            .Replace("ھ", "ه");
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace iot.Domain.Entities.Identity;
 
-public class Role : IEntity
+public class Role
 {
     #region
     Role() { }

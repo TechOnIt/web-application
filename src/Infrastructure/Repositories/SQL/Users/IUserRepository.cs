@@ -1,4 +1,4 @@
-﻿using iot.Domain.Entities.Identity;
+﻿using iot.Domain.Entities.Identity.UserAggregate;
 using System.Linq.Expressions;
 
 namespace iot.Application.Repositories.SQL.Users;

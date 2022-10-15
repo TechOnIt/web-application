@@ -32,6 +32,10 @@ public class AppSettingsService<T> : IAppSettingsService<T> where T : class, new
 
     public T Value => _options.CurrentValue;
 
+    /// <summary>
+    /// Update a specitif section in appsettings.json.
+    /// </summary>
+    /// <param name="applyChanges">TODO:Ashkan</param>
     public void Update(Action<T> applyChanges)
     {
         var fileProvider = _environment.ContentRootFileProvider;

@@ -1,6 +1,7 @@
 ﻿using iot.Application.Common.Interfaces;
 using iot.Application.Events.ProductNotifications;
 using iot.Domain.Enums;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 
 namespace iot.Application.Commands.Sensor.UpdateSensor;
 

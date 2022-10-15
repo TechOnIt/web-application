@@ -1,4 +1,5 @@
 ﻿using iot.Domain.Entities.Identity;
+using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Domain.Entities.Product;
 using iot.Domain.Entities.Product.SensorAggregate;
 using iot.Domain.Entities.Product.StructureAggregate;
@@ -34,11 +35,12 @@ public class IdentityContext : DbContext
         //optionsBuilder.UseSqlServer(configuration.GetConnectionString("CoreDevelopment"));
     }
 
-
+    #region Identity
     public DbSet<User> Users { get; set; }
+    public DbSet<LoginHistory> LoginHistories { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
-    public DbSet<LoginHistory> LoginHistories { get; set; }
+    #endregion
 
     #region products
     public DbSet<Structure> Structures { get; set; }

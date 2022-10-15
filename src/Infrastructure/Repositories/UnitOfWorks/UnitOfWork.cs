@@ -11,7 +11,7 @@ using iot.Infrastructure.Common.Extentions;
 using iot.Infrastructure.Repositories.SQL.Device;
 using iot.Infrastructure.Common.Encryptions.Contracts;
 
-namespace iot.Application.Repositories.UnitOfWorks.Identity;
+namespace iot.Infrastructure.Repositories.UnitOfWorks;
 
 public class UnitOfWork : IUnitOfWorks
 {
@@ -135,7 +135,7 @@ public class UnitOfWork : IUnitOfWorks
 
                 if (!string.IsNullOrWhiteSpace(val))
                 {
-                    var newVal = val.Fa2En().FixPersianChars();
+                    var newVal = val.NumberFa2En().FixPersianChars();
                     if (newVal == val)
                         continue;
                     property.SetValue(item.Entity, newVal, null);

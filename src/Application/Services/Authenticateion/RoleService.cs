@@ -1,5 +1,6 @@
 ﻿using iot.Application.Common.Enums.IdentityServiceEnums;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 
 namespace iot.Application.Services.Authenticateion;
 

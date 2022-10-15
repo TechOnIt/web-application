@@ -1,3 +1,5 @@
+using iot.Domain.Entities.Identity.UserAggregate;
+
 namespace iot.Domain.UnitTests.Entities;
 
 public class UserTests

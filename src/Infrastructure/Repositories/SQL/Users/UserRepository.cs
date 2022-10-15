@@ -1,4 +1,4 @@
-﻿using iot.Domain.Entities.Identity;
+﻿using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.Encryptions;
 using iot.Infrastructure.Persistence.Context.Identity;
 using Microsoft.EntityFrameworkCore;

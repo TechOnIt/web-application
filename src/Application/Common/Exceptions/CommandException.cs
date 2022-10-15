@@ -15,8 +15,7 @@ public class CommandException : AppException
     }
 
     public CommandException(IdentityCrudStatus operationStatus, string message)
-        :this(operationStatus, message, null,null)
+        : this(operationStatus, message, null, null)
     {
     }
-
 }

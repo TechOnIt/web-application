@@ -2,18 +2,17 @@
 
 public class StructureException : AppException
 {
-	public StructureException()
+    #region Ctors
+    public StructureException()
 	{
-
 	}
 
 	public StructureException(string message) :base(message)
 	{
-
 	}
 
 	public StructureException(string message,Exception innerexception)
 	{
-
 	}
+    #endregion
 }

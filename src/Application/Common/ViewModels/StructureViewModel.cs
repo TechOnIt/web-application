@@ -1,6 +1,7 @@
 ﻿using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
-namespace iot.Application.Common.Models;
+
+namespace iot.Application.Common.ViewModels;
 
 public class StructureViewModel
 {
@@ -9,9 +10,11 @@ public class StructureViewModel
     public string Description { get; set; }
     public bool IsActive { get; set; }
     public StuctureType Type { get; set; }
-    public Concurrency  ApiKey { get; set; }
+    public Concurrency ApiKey { get; set; }
     public DateTime CreateDate { get; set; }
     public DateTime? ModifyDate { get; set; }
+
+    #region explicit casting
 
     public static explicit operator Structure(StructureViewModel viewModel)
     {
@@ -23,4 +26,5 @@ public class StructureViewModel
             IsActive = viewModel.IsActive
         };
     }
+    #endregion
 }

@@ -1,20 +1,20 @@
 ﻿using iot.Domain.Entities.Product;
 using iot.Domain.Enums;
 
-namespace iot.Application.Common.Models;
+namespace iot.Application.Common.ViewModels;
 
 public class DeviceViewModel
 {
-
+    #region Ctors
     public DeviceViewModel()
     {
-
     }
 
-    public DeviceViewModel(Guid id,Guid placeId,int pin,DeviceType deviceType,bool isHight)
+    public DeviceViewModel(Guid id, Guid placeId, int pin, DeviceType deviceType, bool isHight)
     {
 
     }
+    #endregion
 
     public Guid Id { get; set; }
     public int Pin { get; set; }
@@ -22,8 +22,10 @@ public class DeviceViewModel
     public bool IsHigh { get; set; }
     public Guid PlaceId { get; set; }
 
+    #region explicit casting
     public static explicit operator Device(DeviceViewModel viewModel)
     {
-        return new Device(viewModel.Pin,viewModel.DeviceType,viewModel.IsHigh,viewModel.PlaceId);
+        return new Device(viewModel.Pin, viewModel.DeviceType, viewModel.IsHigh, viewModel.PlaceId);
     }
+    #endregion
 }

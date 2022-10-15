@@ -2,30 +2,29 @@
 
 public class ReportExceptions : AppException
 {
-	#region properties
-	public Guid? UserId { get; set; }
-	#endregion
+    #region Ctors
+    public ReportExceptions()
+    {
 
-	public ReportExceptions()
-	{
+    }
 
-	}
+    public ReportExceptions(string message) : base(message)
+    {
 
-	public ReportExceptions(string message):base(message)
-	{
+    }
 
-	}
+    public ReportExceptions(string message, Exception innerException)
+        : base(message, innerException)
+    {
 
-	public ReportExceptions(string message,Exception innerException)
-		:base(message,innerException)
-	{
+    }
 
-	}
+    public ReportExceptions(string message, Guid? userId)
+        : base(message)
+    {
+        UserId = userId;
+    }
+    #endregion
 
-	public ReportExceptions(string message, Guid? userId)
-		:base(message)
-	{
-		UserId = userId;
-	}
-
+    public Guid? UserId { get; set; }
 }

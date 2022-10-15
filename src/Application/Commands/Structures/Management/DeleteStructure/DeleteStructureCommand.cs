@@ -1,4 +1,5 @@
 ﻿using iot.Application.Common.Interfaces;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 
 namespace iot.Application.Commands.Structures.Management.DeleteStructure;
 

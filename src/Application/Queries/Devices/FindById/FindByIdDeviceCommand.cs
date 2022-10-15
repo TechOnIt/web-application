@@ -1,4 +1,6 @@
-﻿using iot.Domain.Entities.Product;
+﻿using iot.Application.Common.ViewModels;
+using iot.Domain.Entities.Product;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 
 namespace iot.Application.Queries.Devices.FindById;

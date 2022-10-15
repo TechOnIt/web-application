@@ -1,4 +1,4 @@
-﻿using iot.Domain.Entities.Identity;
+﻿using iot.Domain.Entities.Identity.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

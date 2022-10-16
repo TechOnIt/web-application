@@ -26,12 +26,14 @@ public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand
     public async Task<Result<AccessToken>> Handle(SignInUserCommand request, CancellationToken cancellationToken)
     {
         var signInUserResult = await _identityService.SignInUserAsync(request.Username,request.Password,cancellationToken);
+        if (!signInUserResult.HasValue)
+            return Result.Fail("Server side error has occured.");
 
-        if (signInUserResult.Token is null)
-            return Result.Fail(signInUserResult.Message);
+        if (signInUserResult.Value.Token is null)
+            return Result.Fail(signInUserResult.Value.Message);
 
         await _mediator.Publish(new SignInUserNotifications()); // notification events
-        return Result.Ok(signInUserResult.Token);
+        return Result.Ok(signInUserResult.Value.Token);
     }
 }
 

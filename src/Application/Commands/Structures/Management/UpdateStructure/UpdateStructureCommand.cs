@@ -6,7 +6,7 @@ using Mapster;
 
 namespace iot.Application.Commands.Structures.Management.UpdateStructure;
 
-public class UpdateStructureCommand : IRequest<Result> , ICommittableRequest
+public class UpdateStructureCommand : IRequest<Result>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }
@@ -29,15 +29,12 @@ public class UpdatetructureCommandHandler : IRequestHandler<UpdateStructureComma
     {
         try
         {
-            var findStructure = await _unitOfWorks.StructureRepository.GetStructureByIdAsyncAsNoTracking(request.Id,cancellationToken);
+            var findStructure = await _unitOfWorks.StructureRepository.GetStructureByIdAsyncAsNoTracking(request.Id, cancellationToken);
             if (findStructure == null)
                 return Result.Fail("Structure not found !");
-            else
-            {
-                var model = request.Adapt<Structure>();
-                await _unitOfWorks.StructureRepository.UpdateStructureAsync(model,cancellationToken);
-                return Result.Ok();
-            }
+            var model = request.Adapt<Structure>();
+            await _unitOfWorks.StructureRepository.UpdateStructureAsync(model, cancellationToken);
+            return Result.Ok();
         }
         catch (Exception exp)
         {

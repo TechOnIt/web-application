@@ -24,6 +24,9 @@ public class BaseController : ControllerBase
     #region Command
     protected async Task<IActionResult> RunCommandAsync<TRequest>(TRequest request)
     {
+        if(request == null)
+            return NotFound();
+
         var resultObject = await _mediator.Send(request);
 
         var result = resultObject as Result<StructureAccessToken>;

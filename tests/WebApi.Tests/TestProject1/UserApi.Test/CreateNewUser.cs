@@ -22,22 +22,22 @@ public class CreateNewUser
     #endregion
 
 
-    public async void GivenRequestToCreateNewUser()
-    {
+    //public void GivenRequestToCreateNewUser()
+    //{
 
-    }
+    //}
 
-    public async Task WhenNewUserAddedToSystemWithDetails()
-    {
-        this._command = new CreateUserCommand
-        {
-            Name = "testName",
-            Surname = "testsurname",
-            Email = "testEmail",
-            Password = "Aa123456@",
-            PhoneNumber = "09124133486"
-        };
-    }
+    //public void WhenNewUserAddedToSystemWithDetails()
+    //{
+    //    this._command = new CreateUserCommand
+    //    {
+    //        Name = "testName",
+    //        Surname = "testsurname",
+    //        Email = "testEmail",
+    //        Password = "Aa123456@",
+    //        PhoneNumber = "09124133486"
+    //    };
+    //}
 
     public async Task ThenResponseShouldBe200Ok()
     {

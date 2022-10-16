@@ -9,7 +9,7 @@ namespace iot.Application.Commands.Users.Management.CreateUser;
 
 public class CreateUserCommand : IRequest<Result<Guid>>, ICommittableRequest
 {
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
     public string? Password { get; set; }
     public string? Email { get; set; }
     public string? Name { get; set; }
@@ -42,7 +42,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
             else if (result.Status.IsFailed())
                 return Result.Fail("An error occurred");
 
-            return Result.Ok((Guid)result.UserId);
+            // TODO:
+            // Refactor this response.
+            if (!result.UserId.HasValue)
+                return Result.Ok();
+
+            return Result.Ok(result.UserId.Value);
         }
         catch (AppException exp)
         {

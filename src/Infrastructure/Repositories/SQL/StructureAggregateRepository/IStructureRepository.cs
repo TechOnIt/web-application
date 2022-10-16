@@ -23,8 +23,8 @@ public interface IStructureRepository
     Task<Place> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken);
     Task<Structure> GetStructureByIdAsync(Guid structureId, CancellationToken cancellationToken);
 
-    Task<Place> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken);
-    Task<Structure> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken);
+    Task<Place?> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken);
+    Task<Structure?> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken);
 
     Task<IList<Structure>> GetAllStructuresByFilterAsync(CancellationToken cancellationToken, Expression<Func<Structure, bool>> filter = null);
     Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>> filter = null);

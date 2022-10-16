@@ -30,8 +30,9 @@ public class StructureController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Create([FromBody] CreateStructureCommand structure)
     {
-        if (!User.Identity.IsAuthenticated)
-            return Unauthorized();
+        if (User.Identity != null)
+            if (!User.Identity.IsAuthenticated)
+                return Unauthorized();
 
         var cancellation = new CancellationToken();
         var result = await _mediator.Send(structure, cancellation);
@@ -43,8 +44,9 @@ public class StructureController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Update([FromBody] UpdateStructureCommand structure)
     {
-        if (!User.Identity.IsAuthenticated)
-            return Unauthorized();
+        if (User.Identity != null)
+            if (!User.Identity.IsAuthenticated)
+                return Unauthorized();
 
         var stoppingToken = new CancellationToken();
         var result = await _mediator.Send(structure, stoppingToken);
@@ -57,10 +59,10 @@ public class StructureController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Delete(string id)
     {
-        if (!User.Identity.IsAuthenticated)
-            return Unauthorized();
+        if (User.Identity != null)
+            if (!User.Identity.IsAuthenticated)
+                return Unauthorized();
 
-        var cancellOperation = new CancellationToken();
         var result = await _mediator.Send(new DeleteStructureCommand() { StructureId = Guid.Parse(id) });
         return Ok(result);
     }

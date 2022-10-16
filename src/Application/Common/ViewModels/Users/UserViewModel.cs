@@ -47,7 +47,7 @@ public class UserViewModel
     /// </summary>
     /// <param name="Username"></param>
     /// <param name="phonenumber"></param>
-    public UserViewModel(string username, string phonenumber, string password, string name, string surname, string email = "")
+    public UserViewModel(string username, string phonenumber, string? password, string? name, string? surname, string? email = "")
     {
         Username = username;
         PhoneNumber = phonenumber;

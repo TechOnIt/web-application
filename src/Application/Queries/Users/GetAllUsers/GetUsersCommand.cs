@@ -27,7 +27,7 @@ public class GetUsersCommandHandler : IRequestHandler<GetUsersCommand, Result<IL
         try
         {
             IList<UserViewModel> users = new List<UserViewModel>();
-            Expression<Func<User, bool>> getusersExpression = null;
+            Expression<Func<User, bool>>? getusersExpression = null;
 
             if (!string.IsNullOrWhiteSpace(request.PhoneNumber) || !string.IsNullOrWhiteSpace(request.Email))
             {

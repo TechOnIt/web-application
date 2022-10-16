@@ -160,7 +160,8 @@ public class UserReports : IUserReports
             throw new ReportExceptions($"error in geting all user devices by user Id : {exp.UserId}");
         }
     }
-    public PropertyInfo GetUserProperty(string propertyName)
+
+    public PropertyInfo? GetUserProperty(string propertyName)
     {
         // get all public static properties of MyClass type
         PropertyInfo[] propertyInfos;
@@ -172,7 +173,7 @@ public class UserReports : IUserReports
                 delegate (PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
                 { return propertyInfo1.Name.CompareTo(propertyInfo2.Name); });
 
-        PropertyInfo result = null;
+        PropertyInfo? result = null;
 
         // write property names
         foreach (PropertyInfo propertyInfo in propertyInfos)

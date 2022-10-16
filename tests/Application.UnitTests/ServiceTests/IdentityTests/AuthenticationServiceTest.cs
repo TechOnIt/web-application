@@ -38,37 +38,41 @@ public class AuthenticationServiceTest
     public string Password { get; set; }
     #endregion
 
-    public void GivenRequestToSignInExistsUserInSystem()
-    {
+    // TODO:
+    // Ashkan
+    // What this :/
 
-    }
+    //public void GivenRequestToSignInExistsUserInSystem()
+    //{
 
-    public void WhenAddedPhonenumberAndPasswordAreRight()
-    {
-        this.Phonenumber = "09124133486";
-        this.Password = "Aa123456@";
-    }
+    //}
 
-    public async Task ThenReturnsTokenSuccessfully()
-    {
-        var service = Subject();
-        var userModel = NewUserInstance();
+    //public void WhenAddedPhonenumberAndPasswordAreRight()
+    //{
+    //    this.Phonenumber = "09124133486";
+    //    this.Password = "Aa123456@";
+    //}
 
-        _unitOfWorks.Setup(a => a.UserRepository.FindUserByPhoneNumberWithRolesAsyncNoTracking(this.Phonenumber, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(userModel);
+    //public async Task ThenReturnsTokenSuccessfully()
+    //{
+    //    var service = Subject();
+    //    var userModel = NewUserInstance();
 
-        _jwtService.Setup(a => a.GenerateAccessToken(userModel, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new AccessToken() { Token = "sdhksdhgkhsdkgsd" });
+    //    _unitOfWorks.Setup(a => a.UserRepository.FindUserByPhoneNumberWithRolesAsyncNoTracking(this.Phonenumber, It.IsAny<CancellationToken>()))
+    //        .ReturnsAsync(userModel);
 
-        var cancellationToken = new CancellationTokenSource();
-        var result = await service.SignInUserAsync(this.Phonenumber, this.Password, cancellationToken.Token);
+    //    _jwtService.Setup(a => a.GenerateAccessToken(userModel, It.IsAny<CancellationToken>()))
+    //        .ReturnsAsync(new AccessToken() { Token = "sdhksdhgkhsdkgsd" });
 
-        Assert.NotNull(result.Token.Token);
-        Assert.NotNull(result.Message);
+    //    var cancellationToken = new CancellationTokenSource();
+    //    var result = await service.SignInUserAsync(this.Phonenumber, this.Password, cancellationToken.Token);
 
-        Assert.Equal("sdhksdhgkhsdkgsd", result.Token.Token);
-        Assert.Equal("Welcome !", result.Message);
-    }
+    //    Assert.NotNull(result.Token.Token);
+    //    Assert.NotNull(result.Message);
+
+    //    Assert.Equal("sdhksdhgkhsdkgsd", result.Token.Token);
+    //    Assert.Equal("Welcome !", result.Message);
+    //}
 
     [Fact]
     public void Sould_User_Succeesfully_Authenticated_With_Right_Informations()

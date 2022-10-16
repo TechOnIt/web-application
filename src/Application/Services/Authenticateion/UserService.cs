@@ -22,6 +22,9 @@ public class UserService : IUserService
 
     public async Task<(Guid? UserId, IdentityCrudStatus Status)> CreateUserAsync(UserViewModel user, CancellationToken cancellationToken)
     {
+        if (user.PhoneNumber is null)
+            return (null, IdentityCrudStatus.Failed);
+
         var isDuplicate = await _unitOfWorks.UserRepository.IsExistsUserByPhoneNumberAsync(user.PhoneNumber);
         if (isDuplicate)
             return (null, IdentityCrudStatus.Duplicate);

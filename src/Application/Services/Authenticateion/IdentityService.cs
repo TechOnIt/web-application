@@ -69,17 +69,20 @@ public class IdentityService : IIdentityService
         return (token, "welcome !");
     }
 
-    public async Task<(AccessToken Token, string Message)> SignInUserAsync(string phoneNumber, string password, CancellationToken cancellationToken)
+    public async Task<(AccessToken Token, string Message)?> SignInUserAsync(string phoneNumber, string password, CancellationToken cancellationToken)
     {
         var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesAsyncNoTracking(phoneNumber, cancellationToken);
+        if (user is null)
+            return null;
         var status = user.GetUserSignInStatusResultWithMessage(password);
-        string message = string.Empty;
 
         if (status.Status.IsSucceeded())
         {
-            // TODO:Ashkan
+            string message = string.Empty;
+            // TODO:
+            // Ashkan
+            // Add using
             var _jwtService = new JwtService();
-
             AccessToken token = await _jwtService.GenerateAccessToken(user, cancellationToken);
             if (token.Token is null)
                 message = "user is not authenticated !";

@@ -8,16 +8,18 @@ public static class EnumExtensions
     public static string ToDisplay(this Enum value, DisplayProperty property = DisplayProperty.Name)
     {
         Assert.NotNull(value, nameof(value));
-        List<string> Messages = new List<string>();
+        List<string> messages = new List<string>();
 
         var attribute = value.GetType().GetField(value.ToString())
             .GetCustomAttributes<DisplayAttribute>(false).FirstOrDefault();
 
         if (attribute == null)
-            return Messages[0];
+            return messages[0];
 
-        var propValue = attribute.GetType().GetProperty(property.ToString()).GetValue(attribute, null);
-        return propValue.ToString();
+        object? propValue = attribute.GetType().GetProperty(property.ToString()).GetValue(attribute, null);
+        if (propValue != null)
+            return propValue.ToString();
+        return messages[0];
     }
 
     public static List<string> ToDisplays(this Enum value, DisplayProperty property = DisplayProperty.Name)

@@ -26,7 +26,7 @@ public class CreatePerformanceReportCommandHandler : IRequestHandler<CreatePerfo
     {
         try
         {
-            if (request.Id == null || request.Id == Guid.Empty)
+            if (request.Id == Guid.Empty)
                 request.Id = Guid.NewGuid();
 
             await _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.PerformanceReport>()

@@ -1,6 +1,7 @@
 ﻿using iot.Application.Common.Enums.IdentityServiceEnums;
 using iot.Application.Common.Exceptions;
 using iot.Application.Common.Interfaces;
+using iot.Application.Common.ViewModels.Users;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 using Microsoft.Extensions.Logging;
 
@@ -30,11 +31,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
 
     public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var userViewModel = new UserViewModel(request.PhoneNumber, request.PhoneNumber, request.Password,request.Name,request.Surname,request.Email);
+        var userViewModel = new UserViewModel(request.PhoneNumber, request.PhoneNumber, request.Password,
+            request.Name, request.Surname, request.Email);
 
         try
         {
-            var result = await _userService.CreateUserAsync(userViewModel,cancellationToken);
+            var result = await _userService.CreateUserAsync(userViewModel, cancellationToken);
             if (result.Status.IsDuplicate())
                 return Result.Fail("user with this phonenumber has already been registered in the system");
             else if (result.Status.IsFailed())
@@ -44,8 +46,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
         }
         catch (AppException exp)
         {
-            throw new CommandException(IdentityCrudStatus.ServerError,$"{DateTime.Now}",exp,null);
+            throw new CommandException(IdentityCrudStatus.ServerError, $"{DateTime.Now}", exp, null);
         }
     }
 }
-

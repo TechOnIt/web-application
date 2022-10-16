@@ -1,12 +1,10 @@
-﻿using FluentValidation;
-using MediatR;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System.Text;
 
 namespace iot.Application.Common.Behaviors
 {
     public class ValidateCommandBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : MediatR.IRequest<TResponse>
+        where TRequest : IRequest<TResponse>
     {
         // general command validation for all commands
 
@@ -24,7 +22,7 @@ namespace iot.Application.Common.Behaviors
         }
         #endregion
 
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             // validate our commands in these lines of linq expression
             // what we did here ? we found our validation class related 
@@ -36,7 +34,7 @@ namespace iot.Application.Common.Behaviors
                 .SelectMany(result => result.Errors)
                 .Where(a => a != null)
                 .ToList();
-            
+
             if (errors.Any()) // if we have any kind of error
             {
                 #region append all errors into an instance of string builder

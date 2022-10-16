@@ -2,7 +2,7 @@
 
 namespace iot.Application.Common.Behaviors;
 
-public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : MediatR.IRequest<TResponse>
+public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     #region Constructor
     private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
@@ -13,7 +13,7 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
     }
     #endregion
 
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"Handling {typeof(TRequest).Name}");
 

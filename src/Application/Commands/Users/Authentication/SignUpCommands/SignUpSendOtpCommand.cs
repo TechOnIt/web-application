@@ -1,4 +1,5 @@
-﻿using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using iot.Application.Common.ViewModels.Users;
+using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 
 namespace iot.Application.Commands.Users.Authentication.SignUpCommands;
 

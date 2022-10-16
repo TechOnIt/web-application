@@ -1,15 +1,9 @@
-﻿using iot.Infrastructure.Common.Encryptions.Contracts;
-using iot.Infrastructure.Common.Encryptions;
+﻿using iot.Infrastructure.Common.Encryptions;
+using iot.Infrastructure.Common.Encryptions.Contracts;
 using iot.Infrastructure.Common.Notifications.KaveNegarSms;
 using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
 using iot.Infrastructure.Persistence.Context.Identity;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Logging;
-using NLog.Web;
 
 namespace iot.Infrastructure;
 

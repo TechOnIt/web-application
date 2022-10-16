@@ -8,12 +8,17 @@ public class UserController : BaseController
 {
     #region DI & Ctor's
     private readonly ILogger<UserController> _logger;
+
     public UserController(IMediator mediator, ILogger<UserController> logger)
         : base(mediator)
     {
         _logger = logger;
     }
 
+    public UserController(IMediator mediator)
+        : base(mediator)
+    {
+    }
     #endregion
 
     #region Commands

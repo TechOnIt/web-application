@@ -87,7 +87,7 @@ public class StructureAggregateReports : IStructureAggregateReports
     /// <exception cref="StructureException"></exception>
     public async Task<IList<StructureViewModel>> GetstructuresParallel(CancellationToken cancellationToken, int degreeOfParallelism = 3)
     {
-        IList<StructureViewModel> structures = new();
+        IList<StructureViewModel> structures = new List<StructureViewModel>();
 
         try
         {

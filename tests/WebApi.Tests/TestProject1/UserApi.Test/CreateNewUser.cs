@@ -3,7 +3,7 @@ using FluentResults;
 using iot.Application.Commands.Users.Management.CreateUser;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TestProject1.UserApi.Test;
+namespace WebApi.Tests.UserApi.Test;
 
 public class CreateNewUser
 {

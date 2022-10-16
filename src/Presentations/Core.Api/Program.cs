@@ -1,4 +1,3 @@
-using iot.Application;
 using iot.Application.Commands;
 using iot.Application.Common.DTOs.Settings;
 using iot.Application.Queries;
@@ -6,9 +5,6 @@ using MediatR;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Infrastructure & Database.
-builder.Services.AddIdentityDbContextServices(builder.Configuration);
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();

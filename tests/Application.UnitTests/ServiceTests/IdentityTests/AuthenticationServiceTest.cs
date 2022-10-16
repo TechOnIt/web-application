@@ -1,9 +1,9 @@
 ﻿using iot.Application.Common.DTOs.Users.Authentication;
 using iot.Application.Common.Security.JwtBearer;
-using iot.Application.Repositories.UnitOfWorks.Identity;
 using iot.Application.Services.Authenticateion;
-using iot.Domain.Entities.Identity;
+using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Domain.ValueObjects;
+using iot.Infrastructure.Repositories.UnitOfWorks;
 using TestStack.BDDfy;
 
 namespace iot.Application.UnitTests.ServiceTests.IdentityTests;
@@ -24,13 +24,13 @@ public class AuthenticationServiceTest
 
     private User NewUserInstance()
     {
-        var user= User.CreateNewInstance("ashnoori11@gmail.com", "09124133486");
+        var user = User.CreateNewInstance("ashnoori11@gmail.com", "09124133486");
         user.SetPassword(PasswordHash.Parse("Aa123456@"));
         return user;
     }
 
     private IdentityService Subject()
-        => new IdentityService(_unitOfWorks.Object,null);
+        => new IdentityService(_unitOfWorks.Object, null);
     #endregion
 
     #region model

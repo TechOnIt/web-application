@@ -22,7 +22,6 @@ public abstract class CommandHandler<TRequest, TResult> : IRequestHandler<TReque
         catch (Exception ex)
         {
             // TODO:
-            // Reza
             // log error.
             result = new TResult();
         }

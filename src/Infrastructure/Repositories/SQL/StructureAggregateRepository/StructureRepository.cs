@@ -1,5 +1,5 @@
 ﻿using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Infrastructure.Persistence.Context.Identity;
+using iot.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

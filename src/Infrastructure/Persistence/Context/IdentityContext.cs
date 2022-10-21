@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
-namespace iot.Infrastructure.Persistence.Context.Identity;
+namespace iot.Infrastructure.Persistence.Context;
 
 public class IdentityContext : DbContext
 {

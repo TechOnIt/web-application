@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using iot.Infrastructure.Persistence.Context.Identity;
+using iot.Infrastructure.Persistence.Context;
 
 #nullable disable
 

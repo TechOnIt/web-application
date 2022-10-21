@@ -2,7 +2,7 @@
 using iot.Infrastructure.Common.Encryptions.Contracts;
 using iot.Infrastructure.Common.Notifications.KaveNegarSms;
 using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
-using iot.Infrastructure.Persistence.Context.Identity;
+using iot.Infrastructure.Persistence.Context;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace iot.Infrastructure;

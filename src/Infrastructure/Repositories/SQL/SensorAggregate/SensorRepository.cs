@@ -1,5 +1,5 @@
 ﻿using iot.Domain.Entities.Product.SensorAggregate;
-using iot.Infrastructure.Persistence.Context.Identity;
+using iot.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace iot.Infrastructure.Repositories.SQL.SensorAggregate;

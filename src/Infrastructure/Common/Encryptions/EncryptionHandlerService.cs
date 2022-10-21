@@ -1,5 +1,5 @@
 ﻿using iot.Infrastructure.Common.Encryptions.Contracts;
-using iot.Infrastructure.Persistence.Context.Identity;
+using iot.Infrastructure.Persistence.Context;
 using iot.iot.Infrastructure.Common.Encryptions.SecurityTypes;
 using Microsoft.EntityFrameworkCore;
 

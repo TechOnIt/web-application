@@ -68,7 +68,6 @@ public class UserController : BaseController
     #endregion
 
     #region Queries
-
     [HttpGet, ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -77,6 +76,5 @@ public class UserController : BaseController
         var filters = new GetUsersCommand() { PhoneNumber = phoneNumber, Email = email };
         return await RunCommandAsyncT(filters);
     }
-
     #endregion
 }

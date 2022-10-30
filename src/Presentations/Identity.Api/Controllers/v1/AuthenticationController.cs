@@ -40,7 +40,7 @@ public class AuthenticationController : BaseController
         => await RunCommandAsyncT(otpWithPhoneNumber);
 
     [HttpGet]
-    public async Task<IActionResult> SignInOtp([FromBody] SendOtpSmsCommand getSignInOtpCode)
+    public async Task<IActionResult> SignInOtp([FromQuery] SendOtpSmsCommand getSignInOtpCode)
         => await RunCommandAsyncT(getSignInOtpCode);
 
     [HttpPost]

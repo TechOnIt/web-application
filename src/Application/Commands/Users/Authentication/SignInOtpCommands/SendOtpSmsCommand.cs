@@ -1,11 +1,10 @@
-﻿using FluentValidation.Validators;
-using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 
 namespace iot.Application.Commands.Users.Authentication.SignInOtpCommands;
 
 public class SendOtpSmsCommand : IRequest<Result<string>>
 {
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
 }
 
 public class SignInOtpCommandHandler : IRequestHandler<SendOtpSmsCommand, Result<string>>
@@ -20,8 +19,8 @@ public class SignInOtpCommandHandler : IRequestHandler<SendOtpSmsCommand, Result
 
     public async Task<Result<string>> Handle(SendOtpSmsCommand request, CancellationToken cancellationToken)
     {
-        var otpCode = await _identityService.SendOtpAsync(request.PhoneNumber,cancellationToken);
-        if(otpCode.Code ==0)
+        var otpCode = await _identityService.SendOtpAsync(request.PhoneNumber, cancellationToken);
+        if (otpCode.Code == 0)
             return Result.Fail(otpCode.Message);
 
         return Result.Ok("sms has been send");

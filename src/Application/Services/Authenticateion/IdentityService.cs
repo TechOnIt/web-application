@@ -30,8 +30,8 @@ public class IdentityService : IIdentityService
         if (user is null)
             return (0, $"cant find user with phonenumber : {phoneNumber}");
 
-        if (user.ConfirmedPhoneNumber == false)
-            return (0, "phoennumber is not confirmed !");
+        //if (user.ConfirmedPhoneNumber == false)
+        //    return (0, "phoennumber is not confirmed !");
 
         if (user.OtpCode == 0)
         {

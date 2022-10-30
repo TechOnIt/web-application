@@ -2,5 +2,5 @@
 
 internal interface IDataInitializer
 {
-    Task InitializeData();
+    Task InitializeDataAsync();
 }

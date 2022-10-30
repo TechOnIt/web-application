@@ -2,11 +2,12 @@ using AspNetCoreRateLimit;
 using iot.Application;
 using iot.Application.Common.DTOs.Settings;
 using iot.Infrastructure;
+using iot.Infrastructure.Common.Extentions;
 using NLog;
 using NLog.Web;
 using System.Reflection;
 
-var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
 try
@@ -21,8 +22,8 @@ try
         opts.Preload = true;
     });
 
-    //https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.dataprotection.idataprotectionprovider?view=aspnetcore-6.0
-    //builder.Services.AddDataProtection()
+    // https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.dataprotection.idataprotectionprovider?view=aspnetcore-6.0
+    // builder.Services.AddDataProtection()
     //    .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
 
     // Add services to the container.
@@ -33,8 +34,8 @@ try
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 
-
-    //https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
+    // Map app setting json to app setting object.
+    // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
     builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
     builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
 
@@ -42,7 +43,7 @@ try
 
     var app = builder.Build();
 
-    //middlewares
+    // middlewares
     // if you want to catch all exceptions by custom middleware Uncomment the following line
     // And if you don't need it, then comment the following line
     app.UseCustomExceptionHandler();
@@ -63,6 +64,11 @@ try
     app.UseRouting();
     app.UseIpRateLimiting();
 
+    #region Custom Middleware
+    // Initialize database data seed.
+    await app.InitializeDatabaseAsync(builder);
+
+    #endregion
     app.UseEndpoints(endpoints =>
     {
         endpoints.MapControllerRoute(
@@ -87,7 +93,7 @@ catch (Exception ex)
 finally
 {
     // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
-    NLog.LogManager.Shutdown();
+    LogManager.Shutdown();
 }
 
 
@@ -96,10 +102,10 @@ void ConfigureServices(IServiceCollection services) // clean code
     services.AddInfrastructureServices();
     services.AddApplicationServices();
 
-    //Register CommandeHandlers
+    // Register CommandeHandlers
     services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
 
-    //Register QueryHandlers
+    // Register QueryHandlers
     services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
 
     services.AddFluentValidationServices();

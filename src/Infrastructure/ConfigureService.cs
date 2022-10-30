@@ -2,6 +2,8 @@
 using iot.Infrastructure.Common.Encryptions.Contracts;
 using iot.Infrastructure.Common.Notifications.KaveNegarSms;
 using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
+using iot.Infrastructure.Initializer;
+using iot.Infrastructure.Initializer.Identities;
 using iot.Infrastructure.Persistence.Context;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +19,9 @@ public static class ConfigureService
             .AddTransient<IKaveNegarSmsService, KaveNegarSmsService>();
 
         services.AddTransient<IEncryptionHandlerService, EncryptionHandlerService>();
+
+        // Database initializer.
+        services.AddTransient<IDataInitializer, UserDataInitializer>();
 
         //services.AddDataProtection()
         //    .PersistKeysToFileSystem(new DirectoryInfo(""))

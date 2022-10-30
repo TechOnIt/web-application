@@ -15,13 +15,13 @@ internal class UserDataInitializer : IDataInitializer
     }
     #endregion
 
-    public async Task InitializeData()
+    public async Task InitializeDataAsync()
     {
-        await CreateUser("RezaAmd", "rezaahmadidvlp@gmail.com",
+        await CreateUserAsync("RezaAmd", "rezaahmadidvlp@gmail.com",
             roles: new List<string> { "Admin" }, name: "Reza", surname: "Ahmadi");
     }
 
-    private async Task CreateUser(string username, string email, string? password = null,
+    private async Task CreateUserAsync(string username, string email, string? password = null,
         List<string>? roles = null, string? name = null, string? surname = null)
     {
         if (!await _uow.UserRepository.IsExistsUserByPhoneNumberAsync(username))
@@ -37,6 +37,7 @@ internal class UserDataInitializer : IDataInitializer
 
             // Create new user in entities.
             await _uow.UserRepository.CreateNewUser(newUser);
+            await _uow.SaveAsync();
         }
     }
 }

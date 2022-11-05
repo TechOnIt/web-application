@@ -5,6 +5,28 @@ namespace iot.Infrastructure.Common.Notifications.KaveNegarSms;
 
 public class KaveNegarSmsService : IKaveNegarSmsService
 {
+    private readonly string baseUrl = "https://api.kavenegar.com/v1/3042775276656B664D79486572684765432B704646564F7154654D30594543506A437975774F496A4B6A343D/sms";
+
+    public async Task<(SendStatus Status, string Message)> SendAsync(string to, string message)
+    {
+        try
+        {
+            HttpClient httpClient = new HttpClient();
+            var httpResponse = await httpClient.GetAsync($"{baseUrl}/send.json?receptor={to}&sender=0018018949161&message={message}");
+            var contents = await httpResponse.Content.ReadAsStringAsync();
+
+             var result = JsonSerializer.Deserialize<KavenegarResult>(contents);
+            if (result is null)
+                return (SendStatus.BadRequest, String.Empty);
+
+            return GetStatusAndMessageResult(result.Return);
+        }
+        catch (Exception exp)
+        {
+            return (SendStatus.Fail, exp.Message);
+        }
+    }
+    
     public async Task<(SendStatus Status, string Message)> SendAuthSmsAsync(string to, string apiKey, string template, string code)
     {
         try

@@ -39,7 +39,9 @@ public class IdentityService : IIdentityService
             await _unitOfWorks.SaveAsync();
         }
 
-        var sendResult = await _kavenegarAuthService.SendAuthSmsAsync(phoneNumber, "", "", user.OtpCode.ToString());
+        var sendResult = await _kavenegarAuthService.SendAsync(phoneNumber, $"Techonit\nYour verify code:\n{user.OtpCode}");
+        //var sendResult = await _kavenegarAuthService.SendAuthSmsAsync(phoneNumber, "", "", user.OtpCode.ToString());
+
         if (!sendResult.Status.SendSuccessfully())
             return (0, sendResult.Message);
 

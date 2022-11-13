@@ -7,7 +7,7 @@ namespace iot.Application.Commands.Users.Authentication.SignUpCommands;
 public sealed class SignupUserCommand : IRequest<Result<AccessToken>>
 {
     public string? PhoneNumber { get; set; }
-    public int OtpCode { get; set; }
+    public string OtpCode { get; set; }
 }
 
 internal sealed class SignupUserCommandHandler : IRequestHandler<SignupUserCommand, Result<AccessToken>>
@@ -25,7 +25,7 @@ internal sealed class SignupUserCommandHandler : IRequestHandler<SignupUserComma
     {
         try
         {
-            var signupResult = await _identityService.SignUpWithOtpAsync(request.PhoneNumber,request.OtpCode,cancellationToken);
+            var signupResult = await _identityService.SignUpWithOtpAsync(request.PhoneNumber, request.OtpCode,cancellationToken);
             if (signupResult.Token.Token is null)
                 return Result.Fail(signupResult.Message);
 
@@ -44,16 +44,15 @@ public class SignupUserCommandValidator : BaseFluentValidator<SignupUserCommand>
     public SignupUserCommandValidator()
     {
         RuleFor(u => u.PhoneNumber)
+            .NotNull()
             .NotEmpty()
             .Length(11)
             ;
 
         RuleFor(a => a.OtpCode)
             .NotNull()
-            .NotEqual(0)
-            .GreaterThan(999)
-            .LessThan(9001)
+            .NotEmpty()
+            .Length(4)
             ;
     }
 }
-

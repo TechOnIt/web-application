@@ -30,14 +30,14 @@ public class AuthenticationController : BaseController
         return await RunCommandAsyncT(userLoginInformation);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetSignUpOtpMessage([FromBody] SignUpSendOtpCommand userSignUpInformation)
-        => await RunCommandAsyncT(userSignUpInformation);
+    //[HttpGet]
+    //public async Task<IActionResult> GetSignUpOtpMessage([FromBody] SignUpSendOtpCommand userSignUpInformation)
+    //    => await RunCommandAsyncT(userSignUpInformation);
 
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> SignUpWithOtp([FromBody] SignupUserCommand otpWithPhoneNumber)
-        => await RunCommandAsyncT(otpWithPhoneNumber);
+    //[HttpPost]
+    //[ProducesResponseType(StatusCodes.Status200OK)]
+    //public async Task<IActionResult> SignUpWithOtp([FromBody] SignupUserCommand otpWithPhoneNumber)
+    //    => await RunCommandAsyncT(otpWithPhoneNumber);
 
     [HttpGet]
     public async Task<IActionResult> SignInOtp([FromQuery] SendOtpSmsCommand getSignInOtpCode)

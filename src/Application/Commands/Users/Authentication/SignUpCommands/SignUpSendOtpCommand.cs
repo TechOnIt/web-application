@@ -27,7 +27,7 @@ public class SignUpSendOtpCommandHandler : IRequestHandler<SignUpSendOtpCommand,
             var newUser = new UserViewModel(request.Phonenumber,request.Phonenumber,request.Password);
             var signUpresult = await _identityService.SignUpAndSendOtpCode(newUser,cancellationToken);
 
-            if (signUpresult.Code == 0)
+            if (signUpresult.Code is null)
                 return Result.Fail(signUpresult.Message);
 
             return Result.Ok(signUpresult.Message);

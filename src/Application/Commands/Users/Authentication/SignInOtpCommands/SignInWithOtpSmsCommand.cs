@@ -5,7 +5,7 @@ namespace iot.Application.Commands.Users.Authentication.SignInOtpCommands;
 
 public class SignInWithOtpSmsCommand : IRequest<Result<AccessToken>>
 {
-    public int OtpCode { get; set; }
+    public string OtpCode { get; set; }
     public string PhoneNumber { get; set; }
 }
 
@@ -36,8 +36,8 @@ public class SignInWithOtpSmsCommandValidations : BaseFluentValidator<SignInWith
     {
         RuleFor(a => a.OtpCode)
             .NotNull()
-            .NotEqual(0)
-            .LessThan(9001)
+            .NotEmpty()
+            .Length(4)
             ;
 
         RuleFor(a => a.PhoneNumber)

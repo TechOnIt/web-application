@@ -17,10 +17,10 @@ public class SignInOtpCommandHandler : IRequestHandler<SendOtpSmsCommand, Result
     }
     #endregion
 
-    public async Task<Result<string>> Handle(SendOtpSmsCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(SendOtpSmsCommand request, CancellationToken cancellationToken = default)
     {
         var otpCode = await _identityService.SendOtpAsync(request.PhoneNumber, cancellationToken);
-        if (otpCode.Code == 0)
+        if (otpCode.Code is null)
             return Result.Fail(otpCode.Message);
 
         return Result.Ok("sms has been send");

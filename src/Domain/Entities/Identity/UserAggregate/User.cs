@@ -1,5 +1,4 @@
-﻿using iot.Domain.Common;
-using iot.Domain.Entities.Product.StructureAggregate;
+﻿using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,6 @@ public class User
     public bool ConfirmedEmail { get; private set; }
     public string PhoneNumber { get; private set; }
     public bool ConfirmedPhoneNumber { get; private set; }
-    public int OtpCode { get; private set; }
 
     public FullName FullName { get; private set; }
     public DateTime RegisteredDateTime { get; private set; }
@@ -104,12 +102,12 @@ public class User
     {
         MaxFailCount++;
     }
-    public int GetUserOtp()
-        => OtpCode;
-    public int NewOtpCode()
+    public string GenerateNewOtpCode()
     {
-        OtpCode = new Random().Next(1000, 9000);
-        return OtpCode;
+        Random random = new Random();
+        const string chars = "0123345667899";
+        return new string(Enumerable.Repeat(chars, 4)
+          .Select(s => s[random.Next(s.Length)]).ToArray());
     }
 
     #region Login History Aggregate

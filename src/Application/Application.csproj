@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\Extentions\EnumExtensions.cs" />
+    <Compile Remove="Common\Extentions\ResultExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.9.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />
     <PackageReference Include="Mapster" Version="7.3.0" />

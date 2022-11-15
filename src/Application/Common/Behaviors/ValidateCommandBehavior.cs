@@ -21,8 +21,9 @@ namespace iot.Application.Common.Behaviors
             _logger = logger;
         }
         #endregion
-
-        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        // plz do not change place of Cancellation Token parameter !
+        // because this method has interface contract like this and CancellationToken must be in the middle of other two parameters !!!!!!!
+        public Task<TResponse> Handle(TRequest request,CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             // validate our commands in these lines of linq expression
             // what we did here ? we found our validation class related 

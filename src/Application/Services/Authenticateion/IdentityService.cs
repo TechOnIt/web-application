@@ -1,10 +1,8 @@
-﻿using iot.Application.Common.DTOs.Users.Authentication;
+﻿using iot.Application.Common.Extentions;
 using iot.Application.Common.Security.JwtBearer;
-using iot.Application.Common.ViewModels.Users;
+using iot.Application.Common.ViewModels.Users.Authentication;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
-using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.Notifications.KaveNegarSms;
-using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 
 namespace iot.Application.Services.Authenticateion;
@@ -13,11 +11,13 @@ public class IdentityService : IIdentityService
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
+    //private readonly IJwtService _jwtService;
     private readonly IKaveNegarSmsService _kavenegarAuthService;
 
-    public IdentityService(IUnitOfWorks unitOfWorks, IKaveNegarSmsService kavenegarAuthService)
+    public IdentityService(IUnitOfWorks unitOfWorks, /*IJwtService jwtService,*/ IKaveNegarSmsService kavenegarAuthService)
     {
         _unitOfWorks = unitOfWorks;
+        //_jwtService = jwtService;
         _kavenegarAuthService = kavenegarAuthService;
     }
 
@@ -30,8 +30,8 @@ public class IdentityService : IIdentityService
         if (user is null)
             return (0, $"cant find user with phonenumber : {phoneNumber}");
 
-        //if (user.ConfirmedPhoneNumber == false)
-        //    return (0, "phoennumber is not confirmed !");
+        if (user.ConfirmedPhoneNumber == false)
+            return (0, "phoennumber is not confirmed !");
 
         if (user.OtpCode == 0)
         {
@@ -39,9 +39,7 @@ public class IdentityService : IIdentityService
             await _unitOfWorks.SaveAsync();
         }
 
-        var sendResult = await _kavenegarAuthService.SendAsync(phoneNumber, $"Techonit\nYour verify code:\n{user.OtpCode}");
-        //var sendResult = await _kavenegarAuthService.SendAuthSmsAsync(phoneNumber, "", "", user.OtpCode.ToString());
-
+        var sendResult = await _kavenegarAuthService.SendAuthSmsAsync(phoneNumber, "", "", user.OtpCode.ToString());
         if (!sendResult.Status.SendSuccessfully())
             return (0, sendResult.Message);
 
@@ -71,20 +69,16 @@ public class IdentityService : IIdentityService
         return (token, "welcome !");
     }
 
-    public async Task<(AccessToken Token, string Message)?> SignInUserAsync(string phoneNumber, string password, CancellationToken cancellationToken)
+    public async Task<(AccessToken Token, string Message)> SignInUserAsync(string phoneNumber, string password, CancellationToken cancellationToken)
     {
         var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesAsyncNoTracking(phoneNumber, cancellationToken);
-        if (user is null)
-            return null;
         var status = user.GetUserSignInStatusResultWithMessage(password);
+        string message = string.Empty;
 
         if (status.Status.IsSucceeded())
         {
-            string message = string.Empty;
-            // TODO:
-            // Ashkan
-            // Add using
             var _jwtService = new JwtService();
+
             AccessToken token = await _jwtService.GenerateAccessToken(user, cancellationToken);
             if (token.Token is null)
                 message = "user is not authenticated !";
@@ -133,8 +127,6 @@ public class IdentityService : IIdentityService
         await _unitOfWorks.SqlRepository<User>().UpdateAsync(user);
         await _unitOfWorks.SaveAsync();
 
-        // TODO:Ashkan
-        // Add using this.
         var _jwtService = new JwtService();
         var token = await _jwtService.GenerateAccessToken(user, cancellationToken);
 

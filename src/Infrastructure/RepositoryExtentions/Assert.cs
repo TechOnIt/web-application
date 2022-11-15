@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace iot.Application.Common.Extentions;
+namespace iot.Infrastructure.RepositoryExtentions;
 
 public class Assert
 {
@@ -15,14 +15,15 @@ public class Assert
     {
         if (!obj.HasValue)
             throw new ArgumentNullException($"{name} : {typeof(T)}", message);
+
     }
 
     public static void NotEmpty<T>(T obj, string name, string message = null, T defaultValue = null)
         where T : class
     {
         if (obj == defaultValue
-            || (obj is string str && string.IsNullOrWhiteSpace(str))
-            || (obj is IEnumerable list && !list.Cast<object>().Any()))
+            || obj is string str && string.IsNullOrWhiteSpace(str)
+            || obj is IEnumerable list && !list.Cast<object>().Any())
         {
             throw new ArgumentException("Argument is empty : " + message, $"{name} : {typeof(T)}");
         }

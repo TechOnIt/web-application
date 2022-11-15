@@ -1,15 +1,14 @@
 ﻿using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Infrastructure.Persistence.Context;
+using iot.Infrastructure.Persistence.Context.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace iot.Application.Repositories.SQL.StructureAggregateRepository;
+namespace iot.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 
 public class StructureRepository : IStructureRepository
 {
     #region constructor
     private readonly IdentityContext _context;
-
     public StructureRepository(IdentityContext context)
     {
         _context = context;
@@ -61,7 +60,7 @@ public class StructureRepository : IStructureRepository
     public async Task<Place> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken)
         => await _context.Places.FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken) ?? new Place();
 
-    public async Task<IList<Place>?> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken)
+    public async Task<IList<Place>> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken)
     {
         var getstructure = await _context.Structures
             .FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
@@ -133,7 +132,7 @@ public class StructureRepository : IStructureRepository
         }
     }
 
-    public async Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>>? filter = null)
+    public async Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>> filter = null)
     {
         var places = _context.Places.AsNoTracking();
         if (filter != null)
@@ -144,9 +143,9 @@ public class StructureRepository : IStructureRepository
         return await places.ToListAsync(cancellationToken);
     }
 
-    public async Task<Place?> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken)
+    public async Task<Place> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken)
         => await _context.Places.AsNoTracking().FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken);
 
-    public async Task<Structure?> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken)
+    public async Task<Structure> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken)
         => await _context.Structures.AsNoTracking().FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
 }

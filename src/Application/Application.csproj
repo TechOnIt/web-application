@@ -9,20 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Common\Enums\ServiceResultStatus\**" />
-    <EmbeddedResource Remove="Common\Enums\ServiceResultStatus\**" />
-    <None Remove="Common\Enums\ServiceResultStatus\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FluentResults" Version="3.14.0" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="FluentResults" Version="3.9.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />
     <PackageReference Include="Mapster" Version="7.3.0" />
-    <PackageReference Include="MediatR" Version="11.0.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="6.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

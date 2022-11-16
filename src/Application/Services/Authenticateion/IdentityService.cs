@@ -1,10 +1,8 @@
-﻿using iot.Application.Common.DTOs.Users.Authentication;
+﻿using iot.Application.Common.Extentions;
 using iot.Application.Common.Security.JwtBearer;
-using iot.Application.Common.ViewModels.Users;
+using iot.Application.Common.ViewModels.Users.Authentication;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
-using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.Notifications.KaveNegarSms;
-using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Distributed;
@@ -23,6 +21,7 @@ public class IdentityService : IIdentityService
         IDistributedCache distributedCache)
     {
         _unitOfWorks = unitOfWorks;
+        //_jwtService = jwtService;
         _kavenegarAuthService = kavenegarAuthService;
         _distributedCache = distributedCache;
     }
@@ -110,17 +109,13 @@ public class IdentityService : IIdentityService
         CancellationToken cancellationToken = default)
     {
         var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesAsyncNoTracking(phoneNumber, cancellationToken);
-        if (user is null)
-            return null;
         var status = user.GetUserSignInStatusResultWithMessage(password);
+        string message = string.Empty;
 
         if (status.Status.IsSucceeded())
         {
-            string message = string.Empty;
-            // TODO:
-            // Ashkan
-            // Add using
             var _jwtService = new JwtService();
+
             AccessToken token = await _jwtService.GenerateAccessToken(user, cancellationToken);
             if (token.Token is null)
                 message = "user is not authenticated !";
@@ -174,8 +169,6 @@ public class IdentityService : IIdentityService
         await _unitOfWorks.SqlRepository<User>().UpdateAsync(user);
         await _unitOfWorks.SaveAsync();
 
-        // TODO:Ashkan
-        // Add using this.
         var _jwtService = new JwtService();
         var token = await _jwtService.GenerateAccessToken(user, cancellationToken);
 

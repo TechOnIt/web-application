@@ -1,10 +1,10 @@
-﻿using iot.Application.Repositories.SQL;
-using iot.Application.Repositories.SQL.Roles;
-using iot.Application.Repositories.SQL.StructureAggregateRepository;
-using iot.Application.Repositories.SQL.Users;
-using iot.Infrastructure.Persistence.Context;
+﻿using iot.Infrastructure.Persistence.Context;
+using iot.Infrastructure.Repositories.SQL;
 using iot.Infrastructure.Repositories.SQL.Device;
+using iot.Infrastructure.Repositories.SQL.Roles;
 using iot.Infrastructure.Repositories.SQL.SensorAggregate;
+using iot.Infrastructure.Repositories.SQL.StructureAggregateRepository;
+using iot.Infrastructure.Repositories.SQL.Users;
 
 namespace iot.Infrastructure.Repositories.UnitOfWorks;
 

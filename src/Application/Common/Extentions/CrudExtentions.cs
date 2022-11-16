@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.Enums.IdentityService;
+﻿using iot.Application.Common.Enums.IdentityServiceEnums;
 
 namespace iot.Application.Common.Extentions;
 

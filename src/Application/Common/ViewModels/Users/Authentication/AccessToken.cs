@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.ViewModels.Users.Authentication;
+﻿namespace iot.Application.Common.DTOs.Users.Authentication;
 
 public class AccessToken
 {

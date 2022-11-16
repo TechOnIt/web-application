@@ -1,4 +1,4 @@
-﻿namespace iot.Infrastructure.Repositories.SQL.LoginHistories;
+﻿namespace iot.Application.Repositories.SQL.LoginHistories;
 
 public sealed class LoginHistoryRepository : ILoginHistoryRepository
 {

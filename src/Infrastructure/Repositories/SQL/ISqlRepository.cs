@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace iot.Infrastructure.Repositories.SQL;
+namespace iot.Application.Repositories.SQL;
 
 public interface ISqlRepository<TEntity> where TEntity : class
 {

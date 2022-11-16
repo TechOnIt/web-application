@@ -1,5 +1,7 @@
 ﻿using iot.Application.Repositories.SQL;
 using iot.Application.Repositories.SQL.Roles;
+using iot.Application.Repositories.SQL.StructureAggregateRepository;
+using iot.Application.Repositories.SQL.Users;
 using iot.Infrastructure.Repositories.SQL.SensorAggregate;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +10,6 @@ using iot.Infrastructure.Common.Extentions;
 using iot.Infrastructure.Repositories.SQL.Device;
 using iot.Infrastructure.Common.Encryptions.Contracts;
 using iot.Infrastructure.Persistence.Context;
-using iot.Infrastructure.Repositories.SQL;
-using iot.Infrastructure.Repositories.SQL.Roles;
-using iot.Infrastructure.Repositories.SQL.StructureAggregateRepository;
-using iot.Infrastructure.Repositories.SQL.Users;
 
 namespace iot.Infrastructure.Repositories.UnitOfWorks;
 

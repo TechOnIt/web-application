@@ -1,6 +1,6 @@
 ﻿using iot.Domain.Common;
 
-namespace iot.Application.Common.Enums.IdentityService;
+namespace iot.Application.Common.Enums.IdentityServiceEnums;
 
 public class IdentityCrudStatus : Enumeration
 {
@@ -20,6 +20,6 @@ public class IdentityCrudStatus : Enumeration
     public static readonly IdentityCrudStatus Duplicate = new(2, nameof(Duplicate));
     public static readonly IdentityCrudStatus CantRemove = new(3, nameof(CantRemove));
     public static readonly IdentityCrudStatus Succeeded = new(4, nameof(Succeeded));
-    public static readonly IdentityCrudStatus Failed = new(5, nameof(Failed));
+    public static readonly IdentityCrudStatus Failed = new(5,nameof(Failed));
     public static readonly IdentityCrudStatus ServerError = new(6, nameof(ServerError));
 }

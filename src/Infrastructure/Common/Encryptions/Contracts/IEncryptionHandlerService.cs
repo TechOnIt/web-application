@@ -1,4 +1,4 @@
-﻿using iot.Infrastructure.Common.Encryptions.SecurityTypes;
+﻿using iot.iot.Infrastructure.Common.Encryptions.SecurityTypes;
 
 namespace iot.Infrastructure.Common.Encryptions.Contracts;
 

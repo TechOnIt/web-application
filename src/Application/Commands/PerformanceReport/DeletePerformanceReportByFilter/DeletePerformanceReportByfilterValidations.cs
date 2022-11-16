@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.PerformanceReport.DeletePerformanceReportByFilter;
+﻿using iot.Application.Commands.PerformanceReport.DeletePerformanceReport;
+
+namespace iot.Application.Commands.PerformanceReport.DeletePerformanceReportByFilter;
 
 public class DeletePerformanceReportByfilterValidations : BaseFluentValidator<DeletePerformanceReportByfilterCommand>
 {

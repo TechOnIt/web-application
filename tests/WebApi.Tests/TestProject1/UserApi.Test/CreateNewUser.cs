@@ -22,22 +22,22 @@ public class CreateNewUser
     #endregion
 
 
-    public async void GivenRequestToCreateNewUser()
-    {
+    //public void GivenRequestToCreateNewUser()
+    //{
 
-    }
+    //}
 
-    public async Task WhenNewUserAddedToSystemWithDetails()
-    {
-        _command = new CreateUserCommand
-        {
-            Name = "testName",
-            Surname = "testsurname",
-            Email = "testEmail",
-            Password = "Aa123456@",
-            PhoneNumber = "09124133486"
-        };
-    }
+    //public void WhenNewUserAddedToSystemWithDetails()
+    //{
+    //    this._command = new CreateUserCommand
+    //    {
+    //        Name = "testName",
+    //        Surname = "testsurname",
+    //        Email = "testEmail",
+    //        Password = "Aa123456@",
+    //        PhoneNumber = "09124133486"
+    //    };
+    //}
 
     public async Task ThenResponseShouldBe200Ok()
     {
@@ -46,7 +46,7 @@ public class CreateNewUser
         mockData.Setup(x => x.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(FluentResults.Result.Ok() as FluentResults.Result);
 
-        var result = (OkObjectResult)await _userController.Create(_command);
+        var result = (OkObjectResult)await _userController.Create(this._command);
         result.StatusCode.Should().Be(200);
     }
 

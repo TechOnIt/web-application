@@ -1,5 +1,4 @@
 ﻿using iot.Application.Common.Exceptions;
-using iot.Application.Common.Frameworks.ApiResultFrameWork;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;

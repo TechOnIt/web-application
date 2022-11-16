@@ -1,4 +1,5 @@
-﻿using iot.Application.Common.ViewModels.Users.Authentication;
+﻿using iot.Application.Common.DTOs.Users.Authentication;
+using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.JwtBearerService;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

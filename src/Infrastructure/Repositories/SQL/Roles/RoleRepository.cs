@@ -16,13 +16,13 @@ public sealed class RoleRepository : IRoleRepository
     #endregion
 
 
-    public async Task CreateRoleAsync(string roleName, CancellationToken cancellationToken)
+    public async Task CreateRoleAsync(string roleName, CancellationToken cancellationToken = default)
     {
         await _context.Roles.AddAsync(new Role(name: roleName), cancellationToken);
         await Task.CompletedTask;
     }
 
-    public async Task DeleteRoleByIdAsync(Guid roleId, CancellationToken cancellationToken)
+    public async Task DeleteRoleByIdAsync(Guid roleId, CancellationToken cancellationToken = default)
     {
         var role = await _context.Roles.FindAsync(roleId, cancellationToken);
         if (role is null)
@@ -33,7 +33,7 @@ public sealed class RoleRepository : IRoleRepository
         await Task.CompletedTask;
     }
 
-    public async Task DeleteRoleByNameAsync(string roleName, CancellationToken cancellationToken)
+    public async Task DeleteRoleByNameAsync(string roleName, CancellationToken cancellationToken = default)
     {
         var role = await _context.Roles.FirstOrDefaultAsync(a => a.Name == roleName, cancellationToken);
         if (role is null)
@@ -44,7 +44,7 @@ public sealed class RoleRepository : IRoleRepository
         await Task.CompletedTask;
     }
 
-    public async Task UpdateRoleAsync(Guid roleId, string roleName, CancellationToken cancellationToken)
+    public async Task UpdateRoleAsync(Guid roleId, string roleName, CancellationToken cancellationToken = default)
     {
         var getrole = await _context.Roles.FindAsync(roleId, cancellationToken);
         if (getrole is null)
@@ -58,9 +58,9 @@ public sealed class RoleRepository : IRoleRepository
         }
     }
 
-    public async Task<bool> IsExistsRoleNameAsync(string roleName, CancellationToken cancellationToken)
+    public async Task<bool> IsExistsRoleNameAsync(string roleName, CancellationToken cancellationToken = default)
         => await _context.Roles.AnyAsync(a => a.Name == roleName, cancellationToken);
 
-    public async Task<bool> HasSubsetUserAsync(Guid roleId, CancellationToken cancellationToken)
+    public async Task<bool> HasSubsetUserAsync(Guid roleId, CancellationToken cancellationToken = default)
         => await _context.UserRoles.AnyAsync(a => a.RoleId == roleId);
 }

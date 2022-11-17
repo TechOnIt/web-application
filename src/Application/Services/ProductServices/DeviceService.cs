@@ -16,7 +16,7 @@ public class DeviceService : IDeviceService
     }
     #endregion
 
-    public async Task<DeviceViewModel?> CreateDeviceAsync(DeviceViewModel device, CancellationToken cancellationToken)
+    public async Task<DeviceViewModel?> CreateDeviceAsync(DeviceViewModel device, CancellationToken cancellationToken = default)
     {
         var createResult = await _unitOfWorks.DeviceRepositry.CreateDeviceAsync(device.Adapt<Device>(),cancellationToken);
 
@@ -26,7 +26,7 @@ public class DeviceService : IDeviceService
         return await Task.FromResult<DeviceViewModel?>(createResult.Adapt<DeviceViewModel>());
     }
 
-    public async Task<bool> DeleteDeviceByIdAsync(Guid DeviceId, CancellationToken cancellationToken)
+    public async Task<bool> DeleteDeviceByIdAsync(Guid DeviceId, CancellationToken cancellationToken = default)
     {
         var deleteResult= _unitOfWorks.DeviceRepositry.DeleteDeviceByIdAsync(DeviceId,cancellationToken).IsCompletedSuccessfully;
 
@@ -36,7 +36,7 @@ public class DeviceService : IDeviceService
         return await Task.FromResult(true);    
     }
 
-    public async Task<DeviceViewModel?> UpdateDeviceAsync(DeviceViewModel device, CancellationToken cancellationToken)
+    public async Task<DeviceViewModel?> UpdateDeviceAsync(DeviceViewModel device, CancellationToken cancellationToken = default)
     {
         var getrecentDevice = await _unitOfWorks.DeviceRepositry.FindDeviceByIdAsync(device.Id,cancellationToken);
         if (getrecentDevice is null)
@@ -53,7 +53,7 @@ public class DeviceService : IDeviceService
         return await Task.FromResult(updateResult.Adapt<DeviceViewModel>());
     }
 
-    public async Task<DeviceViewModel?> FindDeviceByIdAsync(Guid deviceId, CancellationToken cancellationToken)
+    public async Task<DeviceViewModel?> FindDeviceByIdAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
         var getDevice = await _unitOfWorks.DeviceRepositry.FindDeviceByIdAsync(deviceId,cancellationToken);
         if (getDevice is null)
@@ -62,7 +62,7 @@ public class DeviceService : IDeviceService
        return await Task.FromResult<DeviceViewModel?>(getDevice.Adapt<DeviceViewModel>());
     }
 
-    public async Task<DeviceViewModel?> FindDeviceByIdAsyncAsNoTracking(Guid deviceId, CancellationToken cancellationToken)
+    public async Task<DeviceViewModel?> FindDeviceByIdAsyncAsNoTracking(Guid deviceId, CancellationToken cancellationToken = default)
     {
         var getDevice = await _unitOfWorks.DeviceRepositry.FindDeviceByIdAsyncAsNoTracking(deviceId, cancellationToken);
         if (getDevice is null)

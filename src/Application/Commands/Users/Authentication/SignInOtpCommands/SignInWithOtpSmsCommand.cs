@@ -20,7 +20,7 @@ public class SignInWithOtpSmsCommandHandler : IRequestHandler<SignInWithOtpSmsCo
 
     #endregion
 
-    public async Task<Result<AccessToken>> Handle(SignInWithOtpSmsCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AccessToken>> Handle(SignInWithOtpSmsCommand request, CancellationToken cancellationToken = default)
     {
         var accessToke = await _identityService.SignInUserWithOtpAsync(request.OtpCode,request.PhoneNumber,cancellationToken);
         if (accessToke.Token.Token is null)

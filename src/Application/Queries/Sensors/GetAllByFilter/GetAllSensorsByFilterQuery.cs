@@ -24,7 +24,7 @@ public class GetAllSensorsByFilterQueryHandler : IRequestHandler<GetAllSensorsBy
 
     #endregion
 
-    public async Task<Result<IList<SensorViewModel>>> Handle(GetAllSensorsByFilterQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IList<SensorViewModel>>> Handle(GetAllSensorsByFilterQuery request, CancellationToken cancellationToken = default)
     {
         try
         {

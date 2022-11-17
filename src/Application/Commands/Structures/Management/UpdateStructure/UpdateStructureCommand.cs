@@ -25,7 +25,7 @@ public class UpdatetructureCommandHandler : IRequestHandler<UpdateStructureComma
     }
     #endregion
 
-    public async Task<Result> Handle(UpdateStructureCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateStructureCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

@@ -15,7 +15,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
     }
     #endregion
 
-    public async Task<string> GetEncryptAsync(SensitiveEntities sensitiveDataType, string plainText, CancellationToken cancellationToken)
+    public async Task<string> GetEncryptAsync(SensitiveEntities sensitiveDataType, string plainText, CancellationToken cancellationToken = default)
     {
         if (sensitiveDataType == SensitiveEntities.Sensor)
             return await EncryptWithSensorKeyAsync(plainText, cancellationToken);
@@ -29,7 +29,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
             throw new NotImplementedException($"type : {sensitiveDataType.DisplayName} Not Implemented !");
     }
 
-    public async Task<string> GetDecryptAsync(SensitiveEntities sensitiveDataType, string encryptedString, CancellationToken cancellationToken)
+    public async Task<string> GetDecryptAsync(SensitiveEntities sensitiveDataType, string encryptedString, CancellationToken cancellationToken = default)
     {
         if (sensitiveDataType == SensitiveEntities.Sensor)
             return await DecryptWithSensorKeyAsync(encryptedString, cancellationToken);
@@ -44,7 +44,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
     }
 
     #region privates
-    private async Task<string> EncryptWithDeviceKeyAsync(string plainText, CancellationToken cancellationToken)
+    private async Task<string> EncryptWithDeviceKeyAsync(string plainText, CancellationToken cancellationToken = default)
     {
         var key = await _context.AesKeys.AsNoTracking()
             .FirstOrDefaultAsync(a => a.Title == "DeviceKey", cancellationToken);
@@ -58,7 +58,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
             throw new NullReferenceException($"there is no key for Device in system");
     }
 
-    private async Task<string> EncryptWithUserKeyAsync(string plainText, CancellationToken cancellationToken)
+    private async Task<string> EncryptWithUserKeyAsync(string plainText, CancellationToken cancellationToken = default)
     {
         var key = await _context.AesKeys.AsNoTracking()
             .FirstOrDefaultAsync(a => a.Title == "UserKey", cancellationToken);
@@ -72,7 +72,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
             throw new NullReferenceException($"there is no key for User in system");
     }
 
-    private async Task<string> EncryptWithSensorKeyAsync(string plainText, CancellationToken cancellationToken)
+    private async Task<string> EncryptWithSensorKeyAsync(string plainText, CancellationToken cancellationToken = default)
     {
         var key = await _context.AesKeys.AsNoTracking().FirstOrDefaultAsync(a => a.Title == "SesnsorKey", cancellationToken);
         if (key is not null)
@@ -84,7 +84,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
             throw new NullReferenceException($"there is no key for Sesnsor in system");
     }
 
-    private async Task<string> EncryptWithReportKeyAsync(string plainText, CancellationToken cancellationToken)
+    private async Task<string> EncryptWithReportKeyAsync(string plainText, CancellationToken cancellationToken = default)
     {
         var key = await _context.AesKeys.AsNoTracking().FirstOrDefaultAsync(a => a.Title == "ReportKey", cancellationToken);
         if (key is not null)
@@ -98,7 +98,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
 
 
 
-    private async Task<string> DecryptWithDeviceKeyAsync(string encryptedString, CancellationToken cancellationToken)
+    private async Task<string> DecryptWithDeviceKeyAsync(string encryptedString, CancellationToken cancellationToken = default)
     {
         var key = await _context.AesKeys.AsNoTracking().FirstOrDefaultAsync(a => a.Title == "DeviceKey", cancellationToken);
         if (key is not null)
@@ -110,7 +110,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
             throw new NullReferenceException($"there is no key for Device in system");
     }
 
-    private async Task<string> DecryptWithUserKeyAsync(string encryptedString, CancellationToken cancellationToken)
+    private async Task<string> DecryptWithUserKeyAsync(string encryptedString, CancellationToken cancellationToken = default)
     {
         var key = await _context.AesKeys.AsNoTracking().FirstOrDefaultAsync(a => a.Title == "UserKey", cancellationToken);
         if (key is not null)
@@ -122,7 +122,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
             throw new NullReferenceException($"there is no key for User in system");
     }
 
-    private async Task<string> DecryptWithSensorKeyAsync(string encryptedString, CancellationToken cancellationToken)
+    private async Task<string> DecryptWithSensorKeyAsync(string encryptedString, CancellationToken cancellationToken = default)
     {
         var key = await _context.AesKeys.AsNoTracking().FirstOrDefaultAsync(a => a.Title == "SesnsorKey", cancellationToken);
         if (key is not null)
@@ -134,7 +134,7 @@ public class EncryptionHandlerService : IEncryptionHandlerService
             throw new NullReferenceException($"there is no key for Sesnsor in system");
     }
 
-    private async Task<string> DecryptWithReportKeyAsync(string encryptedString, CancellationToken cancellationToken)
+    private async Task<string> DecryptWithReportKeyAsync(string encryptedString, CancellationToken cancellationToken = default)
     {
         var key = await _context.AesKeys.AsNoTracking().FirstOrDefaultAsync(a => a.Title == "ReportKey", cancellationToken);
         if (key is not null)

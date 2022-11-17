@@ -19,7 +19,7 @@ public class CreateRoleCommandHanlder : IRequestHandler<CreateRoleCommand, Resul
     }
     #endregion
 
-    public async Task<Result<string>> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(CreateRoleCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

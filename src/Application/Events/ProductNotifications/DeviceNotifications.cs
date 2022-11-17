@@ -8,7 +8,7 @@ namespace iot.Application.Events.ProductNotifications
 
     public class DeviceSmsNotificationsHandler : INotificationHandler<DeviceNotifications>
     {
-        public async Task Handle(DeviceNotifications notification, CancellationToken cancellationToken)
+        public async Task Handle(DeviceNotifications notification, CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask;
         }
@@ -25,7 +25,7 @@ namespace iot.Application.Events.ProductNotifications
 
         #endregion
 
-        public async Task Handle(DeviceNotifications notification, CancellationToken cancellationToken)
+        public async Task Handle(DeviceNotifications notification, CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask;
         }

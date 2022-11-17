@@ -20,7 +20,7 @@ public class GetPlaceByIdQueryHandler : IRequestHandler<GetPlaceByIdQuery, Resul
     }
 
     #endregion
-    public async Task<Result<PlaceViewModel>> Handle(GetPlaceByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<PlaceViewModel>> Handle(GetPlaceByIdQuery request, CancellationToken cancellationToken = default)
     {
         try
         {

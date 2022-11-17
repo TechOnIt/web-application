@@ -20,7 +20,7 @@ public class SignUpSendOtpCommandHandler : IRequestHandler<SignUpSendOtpCommand,
 
     #endregion
 
-    public async Task<Result<string>> Handle(SignUpSendOtpCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(SignUpSendOtpCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

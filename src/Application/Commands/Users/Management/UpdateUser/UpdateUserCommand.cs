@@ -23,7 +23,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
     }
     #endregion
 
-    public async Task<Result<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken = default)
     {
         var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
         // map id to guid instance.

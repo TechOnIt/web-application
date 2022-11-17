@@ -23,7 +23,7 @@ public class UpdateRoleCommandHandler : CommandHandler<UpdateRoleCommand, Result
     }
     #endregion
 
-    protected override async Task<Result> HandleAsync(UpdateRoleCommand request, CancellationToken cancellationToken)
+    protected override async Task<Result> HandleAsync(UpdateRoleCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

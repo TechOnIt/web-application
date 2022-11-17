@@ -5,6 +5,7 @@ namespace iot.Application.Common.Extentions;
 
 public static class EnumExtensions
 {
+#nullable enable
     public static string ToDisplay(this Enum value, DisplayProperty property = DisplayProperty.Name)
     {
         Assert.NotNull(value, nameof(value));
@@ -15,11 +16,12 @@ public static class EnumExtensions
 
         if (attribute == null)
             return messages[0];
-
-        object? propValue = attribute.GetType().GetProperty(property.ToString()).GetValue(attribute, null);
-        if (propValue != null)
-            return propValue.ToString();
-        return messages[0];
+        object? propValue = attribute.GetType()
+            .GetProperty(property.ToString())
+            .GetValue(attribute, null);
+        if (propValue == null)
+            return messages[0];
+        return propValue.ToString();
     }
 
     public static List<string> ToDisplays(this Enum value, DisplayProperty property = DisplayProperty.Name)

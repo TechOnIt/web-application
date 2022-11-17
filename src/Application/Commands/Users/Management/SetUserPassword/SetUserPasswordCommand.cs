@@ -22,7 +22,7 @@ public class SetUserPasswordCommandHandler : IRequestHandler<SetUserPasswordComm
     #endregion
 
 
-    public async Task<Result> Handle(SetUserPasswordCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(SetUserPasswordCommand request, CancellationToken cancellationToken = default)
     {
         // map id to guid i;nstance.
         var userId = Guid.Parse(request.Id);

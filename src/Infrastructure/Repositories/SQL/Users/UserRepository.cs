@@ -65,10 +65,10 @@ internal sealed class UserRepository : IUserRepository
             .AsNoTracking()
             .AnyAsync(a => a.PhoneNumber == phonenumber, cancellationToken);
 
-    public async Task<bool> IsExistsUserByIdAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<bool> IsExistsUserByIdAsync(Guid userId, CancellationToken cancellationToken = default)
         => await _context.Users.AsNoTracking().AnyAsync(a => a.Id == userId, cancellationToken);
 
-    public async Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken)
+    public async Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default)
     {
         var user = await _context.Users.AsNoTracking().FirstAsync(a => aesEncryptor.Decrypt(a.PhoneNumber) == phonenumber);
         return user.Email;

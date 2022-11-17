@@ -23,7 +23,7 @@ public class GetAllDeviceByFilterCommandHandler : IRequestHandler<GetAllDeviceBy
     }
     #endregion
 
-    public async Task<Result<IList<DeviceViewModel>>> Handle(GetAllDeviceByFilterCommand request, CancellationToken cancellationToken)
+    public async Task<Result<IList<DeviceViewModel>>> Handle(GetAllDeviceByFilterCommand request, CancellationToken cancellationToken = default)
     {
         var allDevices = _unitOfWorksl.SqlRepository<Device>().TableNoTracking.AsQueryable();
         if (allDevices.Any())

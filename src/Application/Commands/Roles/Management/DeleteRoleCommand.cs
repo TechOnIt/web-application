@@ -20,7 +20,7 @@ public class DeleteRoleCommandHandler : CommandHandler<DeleteRoleCommand, Result
     }
     #endregion
 
-    protected override async Task<Result> HandleAsync(DeleteRoleCommand request, CancellationToken cancellationToken)
+    protected override async Task<Result> HandleAsync(DeleteRoleCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

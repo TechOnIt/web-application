@@ -27,7 +27,7 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, R
     }
 
     #endregion
-    public async Task<Result<Guid>> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

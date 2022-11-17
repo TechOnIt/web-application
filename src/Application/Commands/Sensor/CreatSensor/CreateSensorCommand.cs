@@ -25,7 +25,7 @@ public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, R
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(CreateSensorCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateSensorCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

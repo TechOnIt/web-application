@@ -22,7 +22,7 @@ public class FindPerformanceReportByDateTimeQueryHandler : IRequestHandler<FindP
     }
     #endregion
 
-    public async Task<Result<IList<PerformanceReportViewModel>>> Handle(FindPerformanceReportByDateTimeQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IList<PerformanceReportViewModel>>> Handle(FindPerformanceReportByDateTimeQuery request, CancellationToken cancellationToken = default)
     {
         try
         {

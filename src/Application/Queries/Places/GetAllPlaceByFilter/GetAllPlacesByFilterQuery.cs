@@ -24,7 +24,7 @@ public class GetAllPlacesByFilterQueryHandler : IRequestHandler<GetAllPlacesByFi
 
     #endregion
 
-    public async Task<Result<IList<PlaceViewModel>>> Handle(GetAllPlacesByFilterQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IList<PlaceViewModel>>> Handle(GetAllPlacesByFilterQuery request, CancellationToken cancellationToken = default)
     {
         try
         {

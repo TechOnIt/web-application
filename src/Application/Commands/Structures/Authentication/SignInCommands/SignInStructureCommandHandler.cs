@@ -14,7 +14,7 @@ public class SignInStructureCommandHandler : IRequestHandler<SignInStructureComm
     }
     #endregion
 
-    public async Task<Result<StructureAccessToken>> Handle(SignInStructureCommand request, CancellationToken cancellationToken)
+    public async Task<Result<StructureAccessToken>> Handle(SignInStructureCommand request, CancellationToken cancellationToken = default)
     {
         //var signinPassword = await _unitOfWorks.UserRepository.UserSignInByPasswordAsync(request.Username, request.Password, cancellationToken);
 

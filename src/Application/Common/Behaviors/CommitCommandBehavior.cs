@@ -16,7 +16,7 @@ public class CommitCommandBehavior<TRequest, TResponse> : IRequestPostProcessor<
     }
     #endregion
 
-    public async Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
+    public async Task Process(TRequest request, TResponse response, CancellationToken cancellationToken = default)
     {
         if (request is ICommittableRequest)
         {

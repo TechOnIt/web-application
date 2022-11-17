@@ -20,7 +20,7 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, Resul
     }
     #endregion
 
-    public async Task<Result> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateRoleCommand request, CancellationToken cancellationToken = default)
     {
         // Find role by id.
         var roleId = Guid.Parse(request.Id);

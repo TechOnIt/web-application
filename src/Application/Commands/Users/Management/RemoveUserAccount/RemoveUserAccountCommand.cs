@@ -19,7 +19,7 @@ namespace iot.Application.Commands.Users.Management.RemoveUserAccount
         }
         #endregion
 
-        public async Task<Result> Handle(RemoveUserAccountCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(RemoveUserAccountCommand request, CancellationToken cancellationToken = default)
         {
             // map id to guid instance.
             var userId = Guid.Parse(request.Id);

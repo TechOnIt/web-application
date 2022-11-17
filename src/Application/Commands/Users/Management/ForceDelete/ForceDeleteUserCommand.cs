@@ -22,7 +22,7 @@ public class ForceDeleteUserCommandHandler : IRequestHandler<ForceDeleteUserComm
 
     #endregion
 
-    public async Task<Result> Handle(ForceDeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ForceDeleteUserCommand request, CancellationToken cancellationToken = default)
     {
         // map id to guid instance.
         var userId = Guid.Parse(request.Id);

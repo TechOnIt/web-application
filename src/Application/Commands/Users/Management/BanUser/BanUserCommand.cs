@@ -24,7 +24,7 @@ public class BanUserCommandHandler : IRequestHandler<BanUserCommand, Result>
 
     #endregion
 
-    public async Task<Result> Handle(BanUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(BanUserCommand request, CancellationToken cancellationToken = default)
     {
         // map id to guid instance.
         var userId = Guid.Parse(request.Id);

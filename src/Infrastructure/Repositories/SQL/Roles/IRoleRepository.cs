@@ -2,10 +2,10 @@
 
 public interface IRoleRepository
 {
-    Task CreateRoleAsync(string roleName,CancellationToken cancellationToken);
-    Task DeleteRoleByIdAsync(Guid roleId,CancellationToken cancellationToken);
-    Task DeleteRoleByNameAsync(string roleName,CancellationToken cancellationToken);
-    Task UpdateRoleAsync(Guid roleId, string roleName,CancellationToken cancellationToken);
-    Task<bool> IsExistsRoleNameAsync(string roleName,CancellationToken cancellationToken);
-    Task<bool> HasSubsetUserAsync(Guid roleId, CancellationToken cancellationToken);
+    Task CreateRoleAsync(string roleName,CancellationToken cancellationToken = default);
+    Task DeleteRoleByIdAsync(Guid roleId,CancellationToken cancellationToken = default);
+    Task DeleteRoleByNameAsync(string roleName,CancellationToken cancellationToken = default);
+    Task UpdateRoleAsync(Guid roleId, string roleName,CancellationToken cancellationToken = default);
+    Task<bool> IsExistsRoleNameAsync(string roleName,CancellationToken cancellationToken = default);
+    Task<bool> HasSubsetUserAsync(Guid roleId, CancellationToken cancellationToken = default);
 }

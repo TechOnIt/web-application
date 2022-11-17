@@ -19,7 +19,7 @@ public class DeleteStructureCommandHandler : IRequestHandler<DeleteStructureComm
 
     #endregion
 
-    public async Task<Result> Handle(DeleteStructureCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteStructureCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

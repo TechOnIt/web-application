@@ -17,7 +17,7 @@ public class LoginHistoryCreateCommandHandler : CommandHandler<LoginHistoryCreat
 
     }
     #endregion
-    protected override async Task<Result<Unit>> HandleAsync(LoginHistoryCreateCommand request, CancellationToken cancellationToken)
+    protected override async Task<Result<Unit>> HandleAsync(LoginHistoryCreateCommand request, CancellationToken cancellationToken = default)
     {
         return Result.Ok(await Task.FromResult(Unit.Value));
     }

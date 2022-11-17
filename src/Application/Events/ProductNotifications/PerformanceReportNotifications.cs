@@ -8,7 +8,7 @@ public class PerformanceReportNotifications : INotification
 
 public class PerformanceSmsReportNotificationsHandler : INotificationHandler<PerformanceReportNotifications>
 {
-    public async Task Handle(PerformanceReportNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(PerformanceReportNotifications notification, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }
@@ -25,7 +25,7 @@ public class PerformanceEmailReportNotificationsHandler : INotificationHandler<P
     }
 
     #endregion
-    public async Task Handle(PerformanceReportNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(PerformanceReportNotifications notification, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }

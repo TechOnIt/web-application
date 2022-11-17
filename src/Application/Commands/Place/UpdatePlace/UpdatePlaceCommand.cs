@@ -24,7 +24,7 @@ public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, Res
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(UpdatePlaceCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(UpdatePlaceCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

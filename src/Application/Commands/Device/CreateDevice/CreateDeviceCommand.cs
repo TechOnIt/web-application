@@ -30,7 +30,7 @@ public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, R
 
     #endregion
 
-    public async Task<Result<Guid>> Handle(CreateDeviceCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateDeviceCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

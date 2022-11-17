@@ -19,7 +19,7 @@ public class StructureAggregateReports : IStructureAggregateReports
 
     #endregion
 
-    public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure,bool>> filter,CancellationToken cancellationToken)
+    public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure,bool>> filter,CancellationToken cancellationToken = default)
     {
         try
         {
@@ -37,7 +37,7 @@ public class StructureAggregateReports : IStructureAggregateReports
         }
     }
     
-    public async Task<IList<StructureViewModel>> GetstructuresAsync(CancellationToken cancellationToken)
+    public async Task<IList<StructureViewModel>> GetstructuresAsync(CancellationToken cancellationToken = default)
     {
         IList<StructureViewModel> structures = new List<StructureViewModel>();
 
@@ -58,7 +58,7 @@ public class StructureAggregateReports : IStructureAggregateReports
         return structures;
     }
 
-    public IList<StructureViewModel>? GetstructuresSync(CancellationToken cancellationToken)
+    public IList<StructureViewModel>? GetstructuresSync(CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.IsCancellationRequested)
         {

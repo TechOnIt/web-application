@@ -21,7 +21,7 @@ public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, R
 
     #endregion
 
-    public async Task<Result> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

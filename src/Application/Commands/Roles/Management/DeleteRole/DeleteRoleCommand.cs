@@ -19,7 +19,7 @@ public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, Resul
     }
     #endregion
 
-    public async Task<Result> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteRoleCommand request, CancellationToken cancellationToken = default)
     {
         // Find role by id.
         var roleId = Guid.Parse(request.Id);

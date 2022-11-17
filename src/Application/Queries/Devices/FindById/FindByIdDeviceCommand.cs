@@ -20,7 +20,7 @@ public class FindByIdDeviceCommandHandler : IRequestHandler<FindByIdDeviceComman
     }
 
     #endregion
-    public async Task<Result<DeviceViewModel>> Handle(FindByIdDeviceCommand request, CancellationToken cancellationToken)
+    public async Task<Result<DeviceViewModel>> Handle(FindByIdDeviceCommand request, CancellationToken cancellationToken = default)
     {
         var getDevice = await _unitOfWorks.SqlRepository<Device>().TableNoTracking.FirstOrDefaultAsync(a => a.Id == request.DeviceId);
         if (getDevice == null)

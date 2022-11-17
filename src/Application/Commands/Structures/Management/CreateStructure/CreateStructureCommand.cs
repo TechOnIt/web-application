@@ -30,7 +30,7 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
 
     #endregion
 
-    public async Task<Result<Concurrency>> Handle(CreateStructureCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Concurrency>> Handle(CreateStructureCommand request, CancellationToken cancellationToken = default)
     {
 
         try

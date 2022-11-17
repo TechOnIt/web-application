@@ -23,7 +23,7 @@ public class DeletePerformanceReportByfilterCommandHandler : IRequestHandler<Del
 
     #endregion
 
-    public async Task<Result> Handle(DeletePerformanceReportByfilterCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeletePerformanceReportByfilterCommand request, CancellationToken cancellationToken = default)
     {
         var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.PerformanceReport>();
 

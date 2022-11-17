@@ -24,7 +24,7 @@ public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, Res
 
 	#endregion
 
-	public async Task<Result<Guid>> Handle(DeletePlaceCommand request, CancellationToken cancellationToken)
+	public async Task<Result<Guid>> Handle(DeletePlaceCommand request, CancellationToken cancellationToken = default)
     {
 		try
 		{

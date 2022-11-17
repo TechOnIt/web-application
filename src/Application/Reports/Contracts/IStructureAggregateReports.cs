@@ -13,7 +13,7 @@ public interface IStructureAggregateReports : IReport
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="StructureException"></exception>
-    Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure, bool>> filter, CancellationToken cancellationToken);
+    Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure, bool>> filter, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// use for get structures from databes async
@@ -21,7 +21,7 @@ public interface IStructureAggregateReports : IReport
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="StructureException"></exception>
-    Task<IList<StructureViewModel>> GetstructuresAsync(CancellationToken cancellationToken);
+    Task<IList<StructureViewModel>> GetstructuresAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// use when you have less than 200 structures in database
@@ -29,7 +29,7 @@ public interface IStructureAggregateReports : IReport
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="StructureException"></exception>
-    IList<StructureViewModel>? GetstructuresSync(CancellationToken cancellationToken);
+    IList<StructureViewModel>? GetstructuresSync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// only when you have more than 1000 structures in database

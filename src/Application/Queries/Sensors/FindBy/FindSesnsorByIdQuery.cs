@@ -19,7 +19,7 @@ public class FindSesnsorByIdQueryHandler : IRequestHandler<FindSesnsorByIdQuery,
     }
 
     #endregion
-    public async Task<Result<SensorViewModel>> Handle(FindSesnsorByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<SensorViewModel>> Handle(FindSesnsorByIdQuery request, CancellationToken cancellationToken = default)
     {
         try
         {

@@ -24,7 +24,7 @@ public class GetAllPerformanceReportByFilterQueryHandler : IRequestHandler<GetAl
 
     #endregion
 
-    public async Task<Result<IList<PerformanceReportViewModel>>> Handle(GetAllPerformanceReportByFilterQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IList<PerformanceReportViewModel>>> Handle(GetAllPerformanceReportByFilterQuery request, CancellationToken cancellationToken = default)
     {
         var allReports = _unitOfWorks.SqlRepository<PerformanceReport>().TableNoTracking.AsQueryable();
         if (allReports.Any())

@@ -15,7 +15,7 @@ public class SensorRepository : ISensorRepository
 
     #endregion
 
-    public async Task CreateSensorAsync(Sensor sensor, CancellationToken cancellationToken)
+    public async Task CreateSensorAsync(Sensor sensor, CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.IsCancellationRequested)
         {
@@ -25,7 +25,7 @@ public class SensorRepository : ISensorRepository
 
         cancellationToken.ThrowIfCancellationRequested();
     }
-    public async Task DeleteSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken)
+    public async Task DeleteSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.IsCancellationRequested)
         {
@@ -39,7 +39,7 @@ public class SensorRepository : ISensorRepository
 
         cancellationToken.ThrowIfCancellationRequested();
     }
-    public async Task<Sensor?> GetSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken)
+    public async Task<Sensor?> GetSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.IsCancellationRequested)
         {
@@ -56,7 +56,7 @@ public class SensorRepository : ISensorRepository
         cancellationToken.ThrowIfCancellationRequested();
         return null;
     }
-    public async Task UpdateSensorAsync(Sensor sensor, CancellationToken cancellationToken)
+    public async Task UpdateSensorAsync(Sensor sensor, CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.IsCancellationRequested)
         {
@@ -74,7 +74,7 @@ public class SensorRepository : ISensorRepository
         cancellationToken.ThrowIfCancellationRequested();
     }
 
-    public async Task ClearReportsBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
+    public async Task ClearReportsBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.IsCancellationRequested)
         {
@@ -90,7 +90,7 @@ public class SensorRepository : ISensorRepository
 
         cancellationToken.ThrowIfCancellationRequested();
     }
-    public async Task DeleteReportByIdAsync(Guid sensorId, PerformanceReport report, CancellationToken cancellationToken)
+    public async Task DeleteReportByIdAsync(Guid sensorId, PerformanceReport report, CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.IsCancellationRequested)
         {
@@ -105,7 +105,7 @@ public class SensorRepository : ISensorRepository
 
         cancellationToken.ThrowIfCancellationRequested();
     }
-    public async Task<PerformanceReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken)
+    public async Task<PerformanceReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.IsCancellationRequested)
         {
@@ -119,7 +119,7 @@ public class SensorRepository : ISensorRepository
         cancellationToken.ThrowIfCancellationRequested();
         return null;
     }
-    public async Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
+    public async Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.IsCancellationRequested)
         {

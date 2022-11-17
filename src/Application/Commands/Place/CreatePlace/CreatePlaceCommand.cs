@@ -25,7 +25,7 @@ public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, Res
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(CreatePlaceCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreatePlaceCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

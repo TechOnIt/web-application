@@ -21,7 +21,7 @@ internal sealed class SignupUserCommandHandler : IRequestHandler<SignupUserComma
         _identityService = identityService;
     }
 
-    public async Task<Result<AccessToken>> Handle(SignupUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AccessToken>> Handle(SignupUserCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

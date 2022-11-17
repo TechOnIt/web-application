@@ -2,7 +2,7 @@
 
 public class SignInUserSmsNotificationsHandler : INotificationHandler<SignInUserNotifications>
 {
-    public async Task Handle(SignInUserNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(SignInUserNotifications notification, CancellationToken cancellationToken = default)
     {
         //codes to do for send sms notification
         await Task.CompletedTask;
@@ -11,7 +11,7 @@ public class SignInUserSmsNotificationsHandler : INotificationHandler<SignInUser
 
 public class SignInUserEmailNotificationsHandler : INotificationHandler<SignInUserNotifications>
 {
-    public async Task Handle(SignInUserNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(SignInUserNotifications notification, CancellationToken cancellationToken = default)
     {
         //codes to do for send email notification
         await Task.CompletedTask;

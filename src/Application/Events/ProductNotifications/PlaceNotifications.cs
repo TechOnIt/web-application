@@ -8,7 +8,7 @@ public class PlaceNotifications : INotification
 
 public class PlaceSmsNotificationHandler : INotificationHandler<PlaceNotifications>
 {
-    public async Task Handle(PlaceNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(PlaceNotifications notification, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }
@@ -24,7 +24,7 @@ public class PlaceEmailNotificationHandler : INotificationHandler<PlaceNotificat
     }
 
     #endregion
-    public async Task Handle(PlaceNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(PlaceNotifications notification, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }

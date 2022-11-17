@@ -29,7 +29,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken = default)
     {
         var userViewModel = new UserViewModel(request.PhoneNumber, request.PhoneNumber, request.Password,
             request.Name, request.Surname, request.Email);

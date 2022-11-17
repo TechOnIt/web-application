@@ -8,7 +8,7 @@ public class StructureNotifications : INotification
 
 public class StructureEmailNotifications : INotificationHandler<StructureNotifications>
 {
-    public async Task Handle(StructureNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(StructureNotifications notification, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }
@@ -24,7 +24,7 @@ public class StructureSmsNotifications : INotificationHandler<StructureNotificat
     }
 
     #endregion
-    public async Task Handle(StructureNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(StructureNotifications notification, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }

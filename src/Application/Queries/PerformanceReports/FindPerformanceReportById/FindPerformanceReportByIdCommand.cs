@@ -22,7 +22,7 @@ public class FindPerformanceReportByIdCommandHandler : IRequestHandler<FindPerfo
     #endregion
 
 
-    public async Task<Result<PerformanceReportViewModel>> Handle(FindPerformanceReportByIdCommand request, CancellationToken cancellationToken)
+    public async Task<Result<PerformanceReportViewModel>> Handle(FindPerformanceReportByIdCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

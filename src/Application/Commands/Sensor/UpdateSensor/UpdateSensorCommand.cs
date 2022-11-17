@@ -26,7 +26,7 @@ public class UpdateSensorCommandHandler : IRequestHandler<UpdateSensorCommand, R
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(UpdateSensorCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(UpdateSensorCommand request, CancellationToken cancellationToken = default)
     {
         var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>();
         try

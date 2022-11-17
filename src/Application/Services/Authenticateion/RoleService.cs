@@ -15,7 +15,7 @@ public class RoleService : IRoleService
 
     #endregion
 
-    public async Task<(IdentityCrudStatus Result, string Message)> CreateRoleAsync(string roleName, CancellationToken cancellationToken)
+    public async Task<(IdentityCrudStatus Result, string Message)> CreateRoleAsync(string roleName, CancellationToken cancellationToken = default)
     {
         bool isExistsBefor = 
             await _unitOfWorks.RoleRepository.IsExistsRoleNameAsync(roleName, cancellationToken);
@@ -27,7 +27,7 @@ public class RoleService : IRoleService
         return (IdentityCrudStatus.Succeeded, "done successfully");
     }
 
-    public async Task<IdentityCrudStatus> DeleteRoleByIdAsync(Guid roleId, CancellationToken cancellationToken)
+    public async Task<IdentityCrudStatus> DeleteRoleByIdAsync(Guid roleId, CancellationToken cancellationToken = default)
     {
         bool hasUserInRole=await _unitOfWorks.RoleRepository.HasSubsetUserAsync(roleId,cancellationToken);
         if (hasUserInRole)
@@ -39,7 +39,7 @@ public class RoleService : IRoleService
         }
     }
 
-    public async Task<(IdentityCrudStatus Result, string Message)> UpdateRoleAsync(Guid roleId,string roleName, CancellationToken cancellationToken)
+    public async Task<(IdentityCrudStatus Result, string Message)> UpdateRoleAsync(Guid roleId,string roleName, CancellationToken cancellationToken = default)
     {
          var result=  _unitOfWorks.RoleRepository.UpdateRoleAsync(roleId, roleName, cancellationToken).IsCompletedSuccessfully;
         if (!result)

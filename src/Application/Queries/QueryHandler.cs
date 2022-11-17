@@ -3,10 +3,10 @@
 public abstract class QueryHandler<TRequest, TResult> : IRequestHandler<TRequest, TResult>
     where TRequest : Query<TResult> where TResult : Result, new()
 {
-    public async Task<TResult> Handle(TRequest request, CancellationToken cancellationToken)
+    public async Task<TResult> Handle(TRequest request, CancellationToken cancellationToken = default)
     {
         return await HandleAsync(request, cancellationToken);
     }
 
-    public abstract Task<TResult> HandleAsync(TRequest request, CancellationToken cancellationToken);
+    public abstract Task<TResult> HandleAsync(TRequest request, CancellationToken cancellationToken = default);
 }

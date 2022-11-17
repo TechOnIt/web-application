@@ -16,9 +16,9 @@ public class StructureRepository : IStructureRepository
     }
     #endregion
 
-    public async Task CreateStructureAsync(Structure structure, CancellationToken cancellationToken) => await _context.Structures.AddAsync(structure, cancellationToken);
+    public async Task CreateStructureAsync(Structure structure, CancellationToken cancellationToken = default) => await _context.Structures.AddAsync(structure, cancellationToken);
 
-    public async Task CreateStructureWithPlacesAsync(Structure structure, IList<Place> places, CancellationToken cancellationToken)
+    public async Task CreateStructureWithPlacesAsync(Structure structure, IList<Place> places, CancellationToken cancellationToken = default)
     {
         await _context.Structures.AddAsync(structure, cancellationToken);
         if (places is not null)
@@ -27,7 +27,7 @@ public class StructureRepository : IStructureRepository
         }
     }
 
-    public async Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken)
+    public async Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken = default)
     {
         var getstructure = await _context.Structures
             .FirstOrDefaultAsync(a => a.Id == StructureId, cancellationToken);
@@ -39,7 +39,7 @@ public class StructureRepository : IStructureRepository
         }
     }
 
-    public async Task DeletePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken)
+    public async Task DeletePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default)
     {
         var getStructure = await _context.Structures
             .FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
@@ -50,7 +50,7 @@ public class StructureRepository : IStructureRepository
     public void DeleteStructure(Structure structure)
         => _context.Structures.Remove(structure);
 
-    public async Task DeleteStructureAsync(Guid structureId, CancellationToken cancellationToken)
+    public async Task DeleteStructureAsync(Guid structureId, CancellationToken cancellationToken = default)
     {
         var getStructure = await _context.Structures
             .FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
@@ -58,10 +58,10 @@ public class StructureRepository : IStructureRepository
             _context.Structures.Remove(getStructure);
     }
 
-    public async Task<Place> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken)
+    public async Task<Place> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken = default)
         => await _context.Places.FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken) ?? new Place();
 
-    public async Task<IList<Place>?> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken)
+    public async Task<IList<Place>?> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken = default)
     {
         var getstructure = await _context.Structures
             .FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
@@ -71,13 +71,13 @@ public class StructureRepository : IStructureRepository
             return new List<Place>();
     }
 
-    public async Task<Structure> GetStructureByIdAsync(Guid structureId, CancellationToken cancellationToken)
+    public async Task<Structure> GetStructureByIdAsync(Guid structureId, CancellationToken cancellationToken = default)
         => await _context.Structures.FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken) ?? new Structure();
 
-    public async Task<Structure> GetStructureByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<Structure> GetStructureByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
         => await _context.Structures.FirstOrDefaultAsync(a => a.UserId == userId, cancellationToken) ?? new Structure();
 
-    public async Task<IList<Structure>> GetStructuresByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<IList<Structure>> GetStructuresByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var getstructures = await _context.Structures.Where(a => a.UserId == userId).AsNoTracking().ToListAsync(cancellationToken);
         if (getstructures.Any())
@@ -86,12 +86,12 @@ public class StructureRepository : IStructureRepository
             return new List<Structure>();
     }
 
-    public async Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken)
+    public async Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default)
     {
         _context.Places.Update(place);
     }
 
-    public async Task UpdateStructureAsync(Structure structure, CancellationToken cancellationToken)
+    public async Task UpdateStructureAsync(Structure structure, CancellationToken cancellationToken = default)
     {
         var getStructure = await _context.Structures
             .FirstOrDefaultAsync(a => a.Id == structure.Id, cancellationToken);
@@ -144,9 +144,9 @@ public class StructureRepository : IStructureRepository
         return await places.ToListAsync(cancellationToken);
     }
 
-    public async Task<Place?> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken)
+    public async Task<Place?> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken = default)
         => await _context.Places.AsNoTracking().FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken);
 
-    public async Task<Structure?> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken)
+    public async Task<Structure?> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken = default)
         => await _context.Structures.AsNoTracking().FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
 }

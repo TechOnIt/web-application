@@ -22,7 +22,7 @@ public class DeleteSensorCommandHandler : IRequestHandler<DeleteSensorCommand, R
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(DeleteSensorCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(DeleteSensorCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

@@ -41,7 +41,7 @@ public class SignUpUserNotifications : INotification
 
 public class SignUpUserSmsNotificationsHandler : INotificationHandler<SignUpUserNotifications>
 {
-    public async Task Handle(SignUpUserNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(SignUpUserNotifications notification, CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;
     }
@@ -61,7 +61,7 @@ public class SignUpUserEmailNotificationsHandler : INotificationHandler<SignUpUs
     }
     #endregion
 
-    public async Task Handle(SignUpUserNotifications notification, CancellationToken cancellationToken)
+    public async Task Handle(SignUpUserNotifications notification, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(notification.Email))
             notification.Email = await _unitOfWorks.UserRepository.GetUserEmailByPhoneNumberAsync(notification.Phonenumber);

@@ -21,7 +21,7 @@ public class FindByIdStructureCommandHandler : IRequestHandler<FindByIdStructure
     }
     #endregion
 
-    public async Task<Result<StructureViewModel>> Handle(FindByIdStructureCommand request, CancellationToken cancellationToken)
+    public async Task<Result<StructureViewModel>> Handle(FindByIdStructureCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

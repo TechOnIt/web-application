@@ -22,7 +22,7 @@ namespace iot.Application.Common.Behaviors
         }
         #endregion
 
-        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken = default)
         {
             // validate our commands in these lines of linq expression
             // what we did here ? we found our validation class related 

@@ -22,7 +22,7 @@ public class GetUsersCommandHandler : IRequestHandler<GetUsersCommand, Result<IL
     }
     #endregion
 
-    public async Task<Result<IList<UserViewModel>>> Handle(GetUsersCommand request, CancellationToken cancellationToken)
+    public async Task<Result<IList<UserViewModel>>> Handle(GetUsersCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

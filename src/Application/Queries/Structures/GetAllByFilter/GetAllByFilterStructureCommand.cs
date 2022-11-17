@@ -23,7 +23,7 @@ public class GetAllByFilterStructureCommandHandler : IRequestHandler<GetAllByFil
 
     #endregion
 
-    public async Task<Result<IList<StructureViewModel>>> Handle(GetAllByFilterStructureCommand request, CancellationToken cancellationToken)
+    public async Task<Result<IList<StructureViewModel>>> Handle(GetAllByFilterStructureCommand request, CancellationToken cancellationToken = default)
     {
         var allStructures = await _structureAggregateReports.GetStructuresByFilterAsync(request.Filter,cancellationToken);
         return Result.Ok(allStructures);

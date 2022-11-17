@@ -23,7 +23,7 @@ public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand
     }
     #endregion
 
-    public async Task<Result<AccessToken>> Handle(SignInUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AccessToken>> Handle(SignInUserCommand request, CancellationToken cancellationToken = default)
     {
         var signInUserResult = await _identityService.SignInUserAsync(request.Username,request.Password,cancellationToken);
         if (!signInUserResult.HasValue)

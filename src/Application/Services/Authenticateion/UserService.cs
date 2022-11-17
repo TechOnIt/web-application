@@ -20,7 +20,7 @@ public class UserService : IUserService
 
     #endregion
 
-    public async Task<(Guid? UserId, IdentityCrudStatus Status)> CreateUserAsync(UserViewModel user, CancellationToken cancellationToken)
+    public async Task<(Guid? UserId, IdentityCrudStatus Status)> CreateUserAsync(UserViewModel user, CancellationToken cancellationToken = default)
     {
         if (user.PhoneNumber is null)
             return (null, IdentityCrudStatus.Failed);
@@ -37,7 +37,7 @@ public class UserService : IUserService
             return (result.Id, IdentityCrudStatus.Succeeded);
     }
 
-    public async Task<IdentityCrudStatus> DeleteUserAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<IdentityCrudStatus> DeleteUserAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var isExists = await IsExistsUserAsync(userId, cancellationToken);
         if (isExists)
@@ -50,7 +50,7 @@ public class UserService : IUserService
         return IdentityCrudStatus.Succeeded;
     }
 
-    public async Task<IdentityCrudStatus> DeleteUserAsync(string phoneNumber, CancellationToken cancellationToken)
+    public async Task<IdentityCrudStatus> DeleteUserAsync(string phoneNumber, CancellationToken cancellationToken = default)
     {
         var isExists = await _unitOfWorks.UserRepository.IsExistsUserByPhoneNumberAsync(phoneNumber);
         if (isExists)
@@ -63,13 +63,13 @@ public class UserService : IUserService
         return IdentityCrudStatus.Succeeded;
     }
 
-    public async Task<UserViewModel> FindUserByIdAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<UserViewModel> FindUserByIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var user = await _unitOfWorks.UserRepository.FindUserByUserIdAsync(userId);
         return user.Adapt<UserViewModel>();
     }
 
-    public async Task<(UserViewModel User, IdentityCrudStatus Status)> UpdateUserAsync(UserViewModel user, CancellationToken cancellationToken)
+    public async Task<(UserViewModel User, IdentityCrudStatus Status)> UpdateUserAsync(UserViewModel user, CancellationToken cancellationToken = default)
     {
         var isDuplicate = await _unitOfWorks.UserRepository.IsExistsUserByPhoneNumberAsync(user.PhoneNumber);
         if (!isDuplicate)
@@ -82,6 +82,6 @@ public class UserService : IUserService
         return (user, IdentityCrudStatus.Succeeded);
     }
 
-    public async Task<bool> IsExistsUserAsync(Guid userId, CancellationToken cancellationToken)
+    public async Task<bool> IsExistsUserAsync(Guid userId, CancellationToken cancellationToken = default)
         => await _unitOfWorks.UserRepository.IsExistsUserByIdAsync(userId, cancellationToken);
 }

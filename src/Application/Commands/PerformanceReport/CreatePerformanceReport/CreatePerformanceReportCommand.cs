@@ -22,7 +22,7 @@ public class CreatePerformanceReportCommandHandler : IRequestHandler<CreatePerfo
     }
 
     #endregion
-    public async Task<Result<Guid>> Handle(CreatePerformanceReportCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreatePerformanceReportCommand request, CancellationToken cancellationToken = default)
     {
         try
         {

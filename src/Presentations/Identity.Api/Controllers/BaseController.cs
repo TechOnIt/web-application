@@ -35,24 +35,6 @@ public class BaseController : ControllerBase
         return BadRequest();
     }
 
-    protected async Task<IActionResult> RunCommandAsync(Command<Result> request)
-    {
-        var result = await _mediator.Send(request);
-
-        if (result.IsSuccess)
-            return Ok(result);
-        return BadRequest();
-    }
-
-    protected async Task<IActionResult> RunCommandAsync<TResult>(Command<Result<TResult>> request)
-    {
-        var result = await _mediator.Send(request);
-
-        if (result.IsSuccess)
-            return Ok(result);
-        return BadRequest();
-    }
-
     protected async Task<IActionResult> RunQueryAsync(Query<Result> request)
     {
         var result = await _mediator.Send(request);

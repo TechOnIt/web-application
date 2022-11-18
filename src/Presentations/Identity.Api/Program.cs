@@ -5,7 +5,6 @@ using iot.Infrastructure;
 using iot.Infrastructure.Common.Extentions;
 using NLog;
 using NLog.Web;
-using System.Reflection;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -101,12 +100,6 @@ void ConfigureServices(IServiceCollection services) // clean code
 {
     services.AddInfrastructureServices();
     services.AddApplicationServices();
-
-    // Register CommandeHandlers
-    services.AddMediatR(typeof(CommandHandler<,>).GetTypeInfo().Assembly);
-
-    // Register QueryHandlers
-    services.AddMediatR(typeof(QueryHandler<,>).GetTypeInfo().Assembly);
 
     services.AddFluentValidationServices();
 

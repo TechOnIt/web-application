@@ -3,8 +3,10 @@ using iot.Application;
 using iot.Application.Common.DTOs.Settings;
 using iot.Infrastructure;
 using iot.Infrastructure.Common.Extentions;
+using Microsoft.AspNetCore.Hosting;
 using NLog;
 using NLog.Web;
+using System.Reflection;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -32,6 +34,9 @@ try
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
+
+    // Register MediatR.
+    builder.Services.AddMediatR(typeof(Program).GetTypeInfo().Assembly);
 
     // Map app setting json to app setting object.
     // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows

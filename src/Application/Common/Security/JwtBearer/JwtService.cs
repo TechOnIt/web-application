@@ -31,7 +31,9 @@ public class JwtService : IJwtService,IDisposable
             Issuer = JwtSettings.Issuer,
             Audience = JwtSettings.Audience,
             IssuedAt = DateTime.Now,
-            NotBefore = DateTime.Now.AddMinutes(JwtSettings.NotBeforeMinutes),
+            // TODO:
+            // What is this?
+            //NotBefore = DateTime.Now.AddMinutes(JwtSettings.NotBeforeMinutes),
             SigningCredentials = signingCredentials,
             Subject = new ClaimsIdentity(claims),
             EncryptingCredentials = encryptingCredentials,

@@ -16,7 +16,7 @@ public interface IUserRepository
     Task<IList<User>?> GetAllUsersByFilterAsync(Expression<Func<User, bool>>? filter = null,
         CancellationToken cancellationToken = default);
 
-    Task<User?> FindUserByPhoneNumberWithRolesAsyncNoTracking(string phonenumber, CancellationToken cancellationToken = default);
+    Task<User?> FindUserByPhoneNumberWithRolesNoTrackingAsync(string phonenumber, CancellationToken cancellationToken = default);
     Task<User> CreateNewUser(User user, CancellationToken cancellationToken = default);
     Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
     Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);

@@ -3,26 +3,26 @@ using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 
 namespace iot.Application.Commands.Users.Authentication.SignInOtpCommands;
 
-public class SignInWithOtpSmsCommand : IRequest<Result<AccessToken>>
+public class VerifyOtpSmsCommand : IRequest<Result<AccessToken>>
 {
     public string OtpCode { get; set; }
     public string PhoneNumber { get; set; }
 }
 
-public class SignInWithOtpSmsCommandHandler : IRequestHandler<SignInWithOtpSmsCommand, Result<AccessToken>>
+public class VerifyOtpSmsCommandHandler : IRequestHandler<VerifyOtpSmsCommand, Result<AccessToken>>
 {
-    #region constructor
+    #region DI & Ctor
     private readonly IIdentityService _identityService;
-    public SignInWithOtpSmsCommandHandler(IIdentityService identityService)
+
+    public VerifyOtpSmsCommandHandler(IIdentityService identityService)
     {
         _identityService = identityService;
     }
-
     #endregion
 
-    public async Task<Result<AccessToken>> Handle(SignInWithOtpSmsCommand request, CancellationToken cancellationToken = default)
+    public async Task<Result<AccessToken>> Handle(VerifyOtpSmsCommand request, CancellationToken cancellationToken = default)
     {
-        var accessToke = await _identityService.SignInUserWithOtpAsync(request.OtpCode,request.PhoneNumber,cancellationToken);
+        var accessToke = await _identityService.VerifySignInOtpAsync(request.OtpCode, request.PhoneNumber, cancellationToken);
         if (accessToke.Token.Token is null)
             return Result.Fail(accessToke.Message);
 
@@ -30,9 +30,9 @@ public class SignInWithOtpSmsCommandHandler : IRequestHandler<SignInWithOtpSmsCo
     }
 }
 
-public class SignInWithOtpSmsCommandValidations : BaseFluentValidator<SignInWithOtpSmsCommand>
+public class VerifyOtpSmsCommandValidations : BaseFluentValidator<VerifyOtpSmsCommand>
 {
-    public SignInWithOtpSmsCommandValidations()
+    public VerifyOtpSmsCommandValidations()
     {
         RuleFor(a => a.OtpCode)
             .NotNull()
@@ -43,8 +43,7 @@ public class SignInWithOtpSmsCommandValidations : BaseFluentValidator<SignInWith
         RuleFor(a => a.PhoneNumber)
             .NotEmpty()
             .NotNull()
-            .MinimumLength(11)
-            .MaximumLength(11)
+            .Length(11)
             ;
     }
 }

@@ -26,26 +26,16 @@ public class AuthenticationController : BaseController
     public async Task<IActionResult> Signin([FromBody] SignInUserCommand userLoginInformation)
     {
         _logger.LogWarning($"user with ip : {Request.HttpContext.Connection.RemoteIpAddress} tried to signin");
-
         return await RunCommandAsyncT(userLoginInformation);
     }
 
-    //[HttpGet]
-    //public async Task<IActionResult> GetSignUpOtpMessage([FromBody] SignUpSendOtpCommand userSignUpInformation)
-    //    => await RunCommandAsyncT(userSignUpInformation);
-
-    //[HttpPost]
-    //[ProducesResponseType(StatusCodes.Status200OK)]
-    //public async Task<IActionResult> SignUpWithOtp([FromBody] SignupUserCommand otpWithPhoneNumber)
-    //    => await RunCommandAsyncT(otpWithPhoneNumber);
-
-    [HttpGet]
-    public async Task<IActionResult> SignInOtp([FromQuery] SendOtpSmsCommand getSignInOtpCode)
+    [HttpPost]
+    public async Task<IActionResult> SignInOtp([FromBody] SendOtpSmsCommand getSignInOtpCode)
         => await RunCommandAsyncT(getSignInOtpCode);
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> SignInOtp([FromBody] SignInWithOtpSmsCommand otpCode)
+    public async Task<IActionResult> VerifySignInOtp([FromBody] VerifyOtpSmsCommand otpCode)
     => await RunCommandAsyncT(otpCode);
     #endregion
 }

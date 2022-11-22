@@ -3,17 +3,18 @@ using iot.Application.Common.Security.JwtBearer;
 using iot.Application.Common.ViewModels.Users;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 using iot.Domain.Entities.Identity.UserAggregate;
+using iot.Infrastructure.Common.Extentions;
 using iot.Infrastructure.Common.Notifications.KaveNegarSms;
+using iot.Infrastructure.Common.Notifications.Results;
 using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace iot.Application.Services.Authenticateion;
 
 public class IdentityService : IIdentityService
 {
-    #region constructor
+    #region DI & Ctor
     private readonly IUnitOfWorks _unitOfWorks;
     private readonly IDistributedCache _distributedCache;
     private readonly IKaveNegarSmsService _kavenegarAuthService;
@@ -28,7 +29,7 @@ public class IdentityService : IIdentityService
     }
     #endregion
 
-    #region login
+    #region Sign-In
     /// <summary>
     /// Generate otp and send sms for user phone number.
     /// </summary>
@@ -38,30 +39,34 @@ public class IdentityService : IIdentityService
         CancellationToken cancellationToken = default)
     {
         // Find user by phone number.
-        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesAsyncNoTracking(phoneNumber, cancellationToken);
+        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesNoTrackingAsync(phoneNumber, cancellationToken);
         if (user is null)
             return (null, $"cant find user with phonenumber: {phoneNumber}");
 
         // Read otp code from cache.
         var newOtpCode = await _distributedCache.GetStringAsync(IdentitySettingConstant.OtpCodeKey, cancellationToken);
+
+        // Was the code already generated?
+        if (newOtpCode is not null)
+            return (null, "Code was already generated.");
+
+        // Create result and set fail default.
+        (SendStatus Status, string Message) sendResult = (SendStatus.BadRequest, string.Empty);
+
         // If cache is null or expired.
+        // Generate new OTP code.
+        newOtpCode = user.GenerateNewOtpCode();
+
+        // Validate generated otp code.
         if (newOtpCode is null)
         {
-            // Generate new OTP code.
-            newOtpCode = user.GenerateNewOtpCode();
-
-            // Set OTP code to cache with "otp-code" key.
-            // Expiration setting up to 2 minutes.
-            await _distributedCache.SetStringAsync(IdentitySettingConstant.OtpCodeKey, newOtpCode,
-                new DistributedCacheEntryOptions
-                {
-                    AbsoluteExpiration = DateTime.Now.AddMinutes(IdentitySettingConstant.OtpExpirationDurationPerMinute)
-                },
-                cancellationToken);
+            // TODO:
+            // Log here!
+            return (null, "An error was occured!");
         }
 
         // Send otp as a normal sms.
-        var sendResult = await _kavenegarAuthService.SendAsync(phoneNumber, $"Techonit\nYour verify code:\n{newOtpCode}");
+        sendResult = await _kavenegarAuthService.SendAsync(phoneNumber, $"Techonit\nYour verify code:\n{newOtpCode}");
 
         // Send otp as template (Lookup).
         //var sendResult = await _kavenegarAuthService.SendAuthSmsAsync(phoneNumber, "", "", user.OtpCode.ToString());
@@ -70,25 +75,35 @@ public class IdentityService : IIdentityService
         if (!sendResult.Status.IsSendSuccessfully())
             return (null, sendResult.Message);
 
+        // Set OTP code to cache with "otp-code" key.
+        // Expiration setting up to 2 minutes.
+        await _distributedCache.SetStringAsync(IdentitySettingConstant.OtpCodeKey, newOtpCode.Encrypt(),
+            new DistributedCacheEntryOptions
+            {
+                AbsoluteExpiration = DateTime.Now.AddMinutes(IdentitySettingConstant.OtpExpirationDurationPerMinute)
+            },
+            cancellationToken);
+
+
         return (newOtpCode, $"OTP has been sent.");
     }
 
-    public async Task<(AccessToken Token, string Message)> SignInUserWithOtpAsync(string otpCode, string phonenumber,
+    public async Task<(AccessToken Token, string Message)> VerifySignInOtpAsync(string otpCode, string phonenumber,
         CancellationToken cancellationToken = default)
     {
         // Find user by phone number.
-        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesAsyncNoTracking(phonenumber, cancellationToken);
+        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesNoTrackingAsync(phonenumber, cancellationToken);
         // Null handling Validation.
         if (user is null)
             return (new AccessToken(), $"Can't find user with {phonenumber} phonenumber!");
 
         // Read otp code from cache.
-        var otpCodeCache = await _distributedCache.GetStringAsync(IdentitySettingConstant.OtpCodeKey, cancellationToken);
-
-        // Validation
+        var EncryptedOtpCodeCache = await _distributedCache.GetStringAsync(IdentitySettingConstant.OtpCodeKey, cancellationToken);        // Validation
         // Null handling.
-        if (otpCodeCache is null)
+        if (EncryptedOtpCodeCache is null)
             return (new AccessToken(), "The code has expired!");
+        // Decrypt otp code.
+        var otpCodeCache = EncryptedOtpCodeCache.Decrypt();
         // Compare code.
         if (otpCodeCache != otpCode)
             return (new AccessToken(), "input otp code is not valid !");
@@ -109,7 +124,7 @@ public class IdentityService : IIdentityService
     public async Task<(AccessToken Token, string Message)?> SignInUserAsync(string phoneNumber, string password,
         CancellationToken cancellationToken = default)
     {
-        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesAsyncNoTracking(phoneNumber, cancellationToken);
+        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesNoTrackingAsync(phoneNumber, cancellationToken);
         if (user is null)
             return null;
         var status = user.GetUserSignInStatusResultWithMessage(password);
@@ -134,7 +149,7 @@ public class IdentityService : IIdentityService
     }
     #endregion
 
-    #region signUp
+    #region Sign-Up
     public async Task<(string? Code, string Message)> SignUpAndSendOtpCode(UserViewModel user,
         CancellationToken cancellationToken = default)
     {
@@ -160,10 +175,10 @@ public class IdentityService : IIdentityService
         CancellationToken cancellationToken = default)
     {
         var cachedOtpCode = await _distributedCache.GetStringAsync(IdentitySettingConstant.OtpCodeKey, cancellationToken);
-        if(cachedOtpCode is null)
+        if (cachedOtpCode is null)
             return (new AccessToken(), $"Token is expired.");
 
-        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesAsyncNoTracking(phonenumber, cancellationToken);
+        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesNoTrackingAsync(phonenumber, cancellationToken);
         if (user is null)
             return (new AccessToken(), $"can not find user with phonenumber : {phonenumber}");
 

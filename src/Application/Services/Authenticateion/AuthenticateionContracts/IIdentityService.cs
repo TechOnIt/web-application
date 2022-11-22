@@ -9,7 +9,7 @@ public interface IIdentityService
         CancellationToken cancellationToken = default);
     Task<(string? Code, string Message)> SendOtpAsync(string phoneNumber,
         CancellationToken cancellationToken = default);
-    Task<(AccessToken Token, string Message)> SignInUserWithOtpAsync(string otpCode, string phonenumber,
+    Task<(AccessToken Token, string Message)> VerifySignInOtpAsync(string otpCode, string phonenumber,
         CancellationToken cancellationToken = default);
     Task<(string? Code, string Message)> SignUpAndSendOtpCode(UserViewModel user,
         CancellationToken cancellationToken = default);

@@ -12,16 +12,16 @@ public class KaveNegarSmsService : IKaveNegarSmsService
         try
         {
             HttpClient httpClient = new HttpClient();
-            var httpResponse = await httpClient.GetAsync($"{baseUrl}/send.json?receptor={to}&sender=0018018949161&message={message}");
+            var httpResponse = await httpClient.GetAsync($"{baseUrl}/send.json?receptor={to}&sender=10001110100010&message={message}");
             var contents = await httpResponse.Content.ReadAsStringAsync();
 
              var result = JsonSerializer.Deserialize<KavenegarResult>(contents);
             if (result is null)
                 return (SendStatus.BadRequest, String.Empty);
-            if (result.Return is null)
+            if (result.@return is null)
                 return (SendStatus.BadRequest, String.Empty);
 
-            return GetStatusAndMessageResult(result.Return);
+            return GetStatusAndMessageResult(result.@return);
         }
         catch (Exception exp)
         {
@@ -40,10 +40,10 @@ public class KaveNegarSmsService : IKaveNegarSmsService
             var result = JsonSerializer.Deserialize<KavenegarResult>(contents);
             if (result is null)
                 return (SendStatus.BadRequest, String.Empty);
-            if (result.Return is null)
+            if (result.@return is null)
                 return (SendStatus.BadRequest, String.Empty);
 
-            return GetStatusAndMessageResult(result.Return);
+            return GetStatusAndMessageResult(result.@return);
         }
         catch (Exception exp)
         {
@@ -81,8 +81,8 @@ public class KaveNegarSmsService : IKaveNegarSmsService
     #endregion
 
     #region records
-    private record KavenegarResult(Return Return, Entries entries);
+    private record KavenegarResult(Return @return, List<Entries> entries);
     private record Return(int status, string message);
-    private record Entries(DateTime datetime, int day, int hour, int minute, int month, int second, object unixtime, int year);
+    private record Entries(int messageid, string message, int status, string statustext, string sender, string receptor, int date, int cost);
     #endregion
 }

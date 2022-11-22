@@ -9,7 +9,6 @@ public class SignInUserCommand : IRequest<Result<AccessToken>>
     public string? Password { get; set; }
 }
 
-
 public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand, Result<AccessToken>>
 {
     #region DI & Ctor
@@ -25,7 +24,7 @@ public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand
 
     public async Task<Result<AccessToken>> Handle(SignInUserCommand request, CancellationToken cancellationToken = default)
     {
-        var signInUserResult = await _identityService.SignInUserAsync(request.Username,request.Password,cancellationToken);
+        var signInUserResult = await _identityService.SignInUserAsync(request.Username, request.Password, cancellationToken);
         if (!signInUserResult.HasValue)
             return Result.Fail("Server side error has occured.");
 

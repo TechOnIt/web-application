@@ -18,6 +18,8 @@ public class KaveNegarSmsService : IKaveNegarSmsService
              var result = JsonSerializer.Deserialize<KavenegarResult>(contents);
             if (result is null)
                 return (SendStatus.BadRequest, String.Empty);
+            if (result.Return is null)
+                return (SendStatus.BadRequest, String.Empty);
 
             return GetStatusAndMessageResult(result.Return);
         }
@@ -37,6 +39,8 @@ public class KaveNegarSmsService : IKaveNegarSmsService
 
             var result = JsonSerializer.Deserialize<KavenegarResult>(contents);
             if (result is null)
+                return (SendStatus.BadRequest, String.Empty);
+            if (result.Return is null)
                 return (SendStatus.BadRequest, String.Empty);
 
             return GetStatusAndMessageResult(result.Return);

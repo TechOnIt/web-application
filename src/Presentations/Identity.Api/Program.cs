@@ -1,5 +1,6 @@
 using AspNetCoreRateLimit;
 using iot.Application;
+using iot.Application.Commands.Users.Authentication.SignInOtpCommands;
 using iot.Application.Common.DTOs.Settings;
 using iot.Infrastructure;
 using iot.Infrastructure.Common.Extentions;
@@ -36,7 +37,7 @@ try
     builder.Host.UseNLog();
 
     // Register MediatR.
-    builder.Services.AddMediatR(typeof(Program).GetTypeInfo().Assembly);
+    builder.Services.AddMediatR(typeof(SendOtpSmsCommand).GetTypeInfo().Assembly);
 
     // Map app setting json to app setting object.
     // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows

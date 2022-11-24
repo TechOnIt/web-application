@@ -19,6 +19,9 @@ internal class UserDataInitializer : IDataInitializer
     {
         await CreateUserAsync("RezaAmd", "rezaahmadidvlp@gmail.com",
             roles: new List<string> { "Admin" }, name: "Reza", surname: "Ahmadi");
+
+        await CreateUserAsync("MohsenMahv", "mohsen.mahv@gmail.com",
+            roles: new List<string> { "Admin" }, name: "Mohsen", surname: "Heydari");
     }
 
     private async Task CreateUserAsync(string username, string email, string? password = null,

@@ -10,8 +10,17 @@ public class Device
     public Device(int pin, DeviceType deviceType, bool isHigh, Guid placeId)
     {
         Id = Guid.NewGuid();
-        Pin = pin;  
-        DeviceType = deviceType;    
+        Pin = pin;
+        DeviceType = deviceType;
+        IsHigh = isHigh;
+        PlaceId = placeId;
+    }
+
+    public Device(Guid id,int pin, DeviceType deviceType, bool isHigh, Guid placeId)
+    {
+        Id = id;
+        Pin = pin;
+        DeviceType = deviceType;
         IsHigh = isHigh;
         PlaceId = placeId;
     }
@@ -22,13 +31,11 @@ public class Device
     #endregion
 
     private Guid? _Id;
-    public Guid Id 
+    public Guid Id
     {
         get { return _Id ?? Guid.NewGuid(); }
         private set { _Id = value; }
     }
-
-
     public int Pin { get; set; }
     public DeviceType DeviceType { get; private set; }
     public bool IsHigh { get; set; }
@@ -37,6 +44,14 @@ public class Device
     public byte[] RowVersion { get; set; }
 
     #region methods
+
+    public Guid SetDeviceId(Guid id)
+    {
+        ArgumentNullException.ThrowIfNull(id);
+
+        this.Id = id;
+        return this.Id;
+    }
 
     public Guid GetDeviceId()
     {

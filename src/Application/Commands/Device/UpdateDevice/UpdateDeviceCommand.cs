@@ -31,15 +31,14 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, R
     {
         try
         {
-            var viewModel = new DeviceViewModel(request.DeviceId,request.PlaceId,request.Pin,request.DeviceType,request.IsHigh);
-
-            var updateResult = await _deviceService.UpdateDeviceAsync(viewModel,cancellationToken);
-            await _mediator.Publish(new DeviceNotifications());
+            var viewModel = new DeviceViewModel(request.DeviceId, request.PlaceId, request.Pin, request.DeviceType, request.IsHigh);
+            var updateResult = await _deviceService.UpdateDeviceAsync(viewModel, cancellationToken);
 
             if (updateResult is null)
-                return Result.Fail("an error occured !");
-            else
-                return Result.Ok(updateResult.Id);
+                return Result.Fail("device can not be found !");
+
+            await _mediator.Publish(new DeviceNotifications());
+            return Result.Ok(updateResult.Id);
         }
         catch (Exception exp)
         {

@@ -12,7 +12,11 @@ public class DeviceViewModel
 
     public DeviceViewModel(Guid id, Guid placeId, int pin, DeviceType deviceType, bool isHight)
     {
-
+        Id = id;
+        PlaceId = placeId;
+        Pin = pin;
+        DeviceType=deviceType;
+        IsHigh = isHight;
     }
     #endregion
 

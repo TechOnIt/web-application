@@ -1,4 +1,5 @@
-﻿using iot.Domain.Entities.Identity.UserAggregate;
+﻿using iot.Domain.Entities.Identity;
+using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Domain.ValueObjects;
 using iot.Infrastructure.Repositories.UnitOfWorks;
 
@@ -17,14 +18,31 @@ internal class UserDataInitializer : IDataInitializer
 
     public async Task InitializeDataAsync()
     {
-        await CreateUserAsync("RezaAmd", "rezaahmadidvlp@gmail.com",
+        await CreateUserAsync("RezaAmd", "09058089095", "rezaahmadidvlp@gmail.com",
             roles: new List<string> { "Admin" }, name: "Reza", surname: "Ahmadi");
+
+        await CreateUserAsync("MohsenMahv", "09128395645", "mohsen.mahv@gmail.com",
+            roles: new List<string> { "Admin" }, name: "Mohsen", surname: "Heydari");
     }
 
-    private async Task CreateUserAsync(string username, string email, string? password = null,
+    private async Task CreateUserAsync(string username, string phoneNumber, string email, string? password = null,
         List<string>? roles = null, string? name = null, string? surname = null)
     {
-        if (!await _uow.UserRepository.IsExistsUserByPhoneNumberAsync(username))
+        bool haveSaveChange = false;
+        if (roles != null)
+        {
+            foreach (var role in roles)
+            {
+                if (!await _uow.RoleRepository.IsExistsRoleNameAsync(role))
+                {
+                    var newRole = new Role(role);
+                    await _uow.RoleRepository.CreateRoleAsync(newRole);
+                    haveSaveChange = true;
+                    await Task.Delay(500);
+                }
+            }
+        }
+        if (!await _uow.UserRepository.IsExistsUserByQueryAsync(u => u.Username == username || u.PhoneNumber == username || u.Email == username))
         {
             var newUser = User.CreateNewInstance(email, username);
             newUser.SetFullName(new FullName(name, surname));
@@ -37,7 +55,9 @@ internal class UserDataInitializer : IDataInitializer
 
             // Create new user in entities.
             await _uow.UserRepository.CreateNewUser(newUser);
-            await _uow.SaveAsync();
+            haveSaveChange = true;
         }
+        if (haveSaveChange)
+            await _uow.SaveAsync();
     }
 }

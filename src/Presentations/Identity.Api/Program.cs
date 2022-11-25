@@ -44,6 +44,20 @@ try
     builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
     builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
 
+    // Cross origin
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("allows_policy", policy =>
+        {
+            policy.AllowAnyHeader()
+                .AllowAnyMethod()
+                .WithOrigins("*", "http://localhost:3000")
+                .SetIsOriginAllowed(_ => true)
+                .AllowCredentials()
+                .WithMethods("GET", "PUT", "DELETE", "POST", "PATCH"); //not really necessary when AllowAnyMethods is used.;
+        });
+    });
+
     ConfigureServices(builder.Services);
 
     var app = builder.Build();
@@ -53,16 +67,15 @@ try
     // And if you don't need it, then comment the following line
     app.UseCustomExceptionHandler();
 
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
     // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
-    else
+    if (!app.Environment.IsDevelopment())
     {
         // client exception handle : https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-6.0#exception-handler-lambda
         app.UseHsts(); // https://git.ir/pluralsight-protecting-sensitive-data-from-exposure-in-asp-net-and-asp-net-core-applications/ episode 13
+
     }
 
     app.UseHttpsRedirection();

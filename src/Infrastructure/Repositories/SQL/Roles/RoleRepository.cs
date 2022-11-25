@@ -16,9 +16,9 @@ public sealed class RoleRepository : IRoleRepository
     #endregion
 
 
-    public async Task CreateRoleAsync(string roleName, CancellationToken cancellationToken = default)
+    public async Task CreateRoleAsync(Role role, CancellationToken cancellationToken = default)
     {
-        await _context.Roles.AddAsync(new Role(name: roleName), cancellationToken);
+        await _context.Roles.AddAsync(role, cancellationToken);
         await Task.CompletedTask;
     }
 

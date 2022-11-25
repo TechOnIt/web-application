@@ -5,7 +5,7 @@ namespace iot.Infrastructure.Common.Notifications.KaveNegarSms;
 
 public class KaveNegarSmsService : IKaveNegarSmsService
 {
-    private readonly string baseUrl = "https://api.kavenegar.com/v1/3042775276656B664D79486572684765432B704646564F7154654D30594543506A437975774F496A4B6A343D/sms";
+    private readonly string baseUrl = "https://api.kavenegar.com/v1/73747A513546793546684D586E6E33504334774C354C43704338436D583338354D624378395237304263383D/sms";
 
     public async Task<(SendStatus Status, string Message)> SendAsync(string to, string message)
     {

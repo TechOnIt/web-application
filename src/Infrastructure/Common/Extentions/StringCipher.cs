@@ -5,7 +5,7 @@ namespace iot.Infrastructure.Common.Extentions;
 
 public static class StringCipher
 {
-    private static string EncryptionKey = "c41b6cc4-bab8-4e61-a9fa-27608978b4ab";
+    private static string EncryptionKey = "a2787f19-0522-4e4a-8479-1f63f3dc631a";
 
     public static string Encrypt(this string clearText, string? salt = null)
     {

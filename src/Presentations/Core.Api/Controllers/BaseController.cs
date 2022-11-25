@@ -1,9 +1,5 @@
 ﻿using FluentResults;
-using iot.Application.Commands;
-using iot.Application.Common.Extentions;
-using iot.Application.Common.Models;
 using iot.Application.Common.ViewModels.Structures.Authentication;
-using iot.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +20,7 @@ public class BaseController : ControllerBase
     #region Command
     protected async Task<IActionResult> RunCommandAsync<TRequest>(TRequest request)
     {
-        if(request == null)
+        if (request == null)
             return NotFound();
 
         var resultObject = await _mediator.Send(request);
@@ -43,20 +39,19 @@ public class BaseController : ControllerBase
     #endregion
 
     #region Query
-    protected async Task<IActionResult> RunQueryAsync(Query<Result> request)
+    protected async Task<IActionResult> RunQueryAsync(Result request)
     {
         var result = await _mediator.Send(request);
 
-        if (result.IsSuccess)
+        if (result is not null)
             return Ok(result);
         return BadRequest(result);
     }
-
-    protected async Task<IActionResult> RunQueryAsync<TResult>(Query<Result<TResult>> request)
+    protected async Task<IActionResult> RunQueryAsync<TResult>(Result<TResult> request)
     {
         var result = await _mediator.Send(request);
 
-        if (result.IsSuccess)
+        if (result is not null)
             return Ok(result);
         return BadRequest(result);
     }

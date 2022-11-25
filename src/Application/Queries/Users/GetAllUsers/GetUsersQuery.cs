@@ -4,22 +4,22 @@ using iot.Application.Reports.Contracts;
 
 namespace iot.Application.Queries.Users.GetAllUsers;
 
-public class GetUsersCommand : Paginated, IRequest<Result<PaginatedList<UserViewModel>>>
+public class GetUsersQuery : Paginated, IRequest<Result<PaginatedList<UserViewModel>>>
 {
     public string? Keyword { get; set; }
 }
 
-public class GetUsersCommandHandler : IRequestHandler<GetUsersCommand, Result<PaginatedList<UserViewModel>>>
+public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, Result<PaginatedList<UserViewModel>>>
 {
     #region constructor
     private readonly IUserReports _userReports;
-    public GetUsersCommandHandler(IUserReports userReports)
+    public GetUsersQueryHandler(IUserReports userReports)
     {
         _userReports = userReports;
     }
     #endregion
 
-    public async Task<Result<PaginatedList<UserViewModel>>> Handle(GetUsersCommand request, CancellationToken cancellationToken = default)
+    public async Task<Result<PaginatedList<UserViewModel>>> Handle(GetUsersQuery request, CancellationToken cancellationToken = default)
     {
         try
         {

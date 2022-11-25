@@ -12,7 +12,7 @@ public class BaseController : ControllerBase
     }
     #endregion
 
-
+    #region Commands
     protected async Task<IActionResult> RunCommandAsyncT<TRequest>(TRequest request)
         where TRequest : class
     {
@@ -34,21 +34,16 @@ public class BaseController : ControllerBase
             return Ok(result);
         return BadRequest();
     }
+    #endregion
 
-    protected async Task<IActionResult> RunQueryAsync(Query<Result> request)
+    #region Queries
+    protected async Task<IActionResult> RunQueryAsync<TQuery>(TQuery request)
+        where TQuery : class
     {
         var result = await _mediator.Send(request);
-
-        if (result.IsSuccess)
+        if (result is not null)
             return Ok(result);
-        return BadRequest(result);
+        return BadRequest();
     }
-    protected async Task<IActionResult> RunQueryAsync<TResult>(Query<Result<TResult>> request)
-    {
-        var result = await _mediator.Send(request);
-
-        if (result.IsSuccess)
-            return Ok(result);
-        return BadRequest(result);
-    }
+    #endregion
 }

@@ -63,7 +63,7 @@ public class UserController : BaseController
     [HttpGet, ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public async Task<IActionResult> GetUsers([FromQuery] GetUsersCommand command)
-     => await RunCommandAsyncT(command);
+    public async Task<IActionResult> GetUsers([FromQuery] GetUsersQuery query)
+     => await RunQueryAsync(query);
     #endregion
 }

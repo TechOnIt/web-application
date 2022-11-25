@@ -1,6 +1,6 @@
 ﻿namespace iot.Application.Queries.Users.GetAllUsers;
 
-public class GetUsersCommandValidations : BaseFluentValidator<GetUsersCommand>
+public class GetUsersCommandValidations : BaseFluentValidator<GetUsersQuery>
 {
 	public GetUsersCommandValidations()
 	{

@@ -6,5 +6,4 @@ namespace iot.Desk.Api.Controllers.v1;
 [Route("v1/[controller]/[action]")]
 public class BaseController : ControllerBase
 {
-
 }

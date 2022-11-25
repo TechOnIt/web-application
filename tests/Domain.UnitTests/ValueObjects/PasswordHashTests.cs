@@ -1,4 +1,4 @@
-﻿using iot.Domain.ValueObjects;
+﻿using Shouldly;
 
 namespace iot.Domain.UnitTests.ValueObjects;
 
@@ -22,18 +22,19 @@ public class PasswordHashTests
     }
 
     [Theory]
-    [InlineData("123456", "123456")]
-    [InlineData("abcDefg", "abcDefg")]
-    [InlineData("aB8%h*9T", "aB8%h*9T")]
-    public void Should_Equal_With_Same_Type_And_Same_Value(string oldPassword, string newPassword)
+    [InlineData("123456")]
+    [InlineData("abcDefg")]
+    [InlineData("aB8%h*9T")]
+    public void Should_Verify_Password_After_Hash(string password)
     {
-        // Arrange
-        var oldPasswordHash = PasswordHash.Parse(oldPassword);
-        var newPasswordHash = PasswordHash.Parse(newPassword);
+        // arrange
+        var hashedPassword = PasswordHash.Parse(password);
+
+        // act
+        bool verifyResult = hashedPassword.VerifyPasswordHash(password);
 
         // Assert
-        oldPasswordHash.Should().Match<PasswordHash>(passwordHash => passwordHash == newPasswordHash);
-        oldPasswordHash.Should().Match<PasswordHash>(passwordHash => passwordHash.Equals(newPasswordHash));
+        verifyResult.ShouldBe(true);
     }
     #endregion
 

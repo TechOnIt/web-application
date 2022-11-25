@@ -34,9 +34,7 @@ public class PasswordHash : ValueObject
 
     #region Methods
     public static PasswordHash Parse(string password)
-    {
-        return new PasswordHash(password);
-    }
+        => new PasswordHash(password);
 
     private static string _validation(string password)
     {
@@ -51,16 +49,6 @@ public class PasswordHash : ValueObject
         // initializing
         return password;
     }
-    //private static string _encode(string password)
-    //{
-    //    Byte[] originalBytes;
-    //    Byte[] encodedBytes;
-    //    MD5 md5;
-    //    md5 = new MD5CryptoServiceProvider();
-    //    originalBytes = ASCIIEncoding.Default.GetBytes(password);
-    //    encodedBytes = md5.ComputeHash(originalBytes);
-    //    return BitConverter.ToString(encodedBytes);
-    //}
 
     public override int GetHashCode() => Value.GetHashCode();
     protected override IEnumerable<object> GetEqualityComponents()
@@ -70,7 +58,6 @@ public class PasswordHash : ValueObject
     #endregion
 
     #region Operators
-    //public static bool operator ==(PasswordHash left, PasswordHash right) => left.Value == right.Value;
     public static bool operator ==(PasswordHash left, PasswordHash right)
     {
         //https://stackoverflow.com/questions/4219261/overriding-operator-how-to-compare-to-null
@@ -81,7 +68,16 @@ public class PasswordHash : ValueObject
 
         return left.Equals(right);
     }
-    public static bool operator !=(PasswordHash left, PasswordHash right) => left.Value != right.Value;
+
+    public static bool operator !=(PasswordHash left, PasswordHash right)
+    {
+        if (left is null)
+        {
+            return right is not null;
+        }
+
+        return left.Value != right.Value;
+    }
     #endregion
 
     #region highe level encryption

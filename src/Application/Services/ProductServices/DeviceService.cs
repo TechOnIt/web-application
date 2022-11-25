@@ -1,11 +1,4 @@
-﻿using iot.Application.Common.ViewModels;
-using iot.Application.Services.ProductServices.ProductContracts;
-using iot.Domain.Entities.Product;
-using iot.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
-using Microsoft.AspNetCore.Mvc;
-
-namespace iot.Application.Services.ProductServices;
+﻿namespace iot.Application.Services.ProductServices;
 
 public class DeviceService : IDeviceService
 {

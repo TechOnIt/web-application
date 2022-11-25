@@ -8,3 +8,8 @@ global using iot.Domain.ValueObjects;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using iot.Application.Common.Frameworks.ApiResultFrameWork;
+global using iot.Application.Common.ViewModels;
+global using iot.Application.Services.ProductServices.ProductContracts;
+global using iot.Domain.Entities.Product;
+global using iot.Infrastructure.Repositories.UnitOfWorks;
+global using Mapster;

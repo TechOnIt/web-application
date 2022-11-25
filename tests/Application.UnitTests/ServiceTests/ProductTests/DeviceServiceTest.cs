@@ -245,3 +245,56 @@ public class DeviceFindByIdDeviceTest
         this.BDDfy();
     }
 }
+
+public class DeviceFindByIdDeviceAsNoTrackingTest
+{
+    #region constructor
+    private Mock<IUnitOfWorks> _unitOfWork;
+
+    public DeviceFindByIdDeviceAsNoTrackingTest()
+    {
+        _unitOfWork = new Mock<IUnitOfWorks>();
+    }
+
+    private DeviceService Subject() => new DeviceService(_unitOfWork.Object);
+    #endregion
+
+    #region properties
+    public Guid DeviceId { get; set; }
+    public CancellationToken cancellationToken { get; set; }
+    #endregion
+
+    public void Given_Request_To_Find_Device_AsNoTracking()
+    {
+
+    }
+
+    public void When_DeviceId_Is_Not_Null()
+    {
+        this.DeviceId = Guid.NewGuid();
+        this.cancellationToken = new CancellationTokenSource().Token;
+    }
+
+    public async Task Then_Should_Not_Have_Any_Exceptions_Or_Errors()
+    {
+        // arrange
+        var service = Subject();
+
+        _unitOfWork.Setup(repo => repo.DeviceRepositry.FindDeviceByIdAsyncAsNoTracking(this.DeviceId, this.cancellationToken))
+            .ReturnsAsync(new Device(this.DeviceId, 2, DeviceType.Cooler, true, Guid.NewGuid()));
+
+        // act
+        var result = await service.FindDeviceByIdAsyncAsNoTracking(this.DeviceId,this.cancellationToken);
+        var exceptionResult = Record.ExceptionAsync(() => service.FindDeviceByIdAsyncAsNoTracking(this.DeviceId, this.cancellationToken)).Result;
+
+        // assert
+        result.ShouldNotBeNull();
+        exceptionResult.ShouldBeNull();
+    }
+
+    [Fact]
+    public void Should_Find_Existing_Device_By_Id_AsNoTracking_Successfully()
+    {
+        this.BDDfy();
+    }
+}

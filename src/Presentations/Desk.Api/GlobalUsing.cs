@@ -1,0 +1,15 @@
+﻿global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using iot.Application.Commands.Place.CreatePlace;
+global using iot.Application.Commands.Place.DeletePlace;
+global using iot.Application.Commands.Place.UpdatePlace;
+global using iot.Application.Queries.Places.GetAllPlaceByFilter;
+global using MediatR;
+global using System.Security.Cryptography;
+global using iot.Application.Commands.Structures.Management.CreateStructure;
+global using iot.Application.Commands.Structures.Management.DeleteStructure;
+global using iot.Application.Commands.Structures.Management.UpdateStructure;
+global using iot.Application.Common.Exceptions;
+global using iot.Application.Common.Frameworks.ApiResultFrameWork;
+global using iot.Application.Queries.Structures.GetAllByFilter;
+global using Microsoft.AspNetCore.DataProtection;

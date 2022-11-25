@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
-
-namespace iot.Desk.Api.Controllers.v1;
+﻿namespace iot.Desk.Api.Controllers.v1;
 
 [Route("api/[controller]")]
 [ApiController]

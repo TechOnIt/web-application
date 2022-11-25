@@ -18,12 +18,14 @@ public interface IUserRepository
 
     Task<User?> FindUserByPhoneNumberWithRolesNoTrackingAsync(string phonenumber, CancellationToken cancellationToken = default);
     Task<User> CreateNewUser(User user, CancellationToken cancellationToken = default);
-    Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
     Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
     Task<User?> FindUserByUserIdAsNoTrackingAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<User?> FindUserByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
     Task DeleteUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
     Task DeleteUserByIdAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<bool> IsExistsUserByIdAsync(Guid userId,CancellationToken cancellationToken = default);
     Task UpdateUserAsync(User user, CancellationToken cancellationToken = default);
+
+    Task<bool> IsExistsUserByQueryAsync(Expression<Func<User, bool>> query, CancellationToken cancellationToken = default);
+    Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
+    Task<bool> IsExistsUserByIdAsync(Guid userId,CancellationToken cancellationToken = default);
 }

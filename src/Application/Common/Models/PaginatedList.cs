@@ -27,17 +27,16 @@ public class PaginatedList<T>
     #endregion
 
     #region Method's
-    public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize, CancellationToken cancellationToken)
+    public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize,
+        CancellationToken cancellationToken)
     {
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
         pageSize = pageSize <= 0 ? 5 : pageSize;
-
         var count = await source.CountAsync();
         var items = await source
-            .Skip((pageIndex - 1) * pageSize).Take(pageSize)
-            .ToListAsync(cancellationToken);
-
-        return new PaginatedList<T>(items, count, pageIndex, pageSize);
+            .Skip((pageIndex - 1) * pageSize).Take(pageSize) // Apply pagination.
+            .ToListAsync(cancellationToken); // Execute query command.
+        return new PaginatedList<T>(items, count, pageIndex, pageSize); // Cast to paginated list.
     }
 
     public static async Task<PaginatedList<TDestination>> CreateAsync<TOrigin, TDestination>(IQueryable<TOrigin> source,
@@ -45,13 +44,12 @@ public class PaginatedList<T>
     {
         pageIndex = pageIndex <= 0 ? 1 : pageIndex;
         pageSize = pageSize <= 0 ? 5 : pageSize;
-
         var count = await source.CountAsync();
         var items = await source
-            .Skip((pageIndex - 1) * pageSize).Take(pageSize)
-            .ProjectToType<TDestination>(config)
-            .ToListAsync(cancellationToken);
-        return new PaginatedList<TDestination>(items, count, pageIndex, pageSize);
+            .Skip((pageIndex - 1) * pageSize).Take(pageSize) // Apply pagination.
+            .ProjectToType<TDestination>(config) // Cast to view model.
+            .ToListAsync(cancellationToken); // Execute query command.
+        return new PaginatedList<TDestination>(items, count, pageIndex, pageSize); // Cast to paginated list.
     }
     #endregion
 }

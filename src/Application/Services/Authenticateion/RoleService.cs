@@ -1,6 +1,5 @@
 ﻿using iot.Application.Common.Enums.IdentityServiceEnums;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
-using iot.Infrastructure.Repositories.UnitOfWorks;
 
 namespace iot.Application.Services.Authenticateion;
 
@@ -15,15 +14,15 @@ public class RoleService : IRoleService
 
     #endregion
 
-    public async Task<(IdentityCrudStatus Result, string Message)> CreateRoleAsync(string roleName, CancellationToken cancellationToken = default)
+    public async Task<(IdentityCrudStatus Result, string Message)> CreateRoleAsync(Role role, CancellationToken cancellationToken = default)
     {
         bool isExistsBefor = 
-            await _unitOfWorks.RoleRepository.IsExistsRoleNameAsync(roleName, cancellationToken);
+            await _unitOfWorks.RoleRepository.IsExistsRoleNameAsync(role.Name, cancellationToken);
 
         if (isExistsBefor)
             return (IdentityCrudStatus.Duplicate, "Duplicate: role name already exists in system");
 
-        await _unitOfWorks.RoleRepository.CreateRoleAsync(roleName, cancellationToken);
+        await _unitOfWorks.RoleRepository.CreateRoleAsync(role, cancellationToken);
         return (IdentityCrudStatus.Succeeded, "done successfully");
     }
 

@@ -8,3 +8,4 @@ global using iot.Domain.ValueObjects;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using iot.Application.Common.Frameworks.ApiResultFrameWork;
+global using iot.Infrastructure.Repositories.UnitOfWorks;

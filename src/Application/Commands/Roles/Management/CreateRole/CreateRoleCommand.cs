@@ -23,7 +23,7 @@ public class CreateRoleCommandHanlder : IRequestHandler<CreateRoleCommand, Resul
     {
         try
         {
-            var result = await _roleService.CreateRoleAsync(request.Name, cancellationToken);
+            var result = await _roleService.CreateRoleAsync(new Role(request.Name), cancellationToken);
             if (result.Result.IsDuplicate())
                 return Result.Fail(result.Message);
 

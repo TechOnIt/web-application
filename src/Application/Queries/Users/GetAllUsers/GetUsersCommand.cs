@@ -1,18 +1,15 @@
 ﻿using iot.Application.Common.Exceptions;
 using iot.Application.Common.ViewModels.Users;
 using iot.Application.Reports.Contracts;
-using iot.Domain.Entities.Identity.UserAggregate;
-using System.Linq.Expressions;
 
 namespace iot.Application.Queries.Users.GetAllUsers;
 
-public class GetUsersCommand : IRequest<Result<IList<UserViewModel>>>
+public class GetUsersCommand : Paginated, IRequest<Result<PaginatedList<UserViewModel>>>
 {
-    public string? PhoneNumber { get; set; }
-    public string? Email { get; set; }
+    public string? Keyword { get; set; }
 }
 
-public class GetUsersCommandHandler : IRequestHandler<GetUsersCommand, Result<IList<UserViewModel>>>
+public class GetUsersCommandHandler : IRequestHandler<GetUsersCommand, Result<PaginatedList<UserViewModel>>>
 {
     #region constructor
     private readonly IUserReports _userReports;
@@ -22,24 +19,12 @@ public class GetUsersCommandHandler : IRequestHandler<GetUsersCommand, Result<IL
     }
     #endregion
 
-    public async Task<Result<IList<UserViewModel>>> Handle(GetUsersCommand request, CancellationToken cancellationToken = default)
+    public async Task<Result<PaginatedList<UserViewModel>>> Handle(GetUsersCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
-            IList<UserViewModel> users = new List<UserViewModel>();
-            Expression<Func<User, bool>>? getusersExpression = null;
-
-            if (!string.IsNullOrWhiteSpace(request.PhoneNumber) || !string.IsNullOrWhiteSpace(request.Email))
-            {
-                getusersExpression = a => a.PhoneNumber == request.PhoneNumber || a.Email.Contains(request.Email);
-                users = await _userReports.GetByConditionAsync(getusersExpression, null);
-            }
-            else
-            {
-                users = await _userReports.GetAllUsersAsync();
-            }
-
-            return Result.Ok(users);
+            var paginatedUsers = await _userReports.GetByQueryAndPaginationAndMapAsync<UserViewModel>(request.Keyword, request.Page, 20, default, cancellationToken);
+            return Result.Ok(paginatedUsers);
         }
         catch (ReportExceptions exp)
         {

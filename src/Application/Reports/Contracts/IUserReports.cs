@@ -19,6 +19,18 @@ public interface IUserReports : IReport
         Func<IQueryable, IOrderedQueryable<User>> orderBy = null,
     params Expression<Func<User, object>>[] includes);
 
+    /// <summary>
+    /// Apply condition, specify the viewmodel and pagination.
+    /// </summary>
+    /// <typeparam name="TDestination">Type of view model.</typeparam>
+    /// <param name="predicate">Condition in 'WHERE'.</param>
+    /// <param name="page">Page index. (defatult = 1)</param>
+    /// <param name="pageSize">Page items scope.</param>
+    /// <param name="config">Config for mapster.</param>
+    /// <returns>The output you specified yourself!</returns>
+    Task<PaginatedList<TDestination>> GetByQueryAndPaginationAndMapAsync<TDestination>(string? keyword = null,
+        int page = 1, int pageSize = 20, TypeAdapterConfig? config = null, CancellationToken cancellationToken = default);
+
     Task<IList<UserViewModel>> GetUsersInRoleAsync(string roleName, Guid? roleId = null);
     Task<IList<StructureViewModel>?> GetUserStructuresByUserIdAsync(Guid userId);
     Task<IList<DeviceViewModel>?> GetAllDevicesByUserIdAsync(Guid userId);

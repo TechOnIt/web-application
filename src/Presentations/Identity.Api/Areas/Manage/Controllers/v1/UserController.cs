@@ -7,14 +7,6 @@ namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 public class UserController : BaseController
 {
     #region DI & Ctor's
-    private readonly ILogger<UserController> _logger;
-
-    public UserController(IMediator mediator, ILogger<UserController> logger)
-        : base(mediator)
-    {
-        _logger = logger;
-    }
-
     public UserController(IMediator mediator)
         : base(mediator)
     {
@@ -71,10 +63,7 @@ public class UserController : BaseController
     [HttpGet, ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public async Task<IActionResult> GetUsers([FromQuery] string? phoneNumber, string? email)
-    {
-        var filters = new GetUsersCommand() { PhoneNumber = phoneNumber, Email = email };
-        return await RunCommandAsyncT(filters);
-    }
+    public async Task<IActionResult> GetUsers([FromQuery] GetUsersCommand command)
+     => await RunCommandAsyncT(command);
     #endregion
 }

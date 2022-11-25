@@ -1,11 +1,8 @@
 ﻿using iot.Application.Common.Exceptions;
-using iot.Application.Common.ViewModels;
 using iot.Application.Common.ViewModels.Users;
 using iot.Application.Reports.Contracts;
 using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -13,12 +10,12 @@ namespace iot.Application.Reports;
 
 public class UserReports : IUserReports
 {
-	#region constructor
-	private readonly IUnitOfWorks _unitOfWorks;
-	public UserReports(IUnitOfWorks unitOfWorks)
-	{
-		_unitOfWorks = unitOfWorks;
-	}
+    #region constructor
+    private readonly IUnitOfWorks _unitOfWorks;
+    public UserReports(IUnitOfWorks unitOfWorks)
+    {
+        _unitOfWorks = unitOfWorks;
+    }
     #endregion
 
     /// <summary>
@@ -44,7 +41,7 @@ public class UserReports : IUserReports
         return users.Adapt<IList<UserViewModel>>();
     }
 
-    public async Task<IList<UserViewModel>> GetByConditionAsync(Expression<Func<User,bool>> filter = null,
+    public async Task<IList<UserViewModel>> GetByConditionAsync(Expression<Func<User, bool>> filter = null,
         Func<IQueryable, IOrderedQueryable<User>> orderBy = null,
     params Expression<Func<User, object>>[] includes)
     {
@@ -67,14 +64,44 @@ public class UserReports : IUserReports
         var executionQueries = await query.AsNoTracking().ToListAsync();
         return executionQueries.Adapt<IList<UserViewModel>>();
     }
-    public async Task<IList<UserViewModel>> GetUsersInRoleAsync(string roleName,Guid? roleId=null)
+
+    /// <summary>
+    /// Apply condition, specify the viewmodel and pagination.
+    /// </summary>
+    /// <typeparam name="TDestination">Type of view model.</typeparam>
+    /// <param name="predicate">Condition in 'WHERE'.</param>
+    /// <param name="page">Page index. (defatult = 1)</param>
+    /// <param name="pageSize">Page items scope.</param>
+    /// <param name="config">Config for mapster.</param>
+    /// <returns>The output you specified yourself!</returns>
+    public async Task<PaginatedList<TDestination>> GetByQueryAndPaginationAndMapAsync<TDestination>(string? keyword = null,
+        int page = 1, int pageSize = 20, TypeAdapterConfig? config = null, CancellationToken cancellationToken = default)
+    {
+        // Initialize users Query.
+        var query = _unitOfWorks._context.Users.AsQueryable();
+        // Apply conditions.
+        if (!string.IsNullOrEmpty(keyword))
+            query = query
+                .Where(u => keyword.Contains(u.Username) ||
+                keyword.Contains(u.PhoneNumber) ||
+                keyword.Contains(u.Email) ||
+                keyword.Contains(u.FullName.Name) ||
+                keyword.Contains(u.FullName.Surname))
+                .AsQueryable();
+        // Execute, pagination and type to project.
+        return await query
+            .AsNoTracking()
+            .PaginatedListAsync<User, TDestination>(page, pageSize, config, cancellationToken);
+    }
+
+    public async Task<IList<UserViewModel>> GetUsersInRoleAsync(string roleName, Guid? roleId = null)
     {
         IQueryable<User> query = null;
-        IList<User> users= new List<User>();
+        IList<User> users = new List<User>();
 
         if (roleId == null)
         {
-            var getRole = await _unitOfWorks._context.Roles.AsNoTracking().FirstOrDefaultAsync(a=>a.Name==roleName);
+            var getRole = await _unitOfWorks._context.Roles.AsNoTracking().FirstOrDefaultAsync(a => a.Name == roleName);
             if (getRole == null)
                 return new List<UserViewModel>();
 
@@ -96,8 +123,8 @@ public class UserReports : IUserReports
 
             if (usersInRole.Length > 0)
             {
-                 query = _unitOfWorks._context.Users.AsNoTracking()
-                    .Where(a => (usersInRole.Any(x => x == a.Id)) == true);
+                query = _unitOfWorks._context.Users.AsNoTracking()
+                   .Where(a => (usersInRole.Any(x => x == a.Id)) == true);
 
                 users = await query.ToListAsync();
             }
@@ -116,7 +143,7 @@ public class UserReports : IUserReports
             Expression<Func<Structure, bool>> getStructures = a => a.UserId == user.Id;
             var cancellationSource = new CancellationToken();
 
-            var structures = await _unitOfWorks.StructureRepository.GetAllStructuresByFilterAsync(cancellationSource,getStructures);
+            var structures = await _unitOfWorks.StructureRepository.GetAllStructuresByFilterAsync(cancellationSource, getStructures);
             if (structures is null)
                 return null;
 
@@ -145,11 +172,11 @@ public class UserReports : IUserReports
 
                                  select new DeviceViewModel
                                  {
-                                     Id=de.Id,
-                                     Pin=de.Pin,
-                                     DeviceType=de.DeviceType,
-                                     IsHigh=de.IsHigh,
-                                     PlaceId=de.PlaceId,
+                                     Id = de.Id,
+                                     Pin = de.Pin,
+                                     DeviceType = de.DeviceType,
+                                     IsHigh = de.IsHigh,
+                                     PlaceId = de.PlaceId,
 
                                  }).AsNoTracking().ToListAsync();
 

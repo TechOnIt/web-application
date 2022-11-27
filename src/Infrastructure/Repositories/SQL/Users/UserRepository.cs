@@ -18,11 +18,11 @@ internal sealed class UserRepository : IUserRepository
         aesEncryptor = new Encryptor(GetUserKey());
     }
     #endregion
-
-    public async Task<User?> FindUserByUserIdAsNoTrackingAsync(Guid userId, CancellationToken cancellationToken = default)
+    
+    public async Task<User?> FindByIdAsNoTrackingAsync(Guid userId, CancellationToken cancellationToken = default)
         => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Id == userId, cancellationToken);
 
-    public async Task<User?> FindUserByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<User?> FindByIdAsync(Guid userId, CancellationToken cancellationToken = default)
     => await _context.Users.FirstOrDefaultAsync(a => a.Id == userId, cancellationToken);
 
     public async Task<User?> FindByUsernameAsync(string username, CancellationToken cancellationToken = default)
@@ -36,7 +36,7 @@ internal sealed class UserRepository : IUserRepository
         .AsNoTracking()
         .FirstOrDefaultAsync(stoppingToken);
 
-    public async Task<User?> FindUserByPhoneNumberWithRolesNoTrackingAsync(string phonenumber, CancellationToken cancellationToken = default)
+    public async Task<User?> FindByPhoneNumberWithRolesNoTrackingAsync(string phonenumber, CancellationToken cancellationToken = default)
     => await _context.Users
         .Where(u => u.PhoneNumber == phonenumber.Trim())
         .Include(u => u.UserRoles)
@@ -44,7 +44,7 @@ internal sealed class UserRepository : IUserRepository
         .AsNoTracking()
         .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task<IList<User>?> GetAllUsersByFilterAsync(Expression<Func<User, bool>>? filter = null,
+    public async Task<IList<User>?> GetAllByFilterAsync(Expression<Func<User, bool>>? filter = null,
         CancellationToken cancellationToken = default)
     {
         if (filter != null)
@@ -60,33 +60,53 @@ internal sealed class UserRepository : IUserRepository
         }
     }
 
-    public async Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default)
+    public async Task<bool> IsExistsByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default)
         => await _context.Users
             .AsNoTracking()
             .AnyAsync(a => a.PhoneNumber == phonenumber, cancellationToken);
 
-    public async Task<bool> IsExistsUserByIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<bool> IsExistsByIdAsync(Guid userId, CancellationToken cancellationToken = default)
         => await _context.Users.AsNoTracking().AnyAsync(a => a.Id == userId, cancellationToken);
 
-    public async Task<bool> IsExistsUserByQueryAsync(Expression<Func<User, bool>> query, CancellationToken cancellationToken = default)
+    public async Task<bool> IsExistsByQueryAsync(Expression<Func<User, bool>> query, CancellationToken cancellationToken = default)
         => await _context.Users.AsNoTracking().AnyAsync(query, cancellationToken);
 
-    public async Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default)
+    public async Task<string> GetEmailByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default)
     {
         var user = await _context.Users.AsNoTracking().FirstAsync(a => aesEncryptor.Decrypt(a.PhoneNumber) == phonenumber);
         return user.Email;
     }
 
-    public async Task<User?> CreateNewUser(User user, CancellationToken cancellationToken = default)
+    public async Task CreateAsync(User user, CancellationToken cancellationToken = default)
     {
         if (user.ConcurrencyStamp is null)
             user.RefreshConcurrencyStamp();
 
-        var newUser = await _context.Users.AddAsync(user);
-        return newUser.Entity;
+        await _context.Users.AddAsync(user);
     }
 
-    public async Task DeleteUserByIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(User user, CancellationToken cancellationToken = default)
+    {
+        var getUser = await _context.Users.FindAsync(user.Id, cancellationToken);
+
+        getUser.SetEmail(user.Email);
+        getUser.SetFullName(user.FullName);
+        getUser.RefreshConcurrencyStamp();
+
+        _context.Users.Update(user);
+        await Task.CompletedTask;
+    }
+
+    public async Task RemoveAsync(User user, CancellationToken cancellationToken = default)
+    {
+        user.SetIsDelete(true);
+        user.SetIsBaned(true);
+        user.RefreshConcurrencyStamp();
+
+        _context.Users.Update(user);
+        await Task.CompletedTask;
+    }
+    public async Task DeleteByIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         var getUser = await _context.Users.FindAsync(userId, cancellationToken);
 
@@ -97,8 +117,7 @@ internal sealed class UserRepository : IUserRepository
         _context.Users.Update(getUser);
         await Task.CompletedTask;
     }
-
-    public async Task DeleteUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default)
+    public async Task DeleteByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default)
     {
         var getUser = await _context.Users.FirstAsync(a => aesEncryptor.Decrypt(a.PhoneNumber) == phonenumber, cancellationToken);
 
@@ -110,17 +129,6 @@ internal sealed class UserRepository : IUserRepository
         await Task.CompletedTask;
     }
 
-    public async Task UpdateUserAsync(User user, CancellationToken cancellationToken = default)
-    {
-        var getUser = await _context.Users.FindAsync(user.Id, cancellationToken);
-
-        getUser.SetEmail(user.Email);
-        getUser.SetFullName(user.FullName);
-        getUser.RefreshConcurrencyStamp();
-
-        _context.Users.Update(user);
-        await Task.CompletedTask;
-    }
 
     #region privates
     private string GetUserKey()

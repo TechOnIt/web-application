@@ -1,6 +1,7 @@
 ﻿namespace iot.Identity.Api.Controllers;
 
 [ApiController]
+[Route("v1/[area]/[controller]/[action]")]
 public class BaseController : ControllerBase
 {
     #region DI & Ctor's
@@ -16,7 +17,6 @@ public class BaseController : ControllerBase
     protected async Task<IActionResult> RunCommandAsyncT<TRequest>(TRequest request)
         where TRequest : class
     {
-        //var result = await _mediator.Send(request) as Result;
         var commandResult = await _mediator.Send(request);
 
         if (commandResult is not null)

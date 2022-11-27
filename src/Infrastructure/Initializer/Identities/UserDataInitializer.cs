@@ -42,7 +42,7 @@ internal class UserDataInitializer : IDataInitializer
                 }
             }
         }
-        if (!await _uow.UserRepository.IsExistsUserByQueryAsync(u => u.Username == username || u.PhoneNumber == username || u.Email == username))
+        if (!await _uow.UserRepository.IsExistsByQueryAsync(u => u.Username == username || u.PhoneNumber == username || u.Email == username))
         {
             var newUser = User.CreateNewInstance(email, username);
             newUser.SetFullName(new FullName(name, surname));
@@ -54,7 +54,7 @@ internal class UserDataInitializer : IDataInitializer
                 newUser.SetPassword(new PasswordHash(password));
 
             // Create new user in entities.
-            await _uow.UserRepository.CreateNewUser(newUser);
+            await _uow.UserRepository.CreateAsync(newUser);
             haveSaveChange = true;
         }
         if (haveSaveChange)

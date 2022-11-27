@@ -1,9 +1,8 @@
-﻿using iot.Application.Common.Frameworks.ApiResultFrameWork.Filters;
-using iot.Application.Queries.Users.GetAllUsers;
+﻿using iot.Application.Queries.Users.GetAllUsers;
 
 namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
-[Area("Manage"), Route("v1/[area]/[controller]/[action]")]
+[Area("manage")]
 public class UserController : BaseController
 {
     #region DI & Ctor's
@@ -31,19 +30,19 @@ public class UserController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> SetPassword([FromBody] SetUserPasswordCommand command)
-        => await RunCommandAsync(command);
+        => await RunCommandAsyncT(command);
 
     [HttpPatch("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Ban([FromRoute] string id)
-        => await RunCommandAsync(new BanUserCommand() { Id = id });
+        => await RunCommandAsyncT(new BanUserCommand() { Id = id });
 
     [HttpPatch("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> UnBan([FromRoute] string id)
-        => await RunCommandAsync(new UnBanUserCommand() { Id = id });
+        => await RunCommandAsyncT(new UnBanUserCommand() { Id = id });
 
 
     [HttpDelete("{id}")]
@@ -56,7 +55,7 @@ public class UserController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> ForceDelete([FromRoute] string id)
-        => await RunCommandAsync(new ForceDeleteUserCommand() { Id = id });
+        => await RunCommandAsyncT(new ForceDeleteUserCommand() { Id = id });
     #endregion
 
     #region Queries

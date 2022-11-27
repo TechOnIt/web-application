@@ -39,7 +39,7 @@ public class IdentityService : IIdentityService
         CancellationToken cancellationToken = default)
     {
         // Find user by phone number.
-        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesNoTrackingAsync(phoneNumber, cancellationToken);
+        var user = await _unitOfWorks.UserRepository.FindByPhoneNumberWithRolesNoTrackingAsync(phoneNumber, cancellationToken);
         if (user is null)
             return (null, $"cant find user with phonenumber: {phoneNumber}");
 
@@ -92,7 +92,7 @@ public class IdentityService : IIdentityService
         CancellationToken cancellationToken = default)
     {
         // Find user by phone number.
-        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesNoTrackingAsync(phonenumber, cancellationToken);
+        var user = await _unitOfWorks.UserRepository.FindByPhoneNumberWithRolesNoTrackingAsync(phonenumber, cancellationToken);
         // Null handling Validation.
         if (user is null)
             return (new AccessToken(), $"Can't find user with {phonenumber} phonenumber!");
@@ -124,7 +124,7 @@ public class IdentityService : IIdentityService
     public async Task<(AccessToken Token, string Message)?> SignInUserAsync(string phoneNumber, string password,
         CancellationToken cancellationToken = default)
     {
-        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesNoTrackingAsync(phoneNumber, cancellationToken);
+        var user = await _unitOfWorks.UserRepository.FindByPhoneNumberWithRolesNoTrackingAsync(phoneNumber, cancellationToken);
         if (user is null)
             return null;
         var status = user.GetUserSignInStatusResultWithMessage(password);
@@ -153,10 +153,12 @@ public class IdentityService : IIdentityService
     public async Task<(string? Code, string Message)> SignUpAndSendOtpCode(UserViewModel user,
         CancellationToken cancellationToken = default)
     {
-        bool canRegister = await _unitOfWorks.UserRepository.IsExistsUserByPhoneNumberAsync(user.PhoneNumber);
+        bool canRegister = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber);
         if (!canRegister) return (null, "user with this information is already exists in system");
 
-        var newUser = await _unitOfWorks.UserRepository.CreateNewUser(user.Adapt<User>(), cancellationToken);
+        var newUser = user.Adapt<User>();
+
+        await _unitOfWorks.UserRepository.CreateAsync(newUser, cancellationToken);
         newUser.GenerateNewOtpCode();
         await _unitOfWorks.SaveAsync();
 
@@ -178,7 +180,7 @@ public class IdentityService : IIdentityService
         if (cachedOtpCode is null)
             return (new AccessToken(), $"Token is expired.");
 
-        var user = await _unitOfWorks.UserRepository.FindUserByPhoneNumberWithRolesNoTrackingAsync(phonenumber, cancellationToken);
+        var user = await _unitOfWorks.UserRepository.FindByPhoneNumberWithRolesNoTrackingAsync(phonenumber, cancellationToken);
         if (user is null)
             return (new AccessToken(), $"can not find user with phonenumber : {phonenumber}");
 

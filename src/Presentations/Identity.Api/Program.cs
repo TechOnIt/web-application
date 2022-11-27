@@ -4,7 +4,6 @@ using iot.Application.Commands.Users.Authentication.SignInOtpCommands;
 using iot.Application.Common.DTOs.Settings;
 using iot.Infrastructure;
 using iot.Infrastructure.Common.Extentions;
-using Microsoft.AspNetCore.Hosting;
 using NLog;
 using NLog.Web;
 using System.Reflection;
@@ -17,6 +16,7 @@ try
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddControllers();
+
     builder.Services.AddHsts(opts =>
     {
         opts.MaxAge = TimeSpan.FromDays(365);
@@ -33,8 +33,10 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
+    #region Logging
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
+    #endregion
 
     // Register MediatR.
     builder.Services.AddMediatR(typeof(SendOtpSmsCommand).GetTypeInfo().Assembly);
@@ -57,6 +59,8 @@ try
                 .WithMethods("GET", "PUT", "DELETE", "POST", "PATCH"); //not really necessary when AllowAnyMethods is used.;
         });
     });
+
+    builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
     ConfigureServices(builder.Services);
 

@@ -22,6 +22,7 @@ public class AuthenticationController : BaseController
 
     #region Command
     [HttpPost]
+    [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Signin([FromBody] SignInUserCommand userLoginInformation)
     {
@@ -30,10 +31,13 @@ public class AuthenticationController : BaseController
     }
 
     [HttpPost]
+    [ApiResultFilter]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> SignInOtp([FromBody] SendOtpSmsCommand getSignInOtpCode)
         => await RunCommandAsyncT(getSignInOtpCode);
 
     [HttpPost]
+    [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> VerifySignInOtp([FromBody] VerifyOtpSmsCommand otpCode)
     => await RunCommandAsyncT(otpCode);

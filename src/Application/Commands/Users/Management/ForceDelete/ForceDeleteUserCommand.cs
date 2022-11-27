@@ -30,9 +30,11 @@ public class ForceDeleteUserCommandHandler : IRequestHandler<ForceDeleteUserComm
         //var result = await _unitOfWorks.UserRepository
 
         // find user by id.
-        //var user = await _unitOfWorks.SqlRepository<User>().GetByIdAsync(cancellationToken, userId);
-        //if (user == null)
-        //    return Result.Fail("User was not found!");
+        var user = await _unitOfWorks.UserRepository.FindByIdAsync(userId, cancellationToken);
+        if (user == null)
+            return Result.Fail("User was not found!");
+
+        await _unitOfWorks.UserRepository.DeleteByIdAsync(userId, cancellationToken);
 
         var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
 

@@ -136,7 +136,7 @@ public class UserReports : IUserReports
     {
         try
         {
-            var user = await _unitOfWorks.UserRepository.FindUserByUserIdAsNoTrackingAsync(userId);
+            var user = await _unitOfWorks.UserRepository.FindByIdAsNoTrackingAsync(userId);
             if (user == null)
                 return null;
 

@@ -3,8 +3,6 @@ using iot.Application.Common.ViewModels.Users;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.Encryptions.Contracts;
-using iot.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
 
 namespace iot.Application.Services.Authenticateion;
 
@@ -25,16 +23,16 @@ public class UserService : IUserService
         if (user.PhoneNumber is null)
             return (null, IdentityCrudStatus.Failed);
 
-        var isDuplicate = await _unitOfWorks.UserRepository.IsExistsUserByPhoneNumberAsync(user.PhoneNumber);
+        var isDuplicate = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber);
         if (isDuplicate)
             return (null, IdentityCrudStatus.Duplicate);
 
         var model = user.Adapt<User>();
-        var result = await _unitOfWorks.UserRepository.CreateNewUser(model, cancellationToken);
-        if (result is null)
+        await _unitOfWorks.UserRepository.CreateAsync(model, cancellationToken);
+        if (model is null)
             return (null, IdentityCrudStatus.Failed);
         else
-            return (result.Id, IdentityCrudStatus.Succeeded);
+            return (model.Id, IdentityCrudStatus.Succeeded);
     }
 
     public async Task<IdentityCrudStatus> DeleteUserAsync(Guid userId, CancellationToken cancellationToken = default)
@@ -43,7 +41,7 @@ public class UserService : IUserService
         if (isExists)
             return (IdentityCrudStatus.NotFound);
 
-        var taskResult = _unitOfWorks.UserRepository.DeleteUserByIdAsync(userId, cancellationToken).IsCompletedSuccessfully;
+        var taskResult = _unitOfWorks.UserRepository.DeleteByIdAsync(userId, cancellationToken).IsCompletedSuccessfully;
         if (!taskResult)
             return IdentityCrudStatus.Failed;
 
@@ -52,11 +50,11 @@ public class UserService : IUserService
 
     public async Task<IdentityCrudStatus> DeleteUserAsync(string phoneNumber, CancellationToken cancellationToken = default)
     {
-        var isExists = await _unitOfWorks.UserRepository.IsExistsUserByPhoneNumberAsync(phoneNumber);
+        var isExists = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(phoneNumber);
         if (isExists)
             return (IdentityCrudStatus.NotFound);
 
-        var taskResult = _unitOfWorks.UserRepository.DeleteUserByPhoneNumberAsync(phoneNumber, cancellationToken).IsCompletedSuccessfully;
+        var taskResult = _unitOfWorks.UserRepository.DeleteByPhoneNumberAsync(phoneNumber, cancellationToken).IsCompletedSuccessfully;
         if (!taskResult)
             return IdentityCrudStatus.Failed;
 
@@ -65,17 +63,17 @@ public class UserService : IUserService
 
     public async Task<UserViewModel> FindUserByIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
-        var user = await _unitOfWorks.UserRepository.FindUserByUserIdAsync(userId);
+        var user = await _unitOfWorks.UserRepository.FindByIdAsync(userId);
         return user.Adapt<UserViewModel>();
     }
 
     public async Task<(UserViewModel User, IdentityCrudStatus Status)> UpdateUserAsync(UserViewModel user, CancellationToken cancellationToken = default)
     {
-        var isDuplicate = await _unitOfWorks.UserRepository.IsExistsUserByPhoneNumberAsync(user.PhoneNumber);
+        var isDuplicate = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber);
         if (!isDuplicate)
             return (user, IdentityCrudStatus.NotFound);
 
-        var result = _unitOfWorks.UserRepository.UpdateUserAsync(user.Adapt<User>(), cancellationToken).IsCompletedSuccessfully;
+        var result = _unitOfWorks.UserRepository.UpdateAsync(user.Adapt<User>(), cancellationToken).IsCompletedSuccessfully;
         if (!result)
             return (user, IdentityCrudStatus.Failed);
 
@@ -83,5 +81,5 @@ public class UserService : IUserService
     }
 
     public async Task<bool> IsExistsUserAsync(Guid userId, CancellationToken cancellationToken = default)
-        => await _unitOfWorks.UserRepository.IsExistsUserByIdAsync(userId, cancellationToken);
+        => await _unitOfWorks.UserRepository.IsExistsByIdAsync(userId, cancellationToken);
 }

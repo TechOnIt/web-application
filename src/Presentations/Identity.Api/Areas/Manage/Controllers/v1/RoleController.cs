@@ -1,29 +1,28 @@
 ﻿using iot.Application.Commands.Roles.Management.CreateRole;
 using iot.Application.Commands.Roles.Management.DeleteRole;
 using iot.Application.Commands.Roles.Management.UpdateRole;
-using iot.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 using Microsoft.AspNetCore.DataProtection;
 
 namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
-[Area("manage"), Route("v1/[area]/[controller]")]
+[Area("manage")]
+[Route("v1/[controller]/[action]")]
 public class RoleController : ControllerBase
 {
     #region DI & Ctor's
-
     private readonly IMediator _mediator;
     private readonly IDataProtector _dataProtectionProvider; // https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.dataprotection.idataprotectionprovider?view=aspnetcore-6.0
 
-    public RoleController(IMediator mediator,IDataProtectionProvider dataProtectionProvider)
+    public RoleController(IMediator mediator, IDataProtectionProvider dataProtectionProvider)
     {
         _mediator = mediator;
-        _dataProtectionProvider= dataProtectionProvider.CreateProtector("RouteData");
+        _dataProtectionProvider = dataProtectionProvider.CreateProtector("RouteData");
     }
     #endregion
 
     #region Command
+    [HttpPost]
     [ApiResultFilter]
-    [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateRoleCommand command)
     {
         if (!User.Identity.IsAuthenticated)
@@ -33,8 +32,8 @@ public class RoleController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost]
     [ApiResultFilter]
-    [HttpPost("update")]
     public async Task<IActionResult> Update([FromBody] UpdateRoleCommand command)
     {
         if (!User.Identity.IsAuthenticated)
@@ -45,13 +44,13 @@ public class RoleController : ControllerBase
     }
 
     [ApiResultFilter]
-    [HttpDelete("{id}")]
+    [HttpDelete, Route("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
         if (!User.Identity.IsAuthenticated)
             return Unauthorized();
 
-        var result = await _mediator.Send(new DeleteRoleCommand { Id=id});
+        var result = await _mediator.Send(new DeleteRoleCommand { Id = id });
         return Ok(result);
     }
     #endregion

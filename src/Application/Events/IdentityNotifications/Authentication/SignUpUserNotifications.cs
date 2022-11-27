@@ -64,7 +64,7 @@ public class SignUpUserEmailNotificationsHandler : INotificationHandler<SignUpUs
     public async Task Handle(SignUpUserNotifications notification, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(notification.Email))
-            notification.Email = await _unitOfWorks.UserRepository.GetUserEmailByPhoneNumberAsync(notification.Phonenumber);
+            notification.Email = await _unitOfWorks.UserRepository.GetEmailByPhoneNumberAsync(notification.Phonenumber);
 
         await _smtpEmailService.SendEmailAsync(_appSettingsService.GetGmailSenderAddress(), notification.Email, notification.Subject, notification.Message,
             _appSettingsService.GetEmailSettings());

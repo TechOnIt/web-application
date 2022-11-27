@@ -13,19 +13,21 @@ public interface IUserRepository
     /// <param name="identity">Email or Phone number</param>
     /// <returns>An specific user.</returns>
     Task<User?> FindByIdentityWithRolesAsync(string identity, CancellationToken stoppingToken = default);
-    Task<IList<User>?> GetAllUsersByFilterAsync(Expression<Func<User, bool>>? filter = null,
+    Task<User?> FindByPhoneNumberWithRolesNoTrackingAsync(string phonenumber, CancellationToken cancellationToken = default);
+    Task<User?> FindByIdAsNoTrackingAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<User?> FindByIdAsync(Guid userId, CancellationToken cancellationToken = default);
+
+    Task<IList<User>?> GetAllByFilterAsync(Expression<Func<User, bool>>? filter = null,
         CancellationToken cancellationToken = default);
+    Task<string> GetEmailByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
 
-    Task<User?> FindUserByPhoneNumberWithRolesNoTrackingAsync(string phonenumber, CancellationToken cancellationToken = default);
-    Task<User> CreateNewUser(User user, CancellationToken cancellationToken = default);
-    Task<string> GetUserEmailByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
-    Task<User?> FindUserByUserIdAsNoTrackingAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<User?> FindUserByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task DeleteUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
-    Task DeleteUserByIdAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task UpdateUserAsync(User user, CancellationToken cancellationToken = default);
+    Task CreateAsync(User user, CancellationToken cancellationToken = default);
 
-    Task<bool> IsExistsUserByQueryAsync(Expression<Func<User, bool>> query, CancellationToken cancellationToken = default);
-    Task<bool> IsExistsUserByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
-    Task<bool> IsExistsUserByIdAsync(Guid userId,CancellationToken cancellationToken = default);
+    Task DeleteByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
+    Task DeleteByIdAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task UpdateAsync(User user, CancellationToken cancellationToken = default);
+
+    Task<bool> IsExistsByQueryAsync(Expression<Func<User, bool>> query, CancellationToken cancellationToken = default);
+    Task<bool> IsExistsByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
+    Task<bool> IsExistsByIdAsync(Guid userId,CancellationToken cancellationToken = default);
 }

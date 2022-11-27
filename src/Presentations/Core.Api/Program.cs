@@ -1,4 +1,5 @@
 using iot.Application.Common.DTOs.Settings;
+using iot.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

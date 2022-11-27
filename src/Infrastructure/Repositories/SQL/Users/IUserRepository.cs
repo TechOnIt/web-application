@@ -1,7 +1,7 @@
 ﻿using iot.Domain.Entities.Identity.UserAggregate;
 using System.Linq.Expressions;
 
-namespace iot.Application.Repositories.SQL.Users;
+namespace iot.Infrastructure.Repositories.SQL.Users;
 
 public interface IUserRepository
 {
@@ -29,5 +29,5 @@ public interface IUserRepository
 
     Task<bool> IsExistsByQueryAsync(Expression<Func<User, bool>> query, CancellationToken cancellationToken = default);
     Task<bool> IsExistsByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default);
-    Task<bool> IsExistsByIdAsync(Guid userId,CancellationToken cancellationToken = default);
+    Task<bool> IsExistsByIdAsync(Guid userId, CancellationToken cancellationToken = default);
 }

@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.DTOs.Users.Authentication;
-using iot.Application.Common.Security.JwtBearer;
+﻿using iot.Application.Common.Security.JwtBearer;
 using iot.Application.Common.ViewModels.Users;
+using iot.Application.Common.ViewModels.Users.Authentication;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.Extentions;

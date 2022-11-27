@@ -1,5 +1,5 @@
-﻿using iot.Application.Common.DTOs.Users.Authentication;
-using iot.Application.Common.ViewModels.Users;
+﻿using iot.Application.Common.ViewModels.Users;
+using iot.Application.Common.ViewModels.Users.Authentication;
 
 namespace iot.Application.Services.Authenticateion.AuthenticateionContracts;
 

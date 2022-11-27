@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace iot.Application.Common.Extentions;
+namespace iot.Infrastructure.Common.Extentions;
 
 public class Assert
 {
@@ -21,8 +21,8 @@ public class Assert
         where T : class
     {
         if (obj == defaultValue
-            || (obj is string str && string.IsNullOrWhiteSpace(str))
-            || (obj is IEnumerable list && !list.Cast<object>().Any()))
+            || obj is string str && string.IsNullOrWhiteSpace(str)
+            || obj is IEnumerable list && !list.Cast<object>().Any())
         {
             throw new ArgumentException("Argument is empty : " + message, $"{name} : {typeof(T)}");
         }

@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.Enums.IdentityServiceEnums;
+﻿using iot.Application.Common.Enums.IdentityService;
 using iot.Application.Common.Exceptions;
 using iot.Application.Common.Interfaces;
 using iot.Application.Common.ViewModels.Users;

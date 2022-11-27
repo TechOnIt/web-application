@@ -3,11 +3,11 @@ using iot.Application.Events.ProductNotifications;
 using iot.Infrastructure.Repositories.UnitOfWorks;
 using System.Linq.Expressions;
 
-namespace iot.Application.Commands.PerformanceReport.DeletePerformanceReport;
+namespace iot.Application.Commands.PerformanceReport.DeletePerformanceReportByFilter;
 
-public class DeletePerformanceReportByfilterCommand : IRequest<Result>,ICommittableRequest
+public class DeletePerformanceReportByfilterCommand : IRequest<Result>, ICommittableRequest
 {
-    public Expression<Func<Domain.Entities.Product.SensorAggregate.PerformanceReport,bool>> Filter { get; set; }
+    public Expression<Func<Domain.Entities.Product.SensorAggregate.PerformanceReport, bool>> Filter { get; set; }
 }
 
 public class DeletePerformanceReportByfilterCommandHandler : IRequestHandler<DeletePerformanceReportByfilterCommand, Result>

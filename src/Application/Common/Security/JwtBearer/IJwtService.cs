@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.DTOs.Users.Authentication;
+﻿using iot.Application.Common.ViewModels.Users.Authentication;
 using iot.Domain.Entities.Identity.UserAggregate;
 using System.Security.Claims;
 

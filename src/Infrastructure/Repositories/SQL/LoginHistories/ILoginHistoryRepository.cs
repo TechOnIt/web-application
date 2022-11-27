@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Repositories.SQL.LoginHistories;
+﻿namespace iot.Infrastructure.Repositories.SQL.LoginHistories;
 
 public interface ILoginHistoryRepository
 {

@@ -4,7 +4,7 @@ using iot.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace iot.Application.Repositories.SQL.Users;
+namespace iot.Infrastructure.Repositories.SQL.Users;
 
 internal sealed class UserRepository : IUserRepository
 {
@@ -18,7 +18,7 @@ internal sealed class UserRepository : IUserRepository
         aesEncryptor = new Encryptor(GetUserKey());
     }
     #endregion
-    
+
     public async Task<User?> FindByIdAsNoTrackingAsync(Guid userId, CancellationToken cancellationToken = default)
         => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Id == userId, cancellationToken);
 

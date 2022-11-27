@@ -2,7 +2,7 @@
 using iot.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace iot.Application.Repositories.SQL.Roles;
+namespace iot.Infrastructure.Repositories.SQL.Roles;
 
 public sealed class RoleRepository : IRoleRepository
 {

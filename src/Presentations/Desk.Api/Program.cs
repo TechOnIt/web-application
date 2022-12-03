@@ -2,8 +2,17 @@ using GraphQL.MicrosoftDI;
 using GraphQL.Server;
 using GraphQL.Types;
 using iot.Application;
+using iot.Application.Commands.Device.CreateDevice;
+using iot.Application.Commands.Device.DeleteDevice;
+using iot.Application.Commands.Device.UpdateDevice;
+using iot.Application.Commands.Sensor.CreatSensor;
+using iot.Application.Commands.Sensor.DeleteSensor;
+using iot.Application.Commands.Sensor.UpdateSensor;
+using iot.Application.Commands.Structures.Authentication.SignInCommands;
+using iot.Application.Commands.Users.Authentication.SignInOtpCommands;
 using iot.Desk.Api.GraphQl.PerformanceReport;
 using iot.Infrastructure;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+RegisterMediatRCommands(builder.Services);
 ConfigureServices(builder.Services);
 var app = builder.Build();
 
@@ -80,4 +90,21 @@ void ConfigureServices(IServiceCollection services)
                        .AllowAnyHeader();
             });
     });
+}
+
+void RegisterMediatRCommands(IServiceCollection services)
+{
+    services.AddMediatR(typeof(CreateDeviceCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(DeleteDeviceCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(UpdateDeviceCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(CreatePlaceCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(DeletePlaceCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(UpdatePlaceCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(CreateSensorCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(DeleteSensorCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(UpdateSensorCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(SignInStructureCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(CreateStructureCommand).GetTypeInfo().Assembly);
+    services.AddMediatR(typeof(DeleteStructureCommand).GetTypeInfo().Assembly);\
+    services.AddMediatR(typeof(UpdateStructureCommand).GetTypeInfo().Assembly);
 }

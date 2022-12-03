@@ -1,6 +1,10 @@
-﻿namespace iot.Desk.Api.Controllers.v1;
+﻿using iot.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 
-public class StructureController : BaseController
+namespace iot.Desk.Api.Controllers.v1;
+
+[Route("api/v1/[controller]")]
+[ApiController]
+public class StructureController : ControllerBase
 {
     #region constructors
     private readonly IMediator _mediator;
@@ -16,44 +20,29 @@ public class StructureController : BaseController
 
     #region Commands
     [HttpPost]
-    [ValidateAntiForgeryToken]
+    [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create([FromBody] CreateStructureCommand structure)
+    public async Task<IActionResult> Create([FromBody] CreateStructureCommand structure,CancellationToken cancellationToken)
     {
-        if (User.Identity != null)
-            if (!User.Identity.IsAuthenticated)
-                return Unauthorized();
-
-        var cancellation = new CancellationToken();
-        var result = await _mediator.Send(structure, cancellation);
+        var result = await _mediator.Send(structure, cancellationToken);
         return Ok(result);
     }
 
-    [HttpPatch]
-    [ValidateAntiForgeryToken]
+    [HttpPut]
+    [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Update([FromBody] UpdateStructureCommand structure)
+    public async Task<IActionResult> Update([FromBody] UpdateStructureCommand structure, CancellationToken cancellationToken)
     {
-        if (User.Identity != null)
-            if (!User.Identity.IsAuthenticated)
-                return Unauthorized();
-
-        var stoppingToken = new CancellationToken();
-        var result = await _mediator.Send(structure, stoppingToken);
-
+        var result = await _mediator.Send(structure, cancellationToken);
         return Ok(result);
     }
 
     [HttpDelete("{id}")]
-    [ValidateAntiForgeryToken]
+    [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
     {
-        if (User.Identity != null)
-            if (!User.Identity.IsAuthenticated)
-                return Unauthorized();
-
-        var result = await _mediator.Send(new DeleteStructureCommand() { StructureId = Guid.Parse(id) });
+        var result = await _mediator.Send(new DeleteStructureCommand() { StructureId = Guid.Parse(id) }, cancellationToken);
         return Ok(result);
     }
     #endregion
@@ -61,12 +50,10 @@ public class StructureController : BaseController
     #region Queries
 
     [HttpGet]
+    [ApiResultFilter]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> GetAll()
     {
-        if (!User.Identity.IsAuthenticated)
-            return Unauthorized();
-
         try
         {
             var result = await _mediator.Send(new GetAllByFilterStructureCommand());

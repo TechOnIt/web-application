@@ -1,6 +1,8 @@
-﻿namespace iot.Desk.Api.Controllers.v1;
+﻿using iot.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 
-[Route("api/[controller]")]
+namespace iot.Desk.Api.Controllers.v1;
+
+[Route("api/v1/[controller]")]
 [ApiController]
 public class PlaceController : ControllerBase
 {
@@ -13,15 +15,12 @@ public class PlaceController : ControllerBase
 
     #endregion
 
-
     #region Commands
     [HttpPost]
+    [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Create([FromBody] CreatePlaceCommand place)
     {
-        if (!User.Identity.IsAuthenticated)
-            return Unauthorized();
-
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
@@ -30,12 +29,10 @@ public class PlaceController : ControllerBase
     }
 
     [HttpPut]
+    [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Update(UpdatePlaceCommand updatePlace)
     {
-        if (!User.Identity.IsAuthenticated)
-            return Unauthorized();
-
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
@@ -44,12 +41,10 @@ public class PlaceController : ControllerBase
     }
 
     [HttpDelete("{placeId}/{structureId}")]
+    [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Delete([FromRoute] string placeId, string structureId)
     {
-        if (!User.Identity.IsAuthenticated)
-            return Unauthorized();
-
         var result = await _mediator
             .Send( new DeletePlaceCommand() 
             { 
@@ -65,9 +60,6 @@ public class PlaceController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll([FromBody] GetAllPlacesByFilterQuery filter)
     {
-        if (!User.Identity.IsAuthenticated)
-            return Unauthorized();
-
         var result = await _mediator.Send(filter);
         return Ok(result);
     }

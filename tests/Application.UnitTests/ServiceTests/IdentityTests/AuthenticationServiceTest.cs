@@ -1,10 +1,7 @@
-﻿using iot.Application.Common.DTOs.Users.Authentication;
-using iot.Application.Common.Security.JwtBearer;
+﻿using iot.Application.Common.Security.JwtBearer;
 using iot.Application.Services.Authenticateion;
 using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Domain.ValueObjects;
-using iot.Infrastructure.Repositories.UnitOfWorks;
-using TestStack.BDDfy;
 
 namespace iot.Application.UnitTests.ServiceTests.IdentityTests;
 

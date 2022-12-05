@@ -1,5 +1,4 @@
 using AspNetCoreRateLimit;
-using iot.Application;
 using iot.Application.Commands.Users.Authentication.SignInOtpCommands;
 using iot.Application.Common.DTOs.Settings;
 using iot.Infrastructure;
@@ -66,31 +65,52 @@ try
 
     var app = builder.Build();
 
-    // middlewares
+    // Middlewares - Pipelines
+    #region Exception Handlers
     // if you want to catch all exceptions by custom middleware Uncomment the following line
     // And if you don't need it, then comment the following line
     app.UseCustomExceptionHandler();
+    #endregion
 
+    #region HSTS
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
     {
+        // Configure the HTTP request pipeline.
         // client exception handle : https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-6.0#exception-handler-lambda
         app.UseHsts(); // https://git.ir/pluralsight-protecting-sensitive-data-from-exposure-in-asp-net-and-asp-net-core-applications/ episode 13
 
     }
+    #endregion
 
+    #region Https Redirection
     app.UseHttpsRedirection();
-    app.UseRouting();
-    app.UseIpRateLimiting();
+    #endregion
 
-    #region Custom Middleware
+    #region Static Files
+    #endregion
+
+    #region Routing
+    app.UseRouting();
+    #endregion
+
+    #region CORS
+    app.UseIpRateLimiting();
+    #endregion
+
+    #region Authentication
+    #endregion
+
+    #region Authorization
+    #endregion
+
+    #region Custom Middlewares
     // Initialize database data seed.
     await app.InitializeDatabaseAsync(builder);
-
     #endregion
+
+    #region Endpoint
     app.UseEndpoints(endpoints =>
     {
         endpoints.MapControllerRoute(
@@ -103,6 +123,7 @@ try
 
         endpoints.MapControllers();
     });
+    #endregion
 
     await app.RunAsync();
 }

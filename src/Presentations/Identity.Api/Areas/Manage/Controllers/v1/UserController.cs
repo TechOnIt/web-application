@@ -15,6 +15,14 @@ public class UserController : BaseController
     }
     #endregion
 
+    #region Queries
+    [HttpGet, ApiResultFilter]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public async Task<IActionResult> GetUsers([FromQuery] GetUsersQuery query, CancellationToken cancellationToken)
+     => await ExecuteAsync(query, cancellationToken);
+    #endregion
+
     #region Commands
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -58,13 +66,5 @@ public class UserController : BaseController
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> ForceDelete([FromRoute] string id)
         => await ExecuteAsync(new ForceDeleteUserCommand() { Id = id });
-    #endregion
-
-    #region Queries
-    [HttpGet, ApiResultFilter]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public async Task<IActionResult> GetUsers([FromQuery] GetUsersQuery query, CancellationToken cancellationToken)
-     => await ExecuteAsync(query, cancellationToken);
     #endregion
 }

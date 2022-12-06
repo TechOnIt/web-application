@@ -26,7 +26,7 @@ public class DeleteStructureCommandHandler : IRequestHandler<DeleteStructureComm
             var findStructure = await _unitOfWorks.StructureRepository.GetStructureByIdAsync(request.StructureId,cancellationToken);
             if (findStructure != null)
             {
-                _unitOfWorks.StructureRepository.DeleteStructure(findStructure);
+                await _unitOfWorks.StructureRepository.DeleteStructure(findStructure, cancellationToken);
                 return Result.Ok();
             }
             else

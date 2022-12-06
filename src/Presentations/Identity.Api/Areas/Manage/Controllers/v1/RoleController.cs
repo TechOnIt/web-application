@@ -1,23 +1,31 @@
 ﻿using iot.Application.Commands.Roles.Management.CreateRole;
 using iot.Application.Commands.Roles.Management.DeleteRole;
 using iot.Application.Commands.Roles.Management.UpdateRole;
+using iot.Application.Queries.Roles.GetAllRoles;
 using Microsoft.AspNetCore.DataProtection;
 
 namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
 
 [Area("manage")]
-[Route("v1/[controller]/[action]")]
-public class RoleController : ControllerBase
+public class RoleController : BaseController
 {
     #region DI & Ctor's
     private readonly IMediator _mediator;
     private readonly IDataProtector _dataProtectionProvider; // https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.dataprotection.idataprotectionprovider?view=aspnetcore-6.0
 
     public RoleController(IMediator mediator, IDataProtectionProvider dataProtectionProvider)
+        : base(mediator)
     {
         _mediator = mediator;
         _dataProtectionProvider = dataProtectionProvider.CreateProtector("RouteData");
     }
+    #endregion
+
+    #region Queries
+    [HttpGet]
+    [ApiResultFilter]
+    public async Task<IActionResult> GetAll([FromQuery] GetRolesQuery query, CancellationToken cancellationToken)
+        => await ExecuteAsync(query, cancellationToken);
     #endregion
 
     #region Command
@@ -52,15 +60,6 @@ public class RoleController : ControllerBase
 
         var result = await _mediator.Send(new DeleteRoleCommand { Id = id });
         return Ok(result);
-    }
-    #endregion
-
-    #region Queries
-    [ApiResultFilter]
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        return Ok();
     }
     #endregion
 }

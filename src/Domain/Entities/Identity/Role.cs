@@ -6,7 +6,7 @@ namespace iot.Domain.Entities.Identity;
 
 public class Role
 {
-    #region
+    #region Ctor
     Role() { }
 
     public Role(string name)

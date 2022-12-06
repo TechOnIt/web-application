@@ -1,29 +1,32 @@
 ﻿using iot.Application.Common.Exceptions;
+using iot.Application.Common.ViewModels.Roles;
 using iot.Application.Common.ViewModels.Users;
+using iot.Application.Reports.Roles;
 using iot.Application.Reports.Users;
 
 namespace iot.Application.Queries.Roles.GetAllRoles;
 
-public class GetRolesQuery : PaginatedSearchWithSize, IRequest<PaginatedList<UserViewModel>>
+public class GetRolesQuery : PaginatedSearchWithSize, IRequest<PaginatedList<RoleViewModel>>
 {
 }
 
-public class GetAllRolesQueryHandler : IRequestHandler<GetRolesQuery, PaginatedList<UserViewModel>>
+public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, PaginatedList<RoleViewModel>>
 {
-    #region constructor
-    private readonly IUserReports _userReports;
-    public GetAllRolesQueryHandler(IUserReports userReports)
+    #region Ctor
+    private readonly IRoleReports _roleReports;
+
+    public GetRolesQueryHandler(IRoleReports roleReports)
     {
-        _userReports = userReports;
+        _roleReports = roleReports;
     }
     #endregion
 
-    public async Task<PaginatedList<UserViewModel>> Handle(GetRolesQuery request, CancellationToken cancellationToken = default)
+    public async Task<PaginatedList<RoleViewModel>> Handle(GetRolesQuery request, CancellationToken cancellationToken = default)
     {
-        var result = new PaginatedList<UserViewModel>();
+        PaginatedList<RoleViewModel> result = new();
         try
         {
-            result = await _userReports.GetAllPaginatedSearchAsync<UserViewModel>(new PaginatedSearchWithSize
+            result = await _roleReports.GetAllPaginatedSearchAsync<RoleViewModel>(new PaginatedSearchWithSize
             {
                 Keyword = request.Keyword,
                 Page = request.Page,

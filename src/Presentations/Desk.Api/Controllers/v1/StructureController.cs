@@ -2,11 +2,11 @@
 
 namespace iot.Desk.Api.Controllers.v1;
 
-[Route("api/v1/[controller]")]
 [ApiController]
+[Route("v1/[controller]/[action]")]
 public class StructureController : ControllerBase
 {
-    #region constructors
+    #region Ctor
     private readonly IMediator _mediator;
     private readonly IDataProtector _dataProtectionProvider;
 
@@ -16,6 +16,24 @@ public class StructureController : ControllerBase
         _dataProtectionProvider = dataProtectionProvider.CreateProtector("RouteData");
     }
 
+    #endregion
+
+    #region Queries
+    [HttpGet]
+    [ApiResultFilter]
+    //[ValidateAntiForgeryToken]
+    public async Task<IActionResult> GetAll()
+    {
+        try
+        {
+            var result = await _mediator.Send(new GetAllByFilterStructureCommand());
+            return Ok(result);
+        }
+        catch (AppException exp)
+        {
+            throw new AppException(ApiResultStatusCode.ServerError, exp.Message);
+        }
+    }
     #endregion
 
     #region Commands
@@ -37,32 +55,13 @@ public class StructureController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
     [ApiResultFilter]
+    [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new DeleteStructureCommand() { StructureId = Guid.Parse(id) }, cancellationToken);
         return Ok(result);
-    }
-    #endregion
-
-    #region Queries
-
-    [HttpGet]
-    [ApiResultFilter]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> GetAll()
-    {
-        try
-        {
-            var result = await _mediator.Send(new GetAllByFilterStructureCommand());
-            return Ok(result);
-        }
-        catch (AppException exp)
-        {
-            throw new AppException(ApiResultStatusCode.ServerError, exp.Message);
-        }
     }
     #endregion
 }

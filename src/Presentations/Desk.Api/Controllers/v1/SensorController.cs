@@ -1,7 +1,7 @@
 ﻿namespace iot.Desk.Api.Controllers.v1;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("v1/[controller]/[action]")]
 public class SensorController : ControllerBase
 {
 	#region constructor

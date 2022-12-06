@@ -10,6 +10,7 @@ using iot.Application.Commands.Sensor.DeleteSensor;
 using iot.Application.Commands.Sensor.UpdateSensor;
 using iot.Application.Commands.Structures.Authentication.SignInCommands;
 using iot.Application.Commands.Users.Authentication.SignInOtpCommands;
+using iot.Application.Common.DTOs.Settings;
 using iot.Desk.Api.GraphQl.PerformanceReport;
 using iot.Infrastructure;
 using System.Reflection;
@@ -24,6 +25,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 RegisterMediatRCommands(builder.Services);
+
+// Map app setting json to app setting object.
+// https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
+builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
+builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
+
 ConfigureServices(builder.Services);
 var app = builder.Build();
 
@@ -95,16 +102,4 @@ void ConfigureServices(IServiceCollection services)
 void RegisterMediatRCommands(IServiceCollection services)
 {
     services.AddMediatR(typeof(CreateDeviceCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(DeleteDeviceCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(UpdateDeviceCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(CreatePlaceCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(DeletePlaceCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(UpdatePlaceCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(CreateSensorCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(DeleteSensorCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(UpdateSensorCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(SignInStructureCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(CreateStructureCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(DeleteStructureCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(UpdateStructureCommand).GetTypeInfo().Assembly);
 }

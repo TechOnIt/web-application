@@ -2,17 +2,26 @@
 
 namespace iot.Desk.Api.Controllers.v1;
 
-[Route("api/v1/[controller]")]
 [ApiController]
+[Route("v1/[controller]/[action]")]
 public class PlaceController : ControllerBase
 {
-    #region constructor
+    #region Ctor
     private readonly IMediator _mediator;
+
     public PlaceController(IMediator mediator)
     {
         _mediator = mediator;
     }
+    #endregion
 
+    #region Queries
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromBody] GetAllPlacesByFilterQuery filter)
+    {
+        var result = await _mediator.Send(filter);
+        return Ok(result);
+    }
     #endregion
 
     #region Commands
@@ -40,8 +49,8 @@ public class PlaceController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{placeId}/{structureId}")]
     [ApiResultFilter]
+    [HttpDelete("{placeId}/{structureId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> Delete([FromRoute] string placeId, string structureId)
     {
@@ -52,15 +61,6 @@ public class PlaceController : ControllerBase
                 StructureId=Guid.Parse(structureId)
             });
 
-        return Ok(result);
-    }
-    #endregion
-
-    #region Queries
-    [HttpGet]
-    public async Task<IActionResult> GetAll([FromBody] GetAllPlacesByFilterQuery filter)
-    {
-        var result = await _mediator.Send(filter);
         return Ok(result);
     }
     #endregion

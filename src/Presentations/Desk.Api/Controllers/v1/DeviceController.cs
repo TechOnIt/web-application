@@ -5,17 +5,17 @@ using iot.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 
 namespace iot.Desk.Api.Controllers.v1;
 
-[Route("api/v1/[controller]")]
 [ApiController]
+[Route("v1/[controller]/[action]")]
 public class DeviceController : ControllerBase
 {
-	#region constructor
+	#region Ctor
 	private readonly IMediator _mediator;
+
 	public DeviceController(IMediator mediator)
 	{
 		_mediator = mediator;
 	}
-
     #endregion
 
     [HttpPost]
@@ -35,7 +35,6 @@ public class DeviceController : ControllerBase
         var result = await _mediator.Send(deviceCommand,cancellationToken);
         return Ok(result);
     }
-
 
     [HttpDelete]
     [ApiResultFilter]

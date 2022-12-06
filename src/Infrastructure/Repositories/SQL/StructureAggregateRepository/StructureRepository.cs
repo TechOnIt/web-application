@@ -79,10 +79,13 @@ public class StructureRepository : IStructureRepository
     }
     public async Task<Structure?> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken)
     => await Task.FromResult(await _context.Structures.AsNoTracking().FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken));
-    public void DeleteStructure(Structure structure)
-        => _context.Structures.Remove(structure);
+    public async Task DeleteStructure(Structure structure,CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        _context.Structures.Remove(structure);
+        await Task.CompletedTask;
+    }
     #endregion
-
 
     #region related to place
     public async Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>>? filter = null)

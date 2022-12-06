@@ -4,6 +4,7 @@ public class RoleReports : IRoleReports
 {
     #region Ctors
     private readonly IUnitOfWorks _uow;
+
     public RoleReports(IUnitOfWorks unitOfWorks)
     {
         _uow = unitOfWorks;
@@ -22,7 +23,7 @@ public class RoleReports : IRoleReports
         #region Search condition
         if (!string.IsNullOrEmpty(paginatedSearch.Keyword))
             query = query
-                .Where(q => paginatedSearch.Keyword.Contains(q.Name))
+                .Where(role => role.Name.Contains(paginatedSearch.Keyword))
                 .AsQueryable();
         #endregion
         return await query.PaginatedListAsync<Role, TDestination>(paginatedSearch.Page, paginatedSearch.PageSize, config, cancellationToken);

@@ -17,7 +17,7 @@ public class CreateDeviceCommand : IRequest<Result<Guid>>, ICommittableRequest
 
 public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, Result<Guid>>
 {
-    #region Constructure
+    #region Ctor
     private readonly IDeviceService _deviceService;
     private readonly IMediator _mediator;
 
@@ -35,7 +35,7 @@ public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, R
         try
         {
             var model = new Domain.Entities.Product.Device(request.Pin, request.DeviceType, request.IsHigh, request.PlaceId);
-            var createResult = await _deviceService.CreateDeviceAsync(model.Adapt<DeviceViewModel>(), cancellationToken);
+            var createResult = await _deviceService.CreateAsync(model.Adapt<DeviceViewModel>(), cancellationToken);
 
             await _mediator.Publish(new DeviceNotifications());
 

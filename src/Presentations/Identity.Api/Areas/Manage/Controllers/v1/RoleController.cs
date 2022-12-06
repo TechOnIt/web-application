@@ -33,9 +33,6 @@ public class RoleController : BaseController
     [ApiResultFilter]
     public async Task<IActionResult> Create([FromBody] CreateRoleCommand command)
     {
-        if (!User.Identity.IsAuthenticated)
-            return Unauthorized();
-
         var result = await _mediator.Send(command);
         return Ok(result);
     }

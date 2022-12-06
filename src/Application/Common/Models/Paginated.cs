@@ -35,7 +35,7 @@ public class PaginatedWithSize
     public int PageSize
     {
         get { return _pageSize; }
-        set { _pageSize = value < 1 ? 1 : value; }
+        set { _pageSize = value < 1 ? 10 : value; }
     }
 }
 
@@ -54,6 +54,6 @@ public class PaginatedSearchWithSize
     public int PageSize
     {
         get { return _pageSize; }
-        set { _pageSize = value < 1 ? 1 : value; }
+        set { _pageSize = value < 1 ? 10 : value; }
     }
 }

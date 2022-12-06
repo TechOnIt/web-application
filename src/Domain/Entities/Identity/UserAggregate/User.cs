@@ -12,6 +12,7 @@ public class User
     {
 
     }
+
     public Guid Id { get; private set; }
     public string Username { get; private set; }
     public PasswordHash Password { get; private set; } // Must be nullable. maybe we use otp in future!
@@ -120,7 +121,7 @@ public class User
     #endregion
     #endregion
 
-    #region relations
+    #region Relations
     public virtual ICollection<UserRole> UserRoles { get; set; }
     public virtual ICollection<Structure> Structures { get; set; }
     public virtual ICollection<LoginHistory> LoginHistories { get; set; }

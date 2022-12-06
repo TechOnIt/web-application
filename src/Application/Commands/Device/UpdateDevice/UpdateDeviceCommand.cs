@@ -31,7 +31,7 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, R
         try
         {
             var viewModel = new DeviceViewModel(request.DeviceId, request.PlaceId, request.Pin, request.DeviceType, request.IsHigh);
-            var updateResult = await _deviceService.UpdateDeviceAsync(viewModel, cancellationToken);
+            var updateResult = await _deviceService.UpdateAsync(viewModel, cancellationToken);
 
             if (updateResult is null)
                 return Result.Fail("device can not be found !");

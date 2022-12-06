@@ -1,6 +1,6 @@
 ﻿using iot.Infrastructure.Persistence.Context;
 using iot.Infrastructure.Repositories.SQL;
-using iot.Infrastructure.Repositories.SQL.Device;
+using iot.Infrastructure.Repositories.SQL.Devices;
 using iot.Infrastructure.Repositories.SQL.Roles;
 using iot.Infrastructure.Repositories.SQL.SensorAggregate;
 using iot.Infrastructure.Repositories.SQL.StructureAggregateRepository;

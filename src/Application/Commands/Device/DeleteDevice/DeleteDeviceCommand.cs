@@ -25,11 +25,11 @@ public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, R
     {
         try
         {
-            var isExists = await _deviceService.FindDeviceByIdAsyncAsNoTracking(request.DeviceId, cancellationToken);
+            var isExists = await _deviceService.FindByIdAsNoTrackingAsync(request.DeviceId, cancellationToken);
             if (isExists is null)
                 return Result.Fail($"can not find device with Id : {request.DeviceId}");
 
-            bool getDevice = await _deviceService.DeleteDeviceByIdAsync(request.DeviceId, cancellationToken);
+            bool getDevice = await _deviceService.DeleteByIdAsync(request.DeviceId, cancellationToken);
             if (!getDevice)
                 return Result.Fail("an error occured !");
 

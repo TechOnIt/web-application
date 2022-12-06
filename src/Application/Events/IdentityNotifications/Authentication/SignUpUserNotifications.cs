@@ -1,11 +1,8 @@
 ﻿using iot.Application.Common.DTOs.Settings;
-using iot.Application.Common.Extentions;
 using iot.Application.Services.AssemblyServices;
 using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
-using iot.Infrastructure.Repositories.UnitOfWorks;
 
 namespace iot.Application.Events.IdentityNotifications.Authentication;
-
 
 public class SignUpUserNotifications : INotification
 {

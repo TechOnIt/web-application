@@ -1,4 +1,6 @@
-﻿namespace iot.Application.UnitTests.ServiceTests.ProductTests;
+﻿using iot.Application.Common.ViewModels.Devices;
+
+namespace iot.Application.UnitTests.ServiceTests.ProductTests;
 
 public class DeviceCreateNewDeviceServiceTest
 {

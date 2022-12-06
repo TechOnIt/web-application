@@ -1,12 +1,14 @@
 ﻿using iot.Application.Common.Exceptions;
+using iot.Application.Common.Extentions;
+using iot.Application.Common.ViewModels.Devices;
+using iot.Application.Common.ViewModels.Structures;
 using iot.Application.Common.ViewModels.Users;
-using iot.Application.Reports.Contracts;
 using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace iot.Application.Reports;
+namespace iot.Application.Reports.Users;
 
 public class UserReports : IUserReports
 {
@@ -74,24 +76,24 @@ public class UserReports : IUserReports
     /// <param name="pageSize">Page items scope.</param>
     /// <param name="config">Config for mapster.</param>
     /// <returns>The output you specified yourself!</returns>
-    public async Task<PaginatedList<TDestination>> GetByQueryAndPaginationAndMapAsync<TDestination>(string? keyword = null,
-        int page = 1, int pageSize = 20, TypeAdapterConfig? config = null, CancellationToken cancellationToken = default)
+    public async Task<PaginatedList<TDestination>> GetAllPaginatedSearchAsync<TDestination>(PaginatedSearchWithSize paginatedSearch,
+        TypeAdapterConfig? config = null, CancellationToken cancellationToken = default)
     {
         // Initialize users Query.
         var query = _unitOfWorks._context.Users.AsQueryable();
         // Apply conditions.
-        if (!string.IsNullOrEmpty(keyword))
+        if (!string.IsNullOrEmpty(paginatedSearch.Keyword))
             query = query
-                .Where(u => keyword.Contains(u.Username) ||
-                keyword.Contains(u.PhoneNumber) ||
-                keyword.Contains(u.Email) ||
-                keyword.Contains(u.FullName.Name) ||
-                keyword.Contains(u.FullName.Surname))
+                .Where(u => paginatedSearch.Keyword.Contains(u.Username) ||
+                paginatedSearch.Keyword.Contains(u.PhoneNumber) ||
+                paginatedSearch.Keyword.Contains(u.Email) ||
+                paginatedSearch.Keyword.Contains(u.FullName.Name) ||
+                paginatedSearch.Keyword.Contains(u.FullName.Surname))
                 .AsQueryable();
         // Execute, pagination and type to project.
         return await query
             .AsNoTracking()
-            .PaginatedListAsync<User, TDestination>(page, pageSize, config, cancellationToken);
+            .PaginatedListAsync<User, TDestination>(paginatedSearch.Page, paginatedSearch.PageSize, config, cancellationToken);
     }
 
     public async Task<IList<UserViewModel>> GetUsersInRoleAsync(string roleName, Guid? roleId = null)
@@ -111,7 +113,7 @@ public class UserReports : IUserReports
             if (allUsersInRole.Length > 0)
             {
                 query = _unitOfWorks._context.Users.AsNoTracking()
-                   .Where(a => (allUsersInRole.Any(x => x == a.Id)) == true);
+                   .Where(a => allUsersInRole.Any(x => x == a.Id) == true);
 
                 users = await query.ToListAsync();
             }
@@ -124,7 +126,7 @@ public class UserReports : IUserReports
             if (usersInRole.Length > 0)
             {
                 query = _unitOfWorks._context.Users.AsNoTracking()
-                   .Where(a => (usersInRole.Any(x => x == a.Id)) == true);
+                   .Where(a => usersInRole.Any(x => x == a.Id) == true);
 
                 users = await query.ToListAsync();
             }

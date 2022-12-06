@@ -1,7 +1,7 @@
 ﻿using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
 
-namespace iot.Application.Common.ViewModels;
+namespace iot.Application.Common.ViewModels.Structures;
 
 public class StructureViewModel
 {

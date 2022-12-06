@@ -56,11 +56,11 @@ public class RoleController : ControllerBase
     #endregion
 
     #region Queries
-    //[ApiResultFilter]
-    //[HttpGet("{roleName}")]
-    //public async Task<IActionResult> GetRoleIdByRoleName(string roleName)
-    //{
-
-    //}
+    [ApiResultFilter]
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        return Ok();
+    }
     #endregion
 }

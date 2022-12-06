@@ -2,24 +2,23 @@
 using iot.Application.Common.ViewModels.Users;
 using iot.Application.Reports.Users;
 
-namespace iot.Application.Queries.Users.GetAllUsers;
+namespace iot.Application.Queries.Roles.GetAllRoles;
 
-public class GetUsersQuery : Paginated, IRequest<PaginatedList<UserViewModel>>
+public class GetRolesQuery : PaginatedSearchWithSize, IRequest<PaginatedList<UserViewModel>>
 {
-    public string? Keyword { get; set; }
 }
 
-public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList<UserViewModel>>
+public class GetAllRolesQueryHandler : IRequestHandler<GetRolesQuery, PaginatedList<UserViewModel>>
 {
     #region constructor
     private readonly IUserReports _userReports;
-    public GetUsersQueryHandler(IUserReports userReports)
+    public GetAllRolesQueryHandler(IUserReports userReports)
     {
         _userReports = userReports;
     }
     #endregion
 
-    public async Task<PaginatedList<UserViewModel>> Handle(GetUsersQuery request, CancellationToken cancellationToken = default)
+    public async Task<PaginatedList<UserViewModel>> Handle(GetRolesQuery request, CancellationToken cancellationToken = default)
     {
         var result = new PaginatedList<UserViewModel>();
         try
@@ -28,9 +27,8 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
             {
                 Keyword = request.Keyword,
                 Page = request.Page,
-                PageSize = 20
-            },
-            config: default, cancellationToken);
+                PageSize = request.PageSize
+            }, config: default, cancellationToken);
         }
         catch (ReportExceptions exp)
         {

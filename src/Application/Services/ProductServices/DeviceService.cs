@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Services.ProductServices;
+﻿using iot.Application.Common.ViewModels.Devices;
+
+namespace iot.Application.Services.ProductServices;
 
 public class DeviceService : IDeviceService
 {

@@ -1,7 +1,5 @@
-﻿using iot.Application.Common.ViewModels;
+﻿using iot.Application.Common.ViewModels.Places;
 using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
 using System.Linq.Expressions;
 
 namespace iot.Application.Queries.Places.GetAllPlaceByFilter;

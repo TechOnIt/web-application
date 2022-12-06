@@ -65,15 +65,20 @@ public class IdentityService : IIdentityService
             return (null, "An error was occured!");
         }
 
-        // Send otp as a normal sms.
-        sendResult = await _kavenegarAuthService.SendAsync(phoneNumber, $"Techonit\nYour verify code:\n{newOtpCode}");
+#if DEBUG
+        Console.WriteLine($"Otp Code is {newOtpCode}");
+#endif
+#if !DEBUG
 
         // Send otp as template (Lookup).
         //var sendResult = await _kavenegarAuthService.SendAuthSmsAsync(phoneNumber, "", "", user.OtpCode.ToString());
 
+        // Send otp as a normal sms.
+        sendResult = await _kavenegarAuthService.SendAsync(phoneNumber, $"Techonit\nYour verify code:\n{newOtpCode}");
         // Check send sms status result.
         if (!sendResult.Status.IsSendSuccessfully())
             return (null, sendResult.Message);
+#endif
 
         // Set OTP code to cache with "otp-code" key.
         // Expiration setting up to 2 minutes.
@@ -147,9 +152,9 @@ public class IdentityService : IIdentityService
 
         return (new AccessToken(), status.message);
     }
-    #endregion
+#endregion
 
-    #region Sign-Up
+#region Sign-Up
     public async Task<(string? Code, string Message)> SignUpAndSendOtpCode(UserViewModel user,
         CancellationToken cancellationToken = default)
     {
@@ -201,5 +206,5 @@ public class IdentityService : IIdentityService
 
         return (token, "welcome !");
     }
-    #endregion
+#endregion
 }

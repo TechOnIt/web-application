@@ -1,8 +1,8 @@
 ﻿namespace iot.Application.Queries.Users.GetAllUsers;
 
-public class GetUsersCommandValidations : BaseFluentValidator<GetUsersQuery>
+public class GetUsersQueryValidations : BaseFluentValidator<GetUsersQuery>
 {
-	public GetUsersCommandValidations()
+	public GetUsersQueryValidations()
 	{
 		//RuleFor(a => a.PhoneNumber)
 		//	.Length(11)

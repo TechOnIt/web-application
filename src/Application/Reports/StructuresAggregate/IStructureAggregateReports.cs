@@ -1,8 +1,8 @@
-﻿using iot.Application.Common.ViewModels;
+﻿using iot.Application.Common.ViewModels.Structures;
 using iot.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
 
-namespace iot.Application.Reports.Contracts;
+namespace iot.Application.Reports.StructuresAggregate;
 
 public interface IStructureAggregateReports : IReport
 {

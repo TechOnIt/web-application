@@ -4,8 +4,9 @@ using iot.Application.Common.Behaviors;
 using iot.Application.Common.Exceptions;
 using iot.Application.Common.Frameworks.ApiResultFrameWork;
 using iot.Application.Common.Frameworks.Middlewares;
-using iot.Application.Reports;
-using iot.Application.Reports.Contracts;
+using iot.Application.Reports.Roles;
+using iot.Application.Reports.StructuresAggregate;
+using iot.Application.Reports.Users;
 using iot.Application.Services.AssemblyServices;
 using iot.Application.Services.Authenticateion;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
@@ -198,6 +199,7 @@ public static class ConfigureServices
     public static IServiceCollection AddReportServices(this IServiceCollection services)
     {
         services.AddTransient<IUserReports, UserReports>();
+        services.AddTransient<IRoleReports, RoleReports>();
         services.AddTransient<IStructureAggregateReports, StructureAggregateReports>();
 
         return services;

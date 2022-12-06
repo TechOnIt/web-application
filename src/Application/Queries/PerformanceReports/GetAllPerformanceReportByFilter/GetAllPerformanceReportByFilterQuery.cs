@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.ViewModels;
+﻿using iot.Application.Common.ViewModels.Reports;
 using iot.Domain.Entities.Product.SensorAggregate;
 using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;

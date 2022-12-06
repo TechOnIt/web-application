@@ -1,7 +1,7 @@
 ﻿using iot.Domain.Entities.Product;
 using iot.Domain.Enums;
 
-namespace iot.Application.Common.ViewModels;
+namespace iot.Application.Common.ViewModels.Devices;
 
 public class DeviceViewModel
 {
@@ -15,7 +15,7 @@ public class DeviceViewModel
         Id = id;
         PlaceId = placeId;
         Pin = pin;
-        DeviceType=deviceType;
+        DeviceType = deviceType;
         IsHigh = isHight;
     }
     #endregion

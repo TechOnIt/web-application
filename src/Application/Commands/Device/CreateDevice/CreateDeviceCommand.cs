@@ -1,5 +1,5 @@
 ﻿using iot.Application.Common.Interfaces;
-using iot.Application.Common.ViewModels;
+using iot.Application.Common.ViewModels.Devices;
 using iot.Application.Events.ProductNotifications;
 using iot.Application.Services.ProductServices.ProductContracts;
 using iot.Domain.Enums;

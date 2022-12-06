@@ -1,12 +1,11 @@
 ﻿using iot.Application.Common.Exceptions;
-using iot.Application.Common.ViewModels;
-using iot.Application.Reports.Contracts;
+using iot.Application.Common.ViewModels.Structures;
 using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 using System.Linq.Expressions;
 
-namespace iot.Application.Reports;
+namespace iot.Application.Reports.StructuresAggregate;
 
 public class StructureAggregateReports : IStructureAggregateReports
 {
@@ -19,7 +18,7 @@ public class StructureAggregateReports : IStructureAggregateReports
 
     #endregion
 
-    public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure,bool>> filter,CancellationToken cancellationToken = default)
+    public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure, bool>> filter, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -36,14 +35,14 @@ public class StructureAggregateReports : IStructureAggregateReports
             throw new StructureException($"server error : {exp.Message}");
         }
     }
-    
+
     public async Task<IList<StructureViewModel>> GetstructuresAsync(CancellationToken cancellationToken = default)
     {
         IList<StructureViewModel> structures = new List<StructureViewModel>();
 
         try
         {
-            var strs= await _unitOfWorks._context.Structures
+            var strs = await _unitOfWorks._context.Structures
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
@@ -95,7 +94,7 @@ public class StructureAggregateReports : IStructureAggregateReports
             {
                 degreeOfParallelism = degreeOfParallelism == 0 || degreeOfParallelism > 5 == true ? 3 : degreeOfParallelism;
 
-                structures= _unitOfWorks._context.Users
+                structures = _unitOfWorks._context.Users
                     .AsNoTracking()
                     .AsParallel()
                     .WithDegreeOfParallelism(degreeOfParallelism)

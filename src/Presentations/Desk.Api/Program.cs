@@ -105,6 +105,6 @@ void RegisterMediatRCommands(IServiceCollection services)
     services.AddMediatR(typeof(UpdateSensorCommand).GetTypeInfo().Assembly);
     services.AddMediatR(typeof(SignInStructureCommand).GetTypeInfo().Assembly);
     services.AddMediatR(typeof(CreateStructureCommand).GetTypeInfo().Assembly);
-    services.AddMediatR(typeof(DeleteStructureCommand).GetTypeInfo().Assembly);\
+    services.AddMediatR(typeof(DeleteStructureCommand).GetTypeInfo().Assembly);
     services.AddMediatR(typeof(UpdateStructureCommand).GetTypeInfo().Assembly);
 }

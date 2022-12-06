@@ -13,6 +13,18 @@ public class BaseController : ControllerBase
     }
     #endregion
 
+    protected async Task<IActionResult> ExecuteAsync<TRequest>(TRequest request, CancellationToken cancellationToken = default)
+    where TRequest : class
+    {
+        var commandResult = await _mediator.Send(request, cancellationToken);
+
+        if (commandResult is not null)
+            return Ok(commandResult);
+
+        return BadRequest();
+    }
+
+
     #region Commands
     protected async Task<IActionResult> RunCommandAsyncT<TRequest>(TRequest request)
         where TRequest : class

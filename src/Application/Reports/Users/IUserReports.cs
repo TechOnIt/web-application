@@ -1,10 +1,11 @@
-﻿using System.Linq.Expressions;
-using System.Reflection;
-using iot.Application.Common.ViewModels;
+﻿using iot.Application.Common.ViewModels.Devices;
+using iot.Application.Common.ViewModels.Structures;
 using iot.Application.Common.ViewModels.Users;
 using iot.Domain.Entities.Identity.UserAggregate;
+using System.Linq.Expressions;
+using System.Reflection;
 
-namespace iot.Application.Reports.Contracts;
+namespace iot.Application.Reports.Users;
 
 public interface IUserReports : IReport
 {
@@ -28,14 +29,14 @@ public interface IUserReports : IReport
     /// <param name="pageSize">Page items scope.</param>
     /// <param name="config">Config for mapster.</param>
     /// <returns>The output you specified yourself!</returns>
-    Task<PaginatedList<TDestination>> GetByQueryAndPaginationAndMapAsync<TDestination>(string? keyword = null,
-        int page = 1, int pageSize = 20, TypeAdapterConfig? config = null, CancellationToken cancellationToken = default);
+    Task<PaginatedList<TDestination>> GetAllPaginatedSearchAsync<TDestination>(PaginatedSearchWithSize paginatedSearch,
+        TypeAdapterConfig? config = null, CancellationToken cancellationToken = default);
 
     Task<IList<UserViewModel>> GetUsersInRoleAsync(string roleName, Guid? roleId = null);
     Task<IList<StructureViewModel>?> GetUserStructuresByUserIdAsync(Guid userId);
     Task<IList<DeviceViewModel>?> GetAllDevicesByUserIdAsync(Guid userId);
     PropertyInfo? GetUserProperty(string propertyName);
     Task<IList<UserViewModel>> GetAllUsersAsync();
-    IList<UserViewModel> GetAllUsersSync(); 
+    IList<UserViewModel> GetAllUsersSync();
     Task<IList<UserViewModel>> GetAllUsersParallel();
 }

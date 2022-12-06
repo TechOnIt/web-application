@@ -145,7 +145,7 @@ public class UserReports : IUserReports
             Expression<Func<Structure, bool>> getStructures = a => a.UserId == user.Id;
             var cancellationSource = new CancellationToken();
 
-            var structures = await _unitOfWorks.StructureRepository.GetAllStructuresByFilterAsync(cancellationSource, getStructures);
+            var structures = await _unitOfWorks.StructureRepository.GetAllByFilterAsync(cancellationSource, getStructures);
             if (structures is null)
                 return null;
 
@@ -210,10 +210,10 @@ public class UserReports : IUserReports
             if (propertyInfo.Name.ToLower().Contains(propertyName.ToLower()))
                 result = propertyInfo;
 
-            if (!string.IsNullOrWhiteSpace(result.Name))
-                break;
+            if (result != null)
+                if (!string.IsNullOrWhiteSpace(result.Name))
+                    break;
         }
-
 
         return result;
     }

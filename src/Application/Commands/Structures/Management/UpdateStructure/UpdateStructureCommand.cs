@@ -1,8 +1,6 @@
 ﻿using iot.Application.Common.Interfaces;
 using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
-using iot.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
 
 namespace iot.Application.Commands.Structures.Management.UpdateStructure;
 
@@ -29,11 +27,11 @@ public class UpdatetructureCommandHandler : IRequestHandler<UpdateStructureComma
     {
         try
         {
-            var findStructure = await _unitOfWorks.StructureRepository.GetStructureByIdAsyncAsNoTracking(request.Id, cancellationToken);
+            var findStructure = await _unitOfWorks.StructureRepository.GetByIdAsyncAsNoTracking(request.Id, cancellationToken);
             if (findStructure == null)
                 return Result.Fail("Structure not found !");
             var model = request.Adapt<Structure>();
-            await _unitOfWorks.StructureRepository.UpdateStructureAsync(model, cancellationToken);
+            await _unitOfWorks.StructureRepository.UpdateAsync(model, cancellationToken);
             return Result.Ok();
         }
         catch (Exception exp)

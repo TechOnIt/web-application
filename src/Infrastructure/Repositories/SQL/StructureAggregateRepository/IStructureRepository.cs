@@ -5,29 +5,29 @@ namespace iot.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 
 public interface IStructureRepository
 {
-    #region structure
-    Task CreateStructureAsync(Structure structure, CancellationToken cancellationToken = default);
-    Task UpdateStructureAsync(Structure structure, CancellationToken cancellationToken = default);
-    Task DeleteStructure(Structure structure, CancellationToken cancellationToken);
-    Task DeleteStructureAsync(Guid structureId, CancellationToken cancellationToken = default);
-    Task<IList<Structure>> GetStructuresByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<Structure> GetStructureByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<Structure> GetStructureByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
-    Task<Structure?> GetStructureByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken = default);
-    Task<IList<Structure>> GetAllStructuresByFilterAsync(CancellationToken cancellationToken, Expression<Func<Structure, bool>> filter = null);
+    #region Structure
+    Task CreateAsync(Structure structure, CancellationToken cancellationToken = default);
+    Task UpdateAsync(Structure structure, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Structure structure, CancellationToken cancellationToken);
+    Task DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
+    Task<Structure> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<Structure> GetByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
+    Task<Structure?> GetByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken = default);
+    Task<IList<Structure>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<IList<Structure>> GetAllByFilterAsync(CancellationToken cancellationToken, Expression<Func<Structure, bool>> filter = null);
     #endregion
 
-    #region commen
-    Task CreateStructureWithPlacesAsync(Structure structure, IList<Place> places, CancellationToken cancellationToken = default);
-    Task<IList<Place>> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken = default);
+    #region Common
+    Task CreateWithPlacesAsync(Structure structure, IList<Place> places, CancellationToken cancellationToken = default);
+    Task<IList<Place>?> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken = default);
     #endregion
 
-    #region place
-    Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken = default);
-    Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default);
-    Task DeletePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default);
+    #region Place
     Task<Place> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken = default);
     Task<Place?> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken = default);
     Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>> filter = null);
+    Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken = default);
+    Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default);
+    Task DeletePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default);
     #endregion
 }

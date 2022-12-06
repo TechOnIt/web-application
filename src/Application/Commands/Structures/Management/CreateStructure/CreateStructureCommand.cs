@@ -2,7 +2,6 @@
 using iot.Application.Events.ProductNotifications;
 using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Domain.Enums;
-using iot.Infrastructure.Repositories.UnitOfWorks;
 using Microsoft.Extensions.Logging;
 
 namespace iot.Application.Commands.Structures.Management.CreateStructure;
@@ -16,7 +15,7 @@ public class CreateStructureCommand : IRequest<Result<Concurrency>>, ICommittabl
 
 public class CreateStructureCommandHandler : IRequestHandler<CreateStructureCommand, Result<Concurrency>>
 {
-    #region constructure
+    #region Ctor
     private readonly IUnitOfWorks _unitOfWorks;
     private readonly ILogger<CreateStructureCommandHandler> _logger;
     private readonly IMediator _mediator;
@@ -27,7 +26,6 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
         _logger = logger;
         _mediator = mediator;
     }
-
     #endregion
 
     public async Task<Result<Concurrency>> Handle(CreateStructureCommand request, CancellationToken cancellationToken = default)
@@ -36,9 +34,10 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
         try
         {
             var newId = Guid.NewGuid();
+            // Create new structure model.
             var structure = new Structure(newId, request.Name, request.Description, DateTime.Now, null, request.Type);
-            
-            await _unitOfWorks.StructureRepository.CreateStructureAsync(structure,cancellationToken);
+
+            await _unitOfWorks.StructureRepository.CreateAsync(structure, cancellationToken);
             await _mediator.Publish(new StructureNotifications(), cancellationToken);
             return Result.Ok(structure.ApiKey);
         }

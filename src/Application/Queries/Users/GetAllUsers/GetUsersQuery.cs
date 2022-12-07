@@ -1,5 +1,5 @@
 ﻿using iot.Application.Common.Exceptions;
-using iot.Application.Common.ViewModels.Users;
+using iot.Application.Common.Models.ViewModels.Users;
 using iot.Application.Reports.Users;
 
 namespace iot.Application.Queries.Users.GetAllUsers;

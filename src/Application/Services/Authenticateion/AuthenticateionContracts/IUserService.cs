@@ -1,5 +1,5 @@
 ﻿using iot.Application.Common.Enums.IdentityService;
-using iot.Application.Common.ViewModels.Users;
+using iot.Application.Common.Models.ViewModels.Users;
 
 namespace iot.Application.Services.Authenticateion.AuthenticateionContracts;
 

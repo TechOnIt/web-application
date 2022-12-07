@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.ViewModels.Users;
+﻿namespace iot.Application.Common.Models.ViewModels.Users;
 
 public class UserViewModel
 {
@@ -6,27 +6,6 @@ public class UserViewModel
     public UserViewModel()
     {
 
-    }
-
-    public UserViewModel(Guid id, string? username, FullName fullname, FullName fullName, string? name, string? surname, string? email, string? phoneNumber, bool confirmedEmail, bool confirmedPhoneNumber, DateTime registeredDateTime, DateTime? lockOutDateTime, bool isBaned, bool isDeleted, short maxFailCount, Concurrency concurrencyStamp, PasswordHash password)
-    {
-        Id = id;
-        Username = username;
-        _fullname = fullname;
-        FullName = fullName;
-        Name = name;
-        Surname = surname;
-        Email = email;
-        PhoneNumber = phoneNumber;
-        ConfirmedEmail = confirmedEmail;
-        ConfirmedPhoneNumber = confirmedPhoneNumber;
-        RegisteredDateTime = registeredDateTime;
-        LockOutDateTime = lockOutDateTime;
-        IsBaned = isBaned;
-        IsDeleted = isDeleted;
-        MaxFailCount = maxFailCount;
-        ConcurrencyStamp = concurrencyStamp;
-        Password = password;
     }
 
     public UserViewModel(string username, string phonenumber, string password)

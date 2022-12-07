@@ -1,8 +1,5 @@
-﻿using iot.Application.Common.Exceptions;
-using iot.Application.Common.ViewModels.Roles;
-using iot.Application.Common.ViewModels.Users;
+﻿using iot.Application.Common.Models.ViewModels.Roles;
 using iot.Application.Reports.Roles;
-using iot.Application.Reports.Users;
 
 namespace iot.Application.Queries.Roles.GetAllRoles;
 

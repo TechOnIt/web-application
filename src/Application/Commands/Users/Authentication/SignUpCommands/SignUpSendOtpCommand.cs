@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.ViewModels.Users;
+﻿using iot.Application.Common.Models.ViewModels.Users;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 
 namespace iot.Application.Commands.Users.Authentication.SignUpCommands;
@@ -24,8 +24,8 @@ public class SignUpSendOtpCommandHandler : IRequestHandler<SignUpSendOtpCommand,
     {
         try
         {
-            var newUser = new UserViewModel(request.Phonenumber,request.Phonenumber,request.Password);
-            var signUpresult = await _identityService.SignUpAndSendOtpCode(newUser,cancellationToken);
+            var newUser = new UserViewModel(request.Phonenumber, request.Phonenumber, request.Password);
+            var signUpresult = await _identityService.SignUpAndSendOtpCode(newUser, cancellationToken);
 
             if (signUpresult.Code is null)
                 return Result.Fail(signUpresult.Message);

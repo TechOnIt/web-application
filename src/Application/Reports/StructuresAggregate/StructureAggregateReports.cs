@@ -1,5 +1,5 @@
 ﻿using iot.Application.Common.Exceptions;
-using iot.Application.Common.ViewModels.Structures;
+using iot.Application.Common.Models.ViewModels.Structures;
 using iot.Domain.Entities.Product.StructureAggregate;
 using iot.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;

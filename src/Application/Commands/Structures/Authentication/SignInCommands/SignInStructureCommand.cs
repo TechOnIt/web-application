@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.ViewModels.Structures.Authentication;
+﻿using iot.Application.Common.Models.ViewModels.Structures.Authentication;
 
 namespace iot.Application.Commands.Structures.Authentication.SignInCommands;
 

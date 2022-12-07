@@ -1,5 +1,5 @@
 ﻿using iot.Application.Common.Enums.IdentityService;
-using iot.Application.Common.ViewModels.Users;
+using iot.Application.Common.Models.ViewModels.Users;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Infrastructure.Common.Encryptions.Contracts;

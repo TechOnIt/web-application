@@ -1,8 +1,8 @@
 ﻿using iot.Application.Common.Exceptions;
 using iot.Application.Common.Extentions;
-using iot.Application.Common.ViewModels.Devices;
-using iot.Application.Common.ViewModels.Structures;
-using iot.Application.Common.ViewModels.Users;
+using iot.Application.Common.Models.ViewModels.Devices;
+using iot.Application.Common.Models.ViewModels.Structures;
+using iot.Application.Common.Models.ViewModels.Users;
 using iot.Domain.Entities.Identity.UserAggregate;
 using iot.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;

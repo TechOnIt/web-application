@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.ViewModels.Devices;
+﻿using iot.Application.Common.Models.ViewModels.Devices;
 
 namespace iot.Application.Services.ProductServices;
 

@@ -1,6 +1,6 @@
-﻿namespace iot.Application.Common.ViewModels.Structures.Authentication;
+﻿namespace iot.Application.Common.Models.ViewModels.Users.Authentication;
 
-public class StructureAccessToken
+public class AccessToken
 {
     public string Token { get; set; }
     public string TokenExpireAt { get; set; }

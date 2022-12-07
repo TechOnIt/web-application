@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.ViewModels.Structures;
+﻿using iot.Application.Common.Models.ViewModels.Structures;
 using iot.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
 

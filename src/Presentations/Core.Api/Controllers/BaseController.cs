@@ -1,5 +1,5 @@
 ﻿using FluentResults;
-using iot.Application.Common.ViewModels.Structures.Authentication;
+using iot.Application.Common.Models.ViewModels.Structures.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

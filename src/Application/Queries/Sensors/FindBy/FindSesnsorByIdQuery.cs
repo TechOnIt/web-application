@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.ViewModels.Sensors;
+﻿using iot.Application.Common.Models.ViewModels.Sensors;
 using iot.Domain.Entities.Product.SensorAggregate;
 using iot.Infrastructure.Repositories.UnitOfWorks;
 

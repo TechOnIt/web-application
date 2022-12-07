@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.ViewModels.Users.Authentication;
+﻿using iot.Application.Common.Models.ViewModels.Users.Authentication;
 using iot.Application.Events.IdentityNotifications.Authentication;
 using iot.Application.Services.Authenticateion.AuthenticateionContracts;
 

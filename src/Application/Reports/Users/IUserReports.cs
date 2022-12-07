@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.ViewModels.Devices;
-using iot.Application.Common.ViewModels.Structures;
-using iot.Application.Common.ViewModels.Users;
+﻿using iot.Application.Common.Models.ViewModels.Devices;
+using iot.Application.Common.Models.ViewModels.Structures;
+using iot.Application.Common.Models.ViewModels.Users;
 using iot.Domain.Entities.Identity.UserAggregate;
 using System.Linq.Expressions;
 using System.Reflection;

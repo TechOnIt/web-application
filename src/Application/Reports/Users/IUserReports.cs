@@ -1,11 +1,12 @@
-﻿using iot.Application.Common.Models.ViewModels.Devices;
-using iot.Application.Common.Models.ViewModels.Structures;
-using iot.Application.Common.Models.ViewModels.Users;
-using iot.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using System.Linq.Expressions;
 using System.Reflection;
+using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Common.Models.ViewModels.Devices;
+using TechOnIt.Application.Common.Models.ViewModels.Structures;
+using TechOnIt.Application.Common.Models.ViewModels.Users;
 
-namespace iot.Application.Reports.Users;
+namespace TechOnIt.Application.Reports.Users;
 
 public interface IUserReports : IReport
 {

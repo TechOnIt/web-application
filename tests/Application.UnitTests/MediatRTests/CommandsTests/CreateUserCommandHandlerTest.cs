@@ -1,4 +1,4 @@
-﻿namespace iot.Application.UnitTests.MediatRTests.CommandsTests;
+﻿namespace TechOnIt.Application.UnitTests.MediatRTests.CommandsTests;
 
 public class CreateUserCommandHandlerTest
 {

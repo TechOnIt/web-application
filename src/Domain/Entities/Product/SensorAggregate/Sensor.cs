@@ -1,8 +1,9 @@
-﻿using iot.Domain.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using TechOnIt.Domain.Common;
+using TechOnIt.Domain.Enums;
 
-namespace iot.Domain.Entities.Product.SensorAggregate;
+namespace TechOnIt.Domain.Entities.Product.SensorAggregate;
 
 public class Sensor
 {
@@ -26,12 +27,12 @@ public class Sensor
     #region methods
     public void SetSensorType(string typeName)
     {
-        SensorType = Common.Enumeration.FromDisplayName<SensorType>(typeName);
+        SensorType = Enumeration.FromDisplayName<SensorType>(typeName);
     }
 
     public void SetSensorType(int value)
     {
-        SensorType = Common.Enumeration.FromValue<SensorType>(value);
+        SensorType = Enumeration.FromValue<SensorType>(value);
     }
 
     public void SetSensorType(SensorType sensorType)
@@ -46,21 +47,21 @@ public class Sensor
     #region aggregate methods
     public void ClearReports()
     {
-        this.Reports.Clear();
+        Reports.Clear();
     }
 
     public void AddReport(PerformanceReport newReport)
     {
-        this.Reports.Add(newReport);
+        Reports.Add(newReport);
     }
 
     public void RemoveReport(PerformanceReport newReport)
     {
-        this.Reports.Remove(newReport);
+        Reports.Remove(newReport);
     }
 
     public ICollection<PerformanceReport> GetReports()
-        => this.Reports;
+        => Reports;
     #endregion
 
     #region relations & foreignkeys

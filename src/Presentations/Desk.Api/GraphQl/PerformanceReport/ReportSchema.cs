@@ -1,10 +1,10 @@
 ﻿using GraphQL.Types;
 
-namespace iot.Desk.Api.GraphQl.PerformanceReport;
+namespace TechOnIt.Desk.Api.GraphQl.PerformanceReport;
 
 public class ReportSchema : Schema
 {
-    public ReportSchema(IServiceProvider serviceProvider):base(serviceProvider)
+    public ReportSchema(IServiceProvider serviceProvider) : base(serviceProvider)
     {
         Query = serviceProvider.GetRequiredService<ReportGqQuery>();
         Mutation = serviceProvider.GetRequiredService<ReportGqMutation>();

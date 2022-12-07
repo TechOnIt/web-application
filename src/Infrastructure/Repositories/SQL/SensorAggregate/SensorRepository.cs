@@ -1,8 +1,8 @@
-﻿using iot.Domain.Entities.Product.SensorAggregate;
-using iot.Infrastructure.Persistence.Context;
+﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
 using Microsoft.EntityFrameworkCore;
+using TechOnIt.Infrastructure.Persistence.Context;
 
-namespace iot.Infrastructure.Repositories.SQL.SensorAggregate;
+namespace TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 
 public class SensorRepository : ISensorRepository
 {
@@ -37,7 +37,7 @@ public class SensorRepository : ISensorRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(a => a.Id == sensorId, cancellationToken);
 
-        return await Task.FromResult<Sensor?>(sensor);
+        return await Task.FromResult(sensor);
     }
     public async Task UpdateSensorAsync(Sensor sensor, CancellationToken cancellationToken)
     {
@@ -59,7 +59,7 @@ public class SensorRepository : ISensorRepository
     #region report
     public async Task ClearReportsBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
     {
-        var sensor = await _context.Sensors.Include(r=>r.Reports).FirstOrDefaultAsync(a => a.Id == sensorId, cancellationToken);
+        var sensor = await _context.Sensors.Include(r => r.Reports).FirstOrDefaultAsync(a => a.Id == sensorId, cancellationToken);
         if (sensor != null)
         {
             if (!cancellationToken.IsCancellationRequested)
@@ -74,7 +74,7 @@ public class SensorRepository : ISensorRepository
     public async Task DeleteReportByIdAsync(Guid sensorId, PerformanceReport report, CancellationToken cancellationToken)
     {
         var sensor = await _context.Sensors
-            .Include(r=>r.Reports)
+            .Include(r => r.Reports)
             .FirstOrDefaultAsync(a => a.Id == sensorId, cancellationToken);
 
         if (sensor != null)
@@ -89,6 +89,6 @@ public class SensorRepository : ISensorRepository
         await Task.CompletedTask;
     }
     public async Task<PerformanceReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken)
-        => await Task.FromResult(await _context.PerformanceReports.FirstOrDefaultAsync(a=>a.Id== reportId, cancellationToken));
+        => await Task.FromResult(await _context.PerformanceReports.FirstOrDefaultAsync(a => a.Id == reportId, cancellationToken));
     #endregion
 }

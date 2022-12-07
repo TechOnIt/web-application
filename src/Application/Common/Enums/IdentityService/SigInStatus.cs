@@ -1,6 +1,6 @@
-﻿using iot.Domain.Common;
+﻿using TechOnIt.Domain.Common;
 
-namespace iot.Application.Common.Enums.IdentityService;
+namespace TechOnIt.Application.Common.Enums.IdentityService;
 
 public class SigInStatus : Enumeration
 {

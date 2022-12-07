@@ -1,13 +1,13 @@
-﻿using iot.Infrastructure.Common.Encryptions;
-using iot.Infrastructure.Common.Encryptions.Contracts;
-using iot.Infrastructure.Common.Notifications.KaveNegarSms;
-using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
-using iot.Infrastructure.Initializer;
-using iot.Infrastructure.Initializer.Identities;
-using iot.Infrastructure.Persistence.Context;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using TechOnIt.Infrastructure.Common.Encryptions;
+using TechOnIt.Infrastructure.Common.Encryptions.Contracts;
+using TechOnIt.Infrastructure.Common.Notifications.KaveNegarSms;
+using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
+using TechOnIt.Infrastructure.Initializer;
+using TechOnIt.Infrastructure.Initializer.Identities;
+using TechOnIt.Infrastructure.Persistence.Context;
 
-namespace iot.Infrastructure;
+namespace TechOnIt.Infrastructure;
 
 public static class ConfigureService
 {

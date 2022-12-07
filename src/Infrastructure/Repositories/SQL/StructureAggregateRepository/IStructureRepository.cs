@@ -1,7 +1,7 @@
-﻿using iot.Domain.Entities.Product.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
 
-namespace iot.Infrastructure.Repositories.SQL.StructureAggregateRepository;
+namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 
 public interface IStructureRepository
 {

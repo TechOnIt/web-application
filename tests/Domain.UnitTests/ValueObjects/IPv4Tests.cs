@@ -1,6 +1,6 @@
-﻿using iot.Domain.ValueObjects;
+﻿using TechOnIt.Domain.ValueObjects;
 
-namespace iot.Domain.UnitTests.ValueObjects;
+namespace TechOnIt.Domain.UnitTests.ValueObjects;
 
 public class IPv4Tests
 {

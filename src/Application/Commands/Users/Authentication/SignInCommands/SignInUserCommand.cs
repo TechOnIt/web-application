@@ -1,7 +1,9 @@
-﻿using iot.Application.Common.Models.ViewModels.Users.Authentication;
-using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using TechOnIt.Application.Common.Constants;
+using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
+using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
-namespace iot.Application.Commands.Users.Authentication.SignInCommands;
+namespace TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 
 public class SignInUserCommand : IRequest<Result<AccessToken>>
 {

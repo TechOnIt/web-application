@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.Sensor.CreatSensor
+﻿using TechOnIt.Application.Common.Models;
+
+namespace TechOnIt.Application.Commands.Sensor.CreatSensor
 {
     public class CreateSensorValidations : BaseFluentValidator<CreateSensorCommand>
     {

@@ -1,9 +1,10 @@
-﻿using iot.Domain.Entities.Identity;
-using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Domain.ValueObjects;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Identity;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.ValueObjects;
+using TechOnIt.Infrastructure.Initializer;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
-namespace iot.Infrastructure.Initializer.Identities;
+namespace TechOnIt.Infrastructure.Initializer.Identities;
 
 internal class UserDataInitializer : IDataInitializer
 {

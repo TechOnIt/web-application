@@ -1,14 +1,14 @@
-﻿using iot.Domain.Entities.Identity;
-using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Domain.Entities.Product;
-using iot.Domain.Entities.Product.SensorAggregate;
-using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Domain.Entities.Secyrity;
+﻿using TechOnIt.Domain.Entities.Identity;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Product;
+using TechOnIt.Domain.Entities.Product.SensorAggregate;
+using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Entities.Secyrity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
-namespace iot.Infrastructure.Persistence.Context;
+namespace TechOnIt.Infrastructure.Persistence.Context;
 
 public class IdentityContext : DbContext
 {

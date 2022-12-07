@@ -1,9 +1,9 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Microsoft.Extensions.Logging;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Users.Management.BanUser;
+namespace TechOnIt.Application.Commands.Users.Management.BanUser;
 
 public class BanUserCommand : IRequest<Result>, ICommittableRequest
 {

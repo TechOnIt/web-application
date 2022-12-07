@@ -1,4 +1,4 @@
-﻿using iot.Application.Common.Security.JwtBearer;
+﻿using TechOnIt.Application.Common.Security.JwtBearer;
 using System.Security.Claims;
 
 namespace Infrastructure.UnitTests.Common.JwtBearerService;

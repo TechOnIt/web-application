@@ -1,9 +1,9 @@
-﻿using iot.Application.Common.DTOs.Settings;
-using iot.Application.Services.AssemblyServices;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
+using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Application.Services.AssemblyServices;
 
-namespace iot.Application.Common.Extentions;
+namespace TechOnIt.Application.Common.Extentions;
 
 public static class NotificationExtentions
 {

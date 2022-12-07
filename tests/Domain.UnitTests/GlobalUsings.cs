@@ -1,5 +1,5 @@
-﻿global using iot.Domain.Entities;
-global using iot.Domain.Entities.Identity;
-global using iot.Domain.ValueObjects;
+﻿global using TechOnIt.Domain.Entities;
+global using TechOnIt.Domain.Entities.Identity;
+global using TechOnIt.Domain.ValueObjects;
 global using FluentAssertions;
 global using Xunit;

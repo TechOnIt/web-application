@@ -1,7 +1,7 @@
-﻿using iot.Infrastructure.Common.Notifications.Results;
-using System.Text.Json;
+﻿using System.Text.Json;
+using TechOnIt.Infrastructure.Common.Notifications.Results;
 
-namespace iot.Infrastructure.Common.Notifications.KaveNegarSms;
+namespace TechOnIt.Infrastructure.Common.Notifications.KaveNegarSms;
 
 public class KaveNegarSmsService : IKaveNegarSmsService
 {
@@ -15,11 +15,11 @@ public class KaveNegarSmsService : IKaveNegarSmsService
             var httpResponse = await httpClient.GetAsync($"{baseUrl}/send.json?receptor={to}&sender=10001110100010&message={message}");
             var contents = await httpResponse.Content.ReadAsStringAsync();
 
-             var result = JsonSerializer.Deserialize<KavenegarResult>(contents);
+            var result = JsonSerializer.Deserialize<KavenegarResult>(contents);
             if (result is null)
-                return (SendStatus.BadRequest, String.Empty);
+                return (SendStatus.BadRequest, string.Empty);
             if (result.@return is null)
-                return (SendStatus.BadRequest, String.Empty);
+                return (SendStatus.BadRequest, string.Empty);
 
             return GetStatusAndMessageResult(result.@return);
         }
@@ -28,7 +28,7 @@ public class KaveNegarSmsService : IKaveNegarSmsService
             return (SendStatus.Fail, exp.Message);
         }
     }
-    
+
     public async Task<(SendStatus Status, string Message)> SendAuthSmsAsync(string to, string apiKey, string template, string code)
     {
         try
@@ -39,9 +39,9 @@ public class KaveNegarSmsService : IKaveNegarSmsService
 
             var result = JsonSerializer.Deserialize<KavenegarResult>(contents);
             if (result is null)
-                return (SendStatus.BadRequest, String.Empty);
+                return (SendStatus.BadRequest, string.Empty);
             if (result.@return is null)
-                return (SendStatus.BadRequest, String.Empty);
+                return (SendStatus.BadRequest, string.Empty);
 
             return GetStatusAndMessageResult(result.@return);
         }

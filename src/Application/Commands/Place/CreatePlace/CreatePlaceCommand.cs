@@ -1,10 +1,10 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Application.Events.ProductNotifications;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Place.CreatePlace;
+namespace TechOnIt.Application.Commands.Place.CreatePlace;
 
-public class CreatePlaceCommand : IRequest<Result<Guid>>,ICommittableRequest
+public class CreatePlaceCommand : IRequest<Result<Guid>>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }
@@ -35,7 +35,7 @@ public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, Res
             var newPlace = new Domain.Entities.Product.StructureAggregate
                 .Place(request.Id, request.Name, request.Description, DateTime.Now, DateTime.Now, request.StuctureId);
 
-            await _unitOfWorks.StructureRepository.CreatePlaceAsync(newPlace,request.StuctureId,cancellationToken);
+            await _unitOfWorks.StructureRepository.CreatePlaceAsync(newPlace, request.StuctureId, cancellationToken);
 
             await _mediator.Publish(new PlaceNotifications());
             return Result.Ok(request.Id);

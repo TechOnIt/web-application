@@ -1,6 +1,7 @@
-﻿using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
-namespace iot.Application.Commands.Users.Authentication.SignInOtpCommands;
+namespace TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
 
 public class SendOtpSmsCommand : IRequest<Result<string>>
 {

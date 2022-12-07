@@ -1,5 +1,4 @@
-﻿using iot.Domain.Common;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -7,8 +6,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
+using TechOnIt.Domain.Common;
 
-namespace iot.Domain.ValueObjects;
+namespace TechOnIt.Domain.ValueObjects;
 
 public class PasswordHash : ValueObject
 {
@@ -93,7 +93,7 @@ public class PasswordHash : ValueObject
                 iterationCount: 1000,
                 numBytesRequested: 256 / 8);
 
-        return String.Concat(
+        return string.Concat(
             Convert.ToBase64String(saltBytes),
             " ",
             Convert.ToBase64String(hashPasswordBytes));
@@ -101,7 +101,7 @@ public class PasswordHash : ValueObject
 
     public bool VerifyPasswordHash(string password)
     {
-        var splitHash = this.Value.Split(" ");
+        var splitHash = Value.Split(" ");
 
         var saltHash = Convert.FromBase64String(splitHash[0]);
         var passwordHashed = Convert.FromBase64String(splitHash[1]);

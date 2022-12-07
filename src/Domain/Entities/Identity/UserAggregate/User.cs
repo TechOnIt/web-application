@@ -1,10 +1,11 @@
-﻿using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Domain.ValueObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TechOnIt.Domain.Entities.Identity;
+using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.ValueObjects;
 
-namespace iot.Domain.Entities.Identity.UserAggregate;
+namespace TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 public class User
 {
@@ -113,11 +114,11 @@ public class User
 
     #region Login History Aggregate
     public IList<LoginHistory> GetLoginHistories()
-        => this.LoginHistories.ToList();
+        => LoginHistories.ToList();
     public void AddLoginHistory(LoginHistory loginHistory)
-        => this.LoginHistories.Add(loginHistory);
+        => LoginHistories.Add(loginHistory);
     public void DeleteLoginHistory(LoginHistory loginHistory)
-        => this.LoginHistories.Remove(loginHistory);
+        => LoginHistories.Remove(loginHistory);
     #endregion
     #endregion
 

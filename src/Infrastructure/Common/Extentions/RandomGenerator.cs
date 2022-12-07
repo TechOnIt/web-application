@@ -1,4 +1,4 @@
-﻿namespace iot.Infrastructure.Common.Extentions;
+﻿namespace TechOnIt.Infrastructure.Common.Extentions;
 
 public static class RandomGenerator
 {
@@ -15,7 +15,7 @@ public static class RandomGenerator
         Random random = new Random();
 
         string chars = "369";
-        if (withLowerCase || (!withLowerCase && !withNumber && !withUpperCase))
+        if (withLowerCase || !withLowerCase && !withNumber && !withUpperCase)
             chars += "qwertyuiopasdfghjklzxcvbnm";
         if (withNumber)
             chars += "0123345667899";

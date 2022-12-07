@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.DTOs.Settings;
+﻿namespace TechOnIt.Application.Common.DTOs.Settings;
 
 public class AppSettingDto
 {

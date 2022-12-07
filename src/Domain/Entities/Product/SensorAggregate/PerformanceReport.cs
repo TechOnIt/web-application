@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iot.Domain.Entities.Product.SensorAggregate;
+namespace TechOnIt.Domain.Entities.Product.SensorAggregate;
 
 public class PerformanceReport
 {
@@ -22,10 +22,10 @@ public class PerformanceReport
     public int Value { get; set; }
 
     private DateTime? _RecordDateTime;
-    public DateTime RecordDateTime 
+    public DateTime RecordDateTime
     {
-        get { return _RecordDateTime??DateTime.Now; }
-        set { _RecordDateTime = value; } 
+        get { return _RecordDateTime ?? DateTime.Now; }
+        set { _RecordDateTime = value; }
     }
 
     #region relations

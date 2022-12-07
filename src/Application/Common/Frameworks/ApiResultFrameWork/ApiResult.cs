@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using TechOnIt.Application.Common.Extentions;
 
-namespace iot.Application.Common.Frameworks.ApiResultFrameWork;
+namespace TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 
 public class ApiResult
 {

@@ -1,8 +1,9 @@
-﻿using iot.Application.Common.Models.ViewModels.Users.Authentication;
-using iot.Application.Events.IdentityNotifications.Authentication;
-using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using TechOnIt.Application.Events.IdentityNotifications.Authentication;
+using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
+using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
-namespace iot.Application.Commands.Users.Authentication.SignUpCommands;
+namespace TechOnIt.Application.Commands.Users.Authentication.SignUpCommands;
 
 public sealed class SignupUserCommand : IRequest<Result<AccessToken>>
 {
@@ -25,11 +26,11 @@ internal sealed class SignupUserCommandHandler : IRequestHandler<SignupUserComma
     {
         try
         {
-            var signupResult = await _identityService.SignUpWithOtpAsync(request.PhoneNumber, request.OtpCode,cancellationToken);
+            var signupResult = await _identityService.SignUpWithOtpAsync(request.PhoneNumber, request.OtpCode, cancellationToken);
             if (signupResult.Token.Token is null)
                 return Result.Fail(signupResult.Message);
 
-            await _mediator.Publish(new SignUpUserNotifications(request.PhoneNumber,string.Empty));
+            await _mediator.Publish(new SignUpUserNotifications(request.PhoneNumber, string.Empty));
             return Result.Ok(signupResult.Token);
         }
         catch (Exception exp)

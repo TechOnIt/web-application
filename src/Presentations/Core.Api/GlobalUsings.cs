@@ -1,1 +1,1 @@
-﻿global using iot.Application;
+﻿global using TechOnIt.Application;

@@ -1,11 +1,11 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Application.Events.ProductNotifications;
-using iot.Domain.Enums;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Enums;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Sensor.CreatSensor;
+namespace TechOnIt.Application.Commands.Sensor.CreatSensor;
 
-public class CreateSensorCommand : IRequest<Result<Guid>>,ICommittableRequest
+public class CreateSensorCommand : IRequest<Result<Guid>>, ICommittableRequest
 {
     public Guid? Id { get; set; }
     public SensorType? SensorType { get; private set; }
@@ -33,7 +33,7 @@ public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, R
                 request.Id = Guid.NewGuid();
 
             await _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>()
-                .AddAsync(new Domain.Entities.Product.SensorAggregate.Sensor((Guid)request.Id,request.SensorType,request.PlaceId));
+                .AddAsync(new Domain.Entities.Product.SensorAggregate.Sensor((Guid)request.Id, request.SensorType, request.PlaceId));
 
             await _mediator.Publish(new SensorNotifications());
 

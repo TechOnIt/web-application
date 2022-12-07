@@ -1,6 +1,6 @@
-﻿using iot.Domain.Common;
+﻿using TechOnIt.Domain.Common;
 
-namespace iot.Infrastructure.Common.Encryptions.SecurityTypes;
+namespace TechOnIt.Infrastructure.Common.Encryptions.SecurityTypes;
 
 public class SensitiveEntities : Enumeration
 {

@@ -1,6 +1,6 @@
-﻿using iot.Domain.Common;
+﻿using TechOnIt.Domain.Common;
 
-namespace iot.Domain.Enums;
+namespace TechOnIt.Domain.Enums;
 
 public class StuctureType : Enumeration
 {

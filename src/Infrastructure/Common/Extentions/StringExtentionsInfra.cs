@@ -1,4 +1,4 @@
-﻿namespace iot.Infrastructure.Common.Extentions;
+﻿namespace TechOnIt.Infrastructure.Common.Extentions;
 
 public static class StringExtentionsInfra
 {

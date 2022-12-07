@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.Interfaces;
+﻿namespace TechOnIt.Application.Common.Interfaces;
 
 public interface ICommittableRequest
 {

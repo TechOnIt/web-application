@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.Frameworks.ApiResultFrameWork.Filters;
+﻿using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 
-namespace iot.Desk.Api.Controllers.v1;
+namespace TechOnIt.Desk.Api.Controllers.v1;
 
 [ApiController]
 [Route("v1/[controller]/[action]")]
@@ -55,10 +55,10 @@ public class PlaceController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] string placeId, string structureId)
     {
         var result = await _mediator
-            .Send( new DeletePlaceCommand() 
-            { 
-                Id=Guid.Parse(placeId),
-                StructureId=Guid.Parse(structureId)
+            .Send(new DeletePlaceCommand()
+            {
+                Id = Guid.Parse(placeId),
+                StructureId = Guid.Parse(structureId)
             });
 
         return Ok(result);

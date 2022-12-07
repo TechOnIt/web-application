@@ -1,10 +1,9 @@
-﻿using iot.Application.Common.Models.ViewModels.Structures;
-using iot.Application.Reports.StructuresAggregate;
-using iot.Domain.Entities.Product.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
+using TechOnIt.Application.Common.Models.ViewModels.Structures;
+using TechOnIt.Application.Reports.StructuresAggregate;
 
-
-namespace iot.Application.Queries.Structures.GetAllByFilter;
+namespace TechOnIt.Application.Queries.Structures.GetAllByFilter;
 
 public class GetAllByFilterStructureCommand : IRequest<Result<IList<StructureViewModel>>>
 {

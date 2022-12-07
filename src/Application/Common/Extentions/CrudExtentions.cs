@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.Enums.IdentityService;
+﻿using TechOnIt.Application.Common.Enums.IdentityService;
 
-namespace iot.Application.Common.Extentions;
+namespace TechOnIt.Application.Common.Extentions;
 
 public static class CrudExtentions
 {

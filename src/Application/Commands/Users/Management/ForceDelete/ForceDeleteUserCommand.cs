@@ -1,8 +1,8 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Microsoft.Extensions.Logging;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Users.Management.ForceDelete;
+namespace TechOnIt.Application.Commands.Users.Management.ForceDelete;
 
 public class ForceDeleteUserCommand : IRequest<Result>, ICommittableRequest
 {

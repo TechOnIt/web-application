@@ -1,8 +1,8 @@
-﻿using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Domain.Enums;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Enums;
 using Shouldly;
 
-namespace iot.Domain.UnitTests.Entities;
+namespace TechOnIt.Domain.UnitTests.Entities;
 
 public class StructureTests
 {

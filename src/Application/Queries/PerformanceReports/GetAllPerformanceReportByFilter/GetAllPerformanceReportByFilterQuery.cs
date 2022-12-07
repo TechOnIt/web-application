@@ -1,10 +1,10 @@
-﻿using iot.Application.Common.Models.ViewModels.Reports;
-using iot.Domain.Entities.Product.SensorAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 using System.Linq.Expressions;
+using TechOnIt.Application.Common.Models.ViewModels.Reports;
 
-namespace iot.Application.Queries.PerformanceReports.GetAllPerformanceReportByFilter;
+namespace TechOnIt.Application.Queries.PerformanceReports.GetAllPerformanceReportByFilter;
 
 public class GetAllPerformanceReportByFilterQuery : IRequest<Result<IList<PerformanceReportViewModel>>>
 {

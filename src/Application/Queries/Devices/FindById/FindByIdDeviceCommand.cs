@@ -1,9 +1,9 @@
-﻿using iot.Application.Common.Models.ViewModels.Devices;
-using iot.Domain.Entities.Product;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Product;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
+using TechOnIt.Application.Common.Models.ViewModels.Devices;
 
-namespace iot.Application.Queries.Devices.FindById;
+namespace TechOnIt.Application.Queries.Devices.FindById;
 
 public class FindByIdDeviceCommand : IRequest<Result<DeviceViewModel>>
 {

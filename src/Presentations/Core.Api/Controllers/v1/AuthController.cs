@@ -1,9 +1,9 @@
-﻿using iot.Application.Commands.Structures.Authentication.SignInCommands;
+﻿using TechOnIt.Application.Commands.Structures.Authentication.SignInCommands;
 using MediatR;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 
-namespace iot.Core.Api.Controllers.v1;
+namespace TechOnIt.Core.Api.Controllers.v1;
 
 [Route("[controller]/[action]")]
 public class AuthController : BaseController

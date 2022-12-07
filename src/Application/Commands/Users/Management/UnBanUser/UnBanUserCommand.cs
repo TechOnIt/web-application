@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.Interfaces;
+﻿using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Users.Management.UnBanUser;
+namespace TechOnIt.Application.Commands.Users.Management.UnBanUser;
 
 public class UnBanUserCommand : IRequest<Result>, ICommittableRequest
 {

@@ -1,16 +1,18 @@
-﻿using iot.Application.Common.Models.ViewModels.Users;
-using iot.Application.Common.Models.ViewModels.Users.Authentication;
-using iot.Application.Common.Security.JwtBearer;
-using iot.Application.Services.Authenticateion.AuthenticateionContracts;
-using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Infrastructure.Common.Extentions;
-using iot.Infrastructure.Common.Notifications.KaveNegarSms;
-using iot.Infrastructure.Common.Notifications.Results;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Application.Common.Security.JwtBearer;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Infrastructure.Common.Extentions;
+using TechOnIt.Infrastructure.Common.Notifications.KaveNegarSms;
+using TechOnIt.Infrastructure.Common.Notifications.Results;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 using Microsoft.Extensions.Caching.Distributed;
+using TechOnIt.Application.Common.Constants;
+using TechOnIt.Application.Common.Extentions;
+using TechOnIt.Application.Common.Models.ViewModels.Users;
+using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
+using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
-namespace iot.Application.Services.Authenticateion;
+namespace TechOnIt.Application.Services.Authenticateion;
 
 public class IdentityService : IIdentityService
 {
@@ -152,9 +154,9 @@ public class IdentityService : IIdentityService
 
         return (new AccessToken(), status.message);
     }
-#endregion
+    #endregion
 
-#region Sign-Up
+    #region Sign-Up
     public async Task<(string? Code, string Message)> SignUpAndSendOtpCode(UserViewModel user,
         CancellationToken cancellationToken = default)
     {
@@ -206,5 +208,5 @@ public class IdentityService : IIdentityService
 
         return (token, "welcome !");
     }
-#endregion
+    #endregion
 }

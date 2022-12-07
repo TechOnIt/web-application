@@ -1,9 +1,9 @@
-﻿using iot.Application.Common.Models.ViewModels.Reports;
-using iot.Domain.Entities.Product.SensorAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
+using TechOnIt.Application.Common.Models.ViewModels.Reports;
 
-namespace iot.Application.Queries.PerformanceReports.FindPerformanceReportByDateTime;
+namespace TechOnIt.Application.Queries.PerformanceReports.FindPerformanceReportByDateTime;
 
 public class FindPerformanceReportByDateTimeQuery : IRequest<Result<IList<PerformanceReportViewModel>>>
 {
@@ -37,7 +37,7 @@ public class FindPerformanceReportByDateTimeQueryHandler : IRequestHandler<FindP
             if (getReports is null || getReports.Count() == 0)
                 return Result.Fail($"there was no repoprt between {request.MinDate.ToShortDateString()} and {request.MaxDate}");
 
-            var model= getReports.Adapt<IList<PerformanceReportViewModel>>();
+            var model = getReports.Adapt<IList<PerformanceReportViewModel>>();
             return Result.Ok(model);
         }
         catch (Exception exp)

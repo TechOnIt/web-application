@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace iot.Domain.Common
+namespace TechOnIt.Domain.Common
 {
     public abstract class ValueObject
     {
@@ -18,7 +18,7 @@ namespace iot.Domain.Common
 
         protected static bool NotEqualOperator(ValueObject left, ValueObject right)
         {
-            return !(EqualOperator(left, right));
+            return !EqualOperator(left, right);
         }
 
         protected abstract IEnumerable<object> GetEqualityComponents();

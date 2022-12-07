@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 
 // https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-6.0
-namespace iot.Application.Common.Frameworks.ApiResultFrameWork.Filters
+namespace TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters
 {
     public class ApiResultFilterAttribute : ActionFilterAttribute
     {
@@ -50,7 +50,7 @@ namespace iot.Application.Common.Frameworks.ApiResultFrameWork.Filters
             }
             else if (context.Result is NotFoundObjectResult notFoundObjectResult)
             {
-                var apiResult = new ApiResult<object>(ApiResultStatusCode.NotFound, notFoundObjectResult.Value,null);
+                var apiResult = new ApiResult<object>(ApiResultStatusCode.NotFound, notFoundObjectResult.Value, null);
                 context.Result = new JsonResult(apiResult) { StatusCode = notFoundObjectResult.StatusCode };
             }
             else if (context.Result is ObjectResult objectResult && objectResult.StatusCode == null

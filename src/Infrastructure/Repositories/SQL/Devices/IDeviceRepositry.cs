@@ -1,5 +1,6 @@
-﻿using iot.Domain.Entities.Product;
-namespace iot.Infrastructure.Repositories.SQL.Devices;
+﻿using TechOnIt.Domain.Entities.Product;
+
+namespace TechOnIt.Infrastructure.Repositories.SQL.Devices;
 
 public interface IDeviceRepositry
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iot.Domain.UnitTests.ValueObjects
+namespace TechOnIt.Domain.UnitTests.ValueObjects
 {
     public class FullNameTests
     {
@@ -13,7 +13,7 @@ namespace iot.Domain.UnitTests.ValueObjects
         private FullName FullNameObj = null;
         public FullNameTests()
         {
-            FullNameObj=new FullName("TestName", "TestSurname");
+            FullNameObj = new FullName("TestName", "TestSurname");
         }
         #endregion
 
@@ -100,7 +100,7 @@ namespace iot.Domain.UnitTests.ValueObjects
         {
             // Arrange
             bool result = default;
-            var newFullNameObject = new FullName("TestName","TestSurname");
+            var newFullNameObject = new FullName("TestName", "TestSurname");
 
             // Act
             if (FullNameObj.GetHashCode() == newFullNameObject.GetHashCode()) result = true;
@@ -114,7 +114,7 @@ namespace iot.Domain.UnitTests.ValueObjects
         {
             // Arrange
             bool result = default;
-            var newFullNameObject = new FullName("TestName","");
+            var newFullNameObject = new FullName("TestName", "");
 
             // Act
             if (FullNameObj.GetHashCode() == newFullNameObject.GetHashCode()) result = true;
@@ -124,8 +124,8 @@ namespace iot.Domain.UnitTests.ValueObjects
         }
 
         [Theory]
-        [InlineData("asfasfdsgsdgfhdfhdghflgshiuseyiusbdbvksjdgksdhkgsdgbdskjgsdhgkdshg","surname")]
-        public void Should_Throw_ArgumentOutOfRangeException_When_Name_Has_More_Than_50_Chars(string name,string surname)
+        [InlineData("asfasfdsgsdgfhdfhdghflgshiuseyiusbdbvksjdgksdhkgsdgbdskjgsdhgkdshg", "surname")]
+        public void Should_Throw_ArgumentOutOfRangeException_When_Name_Has_More_Than_50_Chars(string name, string surname)
         {
             var exception = Record.Exception(() => new FullName(name, surname));
 

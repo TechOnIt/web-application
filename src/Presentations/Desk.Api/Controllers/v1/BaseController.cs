@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace iot.Desk.Api.Controllers.v1;
+namespace TechOnIt.Desk.Api.Controllers.v1;
 
 [ApiController]
 [Route("v1/[controller]/[action]")]

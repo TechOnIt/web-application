@@ -1,4 +1,4 @@
-﻿namespace iot.Infrastructure.Common.Notifications.Contracts;
+﻿namespace TechOnIt.Infrastructure.Common.Notifications.Contracts;
 
 public interface IBaseNotifications
 {

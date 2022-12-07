@@ -1,9 +1,10 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Application.Common.Models.ViewModels.Devices;
-using iot.Application.Events.ProductNotifications;
-using iot.Domain.Enums;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Devices;
+using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Enums;
+using TechOnIt.Application.Common.Interfaces;
+using TechOnIt.Application.Services.ProductServices.ProductContracts;
 
-namespace iot.Application.Commands.Device.UpdateDevice;
+namespace TechOnIt.Application.Commands.Device.UpdateDevice;
 
 public class UpdateDeviceCommand : IRequest<Result<Guid>>, ICommittableRequest
 {

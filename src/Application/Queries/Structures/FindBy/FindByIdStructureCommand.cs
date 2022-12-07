@@ -1,9 +1,9 @@
-﻿using iot.Application.Common.Models.ViewModels.Structures;
-using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
+using TechOnIt.Application.Common.Models.ViewModels.Structures;
 
-namespace iot.Application.Queries.Structures.FindBy;
+namespace TechOnIt.Application.Queries.Structures.FindBy;
 
 public class FindByIdStructureCommand : IRequest<Result<StructureViewModel>>
 {

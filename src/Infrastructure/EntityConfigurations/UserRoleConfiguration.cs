@@ -1,8 +1,8 @@
-﻿using iot.Domain.Entities.Identity;
+﻿using TechOnIt.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace iot.Infrastructure.EntityConfigurations
+namespace TechOnIt.Infrastructure.EntityConfigurations
 {
     public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
     {
@@ -16,7 +16,7 @@ namespace iot.Infrastructure.EntityConfigurations
 
             builder.HasOne(a => a.Role)
                 .WithMany(a => a.UserRoles)
-                .HasForeignKey(a=>a.RoleId);
+                .HasForeignKey(a => a.RoleId);
         }
     }
 }

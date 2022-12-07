@@ -1,9 +1,9 @@
-﻿using iot.Application.Common.Models.ViewModels.Reports;
-using iot.Domain.Entities.Product.SensorAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
+using TechOnIt.Application.Common.Models.ViewModels.Reports;
 
-namespace iot.Application.Queries.PerformanceReports.FindPerformanceReportById;
+namespace TechOnIt.Application.Queries.PerformanceReports.FindPerformanceReportById;
 
 public class FindPerformanceReportByIdCommand : IRequest<Result<PerformanceReportViewModel>>
 {

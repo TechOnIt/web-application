@@ -1,9 +1,9 @@
-﻿using iot.Domain.Entities.Product.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
-namespace iot.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
+namespace TechOnIt.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 
 public class PlaceConfiguration : IEntityTypeConfiguration<Place>
 {

@@ -1,6 +1,6 @@
-﻿using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
+﻿using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
 
-namespace iot.Application.Events.ProductNotifications
+namespace TechOnIt.Application.Events.ProductNotifications
 {
     public class SensorNotifications : INotification
     {

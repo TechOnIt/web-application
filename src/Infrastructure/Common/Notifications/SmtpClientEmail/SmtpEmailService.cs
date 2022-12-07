@@ -1,7 +1,7 @@
-﻿using iot.Infrastructure.Common.Notifications.Results;
-using System.Net.Mail;
+﻿using System.Net.Mail;
+using TechOnIt.Infrastructure.Common.Notifications.Results;
 
-namespace iot.Infrastructure.Common.Notifications.SmtpClientEmail;
+namespace TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
 
 public class SmtpEmailService : ISmtpEmailService
 {

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using iot.Infrastructure.Persistence.Context;
+using TechOnIt.Infrastructure.Persistence.Context;
 
 #nullable disable
 
-namespace iot.Infrastructure.Migrations
+namespace TechOnIt.Infrastructure.Migrations
 {
     [DbContext(typeof(IdentityContext))]
     [Migration("20221006120813_Add_data_Protection")]
@@ -24,7 +24,7 @@ namespace iot.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("iot.Domain.Entities.Identity.LoginHistory", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.LoginHistory", b =>
                 {
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace iot.Infrastructure.Migrations
                     b.ToTable("LoginHistories");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Identity.Role", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -59,7 +59,7 @@ namespace iot.Infrastructure.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Identity.User", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -102,7 +102,7 @@ namespace iot.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Identity.UserRole", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -117,7 +117,7 @@ namespace iot.Infrastructure.Migrations
                     b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.Device", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.Device", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,7 +142,7 @@ namespace iot.Infrastructure.Migrations
                     b.ToTable("Devices");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.SensorAggregate.PerformanceReport", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.SensorAggregate.PerformanceReport", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -164,7 +164,7 @@ namespace iot.Infrastructure.Migrations
                     b.ToTable("PerformanceReports");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.SensorAggregate.Sensor", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.SensorAggregate.Sensor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -181,7 +181,7 @@ namespace iot.Infrastructure.Migrations
                     b.ToTable("Sensors");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.StructureAggregate.Place", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.StructureAggregate.Place", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -210,7 +210,7 @@ namespace iot.Infrastructure.Migrations
                     b.ToTable("Places");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.StructureAggregate.Structure", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.StructureAggregate.Structure", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -244,7 +244,7 @@ namespace iot.Infrastructure.Migrations
                     b.ToTable("Structures");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Secyrity.AesKey", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Secyrity.AesKey", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -287,9 +287,9 @@ namespace iot.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Identity.LoginHistory", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.LoginHistory", b =>
                 {
-                    b.HasOne("iot.Domain.Entities.Identity.User", "User")
+                    b.HasOne("TechOnIt.Domain.Entities.Identity.User", "User")
                         .WithMany("LoginHistories")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -325,7 +325,7 @@ namespace iot.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Identity.User", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.User", b =>
                 {
                     b.OwnsOne("iot.Domain.ValueObjects.Concurrency", "ConcurrencyStamp", b1 =>
                         {
@@ -385,15 +385,15 @@ namespace iot.Infrastructure.Migrations
                     b.Navigation("Password");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Identity.UserRole", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserRole", b =>
                 {
-                    b.HasOne("iot.Domain.Entities.Identity.Role", "Role")
+                    b.HasOne("TechOnIt.Domain.Entities.Identity.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("iot.Domain.Entities.Identity.User", "User")
+                    b.HasOne("TechOnIt.Domain.Entities.Identity.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -404,9 +404,9 @@ namespace iot.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.Device", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.Device", b =>
                 {
-                    b.HasOne("iot.Domain.Entities.Product.StructureAggregate.Place", "Place")
+                    b.HasOne("TechOnIt.Domain.Entities.Product.StructureAggregate.Place", "Place")
                         .WithMany("Devices")
                         .HasForeignKey("PlaceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -415,9 +415,9 @@ namespace iot.Infrastructure.Migrations
                     b.Navigation("Place");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.SensorAggregate.PerformanceReport", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.SensorAggregate.PerformanceReport", b =>
                 {
-                    b.HasOne("iot.Domain.Entities.Product.SensorAggregate.Sensor", "Sensor")
+                    b.HasOne("TechOnIt.Domain.Entities.Product.SensorAggregate.Sensor", "Sensor")
                         .WithMany("Reports")
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -426,9 +426,9 @@ namespace iot.Infrastructure.Migrations
                     b.Navigation("Sensor");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.StructureAggregate.Place", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.StructureAggregate.Place", b =>
                 {
-                    b.HasOne("iot.Domain.Entities.Product.StructureAggregate.Structure", "Structure")
+                    b.HasOne("TechOnIt.Domain.Entities.Product.StructureAggregate.Structure", "Structure")
                         .WithMany("Places")
                         .HasForeignKey("StuctureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -437,9 +437,9 @@ namespace iot.Infrastructure.Migrations
                     b.Navigation("Structure");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.StructureAggregate.Structure", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.StructureAggregate.Structure", b =>
                 {
-                    b.HasOne("iot.Domain.Entities.Identity.User", null)
+                    b.HasOne("TechOnIt.Domain.Entities.Identity.User", null)
                         .WithMany("Structures")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -464,12 +464,12 @@ namespace iot.Infrastructure.Migrations
                     b.Navigation("ApiKey");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Identity.Role", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.Role", b =>
                 {
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Identity.User", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.User", b =>
                 {
                     b.Navigation("LoginHistories");
 
@@ -478,17 +478,17 @@ namespace iot.Infrastructure.Migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.SensorAggregate.Sensor", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.SensorAggregate.Sensor", b =>
                 {
                     b.Navigation("Reports");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.StructureAggregate.Place", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.StructureAggregate.Place", b =>
                 {
                     b.Navigation("Devices");
                 });
 
-            modelBuilder.Entity("iot.Domain.Entities.Product.StructureAggregate.Structure", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Product.StructureAggregate.Structure", b =>
                 {
                     b.Navigation("Places");
                 });

@@ -1,8 +1,10 @@
-﻿using iot.Application.Common.Models.ViewModels.Structures;
-using iot.Domain.Entities.Product.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
+using TechOnIt.Application.Common.Exceptions;
+using TechOnIt.Application.Common.Models.ViewModels.Structures;
+using TechOnIt.Application.Reports;
 
-namespace iot.Application.Reports.StructuresAggregate;
+namespace TechOnIt.Application.Reports.StructuresAggregate;
 
 public interface IStructureAggregateReports : IReport
 {

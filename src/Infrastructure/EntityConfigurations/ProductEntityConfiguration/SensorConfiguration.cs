@@ -1,10 +1,10 @@
-﻿using iot.Domain.Common;
-using iot.Domain.Entities.Product.SensorAggregate;
-using iot.Domain.Enums;
+﻿using TechOnIt.Domain.Common;
+using TechOnIt.Domain.Entities.Product.SensorAggregate;
+using TechOnIt.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace iot.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
+namespace TechOnIt.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 
 public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
 {
@@ -14,7 +14,7 @@ public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
         builder.Property(a => a.SensorType).IsRequired();
 
         builder.HasMany(a => a.Reports)
-            .WithOne(a=>a.Sensor) 
+            .WithOne(a => a.Sensor)
             .HasForeignKey(a => a.SensorId);
 
         builder

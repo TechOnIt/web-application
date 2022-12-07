@@ -1,7 +1,7 @@
-﻿using iot.Application.Events.ProductNotifications;
-using iot.Application.Services.ProductServices.ProductContracts;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Application.Services.ProductServices.ProductContracts;
 
-namespace iot.Application.Commands.Device.DeleteDevice;
+namespace TechOnIt.Application.Commands.Device.DeleteDevice;
 
 public class DeleteDeviceCommand : IRequest<Result>
 {

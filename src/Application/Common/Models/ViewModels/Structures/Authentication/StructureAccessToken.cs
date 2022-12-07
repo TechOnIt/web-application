@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.Models.ViewModels.Structures.Authentication;
+﻿namespace TechOnIt.Application.Common.Models.ViewModels.Structures.Authentication;
 
 public class StructureAccessToken
 {

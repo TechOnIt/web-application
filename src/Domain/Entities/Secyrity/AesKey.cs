@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iot.Domain.Entities.Secyrity;
+namespace TechOnIt.Domain.Entities.Secyrity;
 
 public class AesKey
 {

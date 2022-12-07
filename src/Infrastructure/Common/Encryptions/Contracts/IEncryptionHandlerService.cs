@@ -1,6 +1,6 @@
-﻿using iot.Infrastructure.Common.Encryptions.SecurityTypes;
+﻿using TechOnIt.Infrastructure.Common.Encryptions.SecurityTypes;
 
-namespace iot.Infrastructure.Common.Encryptions.Contracts;
+namespace TechOnIt.Infrastructure.Common.Encryptions.Contracts;
 
 public interface IEncryptionHandlerService
 {

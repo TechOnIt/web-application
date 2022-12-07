@@ -1,9 +1,9 @@
-﻿using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Infrastructure.Persistence.Context;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using TechOnIt.Infrastructure.Persistence.Context;
 
-namespace iot.Infrastructure.Repositories.SQL.StructureAggregateRepository;
+namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 
 public class StructureRepository : IStructureRepository
 {
@@ -38,7 +38,7 @@ public class StructureRepository : IStructureRepository
 
         await Task.CompletedTask;
     }
-    public async Task DeleteAsync(Structure structure,CancellationToken cancellationToken)
+    public async Task DeleteAsync(Structure structure, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         _context.Structures.Remove(structure);

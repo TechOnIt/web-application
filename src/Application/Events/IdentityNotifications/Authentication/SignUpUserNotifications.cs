@@ -1,8 +1,10 @@
-﻿using iot.Application.Common.DTOs.Settings;
-using iot.Application.Services.AssemblyServices;
-using iot.Infrastructure.Common.Notifications.SmtpClientEmail;
+﻿using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
+using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Application.Common.Extentions;
+using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Services.AssemblyServices;
 
-namespace iot.Application.Events.IdentityNotifications.Authentication;
+namespace TechOnIt.Application.Events.IdentityNotifications.Authentication;
 
 public class SignUpUserNotifications : INotification
 {
@@ -12,8 +14,8 @@ public class SignUpUserNotifications : INotification
     {
         Phonenumber = phonenumber;
         Email = email;
-        this.Subject = "TechOnIt.Co";
-        this.Message = defaultEmailTemp;
+        Subject = "TechOnIt.Co";
+        Message = defaultEmailTemp;
     }
 
     public SignUpUserNotifications(string phonenumber, string email, string subject, string message)
@@ -26,8 +28,8 @@ public class SignUpUserNotifications : INotification
 
     public SignUpUserNotifications()
     {
-        this.Subject = "TechOnIt.Co";
-        this.Message = defaultEmailTemp;
+        Subject = "TechOnIt.Co";
+        Message = defaultEmailTemp;
     }
 
     public string Phonenumber { get; set; }

@@ -1,8 +1,8 @@
-﻿using iot.Domain.Entities.Secyrity;
+﻿using TechOnIt.Domain.Entities.Secyrity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace iot.Infrastructure.EntityConfigurations;
+namespace TechOnIt.Infrastructure.EntityConfigurations;
 
 public class AesKeyConfiguration : IEntityTypeConfiguration<AesKey>
 {

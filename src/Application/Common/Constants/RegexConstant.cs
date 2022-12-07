@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.Constants;
+﻿namespace TechOnIt.Application.Common.Constants;
 
 public class RegexConstant
 {

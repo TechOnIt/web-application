@@ -1,4 +1,4 @@
-﻿namespace iot.Infrastructure.Initializer;
+﻿namespace TechOnIt.Infrastructure.Initializer;
 
 internal interface IDataInitializer
 {

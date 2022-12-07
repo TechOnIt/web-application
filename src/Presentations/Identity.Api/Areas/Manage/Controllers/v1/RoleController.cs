@@ -1,10 +1,11 @@
-﻿using iot.Application.Commands.Roles.Management.CreateRole;
-using iot.Application.Commands.Roles.Management.DeleteRole;
-using iot.Application.Commands.Roles.Management.UpdateRole;
-using iot.Application.Queries.Roles.GetAllRoles;
+﻿using TechOnIt.Application.Commands.Roles.Management.CreateRole;
+using TechOnIt.Application.Commands.Roles.Management.DeleteRole;
+using TechOnIt.Application.Commands.Roles.Management.UpdateRole;
+using TechOnIt.Application.Queries.Roles.GetAllRoles;
 using Microsoft.AspNetCore.DataProtection;
+using TechOnIt.Identity.Api.Controllers;
 
-namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
+namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
 
 [Area("manage")]
 public class RoleController : BaseController

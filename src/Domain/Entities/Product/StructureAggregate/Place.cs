@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace iot.Domain.Entities.Product.StructureAggregate;
+namespace TechOnIt.Domain.Entities.Product.StructureAggregate;
 
 public class Place
 {
@@ -39,7 +39,7 @@ public class Place
 
 
     private DateTime? _CreateDate;
-    public DateTime CreateDate 
+    public DateTime CreateDate
     {
         get { return _CreateDate ?? DateTime.Now; }
         private set { _CreateDate = value; }

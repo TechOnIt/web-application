@@ -1,8 +1,8 @@
-﻿using iot.Domain.Common;
-using iot.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Common;
 using System;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
-namespace iot.Domain.Entities.Identity;
+namespace TechOnIt.Domain.Entities.Identity;
 
 public class UserRole
 {

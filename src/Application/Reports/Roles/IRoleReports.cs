@@ -1,4 +1,7 @@
-﻿namespace iot.Application.Reports.Roles;
+﻿using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Reports;
+
+namespace TechOnIt.Application.Reports.Roles;
 
 public interface IRoleReports : IReport
 {

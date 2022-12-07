@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.Models.ViewModels.Devices;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Devices;
 
-namespace iot.Application.Services.ProductServices.ProductContracts;
+namespace TechOnIt.Application.Services.ProductServices.ProductContracts;
 
 public interface IDeviceService
 {

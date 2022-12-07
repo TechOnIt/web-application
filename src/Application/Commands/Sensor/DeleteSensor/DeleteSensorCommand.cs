@@ -1,10 +1,10 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Application.Events.ProductNotifications;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Sensor.DeleteSensor;
+namespace TechOnIt.Application.Commands.Sensor.DeleteSensor;
 
-public class DeleteSensorCommand : IRequest<Result<Guid>>,ICommittableRequest
+public class DeleteSensorCommand : IRequest<Result<Guid>>, ICommittableRequest
 {
     public Guid Id { get; set; }
 }

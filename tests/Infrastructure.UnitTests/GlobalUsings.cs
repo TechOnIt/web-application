@@ -1,2 +1,2 @@
 global using Xunit;
-global using iot.Infrastructure.Common.JwtBearerService;
+global using TechOnIt.Infrastructure.Common.JwtBearerService;

@@ -1,4 +1,4 @@
-﻿namespace iot.Identity.Api.Controllers;
+﻿namespace TechOnIt.Identity.Api.Controllers;
 
 [ApiController]
 [Route("v1/[area]/[controller]/[action]")]

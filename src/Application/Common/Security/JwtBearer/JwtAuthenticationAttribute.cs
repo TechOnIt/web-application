@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 
-namespace iot.Application.Common.Security.JwtBearer
+namespace TechOnIt.Application.Common.Security.JwtBearer
 {
     public class JwtAuthenticationAttribute : AuthorizeAttribute
     {

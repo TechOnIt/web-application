@@ -1,9 +1,9 @@
-﻿using iot.Application.Common.Security.JwtBearer;
-using iot.Application.Services.Authenticateion;
-using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Domain.ValueObjects;
+﻿using TechOnIt.Application.Common.Security.JwtBearer;
+using TechOnIt.Application.Services.Authenticateion;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.ValueObjects;
 
-namespace iot.Application.UnitTests.ServiceTests.IdentityTests;
+namespace TechOnIt.Application.UnitTests.ServiceTests.IdentityTests;
 
 public class AuthenticationServiceTest
 {

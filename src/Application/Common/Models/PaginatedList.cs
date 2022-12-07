@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.Models;
+﻿namespace TechOnIt.Application.Common.Models;
 
 public class PaginatedList<T>
 {

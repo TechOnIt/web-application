@@ -1,8 +1,8 @@
-﻿using iot.Domain.Entities.Product;
-using iot.Infrastructure.Persistence.Context;
+﻿using TechOnIt.Domain.Entities.Product;
 using Microsoft.EntityFrameworkCore;
+using TechOnIt.Infrastructure.Persistence.Context;
 
-namespace iot.Infrastructure.Repositories.SQL.Devices;
+namespace TechOnIt.Infrastructure.Repositories.SQL.Devices;
 
 public class DeviceRepositry : IDeviceRepositry
 {
@@ -17,7 +17,7 @@ public class DeviceRepositry : IDeviceRepositry
     #endregion
     public async Task<Device?> FindByIdAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
-        var getDevice = await _context.Devices.FirstOrDefaultAsync(a=>a.Id==deviceId,cancellationToken);
+        var getDevice = await _context.Devices.FirstOrDefaultAsync(a => a.Id == deviceId, cancellationToken);
         if (getDevice is null)
         {
             await Task.CompletedTask;
@@ -63,12 +63,12 @@ public class DeviceRepositry : IDeviceRepositry
     /// <returns></returns>
     public async Task DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken = default)
     {
-        var getDevice = await _context.Devices.FirstOrDefaultAsync(a=>a.Id==DeviceId);
+        var getDevice = await _context.Devices.FirstOrDefaultAsync(a => a.Id == DeviceId);
 
         if (getDevice is null)
             await Task.CompletedTask;
 
-        if(!cancellationToken.IsCancellationRequested)
+        if (!cancellationToken.IsCancellationRequested)
             _context.Entry<Domain.Entities.Product.Device>(getDevice).State = EntityState.Deleted;
 
         await Task.CompletedTask;

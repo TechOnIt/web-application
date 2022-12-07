@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Common.Extentions;
+﻿using TechOnIt.Application.Common.Models;
+
+namespace TechOnIt.Application.Common.Extentions;
 
 public static class MappingExtensions
 {

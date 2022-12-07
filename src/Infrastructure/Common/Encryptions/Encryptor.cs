@@ -1,8 +1,8 @@
-﻿using iot.Infrastructure.Common.Encryptions.Contracts;
-using iot.Infrastructure.Common.Extentions;
-using System.Text;
+﻿using System.Text;
+using TechOnIt.Infrastructure.Common.Encryptions.Contracts;
+using TechOnIt.Infrastructure.Common.Extentions;
 
-namespace iot.Infrastructure.Common.Encryptions;
+namespace TechOnIt.Infrastructure.Common.Encryptions;
 
 public class Encryptor : IEncryptor
 {
@@ -49,7 +49,7 @@ public class Encryptor : IEncryptor
     private byte[] GetKey()
     {
         if (string.IsNullOrWhiteSpace(keyString) && Key is not null)
-            return this.Key;
+            return Key;
         else if (!string.IsNullOrWhiteSpace(keyString) && Key is null)
             return Encoding.UTF8.GetBytes(keyString);
         else

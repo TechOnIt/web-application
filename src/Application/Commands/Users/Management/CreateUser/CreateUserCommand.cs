@@ -1,11 +1,11 @@
-﻿using iot.Application.Common.Enums.IdentityService;
-using iot.Application.Common.Exceptions;
-using iot.Application.Common.Interfaces;
-using iot.Application.Common.Models.ViewModels.Users;
-using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Users;
 using Microsoft.Extensions.Logging;
+using TechOnIt.Application.Common.Enums.IdentityService;
+using TechOnIt.Application.Common.Exceptions;
+using TechOnIt.Application.Common.Interfaces;
+using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
-namespace iot.Application.Commands.Users.Management.CreateUser;
+namespace TechOnIt.Application.Commands.Users.Management.CreateUser;
 
 public class CreateUserCommand : IRequest<Result<Guid>>, ICommittableRequest
 {

@@ -1,6 +1,7 @@
 ﻿using System.Net;
+using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 
-namespace iot.Application.Common.Exceptions;
+namespace TechOnIt.Application.Common.Exceptions;
 
 public class AppException : Exception
 {

@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.Models.ViewModels.Devices;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Devices;
 
-namespace iot.Application.UnitTests.ServiceTests.ProductTests;
+namespace TechOnIt.Application.UnitTests.ServiceTests.ProductTests;
 
 public class DeviceCreateNewDeviceServiceTest
 {
@@ -29,9 +29,9 @@ public class DeviceCreateNewDeviceServiceTest
 
     public void When_Data_IsValid_And_Device_NotExists_In_System()
     {
-        this.model = new Device(2, DeviceType.Heater, true, Guid.NewGuid());
-        this.viewModel = new DeviceViewModel(Guid.NewGuid(), Guid.NewGuid(), 2, DeviceType.Heater, true);
-        this.cancellationToken = new CancellationTokenSource().Token;
+        model = new Device(2, DeviceType.Heater, true, Guid.NewGuid());
+        viewModel = new DeviceViewModel(Guid.NewGuid(), Guid.NewGuid(), 2, DeviceType.Heater, true);
+        cancellationToken = new CancellationTokenSource().Token;
     }
 
     public async Task Then_Device_Will_Create_Successfully()
@@ -39,14 +39,14 @@ public class DeviceCreateNewDeviceServiceTest
         // arrange
         var service = Subject();
 
-        _unitOfWork.Setup(repo => repo.DeviceRepositry.CreateAsync(this.model, this.cancellationToken))
+        _unitOfWork.Setup(repo => repo.DeviceRepositry.CreateAsync(model, cancellationToken))
             .Returns(Task.CompletedTask);
 
-        _unitOfWork.Setup(repo => repo.SaveAsync(this.cancellationToken, false)).Returns(Task.CompletedTask);
+        _unitOfWork.Setup(repo => repo.SaveAsync(cancellationToken, false)).Returns(Task.CompletedTask);
 
         // act
-        var result = await service.CreateAsync(this.viewModel, this.cancellationToken);
-        var exceptionResult = Record.ExceptionAsync(() => service.CreateAsync(this.viewModel, this.cancellationToken)).Result;
+        var result = await service.CreateAsync(viewModel, cancellationToken);
+        var exceptionResult = Record.ExceptionAsync(() => service.CreateAsync(viewModel, cancellationToken)).Result;
 
         // assert
         exceptionResult.ShouldBe(null);
@@ -89,8 +89,8 @@ public class DeviceDeleteExistingDeviceByIDTest
 
     public void When_DeviceId_Is_Valid_Id()
     {
-        this.DeviceId = Guid.NewGuid();
-        this.cancellationToken = new CancellationTokenSource().Token;
+        DeviceId = Guid.NewGuid();
+        cancellationToken = new CancellationTokenSource().Token;
     }
 
     public async Task Then_Device_Will_Remove_Compeletlly_With_Status_200Ok()
@@ -99,16 +99,16 @@ public class DeviceDeleteExistingDeviceByIDTest
         var service = Subject();
 
         _unitOfWork.Setup(repo => repo.DeviceRepositry
-        .DeleteByIdAsync(this.DeviceId, this.cancellationToken))
+        .DeleteByIdAsync(DeviceId, cancellationToken))
             .Returns(Task.CompletedTask);
 
         _unitOfWork.Setup(repo => repo
-        .SaveAsync(this.cancellationToken, false))
+        .SaveAsync(cancellationToken, false))
             .Returns(Task.CompletedTask);
 
         // arrange
-        var result = await service.DeleteByIdAsync(this.DeviceId, this.cancellationToken);
-        var exceptionResult = Record.ExceptionAsync(() => service.DeleteByIdAsync(this.DeviceId, this.cancellationToken)).Result;
+        var result = await service.DeleteByIdAsync(DeviceId, cancellationToken);
+        var exceptionResult = Record.ExceptionAsync(() => service.DeleteByIdAsync(DeviceId, cancellationToken)).Result;
 
         // assert
         result.ShouldBe(true);
@@ -151,19 +151,19 @@ public class DeviceUpdateExistingDeviceTest
 
     public void When_Device_Is_Exists_And_Data_Is_Valid()
     {
-        this.deviceId = Guid.NewGuid();
-        this.placeId = Guid.NewGuid();
+        deviceId = Guid.NewGuid();
+        placeId = Guid.NewGuid();
 
-        this.cancellationToken = new CancellationTokenSource().Token;
-        this.viewModel = new DeviceViewModel(deviceId, placeId, 5, DeviceType.Heater, true);
+        cancellationToken = new CancellationTokenSource().Token;
+        viewModel = new DeviceViewModel(deviceId, placeId, 5, DeviceType.Heater, true);
 
         // device in system
-        this.model = new Device();
-        this.model.SetDeviceType(DeviceType.Cooler);
-        this.model.SetDeviceId(deviceId);
-        this.model.IsHigh = true;
-        this.model.Pin = 2;
-        this.model.PlaceId = placeId;
+        model = new Device();
+        model.SetDeviceType(DeviceType.Cooler);
+        model.SetDeviceId(deviceId);
+        model.IsHigh = true;
+        model.Pin = 2;
+        model.PlaceId = placeId;
     }
 
     public async void Then_Device_Will_Update_SuccessFully()
@@ -171,19 +171,19 @@ public class DeviceUpdateExistingDeviceTest
         // arrange
         var service = Subject();
 
-        _unitOfWork.Setup(repo => repo.DeviceRepositry.FindByIdAsync(this.deviceId, this.cancellationToken))
-            .ReturnsAsync(new Device(this.deviceId, 2, DeviceType.Cooler, true, this.placeId));
+        _unitOfWork.Setup(repo => repo.DeviceRepositry.FindByIdAsync(deviceId, cancellationToken))
+            .ReturnsAsync(new Device(deviceId, 2, DeviceType.Cooler, true, placeId));
 
-        _unitOfWork.Setup(repo => repo.DeviceRepositry.UpdateAsync(this.model, this.cancellationToken)).Returns(Task.CompletedTask);
-        _unitOfWork.Setup(repo => repo.SaveAsync(this.cancellationToken, false)).Returns(Task.CompletedTask);
+        _unitOfWork.Setup(repo => repo.DeviceRepositry.UpdateAsync(model, cancellationToken)).Returns(Task.CompletedTask);
+        _unitOfWork.Setup(repo => repo.SaveAsync(cancellationToken, false)).Returns(Task.CompletedTask);
 
         //act
-        var result = await service.UpdateAsync(this.viewModel, this.cancellationToken);
-        var exceptionResult = Record.ExceptionAsync(() => service.UpdateAsync(this.viewModel, this.cancellationToken)).Result;
+        var result = await service.UpdateAsync(viewModel, cancellationToken);
+        var exceptionResult = Record.ExceptionAsync(() => service.UpdateAsync(viewModel, cancellationToken)).Result;
 
         //assert
         result.ShouldNotBeNull();
-        result.ShouldBeSameAs(this.viewModel);
+        result.ShouldBeSameAs(viewModel);
         exceptionResult.ShouldBeNull();
     }
 
@@ -220,8 +220,8 @@ public class DeviceFindByIdDeviceTest
 
     public void When_DeviceId_Is_Not_Null()
     {
-        this.DeviceId = Guid.NewGuid();
-        this.cancellationToken = new CancellationTokenSource().Token;
+        DeviceId = Guid.NewGuid();
+        cancellationToken = new CancellationTokenSource().Token;
     }
 
     public async Task Then_Should_Not_Have_Any_Exceptions_Or_Errors()
@@ -231,11 +231,11 @@ public class DeviceFindByIdDeviceTest
 
         Device? findResult = null;
 
-        _unitOfWork.Setup(repo => repo.DeviceRepositry.FindByIdAsync(this.DeviceId, this.cancellationToken))
+        _unitOfWork.Setup(repo => repo.DeviceRepositry.FindByIdAsync(DeviceId, cancellationToken))
             .ReturnsAsync(findResult);
 
         // act
-        var exceptionResult = Record.ExceptionAsync(() => service.FindByIdAsync(this.DeviceId, this.cancellationToken)).Result;
+        var exceptionResult = Record.ExceptionAsync(() => service.FindByIdAsync(DeviceId, cancellationToken)).Result;
 
         // assert
         exceptionResult.ShouldBeNull();
@@ -273,8 +273,8 @@ public class DeviceFindByIdDeviceAsNoTrackingTest
 
     public void When_DeviceId_Is_Not_Null()
     {
-        this.DeviceId = Guid.NewGuid();
-        this.cancellationToken = new CancellationTokenSource().Token;
+        DeviceId = Guid.NewGuid();
+        cancellationToken = new CancellationTokenSource().Token;
     }
 
     public async Task Then_Should_Not_Have_Any_Exceptions_Or_Errors()
@@ -282,12 +282,12 @@ public class DeviceFindByIdDeviceAsNoTrackingTest
         // arrange
         var service = Subject();
 
-        _unitOfWork.Setup(repo => repo.DeviceRepositry.FindByIdAsNoTrackingAsync(this.DeviceId, this.cancellationToken))
-            .ReturnsAsync(new Device(this.DeviceId, 2, DeviceType.Cooler, true, Guid.NewGuid()));
+        _unitOfWork.Setup(repo => repo.DeviceRepositry.FindByIdAsNoTrackingAsync(DeviceId, cancellationToken))
+            .ReturnsAsync(new Device(DeviceId, 2, DeviceType.Cooler, true, Guid.NewGuid()));
 
         // act
-        var result = await service.FindByIdAsNoTrackingAsync(this.DeviceId,this.cancellationToken);
-        var exceptionResult = Record.ExceptionAsync(() => service.FindByIdAsNoTrackingAsync(this.DeviceId, this.cancellationToken)).Result;
+        var result = await service.FindByIdAsNoTrackingAsync(DeviceId, cancellationToken);
+        var exceptionResult = Record.ExceptionAsync(() => service.FindByIdAsNoTrackingAsync(DeviceId, cancellationToken)).Result;
 
         // assert
         result.ShouldNotBeNull();

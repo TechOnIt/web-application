@@ -1,7 +1,7 @@
-﻿using iot.Application.Events.ProductNotifications;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
-namespace iot.Application.Commands.PerformanceReport.CreatePerformanceReport;
+namespace TechOnIt.Application.Commands.PerformanceReport.CreatePerformanceReport;
 
 public class CreatePerformanceReportCommand : IRequest<Result<Guid>>
 {
@@ -30,7 +30,7 @@ public class CreatePerformanceReportCommandHandler : IRequestHandler<CreatePerfo
                 request.Id = Guid.NewGuid();
 
             await _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.PerformanceReport>()
-                .AddAsync(new Domain.Entities.Product.SensorAggregate.PerformanceReport(request.Id,request.Value,DateTime.Now));
+                .AddAsync(new Domain.Entities.Product.SensorAggregate.PerformanceReport(request.Id, request.Value, DateTime.Now));
 
             await _mediator.Publish(new PerformanceReportNotifications());
             return Result.Ok(request.Id);

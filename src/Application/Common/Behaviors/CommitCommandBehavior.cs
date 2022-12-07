@@ -1,12 +1,12 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using MediatR;
 using MediatR.Pipeline;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Common.Behaviors;
+namespace TechOnIt.Application.Common.Behaviors;
 
 public class CommitCommandBehavior<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
-    where TRequest : MediatR.IRequest<TResponse>
+    where TRequest : IRequest<TResponse>
 {
     #region Constructor
     private readonly IUnitOfWorks _unitOfWorks;

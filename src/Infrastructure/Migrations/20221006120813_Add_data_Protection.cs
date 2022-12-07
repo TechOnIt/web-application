@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace iot.Infrastructure.Migrations
+namespace TechOnIt.Infrastructure.Migrations
 {
     public partial class Add_data_Protection : Migration
     {

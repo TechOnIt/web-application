@@ -1,12 +1,12 @@
-﻿using iot.Infrastructure.Initializer;
-using iot.Infrastructure.Persistence.Context;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
+using TechOnIt.Infrastructure.Initializer;
+using TechOnIt.Infrastructure.Persistence.Context;
 
-namespace iot.Infrastructure.Common.Extentions;
+namespace TechOnIt.Infrastructure.Common.Extentions;
 
 public static class ApplicationBuilderExtensions
 {

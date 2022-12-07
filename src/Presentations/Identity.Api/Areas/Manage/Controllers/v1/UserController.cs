@@ -1,7 +1,8 @@
-﻿using iot.Application.Queries.Users.GetAllUsers;
+﻿using TechOnIt.Application.Queries.Users.GetAllUsers;
 using Org.BouncyCastle.Asn1.Ocsp;
+using TechOnIt.Identity.Api.Controllers;
 
-namespace iot.Identity.Api.Areas.Manage.Controllers.v1;
+namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
 
 [Area("manage")]
 public class UserController : BaseController

@@ -1,9 +1,9 @@
-﻿using iot.Application.Common.Models.ViewModels.Places;
-using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
+using TechOnIt.Application.Common.Models.ViewModels.Places;
 
-namespace iot.Application.Queries.Places.FindPlaceBy;
+namespace TechOnIt.Application.Queries.Places.FindPlaceBy;
 
 public class GetPlaceByIdQuery : IRequest<Result<PlaceViewModel>>
 {

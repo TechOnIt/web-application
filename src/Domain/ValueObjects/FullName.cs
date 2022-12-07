@@ -1,8 +1,8 @@
-﻿using iot.Domain.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using TechOnIt.Domain.Common;
 
-namespace iot.Domain.ValueObjects;
+namespace TechOnIt.Domain.ValueObjects;
 
 public class FullName : ValueObject
 {
@@ -45,11 +45,11 @@ public class FullName : ValueObject
     {
         if (name is null || surname is null)
             throw new ArgumentNullException($"name or surname can not be null in this case");
-        if(string.IsNullOrWhiteSpace(name))
+        if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentNullException($"the parameter name can not be null or empty");
 
-        this.Name = name;
-        this.Surname = surname;
+        Name = name;
+        Surname = surname;
     }
 
     #region Overrides

@@ -1,14 +1,14 @@
-﻿using iot.Application.Common.Models.ViewModels.Users.Authentication;
-using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Infrastructure.Common.JwtBearerService;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Infrastructure.Common.JwtBearerService;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 
-namespace iot.Application.Common.Security.JwtBearer;
+namespace TechOnIt.Application.Common.Security.JwtBearer;
 
-public class JwtService : IJwtService,IDisposable
+public class JwtService : IJwtService, IDisposable
 {
     /// <summary>
     /// Generate JWT Token with claims.

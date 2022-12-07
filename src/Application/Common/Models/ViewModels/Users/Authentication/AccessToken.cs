@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.Models.ViewModels.Users.Authentication;
+﻿namespace TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 
 public class AccessToken
 {

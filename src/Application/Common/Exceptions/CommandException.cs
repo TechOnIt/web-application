@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.Enums.IdentityService;
+﻿using TechOnIt.Application.Common.Enums.IdentityService;
 
-namespace iot.Application.Common.Exceptions;
+namespace TechOnIt.Application.Common.Exceptions;
 
 public class CommandException : AppException
 {

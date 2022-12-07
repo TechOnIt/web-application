@@ -1,8 +1,8 @@
-﻿using iot.Domain.Common;
+﻿using TechOnIt.Domain.Common;
 using System;
 using System.Collections.Generic;
 
-namespace iot.Domain.Entities.Identity;
+namespace TechOnIt.Domain.Entities.Identity;
 
 public class Role
 {

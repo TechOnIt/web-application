@@ -1,4 +1,4 @@
-﻿namespace iot.Domain.UnitTests.Entities;
+﻿namespace TechOnIt.Domain.UnitTests.Entities;
 
 public class RoleTests
 {

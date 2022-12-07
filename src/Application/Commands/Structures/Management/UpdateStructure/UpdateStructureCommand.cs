@@ -1,8 +1,8 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Domain.Enums;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Enums;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Structures.Management.UpdateStructure;
+namespace TechOnIt.Application.Commands.Structures.Management.UpdateStructure;
 
 public class UpdateStructureCommand : IRequest<Result>, ICommittableRequest
 {

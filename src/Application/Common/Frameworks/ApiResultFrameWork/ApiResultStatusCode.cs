@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace iot.Application.Common.Frameworks.ApiResultFrameWork;
+namespace TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 
 public enum ApiResultStatusCode
 {

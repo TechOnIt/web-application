@@ -1,14 +1,15 @@
-﻿using iot.Application.Common.Exceptions;
-using iot.Application.Common.Extentions;
-using iot.Application.Common.Models.ViewModels.Devices;
-using iot.Application.Common.Models.ViewModels.Structures;
-using iot.Application.Common.Models.ViewModels.Users;
-using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Domain.Entities.Product.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
 using System.Reflection;
+using TechOnIt.Application.Common.Exceptions;
+using TechOnIt.Application.Common.Extentions;
+using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Common.Models.ViewModels.Devices;
+using TechOnIt.Application.Common.Models.ViewModels.Structures;
+using TechOnIt.Application.Common.Models.ViewModels.Users;
 
-namespace iot.Application.Reports.Users;
+namespace TechOnIt.Application.Reports.Users;
 
 public class UserReports : IUserReports
 {

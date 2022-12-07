@@ -1,10 +1,10 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Application.Events.ProductNotifications;
-using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Domain.Enums;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Enums;
 using Microsoft.Extensions.Logging;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Structures.Management.CreateStructure;
+namespace TechOnIt.Application.Commands.Structures.Management.CreateStructure;
 
 public class CreateStructureCommand : IRequest<Result<Concurrency>>, ICommittableRequest
 {

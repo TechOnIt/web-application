@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iot.Domain.Interfaces;
+namespace TechOnIt.Domain.Interfaces;
 
 public interface ICreateAble
 {

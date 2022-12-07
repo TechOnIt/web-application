@@ -1,9 +1,9 @@
 ﻿using FluentResults;
-using iot.Application.Common.Models.ViewModels.Structures.Authentication;
+using TechOnIt.Application.Common.Models.ViewModels.Structures.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace iot.Core.Api.Controllers;
+namespace TechOnIt.Core.Api.Controllers;
 
 [ApiController]
 public class BaseController : ControllerBase

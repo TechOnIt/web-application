@@ -1,10 +1,10 @@
-﻿using iot.Application.Commands.Users.Authentication.SignInCommands;
-using iot.Application.Commands.Users.Authentication.SignInOtpCommands;
-using iot.Application.Commands.Users.Authentication.SignUpCommands;
-using iot.Application.Common.Frameworks.ApiResultFrameWork.Filters;
+﻿using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
+using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
+using TechOnIt.Application.Commands.Users.Authentication.SignUpCommands;
+using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 using Org.BouncyCastle.Asn1.Ocsp;
 
-namespace iot.Identity.Api.Controllers.v1;
+namespace TechOnIt.Identity.Api.Controllers.v1;
 
 [Route("v1/[controller]/[action]")]
 public class AuthenticationController : BaseController

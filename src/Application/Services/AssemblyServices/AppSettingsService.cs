@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace iot.Application.Services.AssemblyServices;
+namespace TechOnIt.Application.Services.AssemblyServices;
 
 public class AppSettingsService<T> : IAppSettingsService<T> where T : class, new()
 {
@@ -44,12 +44,12 @@ public class AppSettingsService<T> : IAppSettingsService<T> where T : class, new
 
         var jObject = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(physicalPath));
         var sectionObject = jObject.TryGetValue(_section, out JToken section) ?
-            JsonConvert.DeserializeObject<T>(section.ToString()) : (Value ?? new T());
+            JsonConvert.DeserializeObject<T>(section.ToString()) : Value ?? new T();
 
         applyChanges(sectionObject);
 
         jObject[_section] = JObject.Parse(JsonConvert.SerializeObject(sectionObject));
-        File.WriteAllText(physicalPath, JsonConvert.SerializeObject(jObject, Newtonsoft.Json.Formatting.Indented));
+        File.WriteAllText(physicalPath, JsonConvert.SerializeObject(jObject, Formatting.Indented));
 
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)

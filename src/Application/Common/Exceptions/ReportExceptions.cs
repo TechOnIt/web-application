@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Common.Exceptions;
+﻿namespace TechOnIt.Application.Common.Exceptions;
 
 public class ReportExceptions : AppException
 {

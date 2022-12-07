@@ -1,7 +1,7 @@
-﻿using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Domain.Enums;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Enums;
 
-namespace iot.Application.Common.Models.ViewModels.Structures;
+namespace TechOnIt.Application.Common.Models.ViewModels.Structures;
 
 public class StructureViewModel
 {

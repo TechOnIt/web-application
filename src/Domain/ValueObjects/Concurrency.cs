@@ -1,9 +1,9 @@
-﻿using iot.Domain.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TechOnIt.Domain.Common;
 
-namespace iot.Domain.ValueObjects;
+namespace TechOnIt.Domain.ValueObjects;
 
 public class Concurrency : ValueObject
 {

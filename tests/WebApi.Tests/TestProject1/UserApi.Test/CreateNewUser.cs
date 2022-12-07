@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using FluentResults;
-using iot.Application.Commands.Users.Management.CreateUser;
+using TechOnIt.Application.Commands.Users.Management.CreateUser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Tests.UserApi.Test;

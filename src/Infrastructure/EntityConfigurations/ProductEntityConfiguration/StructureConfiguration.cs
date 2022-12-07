@@ -1,10 +1,10 @@
-﻿using iot.Domain.Common;
-using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Domain.Enums;
+﻿using TechOnIt.Domain.Common;
+using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace iot.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
+namespace TechOnIt.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 
 public class StructureConfiguration : IEntityTypeConfiguration<Structure>
 {

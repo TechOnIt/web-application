@@ -1,7 +1,9 @@
-﻿using iot.Application.Common.Models.ViewModels.Roles;
-using iot.Application.Reports.Roles;
+﻿using TechOnIt.Application.Common.Exceptions;
+using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Common.Models.ViewModels.Roles;
+using TechOnIt.Application.Reports.Roles;
 
-namespace iot.Application.Queries.Roles.GetAllRoles;
+namespace TechOnIt.Application.Queries.Roles.GetAllRoles;
 
 public class GetRolesQuery : PaginatedSearchWithSize, IRequest<PaginatedList<RoleViewModel>>
 {

@@ -1,7 +1,7 @@
-﻿using iot.Domain.Common;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using TechOnIt.Domain.Common;
 
-namespace iot.Domain.ValueObjects;
+namespace TechOnIt.Domain.ValueObjects;
 
 public class IPv4 : ValueObject
 {

@@ -1,10 +1,10 @@
-﻿using iot.Application.Common.Models.ViewModels.Sensors;
-using iot.Domain.Entities.Product.SensorAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 using System.Linq.Expressions;
+using TechOnIt.Application.Common.Models.ViewModels.Sensors;
 
-namespace iot.Application.Queries.Sensors.GetAllByFilter;
+namespace TechOnIt.Application.Queries.Sensors.GetAllByFilter;
 
 public class GetAllSensorsByFilterQuery : IRequest<Result<IList<SensorViewModel>>>
 {

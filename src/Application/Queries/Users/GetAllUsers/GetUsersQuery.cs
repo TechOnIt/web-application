@@ -1,8 +1,9 @@
-﻿using iot.Application.Common.Exceptions;
-using iot.Application.Common.Models.ViewModels.Users;
-using iot.Application.Reports.Users;
+﻿using TechOnIt.Application.Common.Exceptions;
+using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Common.Models.ViewModels.Users;
+using TechOnIt.Application.Reports.Users;
 
-namespace iot.Application.Queries.Users.GetAllUsers;
+namespace TechOnIt.Application.Queries.Users.GetAllUsers;
 
 public class GetUsersQuery : Paginated, IRequest<PaginatedList<UserViewModel>>
 {

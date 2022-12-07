@@ -1,8 +1,8 @@
-﻿using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Domain.Enums;
-using System;
+﻿using System;
+using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Enums;
 
-namespace iot.Domain.Entities.Product;
+namespace TechOnIt.Domain.Entities.Product;
 
 public class Device
 {
@@ -16,7 +16,7 @@ public class Device
         PlaceId = placeId;
     }
 
-    public Device(Guid id,int pin, DeviceType deviceType, bool isHigh, Guid placeId)
+    public Device(Guid id, int pin, DeviceType deviceType, bool isHigh, Guid placeId)
     {
         Id = id;
         Pin = pin;
@@ -49,23 +49,23 @@ public class Device
     {
         ArgumentNullException.ThrowIfNull(id);
 
-        this.Id = id;
-        return this.Id;
+        Id = id;
+        return Id;
     }
 
     public Guid GetDeviceId()
     {
-        return this.Id;
+        return Id;
     }
 
     public void SetDeviceType(string typeName)
     {
-        DeviceType = DeviceType.FromDisplayName<DeviceType>(typeName);
+        DeviceType = Common.Enumeration.FromDisplayName<DeviceType>(typeName);
     }
 
     public void SetDeviceType(int value)
     {
-        DeviceType = DeviceType.FromValue<DeviceType>(value);
+        DeviceType = Common.Enumeration.FromValue<DeviceType>(value);
     }
 
     public void SetDeviceType(DeviceType deviceType)
@@ -74,7 +74,7 @@ public class Device
     }
 
     public DeviceType GetDeviceType()
-        => this.DeviceType;
+        => DeviceType;
     #endregion
 
     #region relations & foreignkeys

@@ -1,7 +1,7 @@
-﻿using iot.Domain.Entities.Product;
-using iot.Domain.Enums;
+﻿using TechOnIt.Domain.Entities.Product;
+using TechOnIt.Domain.Enums;
 
-namespace iot.Application.Common.Models.ViewModels.Devices;
+namespace TechOnIt.Application.Common.Models.ViewModels.Devices;
 
 public class DeviceViewModel
 {

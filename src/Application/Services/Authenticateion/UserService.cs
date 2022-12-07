@@ -1,10 +1,10 @@
-﻿using iot.Application.Common.Enums.IdentityService;
-using iot.Application.Common.Models.ViewModels.Users;
-using iot.Application.Services.Authenticateion.AuthenticateionContracts;
-using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Infrastructure.Common.Encryptions.Contracts;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Infrastructure.Common.Encryptions.Contracts;
+using TechOnIt.Application.Common.Enums.IdentityService;
+using TechOnIt.Application.Common.Models.ViewModels.Users;
+using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
-namespace iot.Application.Services.Authenticateion;
+namespace TechOnIt.Application.Services.Authenticateion;
 
 public class UserService : IUserService
 {
@@ -39,7 +39,7 @@ public class UserService : IUserService
     {
         var isExists = await IsExistsUserAsync(userId, cancellationToken);
         if (isExists)
-            return (IdentityCrudStatus.NotFound);
+            return IdentityCrudStatus.NotFound;
 
         var taskResult = _unitOfWorks.UserRepository.DeleteByIdAsync(userId, cancellationToken).IsCompletedSuccessfully;
         if (!taskResult)
@@ -52,7 +52,7 @@ public class UserService : IUserService
     {
         var isExists = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(phoneNumber);
         if (isExists)
-            return (IdentityCrudStatus.NotFound);
+            return IdentityCrudStatus.NotFound;
 
         var taskResult = _unitOfWorks.UserRepository.DeleteByPhoneNumberAsync(phoneNumber, cancellationToken).IsCompletedSuccessfully;
         if (!taskResult)

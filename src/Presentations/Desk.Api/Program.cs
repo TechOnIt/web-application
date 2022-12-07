@@ -1,19 +1,19 @@
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
 using GraphQL.Types;
-using iot.Application;
-using iot.Application.Commands.Device.CreateDevice;
-using iot.Application.Commands.Device.DeleteDevice;
-using iot.Application.Commands.Device.UpdateDevice;
-using iot.Application.Commands.Sensor.CreatSensor;
-using iot.Application.Commands.Sensor.DeleteSensor;
-using iot.Application.Commands.Sensor.UpdateSensor;
-using iot.Application.Commands.Structures.Authentication.SignInCommands;
-using iot.Application.Commands.Users.Authentication.SignInOtpCommands;
-using iot.Application.Common.DTOs.Settings;
-using iot.Desk.Api.GraphQl.PerformanceReport;
-using iot.Infrastructure;
+using TechOnIt.Application;
+using TechOnIt.Application.Commands.Device.CreateDevice;
+using TechOnIt.Application.Commands.Device.DeleteDevice;
+using TechOnIt.Application.Commands.Device.UpdateDevice;
+using TechOnIt.Application.Commands.Sensor.CreatSensor;
+using TechOnIt.Application.Commands.Sensor.DeleteSensor;
+using TechOnIt.Application.Commands.Sensor.UpdateSensor;
+using TechOnIt.Application.Commands.Structures.Authentication.SignInCommands;
+using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
+using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Infrastructure;
 using System.Reflection;
+using TechOnIt.Desk.Api.GraphQl.PerformanceReport;
 
 var builder = WebApplication.CreateBuilder(args);
 

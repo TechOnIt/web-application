@@ -1,13 +1,13 @@
-﻿using iot.Domain.Common;
+﻿using TechOnIt.Domain.Common;
 
-namespace iot.Domain.Enums;
+namespace TechOnIt.Domain.Enums;
 
 public class DeviceType : Enumeration
 {
     public static readonly SensorType Light = new(1, nameof(Light)); // 💡
     public static readonly DeviceType Heater = new(2, nameof(Heater)); // 🔥
-    public static readonly DeviceType Cooler = new (3, nameof(Cooler)); // ❄️
-    public static readonly DeviceType Fan = new (4, nameof(Fan)); // 💨
+    public static readonly DeviceType Cooler = new(3, nameof(Cooler)); // ❄️
+    public static readonly DeviceType Fan = new(4, nameof(Fan)); // 💨
 
     public DeviceType() { }
 

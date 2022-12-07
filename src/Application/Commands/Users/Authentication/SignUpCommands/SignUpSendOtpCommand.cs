@@ -1,7 +1,8 @@
-﻿using iot.Application.Common.Models.ViewModels.Users;
-using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Users;
+using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
-namespace iot.Application.Commands.Users.Authentication.SignUpCommands;
+namespace TechOnIt.Application.Commands.Users.Authentication.SignUpCommands;
 
 public class SignUpSendOtpCommand : IRequest<Result<string>>
 {

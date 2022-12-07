@@ -1,4 +1,7 @@
-﻿namespace iot.Application.Commands.Users.Management.UpdateUser;
+﻿using TechOnIt.Application.Common.Constants;
+using TechOnIt.Application.Common.Models;
+
+namespace TechOnIt.Application.Commands.Users.Management.UpdateUser;
 
 public class UpdateUserCommandValidator : BaseFluentValidator<UpdateUserCommand>
 {

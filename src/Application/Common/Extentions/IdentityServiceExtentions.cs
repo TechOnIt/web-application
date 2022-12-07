@@ -1,8 +1,8 @@
-﻿using iot.Application.Common.Enums.IdentityService;
-using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Infrastructure.Common.Notifications.Results;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Infrastructure.Common.Notifications.Results;
+using TechOnIt.Application.Common.Enums.IdentityService;
 
-namespace iot.Application.Common.Extentions;
+namespace TechOnIt.Application.Common.Extentions;
 
 public static class IdentityServiceExtentions
 {

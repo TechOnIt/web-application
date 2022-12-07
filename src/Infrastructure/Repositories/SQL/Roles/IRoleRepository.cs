@@ -1,6 +1,6 @@
-﻿using iot.Domain.Entities.Identity;
+﻿using TechOnIt.Domain.Entities.Identity;
 
-namespace iot.Infrastructure.Repositories.SQL.Roles;
+namespace TechOnIt.Infrastructure.Repositories.SQL.Roles;
 
 public interface IRoleRepository
 {

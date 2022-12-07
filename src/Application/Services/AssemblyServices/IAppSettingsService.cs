@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Services.AssemblyServices;
+﻿namespace TechOnIt.Application.Services.AssemblyServices;
 
 public interface IAppSettingsService<T> where T : class, new()
 {

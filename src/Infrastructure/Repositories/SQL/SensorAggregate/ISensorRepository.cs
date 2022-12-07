@@ -1,6 +1,6 @@
-﻿using iot.Domain.Entities.Product.SensorAggregate;
+﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
 
-namespace iot.Infrastructure.Repositories.SQL.SensorAggregate;
+namespace TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 
 public interface ISensorRepository
 {
@@ -15,7 +15,7 @@ public interface ISensorRepository
     #region report
     Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken = default);
     Task ClearReportsBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken = default);
-    Task DeleteReportByIdAsync(Guid sensorId,PerformanceReport report, CancellationToken cancellationToken = default);
+    Task DeleteReportByIdAsync(Guid sensorId, PerformanceReport report, CancellationToken cancellationToken = default);
     Task<PerformanceReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken = default);
     #endregion
 }

@@ -1,14 +1,19 @@
-﻿using iot.Infrastructure.Persistence.Context;
-using iot.Infrastructure.Repositories.SQL;
-using iot.Infrastructure.Repositories.SQL.Devices;
-using iot.Infrastructure.Repositories.SQL.Roles;
-using iot.Infrastructure.Repositories.SQL.SensorAggregate;
-using iot.Infrastructure.Repositories.SQL.StructureAggregateRepository;
-using iot.Infrastructure.Repositories.SQL.Users;
+﻿using TechOnIt.Infrastructure.Repositories.SQL;
+using TechOnIt.Infrastructure.Repositories.SQL.Devices;
+using TechOnIt.Infrastructure.Repositories.SQL.Roles;
+using TechOnIt.Infrastructure.Repositories.SQL.Users;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using TechOnIt.Infrastructure.Common.Extentions;
+using TechOnIt.Infrastructure.Persistence.Context;
+using TechOnIt.Infrastructure.Repositories.SQL;
+using TechOnIt.Infrastructure.Repositories.SQL.Devices;
+using TechOnIt.Infrastructure.Repositories.SQL.Roles;
+using TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
+using TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
+using TechOnIt.Infrastructure.Repositories.SQL.Users;
 
-namespace iot.Infrastructure.Repositories.UnitOfWorks;
+namespace TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
 public class UnitOfWork : IUnitOfWorks
 {

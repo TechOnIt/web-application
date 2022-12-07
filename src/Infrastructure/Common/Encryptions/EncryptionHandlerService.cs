@@ -1,9 +1,9 @@
-﻿using iot.Infrastructure.Common.Encryptions.Contracts;
-using iot.Infrastructure.Common.Encryptions.SecurityTypes;
-using iot.Infrastructure.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using TechOnIt.Infrastructure.Common.Encryptions.Contracts;
+using TechOnIt.Infrastructure.Common.Encryptions.SecurityTypes;
+using TechOnIt.Infrastructure.Persistence.Context;
 
-namespace iot.Infrastructure.Common.Encryptions;
+namespace TechOnIt.Infrastructure.Common.Encryptions;
 
 public class EncryptionHandlerService : IEncryptionHandlerService
 {

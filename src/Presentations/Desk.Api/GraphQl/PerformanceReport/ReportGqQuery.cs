@@ -1,14 +1,14 @@
 ﻿using GraphQL.Types;
-using iot.Application.Queries.PerformanceReports.GetAllPerformanceReportByFilter;
+using TechOnIt.Application.Queries.PerformanceReports.GetAllPerformanceReportByFilter;
 using MediatR;
 
-namespace iot.Desk.Api.GraphQl.PerformanceReport;
+namespace TechOnIt.Desk.Api.GraphQl.PerformanceReport;
 
 public class ReportGqQuery : ObjectGraphType
 {
     public ReportGqQuery()
     {
-        Field<ListGraphType<ReportType>>("reports",resolve:context=>new List<ReportGqModel>
+        Field<ListGraphType<ReportType>>("reports", resolve: context => new List<ReportGqModel>
         {
             new ReportGqModel(Guid.NewGuid(),2,DateTime.Now),
             new ReportGqModel(Guid.NewGuid(),7,DateTime.Now.AddDays(2))

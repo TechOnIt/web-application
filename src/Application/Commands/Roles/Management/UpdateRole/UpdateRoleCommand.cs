@@ -1,7 +1,7 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Roles.Management.UpdateRole;
+namespace TechOnIt.Application.Commands.Roles.Management.UpdateRole;
 
 public class UpdateRoleCommand : IRequest<Result>, ICommittableRequest
 {

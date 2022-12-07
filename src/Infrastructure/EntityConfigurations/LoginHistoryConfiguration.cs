@@ -1,8 +1,8 @@
-﻿using iot.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace iot.Infrastructure.EntityConfigurations;
+namespace TechOnIt.Infrastructure.EntityConfigurations;
 
 public class LoginHistoryConfiguration : IEntityTypeConfiguration<LoginHistory>
 {

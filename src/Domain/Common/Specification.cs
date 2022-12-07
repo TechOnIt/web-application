@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace iot.Domain.Common;
+namespace TechOnIt.Domain.Common;
 
 internal sealed class IdentitySpecification<T> : Specification<T>
 {
@@ -66,7 +66,7 @@ internal sealed class AndSpecification<T> : Specification<T>
 
         var invokedExpression = Expression.Invoke(rightExpression, leftExpression.Parameters);
 
-        return (Expression<Func<T, Boolean>>)Expression.Lambda(Expression.AndAlso(leftExpression.Body, invokedExpression), leftExpression.Parameters);
+        return (Expression<Func<T, bool>>)Expression.Lambda(Expression.AndAlso(leftExpression.Body, invokedExpression), leftExpression.Parameters);
     }
 }
 
@@ -88,7 +88,7 @@ internal sealed class OrSpecification<T> : Specification<T>
 
         var invokedExpression = Expression.Invoke(rightExpression, leftExpression.Parameters);
 
-        return (Expression<Func<T, Boolean>>)Expression.Lambda(Expression.OrElse(leftExpression.Body, invokedExpression), leftExpression.Parameters);
+        return (Expression<Func<T, bool>>)Expression.Lambda(Expression.OrElse(leftExpression.Body, invokedExpression), leftExpression.Parameters);
     }
 }
 

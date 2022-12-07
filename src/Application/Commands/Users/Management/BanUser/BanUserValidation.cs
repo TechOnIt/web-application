@@ -1,4 +1,7 @@
-﻿namespace iot.Application.Commands.Users.Management.BanUser;
+﻿using TechOnIt.Application.Common.Constants;
+using TechOnIt.Application.Common.Models;
+
+namespace TechOnIt.Application.Commands.Users.Management.BanUser;
 
 public class BanUserValidation : BaseFluentValidator<BanUserCommand>
 {

@@ -1,11 +1,11 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Application.Common.Models.ViewModels.Devices;
-using iot.Application.Events.ProductNotifications;
-using iot.Application.Services.ProductServices.ProductContracts;
-using iot.Domain.Enums;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Enums;
 using Mapster;
+using TechOnIt.Application.Common.Interfaces;
+using TechOnIt.Application.Common.Models.ViewModels.Devices;
+using TechOnIt.Application.Services.ProductServices.ProductContracts;
 
-namespace iot.Application.Commands.Device.CreateDevice;
+namespace TechOnIt.Application.Commands.Device.CreateDevice;
 
 public class CreateDeviceCommand : IRequest<Result<Guid>>, ICommittableRequest
 {

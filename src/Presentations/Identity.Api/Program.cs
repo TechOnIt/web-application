@@ -1,8 +1,8 @@
 using AspNetCoreRateLimit;
-using iot.Application.Commands.Users.Authentication.SignInOtpCommands;
-using iot.Application.Common.DTOs.Settings;
-using iot.Infrastructure;
-using iot.Infrastructure.Common.Extentions;
+using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
+using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Infrastructure;
+using TechOnIt.Infrastructure.Common.Extentions;
 using NLog;
 using NLog.Web;
 using System.Reflection;

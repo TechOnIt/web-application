@@ -1,7 +1,7 @@
-﻿using iot.Domain.Entities.Product;
+﻿using TechOnIt.Domain.Entities.Product;
 using Shouldly;
 
-namespace iot.Domain.UnitTests.Entities;
+namespace TechOnIt.Domain.UnitTests.Entities;
 
 public class DeviceTests
 {

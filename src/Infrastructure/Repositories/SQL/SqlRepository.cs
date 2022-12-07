@@ -1,8 +1,9 @@
-﻿using iot.Infrastructure.Persistence.Context;
+﻿using TechOnIt.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using TechOnIt.Infrastructure.Common.Extentions;
 
-namespace iot.Infrastructure.Repositories.SQL;
+namespace TechOnIt.Infrastructure.Repositories.SQL;
 
 public class SqlRepository<TEntity, TContext> : ISqlRepository<TEntity>
         where TEntity : class where TContext : DbContext

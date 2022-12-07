@@ -1,7 +1,7 @@
-﻿using iot.Infrastructure.Common.Notifications.Results;
-using System.Net.Mail;
+﻿using System.Net.Mail;
+using TechOnIt.Infrastructure.Common.Notifications.Results;
 
-namespace iot.Infrastructure.Common.Notifications.Contracts;
+namespace TechOnIt.Infrastructure.Common.Notifications.Contracts;
 
 public interface ISendEmail : IBaseNotifications
 {

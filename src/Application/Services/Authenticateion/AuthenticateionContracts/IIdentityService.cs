@@ -1,7 +1,7 @@
-﻿using iot.Application.Common.Models.ViewModels.Users;
-using iot.Application.Common.Models.ViewModels.Users.Authentication;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Users;
+using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 
-namespace iot.Application.Services.Authenticateion.AuthenticateionContracts;
+namespace TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
 public interface IIdentityService
 {

@@ -1,8 +1,8 @@
-﻿using iot.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace iot.Infrastructure.EntityConfigurations
+namespace TechOnIt.Infrastructure.EntityConfigurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
@@ -12,8 +12,8 @@ namespace iot.Infrastructure.EntityConfigurations
             builder.Property(a => a.Id).ValueGeneratedNever();
 
             builder.OwnsOne(a => a.Password);
-            builder.OwnsOne(a=> a.FullName);
-            builder.OwnsOne(a=> a.ConcurrencyStamp);
+            builder.OwnsOne(a => a.FullName);
+            builder.OwnsOne(a => a.ConcurrencyStamp);
         }
     }
 }

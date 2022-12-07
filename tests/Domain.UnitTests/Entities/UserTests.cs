@@ -1,6 +1,6 @@
-using iot.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
-namespace iot.Domain.UnitTests.Entities;
+namespace TechOnIt.Domain.UnitTests.Entities;
 
 public class UserTests
 {

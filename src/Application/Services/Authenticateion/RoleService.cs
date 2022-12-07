@@ -1,7 +1,7 @@
-﻿using iot.Application.Common.Enums.IdentityService;
-using iot.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using TechOnIt.Application.Common.Enums.IdentityService;
+using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
-namespace iot.Application.Services.Authenticateion;
+namespace TechOnIt.Application.Services.Authenticateion;
 
 public class RoleService : IRoleService
 {
@@ -16,7 +16,7 @@ public class RoleService : IRoleService
 
     public async Task<(IdentityCrudStatus Result, string Message)> CreateRoleAsync(Role role, CancellationToken cancellationToken = default)
     {
-        bool isExistsBefor = 
+        bool isExistsBefor =
             await _unitOfWorks.RoleRepository.IsExistsRoleNameAsync(role.Name, cancellationToken);
 
         if (isExistsBefor)
@@ -28,19 +28,19 @@ public class RoleService : IRoleService
 
     public async Task<IdentityCrudStatus> DeleteRoleByIdAsync(Guid roleId, CancellationToken cancellationToken = default)
     {
-        bool hasUserInRole=await _unitOfWorks.RoleRepository.HasSubsetUserAsync(roleId,cancellationToken);
+        bool hasUserInRole = await _unitOfWorks.RoleRepository.HasSubsetUserAsync(roleId, cancellationToken);
         if (hasUserInRole)
-            return (IdentityCrudStatus.CantRemove);
+            return IdentityCrudStatus.CantRemove;
         else
         {
-            await _unitOfWorks.RoleRepository.DeleteRoleByIdAsync(roleId,cancellationToken);
+            await _unitOfWorks.RoleRepository.DeleteRoleByIdAsync(roleId, cancellationToken);
             return IdentityCrudStatus.Succeeded;
         }
     }
 
-    public async Task<(IdentityCrudStatus Result, string Message)> UpdateRoleAsync(Guid roleId,string roleName, CancellationToken cancellationToken = default)
+    public async Task<(IdentityCrudStatus Result, string Message)> UpdateRoleAsync(Guid roleId, string roleName, CancellationToken cancellationToken = default)
     {
-         var result=  _unitOfWorks.RoleRepository.UpdateRoleAsync(roleId, roleName, cancellationToken).IsCompletedSuccessfully;
+        var result = _unitOfWorks.RoleRepository.UpdateRoleAsync(roleId, roleName, cancellationToken).IsCompletedSuccessfully;
         if (!result)
             return (IdentityCrudStatus.Failed, "An error occurred");
 

@@ -1,8 +1,8 @@
-﻿using iot.Application.Common.Models.ViewModels.Sensors;
-using iot.Domain.Entities.Product.SensorAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
+using TechOnIt.Application.Common.Models.ViewModels.Sensors;
 
-namespace iot.Application.Queries.Sensors.FindBy;
+namespace TechOnIt.Application.Queries.Sensors.FindBy;
 
 public class FindSesnsorByIdQuery : IRequest<Result<SensorViewModel>>
 {
@@ -29,7 +29,7 @@ public class FindSesnsorByIdQueryHandler : IRequestHandler<FindSesnsorByIdQuery,
             if (getSensor is null)
                 return Result.Fail($"can not find sesnsor with id : {request.Id}");
 
-            return Result.Ok(new SensorViewModel(getSensor.Id,getSensor.SensorType,getSensor.PlaceId));
+            return Result.Ok(new SensorViewModel(getSensor.Id, getSensor.SensorType, getSensor.PlaceId));
         }
         catch (Exception exp)
         {

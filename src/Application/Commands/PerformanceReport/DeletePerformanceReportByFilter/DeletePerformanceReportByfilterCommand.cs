@@ -1,9 +1,9 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Application.Events.ProductNotifications;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using System.Linq.Expressions;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.PerformanceReport.DeletePerformanceReportByFilter;
+namespace TechOnIt.Application.Commands.PerformanceReport.DeletePerformanceReportByFilter;
 
 public class DeletePerformanceReportByfilterCommand : IRequest<Result>, ICommittableRequest
 {

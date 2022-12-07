@@ -1,10 +1,11 @@
-﻿using iot.Domain.Enums;
-using iot.Domain.ValueObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TechOnIt.Domain.Common;
+using TechOnIt.Domain.Enums;
+using TechOnIt.Domain.ValueObjects;
 
-namespace iot.Domain.Entities.Product.StructureAggregate;
+namespace TechOnIt.Domain.Entities.Product.StructureAggregate;
 
 public class Structure // this class is aggregate root of Structure aggregate
 {
@@ -37,47 +38,47 @@ public class Structure // this class is aggregate root of Structure aggregate
     private DateTime? _CreateDate;
     public DateTime CreateDate
     {
-        get { return _CreateDate??DateTime.Now; }
+        get { return _CreateDate ?? DateTime.Now; }
         private set { _CreateDate = value; }
     }
 
-    public DateTime? ModifyDate { get;private set; }
+    public DateTime? ModifyDate { get; private set; }
 
     #region immutable options
 
     public void SetStructureType(StuctureType newType)
     {
-        this.Type = newType;
+        Type = newType;
     }
 
     public void SetStructureType(string typeName)
     {
-        this.Type = Common.Enumeration.FromDisplayName<StuctureType>(typeName);
+        Type = Enumeration.FromDisplayName<StuctureType>(typeName);
     }
 
     public void SetStructureType(int value)
     {
-        this.Type = Common.Enumeration.FromValue<StuctureType>(value);
+        Type = Enumeration.FromValue<StuctureType>(value);
     }
 
     public StuctureType GetStuctureType()
-        => this.Type;
+        => Type;
 
     public void SetApiKey()
     {
-        this.ApiKey = Concurrency.NewToken();
+        ApiKey = Concurrency.NewToken();
     }
 
     public void SetModifyDate()
     {
-        this.ModifyDate = DateTime.Now;
+        ModifyDate = DateTime.Now;
     }
     #endregion
 
     #region aggregate methods and operations for place entity
     public Place NewPlace(Guid id, string name, string description, DateTime createdate, DateTime modifydate, Guid structureId)
     {
-        return new Place(id,name,description,createdate,modifydate,structureId);
+        return new Place(id, name, description, createdate, modifydate, structureId);
     }
 
     public Place NewPlace()
@@ -87,17 +88,17 @@ public class Structure // this class is aggregate root of Structure aggregate
 
     public void AddPlace(Place place)
     {
-        this.Places.Add(place);
+        Places.Add(place);
     }
 
     public void RemovePlace(Place place)
     {
-        this.Places.Remove(place);
+        Places.Remove(place);
     }
 
     public void SetPlaceModifyDate(Place place)
     {
-        var getPlace = Places.FirstOrDefault(a=>a.Id==place.Id);
+        var getPlace = Places.FirstOrDefault(a => a.Id == place.Id);
         if (getPlace is not null)
         {
             place.SetModifyDate();

@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.Frameworks.ApiResultFrameWork.Filters;
+﻿using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 
-namespace iot.Desk.Api.Controllers.v1;
+namespace TechOnIt.Desk.Api.Controllers.v1;
 
 [ApiController]
 [Route("v1/[controller]/[action]")]
@@ -40,7 +40,7 @@ public class StructureController : ControllerBase
     [HttpPost]
     [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Create([FromBody] CreateStructureCommand structure,CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CreateStructureCommand structure, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(structure, cancellationToken);
         return Ok(result);

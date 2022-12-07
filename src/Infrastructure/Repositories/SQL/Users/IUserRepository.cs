@@ -1,7 +1,7 @@
-﻿using iot.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using System.Linq.Expressions;
 
-namespace iot.Infrastructure.Repositories.SQL.Users;
+namespace TechOnIt.Infrastructure.Repositories.SQL.Users;
 
 public interface IUserRepository
 {

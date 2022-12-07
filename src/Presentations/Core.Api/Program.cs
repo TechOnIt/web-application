@@ -1,5 +1,5 @@
-using iot.Application.Common.DTOs.Settings;
-using iot.Infrastructure;
+using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

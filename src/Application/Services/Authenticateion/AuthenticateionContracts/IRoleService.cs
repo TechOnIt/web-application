@@ -1,6 +1,6 @@
-﻿using iot.Application.Common.Enums.IdentityService;
+﻿using TechOnIt.Application.Common.Enums.IdentityService;
 
-namespace iot.Application.Services.Authenticateion.AuthenticateionContracts;
+namespace TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
 public interface IRoleService
 {

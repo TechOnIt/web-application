@@ -1,1 +1,1 @@
-﻿global using iot.Infrastructure.Common.Extentions;
+﻿global using TechOnIt.Infrastructure.Common.Extentions;

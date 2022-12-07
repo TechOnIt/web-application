@@ -1,7 +1,7 @@
-global using iot.Application.Services.ProductServices;
-global using iot.Domain.Entities.Product;
-global using iot.Domain.Enums;
-global using iot.Infrastructure.Repositories.UnitOfWorks;
+global using TechOnIt.Application.Services.ProductServices;
+global using TechOnIt.Domain.Entities.Product;
+global using TechOnIt.Domain.Enums;
+global using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 global using Moq;
 global using Shouldly;
 global using System;

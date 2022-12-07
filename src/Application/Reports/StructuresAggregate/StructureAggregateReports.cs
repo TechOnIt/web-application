@@ -1,11 +1,11 @@
-﻿using iot.Application.Common.Exceptions;
-using iot.Application.Common.Models.ViewModels.Structures;
-using iot.Domain.Entities.Product.StructureAggregate;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using Mapster;
 using System.Linq.Expressions;
+using TechOnIt.Application.Common.Exceptions;
+using TechOnIt.Application.Common.Models.ViewModels.Structures;
 
-namespace iot.Application.Reports.StructuresAggregate;
+namespace TechOnIt.Application.Reports.StructuresAggregate;
 
 public class StructureAggregateReports : IStructureAggregateReports
 {

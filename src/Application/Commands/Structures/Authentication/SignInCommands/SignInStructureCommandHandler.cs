@@ -1,7 +1,7 @@
-﻿using iot.Application.Common.Models.ViewModels.Structures.Authentication;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
+using TechOnIt.Application.Common.Models.ViewModels.Structures.Authentication;
 
-namespace iot.Application.Commands.Structures.Authentication.SignInCommands;
+namespace TechOnIt.Application.Commands.Structures.Authentication.SignInCommands;
 
 public class SignInStructureCommandHandler : IRequestHandler<SignInStructureCommand, Result<StructureAccessToken>>
 {

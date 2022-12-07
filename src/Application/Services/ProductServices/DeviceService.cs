@@ -1,6 +1,7 @@
-﻿using iot.Application.Common.Models.ViewModels.Devices;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Devices;
+using TechOnIt.Application.Services.ProductServices.ProductContracts;
 
-namespace iot.Application.Services.ProductServices;
+namespace TechOnIt.Application.Services.ProductServices;
 
 public class DeviceService : IDeviceService
 {
@@ -14,13 +15,13 @@ public class DeviceService : IDeviceService
     #endregion
     public async Task<DeviceViewModel?> FindByIdAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
-        var getDevice = await _uow.DeviceRepositry.FindByIdAsync(deviceId,cancellationToken);
+        var getDevice = await _uow.DeviceRepositry.FindByIdAsync(deviceId, cancellationToken);
         if (getDevice is null)
             return await Task.FromResult<DeviceViewModel?>(null);
 
-       return await Task.FromResult<DeviceViewModel?>(getDevice.Adapt<DeviceViewModel>());
+        return await Task.FromResult<DeviceViewModel?>(getDevice.Adapt<DeviceViewModel>());
     }
-    
+
     public async Task<DeviceViewModel?> FindByIdAsNoTrackingAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
         var getDevice = await _uow.DeviceRepositry.FindByIdAsNoTrackingAsync(deviceId, cancellationToken);
@@ -46,7 +47,7 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceViewModel?> UpdateAsync(DeviceViewModel device, CancellationToken cancellationToken = default)
     {
-        var getrecentDevice = await _uow.DeviceRepositry.FindByIdAsync(device.Id,cancellationToken);
+        var getrecentDevice = await _uow.DeviceRepositry.FindByIdAsync(device.Id, cancellationToken);
         if (getrecentDevice is null)
             return await Task.FromResult<DeviceViewModel?>(null);
 

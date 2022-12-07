@@ -1,8 +1,8 @@
-﻿using iot.Application.Common.Models.ViewModels.Users.Authentication;
-using iot.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using System.Security.Claims;
+using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 
-namespace iot.Application.Common.Security.JwtBearer;
+namespace TechOnIt.Application.Common.Security.JwtBearer;
 
 public interface IJwtService
 {

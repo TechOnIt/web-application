@@ -1,13 +1,14 @@
-﻿using iot.Application.Common.Exceptions;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text.Json;
+using TechOnIt.Application.Common.Exceptions;
+using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 
-namespace iot.Application.Common.Frameworks.Middlewares;
+namespace TechOnIt.Application.Common.Frameworks.Middlewares;
 
 public class CustomExceptionHandlerMiddleware
 {
@@ -40,16 +41,16 @@ public class CustomExceptionHandlerMiddleware
 
             if (hostEnvironment.IsDevelopment())
             {
-                IDictionary<string,string> dic = new Dictionary<string, string>
+                IDictionary<string, string> dic = new Dictionary<string, string>
                 {
                     ["Exception"] = exception.Message,
-                    ["StackTrace"] = exception.StackTrace??string.Empty,
+                    ["StackTrace"] = exception.StackTrace ?? string.Empty,
                 };
                 if (exception.InnerException is not null)
                 {
                     // add ToString() for : //https://stackoverflow.com/questions/5928976/what-is-the-proper-way-to-display-the-full-innerexception
                     dic.Add("InnerException.Exception", exception.InnerException.Message.ToString());
-                    dic.Add("InnerException.StackTrace", exception.InnerException.StackTrace??string.Empty);
+                    dic.Add("InnerException.StackTrace", exception.InnerException.StackTrace ?? string.Empty);
                 }
                 if (exception.AdditionalData is not null)
                     dic.Add("AdditionalData", JsonSerializer.Serialize(exception.AdditionalData));
@@ -79,7 +80,7 @@ public class CustomExceptionHandlerMiddleware
         {
             logger.LogError(exception, exception.Message);
 
-            var entityProprttyValues=exception.Entries.Single().GetDatabaseValues();
+            var entityProprttyValues = exception.Entries.Single().GetDatabaseValues();
             if (entityProprttyValues is null)
                 message = "the data being updated has been deleted by an other user !";
             else
@@ -124,7 +125,7 @@ public class CustomExceptionHandlerMiddleware
         {
             if (hostEnvironment.IsDevelopment())
             {
-                IDictionary<string,string> dic = new Dictionary<string, string>
+                IDictionary<string, string> dic = new Dictionary<string, string>
                 {
                     ["Exception"] = exception.Message,
                     ["StackTrace"] = exception.StackTrace ?? string.Empty

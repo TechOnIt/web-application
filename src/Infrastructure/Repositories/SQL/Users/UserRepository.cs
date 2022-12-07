@@ -1,10 +1,10 @@
-﻿using iot.Domain.Entities.Identity.UserAggregate;
-using iot.Infrastructure.Common.Encryptions;
-using iot.Infrastructure.Persistence.Context;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using TechOnIt.Infrastructure.Common.Encryptions;
+using TechOnIt.Infrastructure.Persistence.Context;
 
-namespace iot.Infrastructure.Repositories.SQL.Users;
+namespace TechOnIt.Infrastructure.Repositories.SQL.Users;
 
 internal sealed class UserRepository : IUserRepository
 {

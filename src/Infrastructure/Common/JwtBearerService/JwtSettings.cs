@@ -1,4 +1,4 @@
-﻿namespace iot.Infrastructure.Common.JwtBearerService;
+﻿namespace TechOnIt.Infrastructure.Common.JwtBearerService;
 
 public class JwtSettings
 {

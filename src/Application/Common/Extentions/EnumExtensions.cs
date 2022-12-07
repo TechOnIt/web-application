@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using iot.Infrastructure.Common.Extentions;
+using TechOnIt.Infrastructure.Common.Extentions;
 
-namespace iot.Application.Common.Extentions;
+namespace TechOnIt.Application.Common.Extentions;
 
 public static class EnumExtensions
 {

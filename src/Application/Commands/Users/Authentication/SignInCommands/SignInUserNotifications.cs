@@ -1,4 +1,4 @@
-﻿namespace iot.Application.Commands.Users.Authentication.SignInCommands;
+﻿namespace TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 
 public class SignInUserNotifications : INotification
 {

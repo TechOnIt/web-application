@@ -1,5 +1,5 @@
-﻿using iot.Domain.Enums;
+﻿using TechOnIt.Domain.Enums;
 
-namespace iot.Application.Common.Models.ViewModels.Sensors;
+namespace TechOnIt.Application.Common.Models.ViewModels.Sensors;
 
 public record SensorViewModel(Guid Id, SensorType SensorType, Guid PlaceId);

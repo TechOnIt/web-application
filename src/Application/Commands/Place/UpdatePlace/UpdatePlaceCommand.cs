@@ -1,10 +1,10 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Application.Events.ProductNotifications;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Place.UpdatePlace;
+namespace TechOnIt.Application.Commands.Place.UpdatePlace;
 
-public class UpdatePlaceCommand : IRequest<Result<Guid>>,ICommittableRequest
+public class UpdatePlaceCommand : IRequest<Result<Guid>>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }
@@ -28,16 +28,16 @@ public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, Res
     {
         try
         {
-            var getPlace = await _unitOfWorks.StructureRepository.GetPlaceByIdAsync(request.Id,cancellationToken);
+            var getPlace = await _unitOfWorks.StructureRepository.GetPlaceByIdAsync(request.Id, cancellationToken);
             if (getPlace is null)
                 return Result.Fail($"can not find place with id : {request.Id}");
 
             getPlace.StuctureId = request.StuctureId;
-            getPlace.Name=request.Name;
+            getPlace.Name = request.Name;
             getPlace.Description = request.Description;
             getPlace.SetModifyDate();
 
-            await _unitOfWorks.StructureRepository.UpdatePlaceAsync(request.StuctureId,getPlace,cancellationToken);
+            await _unitOfWorks.StructureRepository.UpdatePlaceAsync(request.StuctureId, getPlace, cancellationToken);
 
             await _mediator.Publish(new PlaceNotifications());
             return Result.Ok(request.Id);

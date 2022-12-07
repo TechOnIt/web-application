@@ -1,11 +1,11 @@
-﻿using iot.Application.Common.Interfaces;
-using iot.Application.Events.ProductNotifications;
-using iot.Domain.Enums;
-using iot.Infrastructure.Repositories.UnitOfWorks;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Enums;
+using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
+using TechOnIt.Application.Common.Interfaces;
 
-namespace iot.Application.Commands.Sensor.UpdateSensor;
+namespace TechOnIt.Application.Commands.Sensor.UpdateSensor;
 
-public class UpdateSensorCommand : IRequest<Result<Guid>>,ICommittableRequest
+public class UpdateSensorCommand : IRequest<Result<Guid>>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public SensorType? SensorType { get; private set; }
@@ -31,11 +31,11 @@ public class UpdateSensorCommandHandler : IRequestHandler<UpdateSensorCommand, R
         var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>();
         try
         {
-            var sesnor = await repo.Table.FirstOrDefaultAsync(a=>a.Id==request.Id);
+            var sesnor = await repo.Table.FirstOrDefaultAsync(a => a.Id == request.Id);
             if (sesnor is null)
                 return Result.Fail($"can not find sesnsor with id : {request.Id}");
 
-            sesnor.PlaceId=request.PlaceId;
+            sesnor.PlaceId = request.PlaceId;
             sesnor.SetSensorType(request.SensorType);
 
             await repo.UpdateAsync(sesnor);

@@ -1,6 +1,6 @@
-﻿using iot.Infrastructure.Common.Notifications.Contracts;
+﻿using TechOnIt.Infrastructure.Common.Notifications.Contracts;
 
-namespace iot.Infrastructure.Common.Notifications.SmtpClientEmail;
+namespace TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
 
 public interface ISmtpEmailService : ISendEmail
 {

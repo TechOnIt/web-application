@@ -1,6 +1,6 @@
 ﻿using Shouldly;
 
-namespace iot.Domain.UnitTests.ValueObjects;
+namespace TechOnIt.Domain.UnitTests.ValueObjects;
 
 public class PasswordHashTests
 {

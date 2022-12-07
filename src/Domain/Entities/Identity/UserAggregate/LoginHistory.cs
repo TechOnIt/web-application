@@ -1,8 +1,8 @@
-﻿using iot.Domain.Common;
-using iot.Domain.ValueObjects;
+﻿using TechOnIt.Domain.Common;
 using System;
+using TechOnIt.Domain.ValueObjects;
 
-namespace iot.Domain.Entities.Identity.UserAggregate;
+namespace TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 public class LoginHistory
 {

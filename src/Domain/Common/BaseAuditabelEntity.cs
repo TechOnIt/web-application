@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iot.Domain.Common
+namespace TechOnIt.Domain.Common
 {
     public abstract class BaseAuditabelEntity
     {

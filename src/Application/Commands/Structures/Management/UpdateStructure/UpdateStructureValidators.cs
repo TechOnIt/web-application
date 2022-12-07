@@ -1,4 +1,6 @@
-﻿namespace iot.Application.Commands.Structures.Management.UpdateStructure;
+﻿using TechOnIt.Application.Common.Models;
+
+namespace TechOnIt.Application.Commands.Structures.Management.UpdateStructure;
 
 public class UpdateStructureValidators : BaseFluentValidator<UpdateStructureCommand>
 {
@@ -15,7 +17,7 @@ public class UpdateStructureValidators : BaseFluentValidator<UpdateStructureComm
             .NotNull()
             ;
 
-        RuleFor(a=>a.Id)
+        RuleFor(a => a.Id)
             .NotEmpty()
             .NotNull()
             ;

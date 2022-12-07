@@ -1,4 +1,7 @@
-﻿namespace iot.Application.Commands.Users.Management.CreateUser;
+﻿using TechOnIt.Application.Common.Constants;
+using TechOnIt.Application.Common.Models;
+
+namespace TechOnIt.Application.Commands.Users.Management.CreateUser;
 
 public class CreateUserValidation : BaseFluentValidator<CreateUserCommand>
 {

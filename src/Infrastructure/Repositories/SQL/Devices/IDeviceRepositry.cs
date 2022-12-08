@@ -9,4 +9,5 @@ public interface IDeviceRepositry
     Task CreateAsync(Device device, CancellationToken cancellationToken = default);
     Task UpdateAsync(Device device, CancellationToken cancellationToken = default);
     Task DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Device device, CancellationToken cancellationToken);
 }

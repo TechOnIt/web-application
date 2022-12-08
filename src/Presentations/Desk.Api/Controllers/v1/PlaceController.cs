@@ -8,7 +8,6 @@ public class PlaceController : ControllerBase
 {
     #region Ctor
     private readonly IMediator _mediator;
-
     public PlaceController(IMediator mediator)
     {
         _mediator = mediator;

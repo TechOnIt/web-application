@@ -85,6 +85,8 @@ public class StructureRepository : IStructureRepository
             return await Task.FromResult(await query.ToListAsync(cancellationToken));
         }
     }
+    public async Task<bool> IsExistsStructoreByIdAsync(Guid structoreId, CancellationToken cancellationToken)
+        => await Task.FromResult(await _context.Structures.AnyAsync(a => a.Id == structoreId));
     #endregion
 
     #region Common
@@ -96,15 +98,27 @@ public class StructureRepository : IStructureRepository
 
         await Task.CompletedTask;
     }
+
     public async Task<IList<Place>?> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken)
     {
         var getstructure = await _context.Structures
+            .Include(p => p.Places)
             .FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
+
         if (getstructure is not null)
             return getstructure.Places as IList<Place>;
         else
-            return new List<Place>();
+            return await Task.FromResult<IList<Place>?>(null);
     }
+
+    public async Task<Place?> GetPlaceByStructureIdAsync(Guid structorId, Guid placeId, CancellationToken cancellationToken)
+    {
+        var place = await _context.Places.FirstOrDefaultAsync(a => a.StuctureId == structorId && a.Id == placeId, cancellationToken);
+        if (place is null) return await Task.FromResult<Place?>(null);
+
+        return await Task.FromResult(place);
+    }
+
     #endregion
 
     #region Place
@@ -120,35 +134,21 @@ public class StructureRepository : IStructureRepository
     }
     public async Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken)
     {
-        var getstructure = await _context.Structures
-            .FirstOrDefaultAsync(a => a.Id == StructureId, cancellationToken);
-
-        cancellationToken.ThrowIfCancellationRequested();
-
-        if (getstructure is not null)
-        {
-            getstructure.AddPlace(place);
-            _context.Structures.Update(getstructure);
-        }
-
+        await _context.Places.AddAsync(place, cancellationToken);
         await Task.CompletedTask;
     }
-    public async Task DeletePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken)
+    public async Task DeletePlaceAsync(Place place, CancellationToken cancellationToken)
     {
-        var getStructure = await _context.Structures
-            .FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
-
-        cancellationToken.ThrowIfCancellationRequested();
-
-        if (getStructure is not null)
-            getStructure.RemovePlace(place);
+        if (!cancellationToken.IsCancellationRequested)
+            _context.Places.Remove(place);
 
         await Task.CompletedTask;
     }
     public async Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken)
     {
-        cancellationToken.ThrowIfCancellationRequested();
-        _context.Places.Update(place);
+        if (!cancellationToken.IsCancellationRequested)
+            _context.Places.Update(place);
+
         await Task.CompletedTask;
     }
     #endregion

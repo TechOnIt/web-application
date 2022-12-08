@@ -52,6 +52,7 @@ public static class ConfigureServices
         services.AuthenticationCustomServices();
 
         services.TryAddTransient<IDeviceService, DeviceService>();
+        services.TryAddTransient<IStructureAggeregateService, StructureAggeregateService>();
         //services.ConfigureWritable<SiteSettings>(Configuration.GetSection("SiteSettings"));
         //services.TryAddTransient(typeof(IAppSettingsService<>), typeof(AppSettingsService<>));
 

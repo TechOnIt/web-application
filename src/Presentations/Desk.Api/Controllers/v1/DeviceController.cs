@@ -11,7 +11,6 @@ public class DeviceController : ControllerBase
 {
     #region Ctor
     private readonly IMediator _mediator;
-
     public DeviceController(IMediator mediator)
     {
         _mediator = mediator;

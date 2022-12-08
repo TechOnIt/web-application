@@ -1,50 +1,48 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using TechOnIt.Domain.Enums;
-using Microsoft.Extensions.Logging;
 using TechOnIt.Application.Common.Interfaces;
+using TechOnIt.Application.Common.Models.ViewModels.Structures;
 
 namespace TechOnIt.Application.Commands.Structures.Management.CreateStructure;
 
-public class CreateStructureCommand : IRequest<Result<Concurrency>>, ICommittableRequest
+public class CreateStructureCommand : IRequest<object>, ICommittableRequest
 {
     public string Name { get; set; }
     public string? Description { get; set; }
     public StuctureType Type { get; private set; }
 }
 
-public class CreateStructureCommandHandler : IRequestHandler<CreateStructureCommand, Result<Concurrency>>
+public class CreateStructureCommandHandler : IRequestHandler<CreateStructureCommand, object>
 {
     #region Ctor
-    private readonly IUnitOfWorks _unitOfWorks;
-    private readonly ILogger<CreateStructureCommandHandler> _logger;
+    private readonly IStructureAggeregateService _structureAggeregateService;
     private readonly IMediator _mediator;
 
-    public CreateStructureCommandHandler(IUnitOfWorks unitOfWorks, ILogger<CreateStructureCommandHandler> logger, IMediator mediator)
+    public CreateStructureCommandHandler(IStructureAggeregateService structureAggeregateService, IMediator mediator)
     {
-        _unitOfWorks = unitOfWorks;
-        _logger = logger;
+        _structureAggeregateService = structureAggeregateService;
         _mediator = mediator;
     }
+
     #endregion
 
-    public async Task<Result<Concurrency>> Handle(CreateStructureCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(CreateStructureCommand request, CancellationToken cancellationToken)
     {
-
         try
         {
-            var newId = Guid.NewGuid();
-            // Create new structure model.
-            var structure = new Structure(newId, request.Name, request.Description, DateTime.Now, null, request.Type);
+            var structure = new StructureViewModel(Guid.NewGuid(), request.Name, request.Description,true, request.Type, DateTime.Now);
+            var createRes = await _structureAggeregateService.CreateStructureAsync(structure,cancellationToken);
 
-            await _unitOfWorks.StructureRepository.CreateAsync(structure, cancellationToken);
+            if (createRes is null)
+                return ResultExtention.Failed($"an error occared !");
+
             await _mediator.Publish(new StructureNotifications(), cancellationToken);
-            return Result.Ok(structure.ApiKey);
+
+            return ResultExtention.ConcurrencyResult(createRes);
         }
         catch (Exception exp)
         {
-            _logger.LogError(exp.Message);
-            return Result.Fail("error during insert structure...");
+            throw new Exception(exp.Message);
         }
     }
 }

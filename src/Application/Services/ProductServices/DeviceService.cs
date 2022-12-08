@@ -1,21 +1,20 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Devices;
-using TechOnIt.Application.Services.ProductServices.ProductContracts;
 
 namespace TechOnIt.Application.Services.ProductServices;
 
 public class DeviceService : IDeviceService
 {
     #region Ctor
-    private readonly IUnitOfWorks _uow;
-
+    private readonly IUnitOfWorks _unitOfWorks; // _unitOfWork is better than _uow : _uow is not clean !
     public DeviceService(IUnitOfWorks unitOfWorks)
     {
-        _uow = unitOfWorks;
+        _unitOfWorks = unitOfWorks;
     }
     #endregion
+
     public async Task<DeviceViewModel?> FindByIdAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
-        var getDevice = await _uow.DeviceRepositry.FindByIdAsync(deviceId, cancellationToken);
+        var getDevice = await _unitOfWorks.DeviceRepositry.FindByIdAsync(deviceId, cancellationToken);
         if (getDevice is null)
             return await Task.FromResult<DeviceViewModel?>(null);
 
@@ -24,7 +23,7 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceViewModel?> FindByIdAsNoTrackingAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
-        var getDevice = await _uow.DeviceRepositry.FindByIdAsNoTrackingAsync(deviceId, cancellationToken);
+        var getDevice = await _unitOfWorks.DeviceRepositry.FindByIdAsNoTrackingAsync(deviceId, cancellationToken);
         if (getDevice is null)
             return await Task.FromResult<DeviceViewModel?>(null);
 
@@ -33,21 +32,14 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceViewModel?> CreateAsync(DeviceViewModel device, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            device.Id = Guid.NewGuid();
-            await _uow.DeviceRepositry.CreateAsync(device.Adapt<Device>(), cancellationToken);
-            return await Task.FromResult<DeviceViewModel?>(device);
-        }
-        catch
-        {
-            return await Task.FromResult<DeviceViewModel?>(null);
-        }
+        device.Id = Guid.NewGuid();
+        await _unitOfWorks.DeviceRepositry.CreateAsync(device.Adapt<Device>(), cancellationToken);
+        return await Task.FromResult<DeviceViewModel?>(device);
     }
 
     public async Task<DeviceViewModel?> UpdateAsync(DeviceViewModel device, CancellationToken cancellationToken = default)
     {
-        var getrecentDevice = await _uow.DeviceRepositry.FindByIdAsync(device.Id, cancellationToken);
+        var getrecentDevice = await _unitOfWorks.DeviceRepositry.FindByIdAsync(device.Id, cancellationToken);
         if (getrecentDevice is null)
             return await Task.FromResult<DeviceViewModel?>(null);
 
@@ -55,13 +47,19 @@ public class DeviceService : IDeviceService
         getrecentDevice.IsHigh = device.IsHigh;
         getrecentDevice.SetDeviceType(device.DeviceType);
 
-        await _uow.DeviceRepositry.UpdateAsync(getrecentDevice, cancellationToken);
+        await _unitOfWorks.DeviceRepositry.UpdateAsync(getrecentDevice, cancellationToken);
         return await Task.FromResult(device);
     }
 
-    public async Task<bool> DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken = default)
+    public async Task<bool?> DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken = default)
     {
-        await _uow.DeviceRepositry.DeleteByIdAsync(DeviceId, cancellationToken);
+        var device = await _unitOfWorks.DeviceRepositry.FindByIdAsync(DeviceId,cancellationToken);
+        if(device is null) return await Task.FromResult<bool?>(null);
+        else
+        {
+            await _unitOfWorks.DeviceRepositry.DeleteAsync(device,cancellationToken);
+        }
+
         return await Task.FromResult(true);
     }
 }

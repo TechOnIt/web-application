@@ -31,6 +31,8 @@ public class Place
     {
         return (DateTime)ModifyDate;
     }
+
+    public void SetCreateDate() => this.CreateDate = DateTime.Now;
     #endregion
 
     public Guid Id { get; set; }

@@ -15,11 +15,13 @@ public interface IStructureRepository
     Task<Structure?> GetByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken = default);
     Task<IList<Structure>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<IList<Structure>> GetAllByFilterAsync(CancellationToken cancellationToken, Expression<Func<Structure, bool>> filter = null);
+    Task<bool> IsExistsStructoreByIdAsync(Guid structoreId, CancellationToken cancellationToken);
     #endregion
 
     #region Common
     Task CreateWithPlacesAsync(Structure structure, IList<Place> places, CancellationToken cancellationToken = default);
     Task<IList<Place>?> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken = default);
+    Task<Place?> GetPlaceByStructureIdAsync(Guid structorId, Guid placeId, CancellationToken cancellationToken);
     #endregion
 
     #region Place
@@ -28,6 +30,6 @@ public interface IStructureRepository
     Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>> filter = null);
     Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken = default);
     Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default);
-    Task DeletePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default);
+    Task DeletePlaceAsync(Place place, CancellationToken cancellationToken = default);
     #endregion
 }

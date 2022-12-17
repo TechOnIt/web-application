@@ -1,10 +1,10 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using TechOnIt.Application.Common.Interfaces;
+using TechOnIt.Application.Common.Models.ViewModels.Places;
 
 namespace TechOnIt.Application.Commands.Place.CreatePlace;
 
-public class CreatePlaceCommand : IRequest<Result<Guid>>, ICommittableRequest
+public class CreatePlaceCommand : IRequest<object>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }
@@ -12,37 +12,35 @@ public class CreatePlaceCommand : IRequest<Result<Guid>>, ICommittableRequest
     public Guid StuctureId { get; set; }
 }
 
-public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, Result<Guid>>
+public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, object>
 {
     #region constructor
-    private readonly IUnitOfWorks _unitOfWorks;
+    private readonly IStructureAggeregateService _structureAggeregateService;
     private readonly IMediator _mediator;
 
-    public CreatePlaceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
+    public CreatePlaceCommandHandler(IStructureAggeregateService structureAggeregateService, IMediator mediator)
     {
-        _unitOfWorks = unitOfWorks;
+        _structureAggeregateService = structureAggeregateService;
         _mediator = mediator;
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(CreatePlaceCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(CreatePlaceCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
-            if (request.Id == Guid.Empty)
-                request.Id = Guid.NewGuid();
-
-            var newPlace = new Domain.Entities.Product.StructureAggregate
-                .Place(request.Id, request.Name, request.Description, DateTime.Now, DateTime.Now, request.StuctureId);
-
-            await _unitOfWorks.StructureRepository.CreatePlaceAsync(newPlace, request.StuctureId, cancellationToken);
+            var newPlace = new PlaceCreateViewModel(request.Id, request.Name, request.Description, request.StuctureId);
+            var createRes = await _structureAggeregateService.CreatePlaceAsync(request.StuctureId,newPlace,cancellationToken);
+            if (createRes is null)
+                return ResultExtention.Failed($"can not find structore with id : {request.StuctureId}");
 
             await _mediator.Publish(new PlaceNotifications());
-            return Result.Ok(request.Id);
+
+            return ResultExtention.IdResult(createRes.Value);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

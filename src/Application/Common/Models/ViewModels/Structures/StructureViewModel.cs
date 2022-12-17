@@ -5,6 +5,22 @@ namespace TechOnIt.Application.Common.Models.ViewModels.Structures;
 
 public class StructureViewModel
 {
+    public StructureViewModel(Guid id, string name, string description, bool isActive, StuctureType type, DateTime? modifyDate)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        IsActive = isActive;
+        Type = type;
+        CreateDate = DateTime.Now;
+        ModifyDate = modifyDate;
+    }
+
+    public StructureViewModel()
+    {
+
+    }
+
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
@@ -14,17 +30,4 @@ public class StructureViewModel
     public DateTime CreateDate { get; set; }
     public DateTime? ModifyDate { get; set; }
 
-    #region explicit casting
-
-    public static explicit operator Structure(StructureViewModel viewModel)
-    {
-        return new Structure()
-        {
-            Id = viewModel.Id,
-            Name = viewModel.Name,
-            Description = viewModel.Description,
-            IsActive = viewModel.IsActive
-        };
-    }
-    #endregion
 }

@@ -2,20 +2,19 @@
 using TechOnIt.Application.Events.ProductNotifications;
 using TechOnIt.Domain.Enums;
 using TechOnIt.Application.Common.Interfaces;
-using TechOnIt.Application.Services.ProductServices.ProductContracts;
 
 namespace TechOnIt.Application.Commands.Device.UpdateDevice;
 
-public class UpdateDeviceCommand : IRequest<Result<Guid>>, ICommittableRequest
+public class UpdateDeviceCommand : IRequest<object>, ICommittableRequest
 {
     public Guid DeviceId { get; set; }
     public int Pin { get; set; }
-    public DeviceType DeviceType { get; private set; }
+    public DeviceType DeviceType { get; set; }
     public bool IsHigh { get; set; }
     public Guid PlaceId { get; set; }
 }
 
-public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, Result<Guid>>
+public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, object>
 {
     #region Constructure
     private readonly IDeviceService _deviceService;
@@ -27,7 +26,8 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, R
     }
 
     #endregion
-    public async Task<Result<Guid>> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken = default)
+
+    public async Task<object> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -35,14 +35,15 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, R
             var updateResult = await _deviceService.UpdateAsync(viewModel, cancellationToken);
 
             if (updateResult is null)
-                return Result.Fail("device can not be found !");
+                return ResultExtention.Failed("device can not be found !");
 
             await _mediator.Publish(new DeviceNotifications());
-            return Result.Ok(updateResult.Id);
+
+            return ResultExtention.IdResult(updateResult.Id);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

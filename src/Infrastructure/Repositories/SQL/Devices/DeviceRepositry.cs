@@ -48,10 +48,10 @@ public class DeviceRepositry : IDeviceRepositry
         await Task.CompletedTask;
     }
 
-    public async Task UpdateAsync(Device device, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(Device device, CancellationToken cancellationToken)
     {
         if (!cancellationToken.IsCancellationRequested)
-            _context.Entry<Domain.Entities.Product.Device>(device).State = EntityState.Modified;
+            _context.Devices.Update(device);
 
         await Task.CompletedTask;
     }
@@ -61,7 +61,7 @@ public class DeviceRepositry : IDeviceRepositry
     /// </summary>
     /// <param name="DeviceId"></param>
     /// <returns></returns>
-    public async Task DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken = default)
+    public async Task DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken =default)
     {
         var getDevice = await _context.Devices.FirstOrDefaultAsync(a => a.Id == DeviceId);
 
@@ -70,6 +70,16 @@ public class DeviceRepositry : IDeviceRepositry
 
         if (!cancellationToken.IsCancellationRequested)
             _context.Entry<Domain.Entities.Product.Device>(getDevice).State = EntityState.Deleted;
+
+        await Task.CompletedTask;
+    }
+
+    public async Task DeleteAsync(Device device,CancellationToken cancellationToken)
+    {
+        if (!cancellationToken.IsCancellationRequested)
+        {
+            _context.Devices.Remove(device);
+        }
 
         await Task.CompletedTask;
     }

@@ -1,45 +1,43 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Place.DeletePlace;
 
-public class DeletePlaceCommand : IRequest<Result<Guid>>, ICommittableRequest
+public class DeletePlaceCommand : IRequest<object>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public Guid StructureId { get; set; }
 }
 
-public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, Result<Guid>>
+public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, object>
 {
     #region constructore
-    private readonly IUnitOfWorks _unitOfWorks;
+    private readonly IStructureAggeregateService _structureAggeregateService;
     private readonly IMediator _mediator;
 
-    public DeletePlaceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
+    public DeletePlaceCommandHandler(IStructureAggeregateService structureAggeregateService, IMediator mediator)
     {
-        _unitOfWorks = unitOfWorks;
+        _structureAggeregateService = structureAggeregateService;
         _mediator = mediator;
     }
 
     #endregion
 
-    public async Task<Result<Guid>> Handle(DeletePlaceCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(DeletePlaceCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var place = await _unitOfWorks.StructureRepository.GetPlaceByIdAsync(request.Id, cancellationToken);
-            if (place is null)
-                return Result.Fail($"can not find place with id : {request.Id}");
-
-            await _unitOfWorks.StructureRepository.DeletePlaceAsync(request.StructureId, place, cancellationToken);
+            var res = await _structureAggeregateService.DeletePlaceByStructureIdAsync(request.StructureId, request.Id, cancellationToken);
+            if (res is null)
+                return ResultExtention.Failed($"can not find place with id : {request.Id}");
 
             await _mediator.Publish(new PlaceNotifications());
-            return Result.Ok(request.Id);
+
+            return ResultExtention.BooleanResult(res);
         }
         catch (Exception exp)
         {
-            return Result.Fail($" error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

@@ -32,5 +32,5 @@ public interface IDeviceService
     /// Delete an specific device.
     /// </summary>
     /// <param name="DeviceId">Device unique id for delete.</param>
-    Task<bool> DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken = default);
+    Task<bool?> DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken = default);
 }

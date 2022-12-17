@@ -3,19 +3,18 @@ using TechOnIt.Domain.Enums;
 using Mapster;
 using TechOnIt.Application.Common.Interfaces;
 using TechOnIt.Application.Common.Models.ViewModels.Devices;
-using TechOnIt.Application.Services.ProductServices.ProductContracts;
 
 namespace TechOnIt.Application.Commands.Device.CreateDevice;
 
-public class CreateDeviceCommand : IRequest<Result<Guid>>, ICommittableRequest
+public class CreateDeviceCommand : IRequest<object>, ICommittableRequest
 {
     public int Pin { get; set; }
-    public DeviceType DeviceType { get; private set; }
+    public DeviceType DeviceType { get; set; }
     public bool IsHigh { get; set; }
     public Guid PlaceId { get; set; }
 }
 
-public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, Result<Guid>>
+public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, object>
 {
     #region Ctor
     private readonly IDeviceService _deviceService;
@@ -26,11 +25,9 @@ public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, R
         _deviceService = deviceService;
         _mediator = mediator;
     }
-
-
     #endregion
 
-    public async Task<Result<Guid>> Handle(CreateDeviceCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(CreateDeviceCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -40,13 +37,13 @@ public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, R
             await _mediator.Publish(new DeviceNotifications());
 
             if (createResult is null)
-                return Result.Fail("an error occured !");
+                return ResultExtention.Failed("an error occured !");
             else
-                return Result.Ok(createResult.Id);
+                return ResultExtention.IdResult(createResult.Id);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

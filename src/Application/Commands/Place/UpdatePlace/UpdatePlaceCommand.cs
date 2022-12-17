@@ -1,10 +1,9 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Place.UpdatePlace;
 
-public class UpdatePlaceCommand : IRequest<Result<Guid>>, ICommittableRequest
+public class UpdatePlaceCommand : IRequest<object>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }
@@ -12,39 +11,35 @@ public class UpdatePlaceCommand : IRequest<Result<Guid>>, ICommittableRequest
     public Guid StuctureId { get; set; }
 }
 
-public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, Result<Guid>>
+public class UpdatePlaceCommandHandler : IRequestHandler<UpdatePlaceCommand, object>
 {
     #region constructor
-    private readonly IUnitOfWorks _unitOfWorks;
+    private readonly IStructureAggeregateService _structureAggeregateService;
     private readonly IMediator _mediator;
-    public UpdatePlaceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
+    public UpdatePlaceCommandHandler(IStructureAggeregateService structureAggeregateService, IMediator mediator)
     {
-        _unitOfWorks = unitOfWorks;
+        _structureAggeregateService = structureAggeregateService;
         _mediator = mediator;
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(UpdatePlaceCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(UpdatePlaceCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var getPlace = await _unitOfWorks.StructureRepository.GetPlaceByIdAsync(request.Id, cancellationToken);
-            if (getPlace is null)
-                return Result.Fail($"can not find place with id : {request.Id}");
+            var viewModel = new Common.Models.ViewModels.Places.PlaceUpdateViewModel(request.Id,request.Name,request.Description,request.StuctureId);
+            var updateResult = await _structureAggeregateService.UpdatePlaceAsync(request.StuctureId,viewModel,cancellationToken);
 
-            getPlace.StuctureId = request.StuctureId;
-            getPlace.Name = request.Name;
-            getPlace.Description = request.Description;
-            getPlace.SetModifyDate();
-
-            await _unitOfWorks.StructureRepository.UpdatePlaceAsync(request.StuctureId, getPlace, cancellationToken);
+            if(updateResult is null)
+                return ResultExtention.Failed($"can not find place with id : {request.Id}");
 
             await _mediator.Publish(new PlaceNotifications());
-            return Result.Ok(request.Id);
+
+            return ResultExtention.IdResult(request.Id);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

@@ -3,6 +3,7 @@ using TechOnIt.Domain.Entities.Product.SensorAggregate;
 using TechOnIt.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TechOnIt.Infrastructure.Common.Consts;
 
 namespace TechOnIt.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 
@@ -21,5 +22,10 @@ public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
           .Property(t => t.SensorType)
           .HasConversion(x => x.Value, x => Enumeration.FromValue<SensorType>(x));
         // https://stackoverflow.com/questions/37513374/using-enumeration-classes-in-ef
+
+        #region column types
+        builder.Property(a => a.Id).HasColumnType(nameof(DataTypes.guid));
+        #endregion
+
     }
 }

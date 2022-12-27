@@ -71,20 +71,14 @@ public class SensorRepository : ISensorRepository
 
         await Task.CompletedTask;
     }
-    public async Task DeleteReportByIdAsync(Guid sensorId, PerformanceReport report, CancellationToken cancellationToken)
+    public async Task DeleteReportByIdAsync(Guid sensorId, Guid reportId, CancellationToken cancellationToken)
     {
-        var sensor = await _context.Sensors
-            .Include(r => r.Reports)
-            .FirstOrDefaultAsync(a => a.Id == sensorId, cancellationToken);
+        var getReport = await _context.PerformanceReports
+            .FirstOrDefaultAsync(a => a.Id == reportId && a.SensorId == sensorId);
 
-        if (sensor != null)
-        {
+        if (getReport is not null)
             if (!cancellationToken.IsCancellationRequested)
-            {
-                sensor.RemoveReport(report);
-                _context.Update(sensor);
-            }
-        }
+                _context.PerformanceReports.Remove(getReport);
 
         await Task.CompletedTask;
     }

@@ -15,7 +15,7 @@ public interface ISensorRepository
     #region report
     Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken = default);
     Task ClearReportsBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken = default);
-    Task DeleteReportByIdAsync(Guid sensorId, PerformanceReport report, CancellationToken cancellationToken = default);
+    Task DeleteReportByIdAsync(Guid sensorId, Guid reportId, CancellationToken cancellationToken);
     Task<PerformanceReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken = default);
     #endregion
 }

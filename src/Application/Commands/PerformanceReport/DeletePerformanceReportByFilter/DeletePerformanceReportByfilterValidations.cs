@@ -1,14 +1,12 @@
-﻿using TechOnIt.Application.Common.Models;
-
-namespace TechOnIt.Application.Commands.PerformanceReport.DeletePerformanceReportByFilter;
+﻿namespace TechOnIt.Application.Commands.PerformanceReport.DeletePerformanceReportByFilter;
 
 public class DeletePerformanceReportByfilterValidations : BaseFluentValidator<DeletePerformanceReportByfilterCommand>
 {
     public DeletePerformanceReportByfilterValidations()
     {
-        RuleFor(a => a.Filter)
+        RuleFor(a => a.SensorId)
             .NotNull()
             .NotEmpty()
-            ;
+            .NotEqual(Guid.Empty);
     }
 }

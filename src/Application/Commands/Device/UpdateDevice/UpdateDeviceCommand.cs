@@ -1,5 +1,4 @@
-﻿using TechOnIt.Application.Common.Models.ViewModels.Devices;
-using TechOnIt.Application.Events.ProductNotifications;
+﻿using TechOnIt.Application.Events.ProductNotifications;
 using TechOnIt.Domain.Enums;
 using TechOnIt.Application.Common.Interfaces;
 
@@ -17,11 +16,11 @@ public class UpdateDeviceCommand : IRequest<object>, ICommittableRequest
 public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, object>
 {
     #region Constructure
-    private readonly IDeviceService _deviceService;
+    private readonly IUnitOfWorks _unitOfWorks;
     private readonly IMediator _mediator;
-    public UpdateDeviceCommandHandler(IDeviceService deviceService, IMediator mediator)
+    public UpdateDeviceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
     {
-        _deviceService = deviceService;
+        _unitOfWorks=unitOfWorks;
         _mediator = mediator;
     }
 
@@ -31,15 +30,19 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, o
     {
         try
         {
-            var viewModel = new DeviceViewModel(request.DeviceId, request.PlaceId, request.Pin, request.DeviceType, request.IsHigh);
-            var updateResult = await _deviceService.UpdateAsync(viewModel, cancellationToken);
+            var updateResult= 
+                Task.Factory
+                .StartNew(() => _unitOfWorks.DeviceRepositry.UpdateAsync(request.Adapt<TechOnIt.Domain.Entities.Product.Device>(),cancellationToken)
+                ,cancellationToken);
 
-            if (updateResult is null)
-                return ResultExtention.Failed("device can not be found !");
+            Task.WaitAny(updateResult);
+
+            if (updateResult.IsFaulted)
+                return await Task.FromResult(ResultExtention.Failed("device can not be found !"));
 
             await _mediator.Publish(new DeviceNotifications());
 
-            return ResultExtention.IdResult(updateResult.Id);
+            return await Task.FromResult(ResultExtention.IdResult(request.DeviceId));
         }
         catch (Exception exp)
         {

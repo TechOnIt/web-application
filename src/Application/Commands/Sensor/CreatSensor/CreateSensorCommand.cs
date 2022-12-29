@@ -5,14 +5,26 @@ using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Sensor.CreatSensor;
 
-public class CreateSensorCommand : IRequest<Result<Guid>>, ICommittableRequest
+public class CreateSensorCommand : IRequest<object>, ICommittableRequest
 {
-    public Guid? Id { get; set; }
+    private Guid? _sensorId;
+    public Guid Id 
+    {
+        get
+        {
+            if (_sensorId is null)
+                _sensorId = Guid.NewGuid();
+
+            return (Guid)_sensorId;
+        }
+
+        set { _sensorId = value; }
+    }
     public SensorType? SensorType { get; private set; }
     public Guid PlaceId { get; set; }
 }
 
-public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, Result<Guid>>
+public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, object>
 {
     #region constructure
     private readonly IUnitOfWorks _unitOfWorks;
@@ -25,23 +37,28 @@ public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, R
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(CreateSensorCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(CreateSensorCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
-            if (request.Id == null || request.Id == Guid.Empty)
-                request.Id = Guid.NewGuid();
+            request.Id = request.Id == Guid.Empty ? Guid.NewGuid() : request.Id;
 
-            await _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>()
-                .AddAsync(new Domain.Entities.Product.SensorAggregate.Sensor((Guid)request.Id, request.SensorType, request.PlaceId));
+            Task createSensor = Task.Factory
+                .StartNew(() =>
+                _unitOfWorks.SensorRepository.CreateSensorAsync(request.Adapt<TechOnIt.Domain.Entities.Product.SensorAggregate.Sensor>(), cancellationToken)
+            , cancellationToken);
+
+            await createSensor;
+
+            if (createSensor.IsFaulted)
+                return await Task.FromResult(ResultExtention.Failed("error ocurred !"));
 
             await _mediator.Publish(new SensorNotifications());
-
-            return Result.Ok((Guid)request.Id);
+            return await Task.FromResult(ResultExtention.IdResult(request.Id));
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

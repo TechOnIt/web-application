@@ -1,16 +1,14 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using System.Linq.Expressions;
 using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.PerformanceReport.DeletePerformanceReportByFilter;
 
-public class DeletePerformanceReportByfilterCommand : IRequest<Result>, ICommittableRequest
+public class DeletePerformanceReportByfilterCommand : IRequest<bool>, ICommittableRequest
 {
-    public Expression<Func<Domain.Entities.Product.SensorAggregate.PerformanceReport, bool>> Filter { get; set; }
+    public Guid SensorId { get; set; }
 }
 
-public class DeletePerformanceReportByfilterCommandHandler : IRequestHandler<DeletePerformanceReportByfilterCommand, Result>
+public class DeletePerformanceReportByfilterCommandHandler : IRequestHandler<DeletePerformanceReportByfilterCommand, bool>
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -23,20 +21,24 @@ public class DeletePerformanceReportByfilterCommandHandler : IRequestHandler<Del
 
     #endregion
 
-    public async Task<Result> Handle(DeletePerformanceReportByfilterCommand request, CancellationToken cancellationToken = default)
+    public async Task<bool> Handle(DeletePerformanceReportByfilterCommand request, CancellationToken cancellationToken = default)
     {
-        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.PerformanceReport>();
-
         try
         {
-            var mustRemove = await repo.Table.Where(request.Filter).ToListAsync();
-            await repo.DeleteRangeAsync(mustRemove);
+            Task cleareAllReports =
+                Task.Factory.StartNew(() =>
+                _unitOfWorks.SensorRepository
+                .ClearReportsBySensorIdAsync(request.SensorId, cancellationToken), cancellationToken);
+
+            Task.WaitAny(cleareAllReports);
+
             await _mediator.Publish(new PerformanceReportNotifications());
-            return Result.Ok();
+
+            return await Task.FromResult(true);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

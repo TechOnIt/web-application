@@ -19,42 +19,44 @@ public class StructureRepository : IStructureRepository
     // attention pls : i removed default for cancellation parameter because i want all them be required !
     #region Structure
     public async Task CreateAsync(Structure structure, CancellationToken cancellationToken) => await _context.Structures.AddAsync(structure, cancellationToken);
-    public async Task UpdateAsync(Structure structure, CancellationToken cancellationToken)
+    public async Task<bool> UpdateAsync(Structure structure, CancellationToken cancellationToken)
     {
         var getStructure = await _context.Structures
             .FirstOrDefaultAsync(a => a.Id == structure.Id, cancellationToken);
 
         if (getStructure is not null)
-        {
-            getStructure.Description = structure.Description;
-            getStructure.SetStructureType(structure.Type);
-            getStructure.IsActive = structure.IsActive;
-            getStructure.Name = structure.Name;
-            getStructure.SetModifyDate();
+            return false;
 
-            cancellationToken.ThrowIfCancellationRequested();
-            _context.Structures.Update(getStructure);
-        }
+        getStructure.Description = structure.Description;
+        getStructure.SetStructureType(structure.Type);
+        getStructure.IsActive = structure.IsActive;
+        getStructure.Name = structure.Name;
+        getStructure.SetModifyDate();
 
-        await Task.CompletedTask;
+        cancellationToken.ThrowIfCancellationRequested();
+        _context.Structures.Update(getStructure);
+        return true;
     }
     public async Task DeleteAsync(Structure structure, CancellationToken cancellationToken)
     {
-        cancellationToken.ThrowIfCancellationRequested();
-        _context.Structures.Remove(structure);
+        if (!cancellationToken.IsCancellationRequested)
+            _context.Structures.Remove(structure);
+
         await Task.CompletedTask;
     }
-    public async Task DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken)
+    public async Task<bool> DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken)
     {
-        var getStructure = await _context.Structures
-            .FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
+        //https://entityframework-extensions.net/delete-from-query
+        //var getStructure = await _context.Structures.Where(a => a.Id == structureId).DeleteFromQuery(); .net7 - efcore 7
 
-        cancellationToken.ThrowIfCancellationRequested();
-
+        var getStructure = await _context.Structures.FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
         if (getStructure is not null)
+        {
             _context.Structures.Remove(getStructure);
-
-        await Task.CompletedTask;
+            return true;
+        }
+        else
+            return false;
     }
     public async Task<Structure> GetByIdAsync(Guid structureId, CancellationToken cancellationToken)
         => await Task.FromResult(await _context.Structures.FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken) ?? new Structure());
@@ -137,12 +139,13 @@ public class StructureRepository : IStructureRepository
         await _context.Places.AddAsync(place, cancellationToken);
         await Task.CompletedTask;
     }
-    public async Task DeletePlaceAsync(Place place, CancellationToken cancellationToken)
+    public async Task<bool> DeletePlaceAsync(Guid placeId, Guid structureId, CancellationToken cancellationToken)
     {
-        if (!cancellationToken.IsCancellationRequested)
-            _context.Places.Remove(place);
+        Place? place = await _context.Places.FirstOrDefaultAsync(a => a.StuctureId == structureId && a.Id == placeId, cancellationToken);
+        if (place is null) return false;
 
-        await Task.CompletedTask;
+        _context.Places.Remove(place);
+        return true;
     }
     public async Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken)
     {

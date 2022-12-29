@@ -15,17 +15,13 @@ using System.Security.Claims;
 using System.Text;
 using TechOnIt.Application.Commands.Roles.Management.CreateRole;
 using TechOnIt.Application.Common.Behaviors;
-using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 using TechOnIt.Application.Common.Frameworks.Middlewares;
-using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Reports.Roles;
 using TechOnIt.Application.Reports.StructuresAggregate;
 using TechOnIt.Application.Reports.Users;
 using TechOnIt.Application.Services.AssemblyServices;
 using TechOnIt.Application.Services.Authenticateion;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
-using TechOnIt.Application.Services.ProductServices;
-using TechOnIt.Application.Services.ProductServices.ProductContracts;
 
 namespace TechOnIt.Application;
 
@@ -51,8 +47,6 @@ public static class ConfigureServices
         services.AddReportServices();
         services.AuthenticationCustomServices();
 
-        services.TryAddTransient<IDeviceService, DeviceService>();
-        services.TryAddTransient<IStructureAggeregateService, StructureAggeregateService>();
         //services.ConfigureWritable<SiteSettings>(Configuration.GetSection("SiteSettings"));
         //services.TryAddTransient(typeof(IAppSettingsService<>), typeof(AppSettingsService<>));
 

@@ -1,15 +1,14 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
 namespace TechOnIt.Application.Commands.PerformanceReport.CreatePerformanceReport;
 
-public class CreatePerformanceReportCommand : IRequest<Result<Guid>>
+public class CreatePerformanceReportCommand : IRequest<object>
 {
     public Guid Id { get; set; }
     public int Value { get; set; }
 }
 
-public class CreatePerformanceReportCommandHandler : IRequestHandler<CreatePerformanceReportCommand, Result<Guid>>
+public class CreatePerformanceReportCommandHandler : IRequestHandler<CreatePerformanceReportCommand, object>
 {
     #region constructure
     private readonly IUnitOfWorks _unitOfWorks;
@@ -20,24 +19,27 @@ public class CreatePerformanceReportCommandHandler : IRequestHandler<CreatePerfo
         _unitOfWorks = unitOfWorks;
         _mediator = mediator;
     }
-
     #endregion
-    public async Task<Result<Guid>> Handle(CreatePerformanceReportCommand request, CancellationToken cancellationToken = default)
+
+    public async Task<object> Handle(CreatePerformanceReportCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
             if (request.Id == Guid.Empty)
                 request.Id = Guid.NewGuid();
 
-            await _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.PerformanceReport>()
-                .AddAsync(new Domain.Entities.Product.SensorAggregate.PerformanceReport(request.Id, request.Value, DateTime.Now));
+            Task insertResult = Task.Factory
+                .StartNew(() => _unitOfWorks.SensorRepository
+                .AddReportToSensorAsync(request.Adapt<TechOnIt.Domain.Entities.Product.SensorAggregate.PerformanceReport>(),cancellationToken)
+            ,cancellationToken);
 
             await _mediator.Publish(new PerformanceReportNotifications());
-            return Result.Ok(request.Id);
+
+            return await Task.FromResult(ResultExtention.IdResult(request.Id));
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

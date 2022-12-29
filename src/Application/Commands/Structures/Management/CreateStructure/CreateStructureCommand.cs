@@ -1,7 +1,7 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
 using TechOnIt.Domain.Enums;
 using TechOnIt.Application.Common.Interfaces;
-using TechOnIt.Application.Common.Models.ViewModels.Structures;
+using TechOnIt.Domain.Entities.Product.StructureAggregate;
 
 namespace TechOnIt.Application.Commands.Structures.Management.CreateStructure;
 
@@ -15,12 +15,12 @@ public class CreateStructureCommand : IRequest<object>, ICommittableRequest
 public class CreateStructureCommandHandler : IRequestHandler<CreateStructureCommand, object>
 {
     #region Ctor
-    private readonly IStructureAggeregateService _structureAggeregateService;
+    private readonly IUnitOfWorks _unitOfWorks;
     private readonly IMediator _mediator;
 
-    public CreateStructureCommandHandler(IStructureAggeregateService structureAggeregateService, IMediator mediator)
+    public CreateStructureCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
     {
-        _structureAggeregateService = structureAggeregateService;
+        _unitOfWorks = unitOfWorks;
         _mediator = mediator;
     }
 
@@ -30,15 +30,19 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
     {
         try
         {
-            var structure = new StructureViewModel(Guid.NewGuid(), request.Name, request.Description,true, request.Type, DateTime.Now);
-            var createRes = await _structureAggeregateService.CreateStructureAsync(structure,cancellationToken);
+            var model = new Structure(Guid.NewGuid(), request.Name, request.Description, DateTime.Now, DateTime.Now, request.Type);
+            Task createStructure = Task.Factory
+                .StartNew(()=>_unitOfWorks.StructureRepository.CreateAsync(model,cancellationToken)
+                ,cancellationToken);
 
-            if (createRes is null)
+            await createStructure;
+
+            if (createStructure.IsFaulted)
                 return ResultExtention.Failed($"an error occared !");
 
             await _mediator.Publish(new StructureNotifications(), cancellationToken);
 
-            return ResultExtention.ConcurrencyResult(createRes);
+            return ResultExtention.ConcurrencyResult(model.ApiKey);
         }
         catch (Exception exp)
         {

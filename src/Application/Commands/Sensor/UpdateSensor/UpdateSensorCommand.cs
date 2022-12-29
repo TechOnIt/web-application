@@ -1,6 +1,5 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
 using TechOnIt.Domain.Enums;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Sensor.UpdateSensor;
@@ -12,7 +11,7 @@ public class UpdateSensorCommand : IRequest<Result<Guid>>, ICommittableRequest
     public Guid PlaceId { get; set; }
 }
 
-public class UpdateSensorCommandHandler : IRequestHandler<UpdateSensorCommand, Result<Guid>>
+public class UpdateSensorCommandHandler : IRequestHandler<UpdateSensorCommand, object>
 {
 
     #region constrocture
@@ -26,25 +25,26 @@ public class UpdateSensorCommandHandler : IRequestHandler<UpdateSensorCommand, R
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(UpdateSensorCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(UpdateSensorCommand request, CancellationToken cancellationToken = default)
     {
-        var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>();
         try
         {
-            var sesnor = await repo.Table.FirstOrDefaultAsync(a => a.Id == request.Id);
-            if (sesnor is null)
-                return Result.Fail($"can not find sesnsor with id : {request.Id}");
+            var updateSensor =
+                Task.Factory
+                .StartNew(() =>
+                _unitOfWorks.SensorRepository.UpdateSensorAsync(request.Adapt<TechOnIt.Domain.Entities.Product.SensorAggregate.Sensor>(),cancellationToken)
+                ,cancellationToken);
+            await updateSensor;
 
-            sesnor.PlaceId = request.PlaceId;
-            sesnor.SetSensorType(request.SensorType);
-
-            await repo.UpdateAsync(sesnor);
             await _mediator.Publish(new SensorNotifications());
-            return Result.Ok(request.Id);
+
+        
+
+            return await Task.FromResult(ResultExtention.IdResult(request.Id));
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

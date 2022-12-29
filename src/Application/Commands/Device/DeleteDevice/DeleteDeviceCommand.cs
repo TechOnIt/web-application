@@ -10,11 +10,11 @@ public class DeleteDeviceCommand : IRequest<object>
 public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, object>
 {
     #region constructure
-    private readonly IDeviceService _deviceService;
+    private readonly IUnitOfWorks _unitOfWorks;
     private readonly IMediator _mediator;
-    public DeleteDeviceCommandHandler(IDeviceService deviceService, IMediator mediator)
+    public DeleteDeviceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
     {
-        _deviceService = deviceService;
+        _unitOfWorks = unitOfWorks;
         _mediator = mediator;
     }
 
@@ -24,11 +24,15 @@ public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand, o
     {
         try
         {
-            bool? getDevice = await _deviceService.DeleteByIdAsync(request.DeviceId, cancellationToken);
-            if(getDevice is null) return ResultExtention.Failed($"can not find device with Id : {request.DeviceId}");
+            Task getDevice = Task.Factory.StartNew(() => _unitOfWorks.DeviceRepositry.DeleteByIdAsync(request.DeviceId, cancellationToken), cancellationToken);
+            Task.WaitAny(getDevice);
+
+            if(!getDevice.IsCompletedSuccessfully) 
+                return await Task.FromResult(ResultExtention.Failed($"can not find device with Id : {request.DeviceId}"));
 
             await _mediator.Publish(new DeviceNotifications());
-            return ResultExtention.BooleanResult(getDevice);
+
+            return await Task.FromResult(ResultExtention.BooleanResult(true));
         }
         catch (Exception exp)
         {

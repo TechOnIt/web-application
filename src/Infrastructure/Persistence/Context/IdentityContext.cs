@@ -30,7 +30,8 @@ public class IdentityContext : DbContext
             .AddJsonFile("appsettings.json")
             .Build();
 
-        optionsBuilder.UseSqlServer(configuration.GetConnectionString("IdentityDevelopment"));
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("pleaseDontDeleteItReza"));
+        //optionsBuilder.UseSqlServer(configuration.GetConnectionString("IdentityDevelopment"));
         //optionsBuilder.UseSqlServer(configuration.GetConnectionString("DeskDevelopment"));
         //optionsBuilder.UseSqlServer(configuration.GetConnectionString("CoreDevelopment"));
     }

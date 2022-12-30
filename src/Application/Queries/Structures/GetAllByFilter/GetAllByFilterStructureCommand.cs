@@ -1,32 +1,34 @@
-﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
-using System.Linq.Expressions;
-using TechOnIt.Application.Common.Models.ViewModels.Structures;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Reports.StructuresAggregate;
 
 namespace TechOnIt.Application.Queries.Structures.GetAllByFilter;
 
-public class GetAllByFilterStructureCommand : IRequest<Result<IList<StructureViewModel>>>
+public class GetAllByFilterStructureCommand : IRequest<object>
 {
-    // TODO:
-    // This is a crime against humanity!                                            WHY?
-    public Expression<Func<Structure, bool>>? Filter { get; set; }
+
 }
 
-public class GetAllByFilterStructureCommandHandler : IRequestHandler<GetAllByFilterStructureCommand, Result<IList<StructureViewModel>>>
+public class GetAllByFilterStructureCommandHandler : IRequestHandler<GetAllByFilterStructureCommand, object>
 {
     #region Ctor
-    private readonly IStructureAggregateReports _structureAggregateReports;
-
-    public GetAllByFilterStructureCommandHandler(IStructureAggregateReports structureAggregateReports)
+    private readonly IUnitOfWorks _unitOfWorks;
+    public GetAllByFilterStructureCommandHandler(IUnitOfWorks unitOfWorks)
     {
-        _structureAggregateReports = structureAggregateReports;
+        _unitOfWorks = unitOfWorks;
     }
 
     #endregion
 
-    public async Task<Result<IList<StructureViewModel>>> Handle(GetAllByFilterStructureCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(GetAllByFilterStructureCommand request, CancellationToken cancellationToken = default)
     {
-        var allStructures = await _structureAggregateReports.GetStructuresByFilterAsync(request.Filter, cancellationToken);
-        return Result.Ok(allStructures);
+        try
+        {
+            var getAll = await _unitOfWorks.StructureRepository.GetAllByFilterAsync(cancellationToken, null);
+            return ResultExtention.ListResult(getAll);
+        }
+        catch (Exception exp)
+        {
+            throw new AppException(exp.Message);
+        }
     }
 }

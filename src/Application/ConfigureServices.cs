@@ -22,6 +22,7 @@ using TechOnIt.Application.Reports.Users;
 using TechOnIt.Application.Services.AssemblyServices;
 using TechOnIt.Application.Services.Authenticateion;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
+using TechOnIt.Application.Common.Security.JwtBearer;
 
 namespace TechOnIt.Application;
 
@@ -42,13 +43,8 @@ public static class ConfigureServices
 
         // Add cache service.
         services.AddDistributedMemoryCache();
-
-        services.AddCustomAuthenticationServices();
         services.AddReportServices();
         services.AuthenticationCustomServices();
-
-        //services.ConfigureWritable<SiteSettings>(Configuration.GetSection("SiteSettings"));
-        //services.TryAddTransient(typeof(IAppSettingsService<>), typeof(AppSettingsService<>));
 
         return services;
     }
@@ -94,26 +90,23 @@ public static class ConfigureServices
         services.TryAddTransient<IIdentityService, IdentityService>();
         services.TryAddTransient<IRoleService, RoleService>();
         services.TryAddTransient<IUserService, UserService>();
+        services.TryAddTransient<IJwtService, JwtService>();
 
         return services;
     }
 
-    public static IServiceCollection AddCustomAuthenticationServices(this IServiceCollection services)
+    public static IServiceCollection AddCustomAuthenticationServices(this IServiceCollection services,JwtSettings settingsJwt)
     {
-        // TODO:
-        // Refactor
         var jwtSettings = new JwtSettings();
-
         services
             .AddAuthentication(options =>
             {
-
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(options =>
             {
-                JwtSettings settingsJwt = new JwtSettings();
-                if (jwtSettings != null) settingsJwt = jwtSettings;
-
                 var secretkeyHandler = settingsJwt.SecretKeyP == null ? JwtSettings.SecretKey : settingsJwt.SecretKeyP;
                 var encryptionkeyHandler = settingsJwt.EncrypKeyP == null ? JwtSettings.EncrypKey : settingsJwt.EncrypKeyP;
                 var ValidAudienceHandler = settingsJwt.AudienceP == null ? JwtSettings.Audience : settingsJwt.AudienceP;
@@ -164,15 +157,7 @@ public static class ConfigureServices
                         if (securityStamp == null)
                             context.Fail("This token has no secuirty stamp");
 
-                        //var userId = claimsIdentity.GetUserId<string>();
                         var userId = claimsIdentity.FindFirst("UserId");
-                        //var user = GetUserAsync(context.Principal);
-
-                        //if (user.SecurityStamp != securityStamp)
-                        //context.Fail("Token secuirty stamp is not valid.");
-
-                        //    if (!user.IsActive)
-                        //        context.Fail("User is not active.");
                     },
 
                     OnChallenge = context =>

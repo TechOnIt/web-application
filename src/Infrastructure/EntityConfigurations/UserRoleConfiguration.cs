@@ -18,11 +18,5 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
         builder.HasOne(a => a.Role)
             .WithMany(a => a.UserRoles)
             .HasForeignKey(a => a.RoleId);
-
-        #region column types
-        builder.Property(a => a.UserId).HasColumnType(nameof(DataTypes.guid));
-        builder.Property(a => a.RoleId).HasColumnType(nameof(DataTypes.guid));
-        #endregion
-
     }
 }

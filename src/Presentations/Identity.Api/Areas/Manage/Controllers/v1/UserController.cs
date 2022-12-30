@@ -1,6 +1,6 @@
-﻿using TechOnIt.Application.Queries.Users.GetAllUsers;
-using Org.BouncyCastle.Asn1.Ocsp;
-using TechOnIt.Identity.Api.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+using TechOnIt.Application.Common.Security.JwtBearer;
+using TechOnIt.Application.Queries.Users.GetAllUsers;
 
 namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
 
@@ -28,6 +28,7 @@ public class UserController : BaseController
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
     => await ExecuteAsync(command);
 

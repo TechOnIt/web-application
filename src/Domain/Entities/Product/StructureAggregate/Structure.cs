@@ -23,6 +23,19 @@ public class Structure // this class is aggregate root of Structure aggregate
         Type = structureType;
     }
 
+    public Structure(Guid id,Guid userId, string name, string description, DateTime createDate, DateTime? modifyDate, int structureType)
+    {
+        Id = id;
+        UserId = userId;
+        Name = name;
+        ApiKey = Concurrency.NewToken();
+        Description = description;
+        IsActive = true;
+        CreateDate = createDate;
+        ModifyDate = modifyDate;
+        this.SetStructureType(structureType);
+    }
+
     public Structure()
     {
     }

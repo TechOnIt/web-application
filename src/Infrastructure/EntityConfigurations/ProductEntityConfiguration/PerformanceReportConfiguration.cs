@@ -14,8 +14,7 @@ public class PerformanceReportConfiguration : IEntityTypeConfiguration<Performan
         builder.Property(a => a.RecordDateTime).IsRequired();
 
         #region column types
-        builder.Property(a => a.Id).HasColumnType(nameof(DataTypes.guid));
-        builder.Property(a => a.Value).HasColumnType(nameof(DataTypes.numerics)).HasMaxLength(10);
+        builder.Property(a => a.Value).HasColumnType(DataTypes.numerics).HasMaxLength(10);
         #endregion
 
         #region indexing

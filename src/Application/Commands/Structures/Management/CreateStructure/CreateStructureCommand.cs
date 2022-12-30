@@ -1,5 +1,4 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Domain.Enums;
 using TechOnIt.Application.Common.Interfaces;
 using TechOnIt.Domain.Entities.Product.StructureAggregate;
 
@@ -9,7 +8,8 @@ public class CreateStructureCommand : IRequest<object>, ICommittableRequest
 {
     public string Name { get; set; }
     public string? Description { get; set; }
-    public StuctureType Type { get; private set; }
+    public Guid UserId { get; set; }
+    public int Type { get; set; }
 }
 
 public class CreateStructureCommandHandler : IRequestHandler<CreateStructureCommand, object>
@@ -30,18 +30,10 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
     {
         try
         {
-            var model = new Structure(Guid.NewGuid(), request.Name, request.Description, DateTime.Now, DateTime.Now, request.Type);
-            Task createStructure = Task.Factory
-                .StartNew(()=>_unitOfWorks.StructureRepository.CreateAsync(model,cancellationToken)
-                ,cancellationToken);
-
-            await createStructure;
-
-            if (createStructure.IsFaulted)
-                return ResultExtention.Failed($"an error occared !");
+            var model = new Structure(Guid.NewGuid(),request.UserId, request.Name, request.Description, DateTime.Now, DateTime.Now, request.Type);
+            await _unitOfWorks.StructureRepository.CreateAsync(model, cancellationToken);
 
             await _mediator.Publish(new StructureNotifications(), cancellationToken);
-
             return ResultExtention.ConcurrencyResult(model.ApiKey);
         }
         catch (Exception exp)

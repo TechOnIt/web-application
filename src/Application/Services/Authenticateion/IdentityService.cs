@@ -20,14 +20,17 @@ public class IdentityService : IIdentityService
     private readonly IUnitOfWorks _unitOfWorks;
     private readonly IDistributedCache _distributedCache;
     private readonly IKaveNegarSmsService _kavenegarAuthService;
+    private readonly IJwtService _jwtService;
 
     public IdentityService(IUnitOfWorks unitOfWorks,
         IKaveNegarSmsService kavenegarAuthService,
-        IDistributedCache distributedCache)
+        IDistributedCache distributedCache,
+        IJwtService jwtService)
     {
         _unitOfWorks = unitOfWorks;
         _kavenegarAuthService = kavenegarAuthService;
         _distributedCache = distributedCache;
+        _jwtService = jwtService;
     }
     #endregion
 
@@ -119,12 +122,11 @@ public class IdentityService : IIdentityService
             return (new AccessToken(), $"phonenumber is not confirmed yet !");
 
         AccessToken token = new();
-        using (var _jwtService = new JwtService())
-        {
-            token = await _jwtService.GenerateAccessToken(user, cancellationToken);
-            _jwtService.Dispose();
-        }
-
+        //using (var _jwtService = new JwtService())
+        //{
+        //    _jwtService.Dispose();
+        //}
+        token = await _jwtService.GenerateAccessToken(user, cancellationToken);
         return (token, "welcome !");
     }
 
@@ -139,10 +141,6 @@ public class IdentityService : IIdentityService
         if (status.Status.IsSucceeded())
         {
             string message = string.Empty;
-            // TODO:
-            // Ashkan
-            // Add using
-            var _jwtService = new JwtService();
             AccessToken token = await _jwtService.GenerateAccessToken(user, cancellationToken);
             if (token.Token is null)
                 message = "user is not authenticated !";
@@ -198,11 +196,7 @@ public class IdentityService : IIdentityService
         await _unitOfWorks.SqlRepository<User>().UpdateAsync(user);
         await _unitOfWorks.SaveAsync();
 
-        // TODO:Ashkan
-        // Add using this.
-        var _jwtService = new JwtService();
         var token = await _jwtService.GenerateAccessToken(user, cancellationToken);
-
         if (token is null)
             return (new AccessToken(), "error !");
 

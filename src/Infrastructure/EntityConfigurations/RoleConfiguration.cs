@@ -13,9 +13,8 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.Property(a => a.Id).ValueGeneratedNever();
 
         #region column types
-        builder.Property(a => a.Id).HasColumnType(nameof(DataTypes.guid));
-        builder.Property(a => a.Name).HasColumnType(nameof(DataTypes.varchar50));
-        builder.Property(a => a.NormalizedName).HasColumnType(nameof(DataTypes.varchar50));
+        builder.Property(a => a.Name).HasColumnType(DataTypes.varchar50);
+        builder.Property(a => a.NormalizedName).HasColumnType(DataTypes.varchar50);
         #endregion
     }
 }

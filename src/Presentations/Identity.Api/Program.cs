@@ -6,6 +6,9 @@ using TechOnIt.Infrastructure.Common.Extentions;
 using NLog;
 using NLog.Web;
 using System.Reflection;
+using Microsoft.OpenApi.Models;
+using TechOnIt.Infrastructure.Common.JwtBearerService;
+using System.Configuration;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -15,7 +18,6 @@ try
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddControllers();
-
     builder.Services.AddHsts(opts =>
     {
         opts.MaxAge = TimeSpan.FromDays(365);
@@ -29,8 +31,6 @@ try
 
     // Add services to the container.
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
 
     #region Logging
     builder.Logging.ClearProviders();
@@ -45,6 +45,9 @@ try
     builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
     builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
 
+    builder.Services.Configure<JwtSettings>(Configuration.GetSection("SiteSettings"));
+    builder.Services.AddCustomAuthenticationServices(builder.Configuration);
+
     // Cross origin
     builder.Services.AddCors(options =>
     {
@@ -58,12 +61,69 @@ try
                 .WithMethods("GET", "PUT", "DELETE", "POST", "PATCH"); //not really necessary when AllowAnyMethods is used.;
         });
     });
-
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
-
     ConfigureServices(builder.Services);
+    builder.Services.AddAuthorization();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
+    #region swagger authorization
+    var securityScheme = new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JSON Web Token based security",
+    };
+    var securityReq = new OpenApiSecurityRequirement()
+{
+    {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            }
+        },
+        new string[] {}
+    }
+};
+    var contact = new OpenApiContact()
+    {
+        Name = "Tech On It",
+        Email = "info@techonit.com",
+        Url = new Uri("https://ashkannoori.onrender.com")
+    };
+    var license = new OpenApiLicense()
+    {
+        Name = "Free License",
+        Url = new Uri("https://ashkannoori.onrender.com")
+    };
+    var info = new OpenApiInfo()
+    {
+        Version = "v1",
+        Title = "TechOnIt SDK",
+        Description = "Implementing JWT Authentication in SDK",
+        TermsOfService = new Uri("https://ashkannoori.onrender.com"),
+        Contact = contact,
+        License = license
+    };
+
+    builder.Services.AddSwaggerGen(o =>
+    {
+        o.SwaggerDoc("v1", info);
+        o.AddSecurityDefinition("Bearer", securityScheme);
+        o.AddSecurityRequirement(securityReq);
+    });
+
+    #endregion
 
     var app = builder.Build();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     // Middlewares - Pipelines
     #region Exception Handlers
@@ -73,8 +133,6 @@ try
     #endregion
 
     #region HSTS
-    app.UseSwagger();
-    app.UseSwaggerUI();
     if (!app.Environment.IsDevelopment())
     {
         // Configure the HTTP request pipeline.
@@ -84,33 +142,10 @@ try
     }
     #endregion
 
-    #region Https Redirection
     app.UseHttpsRedirection();
-    #endregion
-
-    #region Static Files
-    #endregion
-
-    #region Routing
     app.UseRouting();
-    #endregion
-
-    #region CORS
-    app.UseIpRateLimiting();
-    #endregion
-
-    #region Authentication
-    #endregion
-
-    #region Authorization
-    #endregion
-
-    #region Custom Middlewares
-    // Initialize database data seed.
-    await app.InitializeDatabaseAsync(builder);
-    #endregion
-
-    #region Endpoint
+    app.UseAuthentication();
+    app.UseAuthorization();
     app.UseEndpoints(endpoints =>
     {
         endpoints.MapControllerRoute(
@@ -123,8 +158,13 @@ try
 
         endpoints.MapControllers();
     });
-    #endregion
 
+    app.UseIpRateLimiting();
+
+    #region Custom Middlewares
+    // Initialize database data seed.
+    await app.InitializeDatabaseAsync(builder);
+    #endregion
     await app.RunAsync();
 }
 catch (Exception ex)
@@ -144,7 +184,6 @@ void ConfigureServices(IServiceCollection services) // clean code
 {
     services.AddInfrastructureServices();
     services.AddApplicationServices();
-
     services.AddFluentValidationServices();
 
     #region Api Limit-rate

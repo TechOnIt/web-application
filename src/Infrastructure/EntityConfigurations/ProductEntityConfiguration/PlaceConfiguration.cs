@@ -19,9 +19,8 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
             .HasForeignKey(a => a.StuctureId);
 
         #region column types
-        builder.Property(a => a.Id).HasColumnType(nameof(DataTypes.guid));
-        builder.Property(a => a.Name).HasColumnType(nameof(DataTypes.nvarchar50));
-        builder.Property(a => a.Description).HasColumnType(nameof(DataTypes.nvarchar150));
+        builder.Property(a => a.Name).HasColumnType(DataTypes.nvarchar50);
+        builder.Property(a => a.Description).HasColumnType(DataTypes.nvarchar150);
         #endregion
     }
 }

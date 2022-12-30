@@ -21,18 +21,12 @@ public class StructureController : ControllerBase
     #region Queries
     [HttpGet]
     [ApiResultFilter]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     //[ValidateAntiForgeryToken]
     public async Task<IActionResult> GetAll()
     {
-        try
-        {
-            var result = await _mediator.Send(new GetAllByFilterStructureCommand());
-            return Ok(result);
-        }
-        catch (AppException exp)
-        {
-            throw new AppException(ApiResultStatusCode.ServerError, exp.Message);
-        }
+        var result = await _mediator.Send(new GetAllByFilterStructureCommand());
+        return Ok(result);
     }
     #endregion
 

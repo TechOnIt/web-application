@@ -31,9 +31,8 @@ public class DeviceConfiguration : IEntityTypeConfiguration<Device>
             .IsConcurrencyToken(true);
 
         #region column types
-        builder.Property(a => a.Id).HasColumnType(nameof(DataTypes.guid));
-        builder.Property(a => a.Pin).HasColumnType(nameof(DataTypes.numerics)).HasMaxLength(10);
-        builder.Property(a => a.IsHigh).HasColumnType(nameof(DataTypes.boolean));
+        builder.Property(a => a.Pin).HasColumnType(DataTypes.numerics).HasMaxLength(10);
+        builder.Property(a => a.IsHigh).HasColumnType(DataTypes.boolean);
         #endregion
     }
 }

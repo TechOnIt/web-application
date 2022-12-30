@@ -44,6 +44,21 @@ public sealed class RoleRepository : IRoleRepository
         await Task.CompletedTask;
     }
 
+    public async Task<IList<Role>?> GetRolesByUserId(Guid userId,CancellationToken cancellationToken)
+    {
+        var userRoles = await (from ur in _context.UserRoles
+                               join r in _context.Roles on ur.RoleId equals r.Id
+                               where ur.UserId == userId
+                               select new Role 
+                               { 
+                                   Id = r.Id,
+                                   Name = r.Name,
+                                   NormalizedName = r.NormalizedName 
+                               }).ToListAsync(cancellationToken);
+
+        return await Task.FromResult<IList<Role>?>(userRoles);
+    }
+
     public async Task UpdateRoleAsync(Guid roleId, string roleName, CancellationToken cancellationToken = default)
     {
         var getrole = await _context.Roles.FindAsync(roleId, cancellationToken);

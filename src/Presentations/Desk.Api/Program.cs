@@ -28,8 +28,8 @@ RegisterMediatRCommands(builder.Services);
 
 // Map app setting json to app setting object.
 // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
-builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
-builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
+builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
+builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
 
 ConfigureServices(builder.Services);
 var app = builder.Build();
@@ -76,7 +76,7 @@ await app.RunAsync();
 void ConfigureServices(IServiceCollection services)
 {
     services.AddInfrastructureServices();
-    services.AddApplicationServices();
+    services.AddApplicationServices(builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings);
     services.AddFluentValidationServices();
 
     // Add services to the container.

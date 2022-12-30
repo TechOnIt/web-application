@@ -122,11 +122,8 @@ public class IdentityService : IIdentityService
             return (new AccessToken(), $"phonenumber is not confirmed yet !");
 
         AccessToken token = new();
-        //using (var _jwtService = new JwtService())
-        //{
-        //    _jwtService.Dispose();
-        //}
-        token = await _jwtService.GenerateAccessToken(user, cancellationToken);
+        var userRoles = await _unitOfWorks.RoleRepository.GetRolesByUserId(user.Id,cancellationToken);
+        token = await _jwtService.GenerateAccessToken(user, userRoles, cancellationToken);
         return (token, "welcome !");
     }
 
@@ -141,7 +138,8 @@ public class IdentityService : IIdentityService
         if (status.Status.IsSucceeded())
         {
             string message = string.Empty;
-            AccessToken token = await _jwtService.GenerateAccessToken(user, cancellationToken);
+            var userRoles = await _unitOfWorks.RoleRepository.GetRolesByUserId(user.Id, cancellationToken);
+            AccessToken token = await _jwtService.GenerateAccessToken(user, userRoles, cancellationToken);
             if (token.Token is null)
                 message = "user is not authenticated !";
             else
@@ -195,8 +193,8 @@ public class IdentityService : IIdentityService
         user.ConfirmPhoneNumber();
         await _unitOfWorks.SqlRepository<User>().UpdateAsync(user);
         await _unitOfWorks.SaveAsync();
-
-        var token = await _jwtService.GenerateAccessToken(user, cancellationToken);
+        var userRoles = await _unitOfWorks.RoleRepository.GetRolesByUserId(user.Id, cancellationToken);
+        var token = await _jwtService.GenerateAccessToken(user, userRoles, cancellationToken);
         if (token is null)
             return (new AccessToken(), "error !");
 

@@ -3,12 +3,12 @@ using TechOnIt.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings);
 builder.Services.AddInfrastructureServices();
 
 // Read json setting.
-builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
-builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
+builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
+builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
 
 builder.Services.AddFluentValidationServices();
 

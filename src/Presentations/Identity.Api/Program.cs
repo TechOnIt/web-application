@@ -7,8 +7,8 @@ using NLog;
 using NLog.Web;
 using System.Reflection;
 using Microsoft.OpenApi.Models;
-using TechOnIt.Infrastructure.Common.JwtBearerService;
-using System.Configuration;
+using System.Drawing.Text;
+using TechOnIt.Application;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -42,11 +42,8 @@ try
 
     // Map app setting json to app setting object.
     // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
-    builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection(nameof(AppSettingDto)));
-    builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("AppSettingDto"));
-
-    builder.Services.Configure<JwtSettings>(Configuration.GetSection("SiteSettings"));
-    builder.Services.AddCustomAuthenticationServices(builder.Configuration);
+    builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
+    builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
 
     // Cross origin
     builder.Services.AddCors(options =>
@@ -62,7 +59,7 @@ try
         });
     });
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
-    ConfigureServices(builder.Services);
+    ConfigureServices(builder.Services,builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>());
     builder.Services.AddAuthorization();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -180,10 +177,10 @@ finally
 }
 
 
-void ConfigureServices(IServiceCollection services) // clean code 
+void ConfigureServices(IServiceCollection services,AppSettingDto settings) // clean code 
 {
     services.AddInfrastructureServices();
-    services.AddApplicationServices();
+    services.AddApplicationServices(settings.JwtSettings);
     services.AddFluentValidationServices();
 
     #region Api Limit-rate

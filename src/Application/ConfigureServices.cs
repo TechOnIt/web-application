@@ -141,4 +141,38 @@ public static class ConfigureServices
             option.TokenValidationParameters = validationParameters;
         });
     }
+
+    public static void AddJwtAuthentication(this IServiceCollection services,JwtSettingsDto settings)
+    {
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(option =>
+        {
+            var secretKey = Encoding.UTF8.GetBytes(settings.SecretKey);
+            var validationParameters = new TokenValidationParameters
+            {
+                ClockSkew=TimeSpan.Zero,
+                RequireSignedTokens=true,
+
+                ValidateIssuerSigningKey=true,
+                IssuerSigningKey=new SymmetricSecurityKey(secretKey),
+
+                RequireExpirationTime=true,
+                ValidateLifetime=true,
+
+                ValidateAudience=false,
+                ValidAudience= settings.Audience,
+
+                ValidateIssuer=true,
+                ValidIssuer=settings.Issuer,
+            };
+
+            option.RequireHttpsMetadata = false;
+            option.SaveToken = true;
+            option.TokenValidationParameters = validationParameters;
+        });
+    }
 }

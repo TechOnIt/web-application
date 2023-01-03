@@ -28,7 +28,7 @@ public class StructureController : ControllerBase
     {
         try
         {
-            var result = await _mediator.Send(paginated);
+            var result = await _mediator.Send(new GetAllByFilterStructureCommand());
             return Ok(result);
         }
         catch (AppException exp)

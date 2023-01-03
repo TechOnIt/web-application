@@ -8,6 +8,9 @@ namespace TechOnIt.Application.Reports.StructuresAggregate;
 
 public interface IStructureAggregateReports : IReport
 {
+    Task<PaginatedList<TDestination>> GetAllPaginatedSearchAsync<TDestination>(PaginatedSearchWithSize paginatedSearch,
+        TypeAdapterConfig? config = null, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// filter is a Expression linq
     /// </summary>

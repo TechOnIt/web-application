@@ -2,17 +2,18 @@
 using System.Linq.Expressions;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Reports.StructuresAggregate;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TechOnIt.Application.Queries.Structures.GetAllByFilter;
 
-public class GetAllByFilterStructureCommand : IRequest<Result<IList<StructureViewModel>>>
+public class GetAllByFilterStructureCommand : IRequest<PaginatedList<StructureViewModel>>
 {
-    // TODO:
-    // This is a crime against humanity!                                            WHY?
-    public Expression<Func<Structure, bool>>? Filter { get; set; }
+    public string Keyword { get; set; }
+    public int Page { get; set; }
+    public int PageSize { get; set; }
 }
 
-public class GetAllByFilterStructureCommandHandler : IRequestHandler<GetAllByFilterStructureCommand, Result<IList<StructureViewModel>>>
+public class GetAllByFilterStructureCommandHandler : IRequestHandler<GetAllByFilterStructureCommand, PaginatedList<StructureViewModel>>
 {
     #region Ctor
     private readonly IStructureAggregateReports _structureAggregateReports;
@@ -24,9 +25,15 @@ public class GetAllByFilterStructureCommandHandler : IRequestHandler<GetAllByFil
 
     #endregion
 
-    public async Task<Result<IList<StructureViewModel>>> Handle(GetAllByFilterStructureCommand request, CancellationToken cancellationToken = default)
+    public async Task<PaginatedList<StructureViewModel>> Handle(GetAllByFilterStructureCommand request, CancellationToken cancellationToken = default)
     {
-        var allStructures = await _structureAggregateReports.GetStructuresByFilterAsync(request.Filter, cancellationToken);
-        return Result.Ok(allStructures);
+        return await _structureAggregateReports
+            .GetAllPaginatedSearchAsync<StructureViewModel>(new PaginatedSearchWithSize()
+            {
+                Keyword = request.Keyword,
+                Page = request.Page,
+                PageSize = request.PageSize,
+            }
+            , config: null, cancellationToken);
     }
 }

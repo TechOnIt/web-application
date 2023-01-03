@@ -110,11 +110,10 @@ public static class ConfigureServices
         // Refactor
         var jwtSettings = new JwtSettings();
 
-        services
-            .AddAuthentication(options =>
-            {
+        services.AddAuthorization();
 
-            })
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 JwtSettings settingsJwt = new JwtSettings();

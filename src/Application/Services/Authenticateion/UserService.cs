@@ -61,11 +61,8 @@ public class UserService : IUserService
         return IdentityCrudStatus.Succeeded;
     }
 
-    public async Task<UserViewModel> FindUserByIdAsync(Guid userId, CancellationToken cancellationToken = default)
-    {
-        var user = await _unitOfWorks.UserRepository.FindByIdAsync(userId);
-        return user.Adapt<UserViewModel>();
-    }
+    public async Task<User?> FindUserByIdAsync(Guid userId, CancellationToken cancellationToken)
+        => await _unitOfWorks.UserRepository.FindByIdAsync(userId, cancellationToken = default);
 
     public async Task<(UserViewModel User, IdentityCrudStatus Status)> UpdateUserAsync(UserViewModel user, CancellationToken cancellationToken = default)
     {

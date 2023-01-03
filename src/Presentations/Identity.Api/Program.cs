@@ -1,11 +1,12 @@
 using AspNetCoreRateLimit;
+using Microsoft.OpenApi.Models;
+using NLog;
+using NLog.Web;
+using System.Reflection;
 using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Infrastructure;
 using TechOnIt.Infrastructure.Common.Extentions;
-using NLog;
-using NLog.Web;
-using System.Reflection;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -30,8 +31,29 @@ try
     // Add services to the container.
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-
+    builder.Services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Identity Api", Version = "v1" });
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "Please insert JWT with Bearer into field",
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey
+        });
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+            {
+              new OpenApiSecurityScheme
+              {
+                Reference = new OpenApiReference
+                {
+                  Type = ReferenceType.SecurityScheme,
+                  Id = "Bearer"
+                }
+               }, new string[] { }
+            }
+        });
+    });
     #region Logging
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
@@ -80,7 +102,6 @@ try
         // Configure the HTTP request pipeline.
         // client exception handle : https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-6.0#exception-handler-lambda
         app.UseHsts(); // https://git.ir/pluralsight-protecting-sensitive-data-from-exposure-in-asp-net-and-asp-net-core-applications/ episode 13
-
     }
     #endregion
 
@@ -100,9 +121,11 @@ try
     #endregion
 
     #region Authentication
+    //app.UseAuthentication();
     #endregion
 
     #region Authorization
+    app.UseAuthorization();
     #endregion
 
     #region Custom Middlewares

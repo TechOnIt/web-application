@@ -31,6 +31,7 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
         try
         {
             var structure = new StructureViewModel(Guid.NewGuid(), request.Name, request.Description,true, request.Type, DateTime.Now);
+
             var createRes = await _structureAggeregateService.CreateStructureAsync(structure,cancellationToken);
 
             if (createRes is null)

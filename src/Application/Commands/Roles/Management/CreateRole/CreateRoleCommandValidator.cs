@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Constants;
-
-namespace TechOnIt.Application.Commands.Roles.Management.CreateRole;
+﻿namespace TechOnIt.Application.Commands.Roles.Management.CreateRole;
 
 public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
 {

@@ -2,40 +2,34 @@
 
 namespace TechOnIt.Application.Commands.Structures.Management.DeleteStructure;
 
-public class DeleteStructureCommand : IRequest<Result>, ICommittableRequest
+public class DeleteStructureCommand : IRequest<object>, ICommittableRequest
 {
     public Guid StructureId { get; set; }
 }
 
-public class DeleteStructureCommandHandler : IRequestHandler<DeleteStructureCommand, Result>
+public class DeleteStructureCommandHandler : IRequestHandler<DeleteStructureCommand, object>
 {
     #region Ctor
     private readonly IUnitOfWorks _unitOfWorks;
-
     public DeleteStructureCommandHandler(IUnitOfWorks unitOfWorks)
     {
         _unitOfWorks = unitOfWorks;
     }
     #endregion
 
-    public async Task<Result> Handle(DeleteStructureCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(DeleteStructureCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
-            var findStructure = await _unitOfWorks.StructureRepository.GetByIdAsync(request.StructureId, cancellationToken);
-            if (findStructure != null)
-            {
-                await _unitOfWorks.StructureRepository.DeleteAsync(findStructure, cancellationToken);
-                return Result.Ok();
-            }
+            var deleteRes = await _unitOfWorks.StructureRepository.DeleteByIdAsync(request.StructureId,cancellationToken);
+            if (!deleteRes)
+                return ResultExtention.Failed("Structure not found !");
             else
-            {
-                return Result.Fail("Structure not found !");
-            }
+                return ResultExtention.BooleanResult(true);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error ! : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

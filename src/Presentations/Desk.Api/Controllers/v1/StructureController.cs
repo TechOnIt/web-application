@@ -22,6 +22,7 @@ public class StructureController : ControllerBase
     #region Queries
     [HttpGet]
     [ApiResultFilter]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     //[ValidateAntiForgeryToken]
     public async Task<IActionResult> GetAll([FromQuery] GetAllByFilterStructureCommand paginated)
     {

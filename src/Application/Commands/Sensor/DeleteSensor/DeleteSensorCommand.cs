@@ -1,15 +1,14 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Sensor.DeleteSensor;
 
-public class DeleteSensorCommand : IRequest<Result<Guid>>, ICommittableRequest
+public class DeleteSensorCommand : IRequest<object>, ICommittableRequest
 {
     public Guid Id { get; set; }
 }
 
-public class DeleteSensorCommandHandler : IRequestHandler<DeleteSensorCommand, Result<Guid>>
+public class DeleteSensorCommandHandler : IRequestHandler<DeleteSensorCommand, object>
 {
     #region constructure
     private readonly IUnitOfWorks _unitOfWorks;
@@ -22,25 +21,24 @@ public class DeleteSensorCommandHandler : IRequestHandler<DeleteSensorCommand, R
     }
     #endregion
 
-    public async Task<Result<Guid>> Handle(DeleteSensorCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(DeleteSensorCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
-            var repo = _unitOfWorks.SqlRepository<Domain.Entities.Product.SensorAggregate.Sensor>();
+            var deleteSensor = await _unitOfWorks.SensorRepository.DeleteSensorByIdAsync(request.Id, cancellationToken);
 
-            var sesnsor = await repo.Table.FirstOrDefaultAsync(a => a.Id == request.Id);
-            if (sesnsor is null)
-            {
-                return Result.Fail($"can not find sessor with id : {sesnsor}");
-            }
+            if (!deleteSensor.IsExists)
+                return await Task.FromResult(ResultExtention.Failed($"can not find sessor with id : {request.Id}"));
 
-            await repo.DeleteAsync(sesnsor);
+            if(!deleteSensor.Result)
+                return await Task.FromResult(ResultExtention.Failed("error ocurred !"));
+
             await _mediator.Publish(new SensorNotifications());
-            return Result.Ok(request.Id);
+            return await Task.FromResult(ResultExtention.Failed(request.Id));
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

@@ -5,7 +5,6 @@ global using TechOnIt.Application.Common.Exceptions;
 global using TechOnIt.Application.Common.Extentions;
 global using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 global using TechOnIt.Application.Common.Models;
-global using TechOnIt.Application.Services.ProductServices.ProductContracts;
 global using TechOnIt.Domain.Entities.Identity;
 global using TechOnIt.Domain.Entities.Product;
 global using TechOnIt.Domain.ValueObjects;

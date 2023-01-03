@@ -1,113 +1,76 @@
 ﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Infrastructure.Common.JwtBearerService;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
+using TechOnIt.Application.Services.AssemblyServices;
 
 namespace TechOnIt.Application.Common.Security.JwtBearer;
 
-public class JwtService : IJwtService, IDisposable
+public class JwtService : IJwtService
 {
-    /// <summary>
-    /// Generate JWT Token with claims.
-    /// </summary>
-    /// <param name="claims">List of claims in token payload.</param>
-    /// <param name="expireDateTime">Expire date & time.</param>
-    /// <returns>Access token.</returns>
-    public string GenerateTokenWithClaims(List<Claim> claims, DateTime? expireDateTime = null)
+    #region constructure
+    //private readonly AppSettingDto _appSetting;
+    private readonly IAppSettingsService<AppSettingDto> _appSetting;
+    public JwtService(IAppSettingsService<AppSettingDto> appSetting)
     {
-        var secretKey = Encoding.UTF8.GetBytes(JwtSettings.SecretKey);
-        var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey),
-            SecurityAlgorithms.HmacSha256Signature);
+        _appSetting = appSetting;
+    }
+    #endregion
 
-        var encrytionKey = Encoding.UTF8.GetBytes(JwtSettings.EncrypKey);
-        var encryptingCredentials = new EncryptingCredentials(new SymmetricSecurityKey(encrytionKey),
-            SecurityAlgorithms.Aes128KW, SecurityAlgorithms.Aes128CbcHmacSha256);
-
-        var tokenDescriptor = new SecurityTokenDescriptor()
+    public async Task<AccessToken> GenerateAccessToken(User user, IList<Role> userRoles, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        return await Task.FromResult(new AccessToken
         {
-            Issuer = JwtSettings.Issuer,
-            Audience = JwtSettings.Audience,
+            Token = Generate(user, userRoles),
+            TokenExpireAt = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.ExpirationMinutes).ToString()
+        });
+    }
+
+
+    private string Generate(User user, IList<Role> userRoles)
+    {
+        var secretKey = Encoding.UTF8.GetBytes(_appSetting.Value.JwtSettings.SecretKey); // it must be atleast 16 characters or more
+        var signinCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey),SecurityAlgorithms.HmacSha256Signature);
+
+        var claims = GetClaims(user,userRoles);
+        var descriptor = new SecurityTokenDescriptor
+        {
+            Issuer = _appSetting.Value.JwtSettings.Issuer,
+            Audience = _appSetting.Value.JwtSettings.Audience,
             IssuedAt = DateTime.Now,
-            // TODO:
-            // What is this?
-            //NotBefore = DateTime.Now.AddMinutes(JwtSettings.NotBeforeMinutes),
-            SigningCredentials = signingCredentials,
-            Subject = new ClaimsIdentity(claims),
-            EncryptingCredentials = encryptingCredentials,
+            NotBefore = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.NotBeforeMinutes),
+            Expires = DateTime.Now.AddHours(_appSetting.Value.JwtSettings.ExpirationMinutes),
+            SigningCredentials = signinCredentials,
+            Subject = new ClaimsIdentity(claims)
         };
-        // Add expiration date time.
-        if (expireDateTime != null)
-            tokenDescriptor.Expires = expireDateTime;
-        // Generate token.
+
         var tokenHandler = new JwtSecurityTokenHandler();
-        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(securityToken);
+        var securityToken = tokenHandler.CreateToken(descriptor);
+        string token = tokenHandler.WriteToken(securityToken);
+        return token;
     }
 
-    /// <summary>
-    /// Generate access token with Jwt Bearer.
-    /// </summary>
-    /// <param name="user">User instance with roles for generate access token.</param>
-    /// <returns>Access token dto.</returns>
-    public async Task<AccessToken> GenerateAccessToken(User user, CancellationToken stoppingToken = default)
+    private IEnumerable<Claim> GetClaims(User user, IList<Role> userRoles)
     {
-        var accessToken = new AccessToken();
-
-        // Add identity claims.
-        var claims = new List<Claim>()
+        IList<Claim> claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            new Claim(ClaimTypes.Name,$"{user.FullName.Name} {user.FullName.Surname}"),
+            new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+            new Claim(ClaimTypes.MobilePhone,user.PhoneNumber),
         };
 
-        #region Refresh Token
-        // Refresh token expire date time.
-        var refreshTokenExpireAt = DateTime.Now.AddHours(3);
-        accessToken.RefreshTokenExpireAt = refreshTokenExpireAt.ToString("yyyy/MM/dd HH:mm:ss");
-        // Generate refresh token.
-        accessToken.RefreshToken = GenerateTokenWithClaims(claims);
-        #endregion
-
-        #region Token
-        claims.Add(new Claim(ClaimTypes.Name, user.Username));
-
-        // Add roles in claims.
-        if (user.UserRoles != null || user.UserRoles?.Count > 0)
-            foreach (var userRole in user.UserRoles)
-                if (userRole.Role != null)
-                    claims.Add(new Claim(ClaimTypes.Role, userRole.Role.Name.ToString()));
-
-        // Token expire date time.
-        var tokenExpiredAt = DateTime.Now.AddMinutes(5);
-        accessToken.TokenExpireAt = tokenExpiredAt.ToString("yyyy/MM/dd HH:mm:ss");
-        // Generate token.
-        accessToken.Token = GenerateTokenWithClaims(claims,
-            tokenExpiredAt);
-        #endregion
-
-        return accessToken;
-    }
-
-    bool disposed;
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!disposed)
+        if (userRoles.Count() > 0)
         {
-            if (disposing)
+            foreach (var role in userRoles)
             {
-                //dispose managed resources
+                claims.Add(new Claim(ClaimTypes.Role, role.Name));
             }
         }
-        //dispose unmanaged resources
-        disposed = true;
-    }
 
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
+        return claims;
     }
 }

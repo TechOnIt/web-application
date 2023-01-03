@@ -1,17 +1,14 @@
-﻿using TechOnIt.Application.Common.Constants;
-using TechOnIt.Application.Common.Models;
-using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
-using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
 namespace TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 
-public class SignInUserCommand : IRequest<Result<AccessToken>>
+public class SignInUserCommand : IRequest<object>
 {
     public string? Username { get; set; } // phonenumber
     public string? Password { get; set; }
 }
 
-public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand, Result<AccessToken>>
+public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand, object>
 {
     #region DI & Ctor
     private readonly IIdentityService _identityService;
@@ -24,17 +21,25 @@ public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand
     }
     #endregion
 
-    public async Task<Result<AccessToken>> Handle(SignInUserCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(SignInUserCommand request, CancellationToken cancellationToken = default)
     {
-        var signInUserResult = await _identityService.SignInUserAsync(request.Username, request.Password, cancellationToken);
-        if (!signInUserResult.HasValue)
-            return Result.Fail("Server side error has occured.");
+        try
+        {
+            var signInUserResult = await _identityService.SignInUserAsync(request.Username, request.Password, cancellationToken);
 
-        if (signInUserResult.Value.Token is null)
-            return Result.Fail(signInUserResult.Value.Message);
+            if (!signInUserResult.HasValue)
+                return ResultExtention.Failed("Server side error has occured.");
 
-        await _mediator.Publish(new SignInUserNotifications()); // notification events
-        return Result.Ok(signInUserResult.Value.Token);
+            if (signInUserResult.Value.Token is null)
+                return ResultExtention.Failed(signInUserResult.Value.Message);
+
+            await _mediator.Publish(new SignInUserNotifications()); // notification events
+            return signInUserResult.Value.Token;
+        }
+        catch (Exception exp)
+        {
+            throw new AppException(exp.Message);
+        }
     }
 }
 

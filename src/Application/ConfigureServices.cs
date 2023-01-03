@@ -1,37 +1,31 @@
 ﻿using FluentValidation.AspNetCore;
-using TechOnIt.Infrastructure.Common.JwtBearerService;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.Net;
-using System.Security.Claims;
 using System.Text;
 using TechOnIt.Application.Commands.Roles.Management.CreateRole;
 using TechOnIt.Application.Common.Behaviors;
-using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 using TechOnIt.Application.Common.Frameworks.Middlewares;
-using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Reports.Roles;
 using TechOnIt.Application.Reports.StructuresAggregate;
 using TechOnIt.Application.Reports.Users;
 using TechOnIt.Application.Services.AssemblyServices;
 using TechOnIt.Application.Services.Authenticateion;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
-using TechOnIt.Application.Services.ProductServices;
-using TechOnIt.Application.Services.ProductServices.ProductContracts;
+using TechOnIt.Application.Common.Security.JwtBearer;
+using TechOnIt.Application.Common.DTOs.Settings;
 
 namespace TechOnIt.Application;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, JwtSettingsDto settings)
     {
         services
             .AddScoped<IUnitOfWorks, UnitOfWork>();
@@ -46,15 +40,8 @@ public static class ConfigureServices
 
         // Add cache service.
         services.AddDistributedMemoryCache();
-
-        services.AddCustomAuthenticationServices();
         services.AddReportServices();
-        services.AuthenticationCustomServices();
-
-        services.TryAddTransient<IDeviceService, DeviceService>();
-        services.TryAddTransient<IStructureAggeregateService, StructureAggeregateService>();
-        //services.ConfigureWritable<SiteSettings>(Configuration.GetSection("SiteSettings"));
-        //services.TryAddTransient(typeof(IAppSettingsService<>), typeof(AppSettingsService<>));
+        services.AuthenticationCustomServices(settings);
 
         return services;
     }
@@ -95,100 +82,13 @@ public static class ConfigureServices
         return services;
     }
 
-    public static IServiceCollection AuthenticationCustomServices(this IServiceCollection services)
+    public static IServiceCollection AuthenticationCustomServices(this IServiceCollection services, JwtSettingsDto settings)
     {
         services.TryAddTransient<IIdentityService, IdentityService>();
         services.TryAddTransient<IRoleService, RoleService>();
         services.TryAddTransient<IUserService, UserService>();
-
-        return services;
-    }
-
-    public static IServiceCollection AddCustomAuthenticationServices(this IServiceCollection services)
-    {
-        // TODO:
-        // Refactor
-        var jwtSettings = new JwtSettings();
-
-        services.AddAuthorization();
-
-        services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                JwtSettings settingsJwt = new JwtSettings();
-                if (jwtSettings != null) settingsJwt = jwtSettings;
-
-                var secretkeyHandler = settingsJwt.SecretKeyP == null ? JwtSettings.SecretKey : settingsJwt.SecretKeyP;
-                var encryptionkeyHandler = settingsJwt.EncrypKeyP == null ? JwtSettings.EncrypKey : settingsJwt.EncrypKeyP;
-                var ValidAudienceHandler = settingsJwt.AudienceP == null ? JwtSettings.Audience : settingsJwt.AudienceP;
-                var ValidIssuerHandler = settingsJwt.IssuerP == null ? JwtSettings.Issuer : settingsJwt.IssuerP;
-
-
-                var secretkey = Encoding.UTF8.GetBytes(secretkeyHandler);
-                var encryptionkey = Encoding.UTF8.GetBytes(encryptionkeyHandler);
-
-                var validationParameters = new TokenValidationParameters
-                {
-                    RequireSignedTokens = true,
-
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(secretkey),
-
-                    RequireExpirationTime = true,
-                    ValidateLifetime = true,
-
-                    ValidateAudience = true, //default : false
-                    ValidAudience = ValidAudienceHandler,
-
-                    ValidateIssuer = true, //default : false
-                    ValidIssuer = ValidIssuerHandler,
-
-                    TokenDecryptionKey = new SymmetricSecurityKey(encryptionkey)
-                };
-
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = validationParameters;
-                options.Events = new JwtBearerEvents
-                {
-                    OnAuthenticationFailed = context =>
-                    {
-                        if (context.Exception != null)
-                            throw new AppException(ApiResultStatusCode.UnAuthorized, "Authentication failed.", HttpStatusCode.Unauthorized, context.Exception, null);
-                        return Task.CompletedTask;
-                    },
-
-                    OnTokenValidated = async context =>
-                    {
-                        var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
-                        if (claimsIdentity.Claims?.Any() != true)
-                            context.Fail("This token has no claims.");
-
-                        var securityStamp = claimsIdentity.FindFirst(new ClaimsIdentityOptions().SecurityStampClaimType);
-                        if (securityStamp == null)
-                            context.Fail("This token has no secuirty stamp");
-
-                        //var userId = claimsIdentity.GetUserId<string>();
-                        var userId = claimsIdentity.FindFirst("UserId");
-                        //var user = GetUserAsync(context.Principal);
-
-                        //if (user.SecurityStamp != securityStamp)
-                        //context.Fail("Token secuirty stamp is not valid.");
-
-                        //    if (!user.IsActive)
-                        //        context.Fail("User is not active.");
-                    },
-
-                    OnChallenge = context =>
-                    {
-                        if (context.AuthenticateFailure != null)
-                            throw new AppException(ApiResultStatusCode.UnAuthorized, "Authenticate failure.", HttpStatusCode.Unauthorized, context.AuthenticateFailure, null);
-                        throw new AppException(ApiResultStatusCode.UnAuthorized, "You are unauthorized to access this resource.", HttpStatusCode.Unauthorized);
-                    }
-
-                };
-            });
+        services.TryAddScoped<IJwtService, JwtService>();
+        services.AddJwtAuthentication(settings);
 
         return services;
     }
@@ -199,11 +99,46 @@ public static class ConfigureServices
         services.AddTransient<IRoleReports, RoleReports>();
         services.AddTransient<IStructureAggregateReports, StructureAggregateReports>();
 
-        return services;
-    }
+        services.AddAuthorization();
 
-    public static void UseCustomExceptionHandler(this WebApplication app)
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                JwtSettings settingsJwt = new JwtSettings();
+                if (jwtSettings != null) settingsJwt = jwtSettings;
+
+    public static void AddJwtAuthentication(this IServiceCollection services,JwtSettingsDto settings)
     {
-        app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(option =>
+        {
+            var secretKey = Encoding.UTF8.GetBytes(settings.SecretKey);
+            var validationParameters = new TokenValidationParameters
+            {
+                ClockSkew=TimeSpan.Zero,
+                RequireSignedTokens=true,
+
+                ValidateIssuerSigningKey=true,
+                IssuerSigningKey=new SymmetricSecurityKey(secretKey),
+
+                RequireExpirationTime=true,
+                ValidateLifetime=true,
+
+                ValidateAudience=false,
+                ValidAudience= settings.Audience,
+
+                ValidateIssuer=true,
+                ValidIssuer=settings.Issuer,
+            };
+
+            option.RequireHttpsMetadata = false;
+            option.SaveToken = true;
+            option.TokenValidationParameters = validationParameters;
+        });
     }
 }

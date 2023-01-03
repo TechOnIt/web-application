@@ -12,12 +12,12 @@ public class DeletePlaceCommand : IRequest<object>, ICommittableRequest
 public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, object>
 {
     #region constructore
-    private readonly IStructureAggeregateService _structureAggeregateService;
+    private readonly IUnitOfWorks _unitOfWorks;
     private readonly IMediator _mediator;
 
-    public DeletePlaceCommandHandler(IStructureAggeregateService structureAggeregateService, IMediator mediator)
+    public DeletePlaceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
     {
-        _structureAggeregateService = structureAggeregateService;
+        _unitOfWorks = unitOfWorks;
         _mediator = mediator;
     }
 
@@ -27,13 +27,12 @@ public class DeletePlaceCommandHandler : IRequestHandler<DeletePlaceCommand, obj
     {
         try
         {
-            var res = await _structureAggeregateService.DeletePlaceByStructureIdAsync(request.StructureId, request.Id, cancellationToken);
-            if (res is null)
+            bool DeletePlace = await _unitOfWorks.StructureRepository.DeletePlaceAsync(request.Id, request.StructureId, cancellationToken);
+            if(!DeletePlace)
                 return ResultExtention.Failed($"can not find place with id : {request.Id}");
 
             await _mediator.Publish(new PlaceNotifications());
-
-            return ResultExtention.BooleanResult(res);
+            return ResultExtention.BooleanResult(DeletePlace);
         }
         catch (Exception exp)
         {

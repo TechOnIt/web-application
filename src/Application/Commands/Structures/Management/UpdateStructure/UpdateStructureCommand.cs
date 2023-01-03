@@ -4,7 +4,7 @@ using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Structures.Management.UpdateStructure;
 
-public class UpdateStructureCommand : IRequest<Result>, ICommittableRequest
+public class UpdateStructureCommand : IRequest<object>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }
@@ -13,7 +13,7 @@ public class UpdateStructureCommand : IRequest<Result>, ICommittableRequest
     public StuctureType Type { get; set; }
 }
 
-public class UpdatetructureCommandHandler : IRequestHandler<UpdateStructureCommand, Result>
+public class UpdatetructureCommandHandler : IRequestHandler<UpdateStructureCommand, object>
 {
     #region Constructure
     private readonly IUnitOfWorks _unitOfWorks;
@@ -23,20 +23,21 @@ public class UpdatetructureCommandHandler : IRequestHandler<UpdateStructureComma
     }
     #endregion
 
-    public async Task<Result> Handle(UpdateStructureCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(UpdateStructureCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
-            var findStructure = await _unitOfWorks.StructureRepository.GetByIdAsyncAsNoTracking(request.Id, cancellationToken);
-            if (findStructure == null)
-                return Result.Fail("Structure not found !");
             var model = request.Adapt<Structure>();
-            await _unitOfWorks.StructureRepository.UpdateAsync(model, cancellationToken);
-            return Result.Ok();
+            var updateResult = await _unitOfWorks.StructureRepository.UpdateAsync(model,cancellationToken);
+
+            if (!updateResult)
+                return ResultExtention.Failed("Structure not found !");
+
+            return ResultExtention.BooleanResult(true);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new AppException(exp.Message);
         }
     }
 }

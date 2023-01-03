@@ -1,6 +1,5 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
 using TechOnIt.Application.Common.Interfaces;
-using TechOnIt.Application.Common.Models.ViewModels.Places;
 
 namespace TechOnIt.Application.Commands.Place.CreatePlace;
 
@@ -15,12 +14,12 @@ public class CreatePlaceCommand : IRequest<object>, ICommittableRequest
 public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, object>
 {
     #region constructor
-    private readonly IStructureAggeregateService _structureAggeregateService;
+    private readonly IUnitOfWorks _unitOfWorks;
     private readonly IMediator _mediator;
 
-    public CreatePlaceCommandHandler(IStructureAggeregateService structureAggeregateService, IMediator mediator)
+    public CreatePlaceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
     {
-        _structureAggeregateService = structureAggeregateService;
+        _unitOfWorks = unitOfWorks;
         _mediator = mediator;
     }
     #endregion
@@ -29,14 +28,23 @@ public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, obj
     {
         try
         {
-            var newPlace = new PlaceCreateViewModel(request.Id, request.Name, request.Description, request.StuctureId);
-            var createRes = await _structureAggeregateService.CreatePlaceAsync(request.StuctureId,newPlace,cancellationToken);
-            if (createRes is null)
-                return ResultExtention.Failed($"can not find structore with id : {request.StuctureId}");
+            request.Id = request.Id == Guid.Empty ? Guid.NewGuid() : request.Id;
+
+            Task createPlace =
+                Task.Factory
+                .StartNew(() => 
+                _unitOfWorks.StructureRepository
+                .CreatePlaceAsync(request.Adapt<TechOnIt.Domain.Entities.Product.StructureAggregate.Place>(),request.StuctureId,cancellationToken)
+                , cancellationToken);
+
+            await createPlace;
+
+            if (createPlace.IsFaulted)
+                return await Task.FromResult(ResultExtention.Failed($"can not find structore with id : {request.StuctureId}"));
 
             await _mediator.Publish(new PlaceNotifications());
 
-            return ResultExtention.IdResult(createRes.Value);
+            return await Task.FromResult(ResultExtention.IdResult(request.Id));
         }
         catch (Exception exp)
         {

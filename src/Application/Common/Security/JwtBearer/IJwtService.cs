@@ -1,11 +1,9 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using System.Security.Claims;
-using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Common.Security.JwtBearer;
 
 public interface IJwtService
 {
-    string GenerateTokenWithClaims(List<Claim> claims, DateTime? expireDateTime = null);
-    Task<AccessToken> GenerateAccessToken(User user, CancellationToken stoppingToken = default);
+    Task<AccessToken> GenerateAccessToken(User user, IList<Role> userRoles, CancellationToken cancellationToken);
 }

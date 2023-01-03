@@ -10,4 +10,5 @@ public interface IRoleRepository
     Task UpdateRoleAsync(Guid roleId, string roleName, CancellationToken cancellationToken = default);
     Task<bool> IsExistsRoleNameAsync(string roleName, CancellationToken cancellationToken = default);
     Task<bool> HasSubsetUserAsync(Guid roleId, CancellationToken cancellationToken = default);
+    Task<IList<Role>?> GetRolesByUserId(Guid userId, CancellationToken cancellationToken);
 }

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Emit;
 using System.Xml;
+using TechOnIt.Infrastructure.Common.Consts;
 
 namespace TechOnIt.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 
@@ -28,5 +29,10 @@ public class DeviceConfiguration : IEntityTypeConfiguration<Device>
         builder.Property(a => a.RowVersion)
             .IsRowVersion()
             .IsConcurrencyToken(true);
+
+        #region column types
+        builder.Property(a => a.Pin).HasColumnType(DataTypes.numerics).HasMaxLength(10);
+        builder.Property(a => a.IsHigh).HasColumnType(DataTypes.boolean);
+        #endregion
     }
 }

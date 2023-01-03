@@ -1,6 +1,4 @@
-﻿using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using MediatR;
-using MediatR.Pipeline;
+﻿using MediatR.Pipeline;
 using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Common.Behaviors;

@@ -1,10 +1,4 @@
-global using TechOnIt.Application.Services.ProductServices;
-global using TechOnIt.Domain.Entities.Product;
-global using TechOnIt.Domain.Enums;
 global using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 global using Moq;
-global using Shouldly;
-global using System;
-global using System.Threading.Tasks;
 global using TestStack.BDDfy;
 global using Xunit;

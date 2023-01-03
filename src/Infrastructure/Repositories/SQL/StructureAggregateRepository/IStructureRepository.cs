@@ -7,9 +7,11 @@ public interface IStructureRepository
 {
     #region Structure
     Task CreateAsync(Structure structure, CancellationToken cancellationToken = default);
-    Task UpdateAsync(Structure structure, CancellationToken cancellationToken = default);
+    //Task UpdateAsync(Structure structure, CancellationToken cancellationToken = default);
+    Task<bool> UpdateAsync(Structure structure, CancellationToken cancellationToken);
     Task DeleteAsync(Structure structure, CancellationToken cancellationToken);
-    Task DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
+    //Task DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
+    Task<bool> DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken);
     Task<Structure> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<Structure> GetByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
     Task<Structure?> GetByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken = default);
@@ -30,6 +32,6 @@ public interface IStructureRepository
     Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>> filter = null);
     Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken = default);
     Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default);
-    Task DeletePlaceAsync(Place place, CancellationToken cancellationToken = default);
+    Task<bool> DeletePlaceAsync(Guid placeId, Guid structureId, CancellationToken cancellationToken);
     #endregion
 }

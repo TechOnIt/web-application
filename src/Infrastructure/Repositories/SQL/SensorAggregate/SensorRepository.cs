@@ -20,16 +20,15 @@ public class SensorRepository : ISensorRepository
         await _context.Sensors.AddAsync(sensor, cancellationToken);
         await Task.CompletedTask;
     }
-    public async Task DeleteSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken)
+    public async Task<(bool Result, bool IsExists)> DeleteSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken)
     {
-        var sensor = await _context.Sensors.FirstAsync(s => s.Id == sensorId, cancellationToken);
-        if (sensor != null)
-        {
-            if (!cancellationToken.IsCancellationRequested)
-                _context.Sensors.Remove(sensor);
-        }
+        var sensor = await _context.Sensors.FirstOrDefaultAsync(s => s.Id == sensorId, cancellationToken);
 
-        await Task.CompletedTask;
+        if (sensor == null)
+            return (false, false);
+
+        _context.Sensors.Remove(sensor);
+        return (true, true);
     }
     public async Task<Sensor?> GetSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken)
     {
@@ -39,18 +38,18 @@ public class SensorRepository : ISensorRepository
 
         return await Task.FromResult(sensor);
     }
-    public async Task UpdateSensorAsync(Sensor sensor, CancellationToken cancellationToken)
+    public async Task<(bool Result, bool IsExists)> UpdateSensorAsync(Sensor sensor, CancellationToken cancellationToken)
     {
         var findSensor = await _context.Sensors.FindAsync(sensor.Id, cancellationToken);
-        if (findSensor != null)
-        {
-            findSensor.SetSensorType(sensor.SensorType);
-            findSensor.PlaceId = sensor.PlaceId;
+        if (findSensor is null)
+            return (false, false);
 
-            if (!cancellationToken.IsCancellationRequested)
-                _context.Sensors.Update(findSensor);
-        }
-        await Task.CompletedTask;
+        findSensor.SetSensorType(sensor.SensorType);
+        findSensor.PlaceId = sensor.PlaceId;
+
+        cancellationToken.ThrowIfCancellationRequested();
+        _context.Sensors.Update(findSensor);
+        return (true, true);
     }
     public async Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
     => await Task.FromResult<IList<PerformanceReport>?>(await _context.PerformanceReports.Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken));
@@ -71,24 +70,28 @@ public class SensorRepository : ISensorRepository
 
         await Task.CompletedTask;
     }
-    public async Task DeleteReportByIdAsync(Guid sensorId, PerformanceReport report, CancellationToken cancellationToken)
+    public async Task DeleteReportByIdAsync(Guid sensorId, Guid reportId, CancellationToken cancellationToken)
     {
-        var sensor = await _context.Sensors
-            .Include(r => r.Reports)
-            .FirstOrDefaultAsync(a => a.Id == sensorId, cancellationToken);
+        var getReport = await _context.PerformanceReports
+            .FirstOrDefaultAsync(a => a.Id == reportId && a.SensorId == sensorId);
 
-        if (sensor != null)
-        {
+        if (getReport is not null)
             if (!cancellationToken.IsCancellationRequested)
-            {
-                sensor.RemoveReport(report);
-                _context.Update(sensor);
-            }
-        }
+                _context.PerformanceReports.Remove(getReport);
 
         await Task.CompletedTask;
     }
     public async Task<PerformanceReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken)
         => await Task.FromResult(await _context.PerformanceReports.FirstOrDefaultAsync(a => a.Id == reportId, cancellationToken));
+    public async Task AddReportToSensorAsync(PerformanceReport model, CancellationToken cancellationToken)
+    {
+        var sensor = await _context.Sensors.FirstOrDefaultAsync(a => a.Id == model.SensorId);
+
+        if (sensor is not null)
+            sensor.AddReport(model);
+
+        await Task.CompletedTask;
+    }
+
     #endregion
 }

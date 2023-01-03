@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Text;
+using System.Text.Json;
 
 namespace TechOnIt.Application.Common.Extentions;
 
@@ -14,6 +15,9 @@ public static class ResultExtention
     public static object BooleanResult(bool parameter) => new { Succedded = parameter };
     public static object BooleanResult(bool? parameter) => new { Succedded = parameter };
     public static object ConcurrencyResult(object parameter) => new { Key = parameter };
+    public static object GetJsonResult(object parameter)=>new {Result = JsonSerializer.Serialize(parameter) };
+    public static object ListResult(object parameter) => new { List = parameter };
+    public static object TokenResult(object parameter) => new {Token = parameter };
 
     public static object Failed(object parameter)
     {

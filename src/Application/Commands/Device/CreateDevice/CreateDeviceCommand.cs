@@ -1,8 +1,6 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
 using TechOnIt.Domain.Enums;
-using Mapster;
 using TechOnIt.Application.Common.Interfaces;
-using TechOnIt.Application.Common.Models.ViewModels.Devices;
 
 namespace TechOnIt.Application.Commands.Device.CreateDevice;
 
@@ -17,13 +15,13 @@ public class CreateDeviceCommand : IRequest<object>, ICommittableRequest
 public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, object>
 {
     #region Ctor
-    private readonly IDeviceService _deviceService;
+    private readonly IUnitOfWorks _unitOfWorks;
     private readonly IMediator _mediator;
 
-    public CreateDeviceCommandHandler(IDeviceService deviceService, IMediator mediator)
+    public CreateDeviceCommandHandler(IMediator mediator, IUnitOfWorks unitOfWorks)
     {
-        _deviceService = deviceService;
         _mediator = mediator;
+        _unitOfWorks = unitOfWorks;
     }
     #endregion
 
@@ -32,14 +30,15 @@ public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, o
         try
         {
             var model = new Domain.Entities.Product.Device(request.Pin, request.DeviceType, request.IsHigh, request.PlaceId);
-            var createResult = await _deviceService.CreateAsync(model.Adapt<DeviceViewModel>(), cancellationToken);
+            Task createResult = Task.Factory.StartNew(() => _unitOfWorks.DeviceRepositry.CreateAsync(model, cancellationToken), cancellationToken);
+            Task.WaitAny(createResult);
 
             await _mediator.Publish(new DeviceNotifications());
 
-            if (createResult is null)
+            if (!createResult.IsCompletedSuccessfully)
                 return ResultExtention.Failed("an error occured !");
             else
-                return ResultExtention.IdResult(createResult.Id);
+                return ResultExtention.IdResult(model.Id);
         }
         catch (Exception exp)
         {

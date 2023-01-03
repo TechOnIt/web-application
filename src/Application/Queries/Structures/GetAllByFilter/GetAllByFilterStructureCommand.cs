@@ -1,6 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
-using System.Linq.Expressions;
-using TechOnIt.Application.Common.Models.ViewModels.Structures;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Reports.StructuresAggregate;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,32 +6,25 @@ namespace TechOnIt.Application.Queries.Structures.GetAllByFilter;
 
 public class GetAllByFilterStructureCommand : IRequest<PaginatedList<StructureViewModel>>
 {
-    public string Keyword { get; set; }
-    public int Page { get; set; }
-    public int PageSize { get; set; }
+    // TODO:
+    // This is a crime against humanity!                                            WHY?
+    public Expression<Func<Structure, bool>>? Filter { get; set; }
 }
 
-public class GetAllByFilterStructureCommandHandler : IRequestHandler<GetAllByFilterStructureCommand, PaginatedList<StructureViewModel>>
+public class GetAllByFilterStructureCommandHandler : IRequestHandler<GetAllByFilterStructureCommand, Result<IList<StructureViewModel>>>
 {
     #region Ctor
-    private readonly IStructureAggregateReports _structureAggregateReports;
-
-    public GetAllByFilterStructureCommandHandler(IStructureAggregateReports structureAggregateReports)
+    private readonly IUnitOfWorks _unitOfWorks;
+    public GetAllByFilterStructureCommandHandler(IUnitOfWorks unitOfWorks)
     {
-        _structureAggregateReports = structureAggregateReports;
+        _unitOfWorks = unitOfWorks;
     }
 
     #endregion
 
-    public async Task<PaginatedList<StructureViewModel>> Handle(GetAllByFilterStructureCommand request, CancellationToken cancellationToken = default)
+    public async Task<Result<IList<StructureViewModel>>> Handle(GetAllByFilterStructureCommand request, CancellationToken cancellationToken = default)
     {
-        return await _structureAggregateReports
-            .GetAllPaginatedSearchAsync<StructureViewModel>(new PaginatedSearchWithSize()
-            {
-                Keyword = request.Keyword,
-                Page = request.Page,
-                PageSize = request.PageSize,
-            }
-            , config: null, cancellationToken);
+        var allStructures = await _structureAggregateReports.GetStructuresByFilterAsync(request.Filter, cancellationToken);
+        return Result.Ok(allStructures);
     }
 }

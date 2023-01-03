@@ -3,6 +3,7 @@ using TechOnIt.Domain.Entities.Product.SensorAggregate;
 using TechOnIt.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TechOnIt.Infrastructure.Common.Consts;
 
 namespace TechOnIt.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
 

@@ -30,8 +30,11 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
     {
         try
         {
-            var model = new Structure(Guid.NewGuid(),request.UserId, request.Name, request.Description, DateTime.Now, DateTime.Now, request.Type);
-            await _unitOfWorks.StructureRepository.CreateAsync(model, cancellationToken);
+            var structure = new StructureViewModel(Guid.NewGuid(), request.Name, request.Description,true, request.Type, DateTime.Now);
+            var createRes = await _structureAggeregateService.CreateStructureAsync(structure,cancellationToken);
+
+            if (createRes is null)
+                return ResultExtention.Failed($"an error occared !");
 
             await _mediator.Publish(new StructureNotifications(), cancellationToken);
             return ResultExtention.ConcurrencyResult(model.ApiKey);

@@ -1,13 +1,18 @@
-﻿using TechOnIt.Application.Commands.Roles.Management.CreateRole;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
+using TechOnIt.Application.Commands.Roles.Management.AssignToUserRole;
+using TechOnIt.Application.Commands.Roles.Management.CreateRole;
 using TechOnIt.Application.Commands.Roles.Management.DeleteRole;
 using TechOnIt.Application.Commands.Roles.Management.UpdateRole;
+using TechOnIt.Application.Common.Security.JwtBearer;
 using TechOnIt.Application.Queries.Roles.GetAllRoles;
-using Microsoft.AspNetCore.DataProtection;
-using TechOnIt.Identity.Api.Controllers;
 
 namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
 
 [Area("manage")]
+//[JwtAuthentication]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class RoleController : BaseController
 {
     #region DI & Ctor's
@@ -53,10 +58,18 @@ public class RoleController : BaseController
     [HttpDelete, Route("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
-        if (!User.Identity.IsAuthenticated)
+        if (User.Identity == null || !User.Identity.IsAuthenticated)
             return Unauthorized();
 
         var result = await _mediator.Send(new DeleteRoleCommand { Id = id });
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [ApiResultFilter]
+    public async Task<IActionResult> AssignToUser([FromBody] AssignRoleToUserCommand command)
+    {
+        var result = await _mediator.Send(command);
         return Ok(result);
     }
     #endregion

@@ -38,8 +38,12 @@ public class FullName : ValueObject
     public string Name { get; private set; }
     public string Surname { get; private set; }
 
-    public string GetName() => Name;
+    public string GetFirstName() => Name;
     public string GetSurname() => Surname;
+    /// <summary>
+    /// Get full name. e.g. Reza Ahmadi
+    /// </summary>
+    /// <returns></returns>
     public string GetFullName() => $"{Name} {Surname}";
     public void SetFullName(string name, string surname)
     {

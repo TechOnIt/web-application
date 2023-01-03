@@ -1,5 +1,6 @@
 ﻿using TechOnIt.Application.Common.Enums.IdentityService;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Services.Authenticateion;
 
@@ -38,7 +39,8 @@ public class RoleService : IRoleService
         }
     }
 
-    public async Task<(IdentityCrudStatus Result, string Message)> UpdateRoleAsync(Guid roleId, string roleName, CancellationToken cancellationToken = default)
+    public async Task<(IdentityCrudStatus Result, string Message)> UpdateRoleAsync(Guid roleId, string roleName,
+        CancellationToken cancellationToken = default)
     {
         var result = _unitOfWorks.RoleRepository.UpdateRoleAsync(roleId, roleName, cancellationToken).IsCompletedSuccessfully;
         if (!result)
@@ -47,6 +49,16 @@ public class RoleService : IRoleService
         return (IdentityCrudStatus.Succeeded, "done successfully");
     }
 
-    #region privates
+    #region Relations
+    public async Task<(IdentityCrudStatus Result, string Message)> AssignToUser(Role role, User user,
+        CancellationToken cancellationToken = default)
+    {
+        var userRole = new UserRole(user.Id, role.Id);
+        await _unitOfWorks._context.UserRoles.AddAsync(userRole);
+        bool isSuccess = Convert.ToBoolean(await _unitOfWorks._context.SaveChangesAsync());
+        if (isSuccess)
+            return new(IdentityCrudStatus.Succeeded, $"The {role.Name} assigned to {user.FullName.GetFullName()}");
+        return new(IdentityCrudStatus.Failed, $"An error has occured!");
+    }
     #endregion
 }

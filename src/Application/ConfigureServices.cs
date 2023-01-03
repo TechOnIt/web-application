@@ -99,12 +99,47 @@ public static class ConfigureServices
         services.AddTransient<IRoleReports, RoleReports>();
         services.AddTransient<IStructureAggregateReports, StructureAggregateReports>();
 
-        return services;
-    }
+        services.AddAuthorization();
 
-    public static void UseCustomExceptionHandler(this WebApplication app)
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                JwtSettings settingsJwt = new JwtSettings();
+                if (jwtSettings != null) settingsJwt = jwtSettings;
+
+    public static void AddJwtAuthentication(this IServiceCollection services,JwtSettingsDto settings)
     {
-        app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(option =>
+        {
+            var secretKey = Encoding.UTF8.GetBytes(settings.SecretKey);
+            var validationParameters = new TokenValidationParameters
+            {
+                ClockSkew=TimeSpan.Zero,
+                RequireSignedTokens=true,
+
+                ValidateIssuerSigningKey=true,
+                IssuerSigningKey=new SymmetricSecurityKey(secretKey),
+
+                RequireExpirationTime=true,
+                ValidateLifetime=true,
+
+                ValidateAudience=false,
+                ValidAudience= settings.Audience,
+
+                ValidateIssuer=true,
+                ValidIssuer=settings.Issuer,
+            };
+
+            option.RequireHttpsMetadata = false;
+            option.SaveToken = true;
+            option.TokenValidationParameters = validationParameters;
+        });
     }
 
     public static void AddJwtAuthentication(this IServiceCollection services,JwtSettingsDto settings)

@@ -35,8 +35,8 @@ namespace TechOnIt.Domain.UnitTests.ValueObjects
         public void Sould_Return_Name_With_No_Exception()
         {
             // Act
-            var resultName = FullNameObj.GetName();
-            var exceptionResult = Record.Exception(() => FullNameObj.GetName());
+            var resultName = FullNameObj.GetFullName();
+            var exceptionResult = Record.Exception(() => FullNameObj.GetFullName());
 
             // Assert
             resultName.ShouldNotBeNull();

@@ -3,7 +3,7 @@ using TechOnIt.Application.Common.Models;
 
 namespace TechOnIt.Application.Reports.Roles;
 
-public class RoleReports : IRoleReports
+public class RoleReports : IRoleReports 
 {
     #region Ctors
     private readonly IUnitOfWorks _uow;
@@ -13,6 +13,14 @@ public class RoleReports : IRoleReports
         _uow = unitOfWorks;
     }
     #endregion
+
+    /// <summary>
+    /// Find a specific role by id.
+    /// </summary>
+    /// <param name="roleId">Role unique id.</param>
+    public async Task<Role?> FindByIdAsync(Guid roleId,
+        CancellationToken cancellationToken = default)
+        => await _uow._context.Roles.FindAsync(roleId, cancellationToken);
 
     /// <summary>
     /// Get all roles by search and pagination.

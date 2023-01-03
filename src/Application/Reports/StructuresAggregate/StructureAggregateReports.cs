@@ -4,6 +4,8 @@ using Mapster;
 using System.Linq.Expressions;
 using TechOnIt.Application.Common.Exceptions;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
+using TechOnIt.Application.Common.Extentions;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Reports.StructuresAggregate;
 
@@ -17,6 +19,24 @@ public class StructureAggregateReports : IStructureAggregateReports
     }
 
     #endregion
+    public async Task<PaginatedList<TDestination>> GetAllPaginatedSearchAsync<TDestination>(PaginatedSearchWithSize paginatedSearch,
+        TypeAdapterConfig? config = null, CancellationToken cancellationToken = default)
+    {
+        // Initialize users Query.
+        var query = _unitOfWorks._context.Structures.AsQueryable();
+        // Apply conditions.
+        if (!string.IsNullOrEmpty(paginatedSearch.Keyword))
+            query = query
+                .Where(u => paginatedSearch.Keyword.Contains(u.Name) ||
+                paginatedSearch.Keyword.Contains(u.Description) ||
+                paginatedSearch.Keyword.Contains(u.ApiKey.Value))
+                .AsQueryable();
+        // Execute, pagination and type to project.
+        return await query
+            .AsNoTracking()
+            .PaginatedListAsync<Structure, TDestination>(paginatedSearch.Page, paginatedSearch.PageSize, config, cancellationToken);
+
+    }
 
     public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure, bool>> filter, CancellationToken cancellationToken = default)
     {
@@ -108,4 +128,5 @@ public class StructureAggregateReports : IStructureAggregateReports
 
         return structures;
     }
+
 }

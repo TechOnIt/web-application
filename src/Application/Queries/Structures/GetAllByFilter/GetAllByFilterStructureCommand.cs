@@ -1,9 +1,10 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Reports.StructuresAggregate;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TechOnIt.Application.Queries.Structures.GetAllByFilter;
 
-public class GetAllByFilterStructureCommand : IRequest<object>
+public class GetAllByFilterStructureCommand : IRequest<Result<IList<StructureViewModel>>>
 {
 
 }

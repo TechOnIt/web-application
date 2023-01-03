@@ -1,4 +1,5 @@
 ﻿using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
+using TechOnIt.Application.Common.Models;
 
 namespace TechOnIt.Desk.Api.Controllers.v1;
 
@@ -23,10 +24,17 @@ public class StructureController : ControllerBase
     [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     //[ValidateAntiForgeryToken]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] GetAllByFilterStructureCommand paginated)
     {
-        var result = await _mediator.Send(new GetAllByFilterStructureCommand());
-        return Ok(result);
+        try
+        {
+            var result = await _mediator.Send(new GetAllByFilterStructureCommand());
+            return Ok(result);
+        }
+        catch (AppException exp)
+        {
+            throw new AppException(ApiResultStatusCode.ServerError, exp.Message);
+        }
     }
     #endregion
 

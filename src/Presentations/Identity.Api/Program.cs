@@ -1,4 +1,8 @@
 using AspNetCoreRateLimit;
+using Microsoft.OpenApi.Models;
+using NLog;
+using NLog.Web;
+using System.Reflection;
 using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Infrastructure;
@@ -6,9 +10,6 @@ using TechOnIt.Infrastructure.Common.Extentions;
 using NLog;
 using NLog.Web;
 using System.Reflection;
-using Microsoft.OpenApi.Models;
-using System.Drawing.Text;
-using TechOnIt.Application;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -58,63 +59,10 @@ try
                 .WithMethods("GET", "PUT", "DELETE", "POST", "PATCH"); //not really necessary when AllowAnyMethods is used.;
         });
     });
+
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
-    ConfigureServices(builder.Services,builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>());
-    builder.Services.AddAuthorization();
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
 
-    #region swagger authorization
-    var securityScheme = new OpenApiSecurityScheme()
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "JSON Web Token based security",
-    };
-    var securityReq = new OpenApiSecurityRequirement()
-{
-    {
-        new OpenApiSecurityScheme
-        {
-            Reference = new OpenApiReference
-            {
-                Type = ReferenceType.SecurityScheme,
-                Id = "Bearer"
-            }
-        },
-        new string[] {}
-    }
-};
-    var contact = new OpenApiContact()
-    {
-        Name = "Tech On It",
-        Email = "info@techonit.com",
-        Url = new Uri("https://ashkannoori.onrender.com")
-    };
-    var license = new OpenApiLicense()
-    {
-        Name = "Free License",
-        Url = new Uri("https://ashkannoori.onrender.com")
-    };
-    var info = new OpenApiInfo()
-    {
-        Version = "v1",
-        Title = "TechOnIt SDK",
-        Description = "Implementing JWT Authentication in SDK",
-        TermsOfService = new Uri("https://ashkannoori.onrender.com"),
-        Contact = contact,
-        License = license
-    };
-
-    builder.Services.AddSwaggerGen(o =>
-    {
-        o.SwaggerDoc("v1", info);
-        o.AddSecurityDefinition("Bearer", securityScheme);
-        o.AddSecurityRequirement(securityReq);
-    });
+    ConfigureServices(builder.Services);
 
     #endregion
 
@@ -135,7 +83,6 @@ try
         // Configure the HTTP request pipeline.
         // client exception handle : https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-6.0#exception-handler-lambda
         app.UseHsts(); // https://git.ir/pluralsight-protecting-sensitive-data-from-exposure-in-asp-net-and-asp-net-core-applications/ episode 13
-
     }
     #endregion
 

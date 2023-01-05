@@ -4,6 +4,7 @@ using TechOnIt.Application.Queries.Users.GetAllUsers;
 namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
 
 [Area("manage")]
+[Authorize]
 public class UserController : BaseController
 {
     #region DI & Ctor's

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using TechOnIt.Application.Common.Security.JwtBearer;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
 namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
@@ -20,9 +19,12 @@ public class UserController : BaseController
     [HttpGet, ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public async Task<IActionResult> GetUsers([FromQuery] GetUsersQuery query, CancellationToken cancellationToken)
-     => await ExecuteAsync(query, cancellationToken);
-    #endregion
+    public async Task<IActionResult> GetAll([FromQuery] GetUsersQuery query, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(query, cancellationToken);
+        return Ok(result);
+    }
+    #endregion 
 
     #region Commands
     [HttpPost]

@@ -5,9 +5,8 @@ using TechOnIt.Application.Reports.Users;
 
 namespace TechOnIt.Application.Queries.Users.GetAllUsers;
 
-public class GetUsersQuery : Paginated, IRequest<PaginatedList<UserViewModel>>
+public class GetUsersQuery : PaginatedSearch, IRequest<PaginatedList<UserViewModel>>
 {
-    public string? Keyword { get; set; }
 }
 
 public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList<UserViewModel>>
@@ -31,7 +30,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
                 Page = request.Page,
                 PageSize = 20
             },
-            config: default, cancellationToken);
+            config: UserViewModel.Config(), cancellationToken);
         }
         catch (ReportExceptions exp)
         {

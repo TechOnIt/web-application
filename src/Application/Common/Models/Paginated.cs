@@ -14,7 +14,7 @@ public class PaginatedSearch
 {
     public string? Keyword { get; set; }
 
-    private int _page;
+    private int _page = 1;
     public int Page
     {
         get { return _page; }
@@ -24,7 +24,7 @@ public class PaginatedSearch
 
 public class PaginatedWithSize
 {
-    private int _page;
+    private int _page = 1;
     public int Page
     {
         get { return _page; }
@@ -43,7 +43,7 @@ public class PaginatedSearchWithSize
 {
     public string? Keyword { get; set; }
 
-    private int _page;
+    private int _page = 1;
     public int Page
     {
         get { return _page; }

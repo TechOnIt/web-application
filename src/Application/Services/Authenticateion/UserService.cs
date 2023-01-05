@@ -3,6 +3,7 @@ using TechOnIt.Infrastructure.Common.Encryptions.Contracts;
 using TechOnIt.Application.Common.Enums.IdentityService;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
+using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
 
 namespace TechOnIt.Application.Services.Authenticateion;
 
@@ -18,7 +19,7 @@ public class UserService : IUserService
 
     #endregion
 
-    public async Task<(Guid? UserId, IdentityCrudStatus Status)> CreateUserAsync(UserViewModel user, CancellationToken cancellationToken = default)
+    public async Task<(Guid? UserId, IdentityCrudStatus Status)> CreateUserAsync(CreateUserDto user, CancellationToken cancellationToken = default)
     {
         if (user.PhoneNumber is null)
             return (null, IdentityCrudStatus.Failed);

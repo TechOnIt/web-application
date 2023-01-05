@@ -2,6 +2,7 @@
 using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Reports.Users;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Queries.Users.GetAllUsers;
 
@@ -24,13 +25,19 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
         var result = new PaginatedList<UserViewModel>();
         try
         {
+            #region Map Config
+            var mapConfig = TypeAdapterConfig<User, UserViewModel>.NewConfig()
+            .Map(dest => dest.ConcurrencyStamp, src => src.ConcurrencyStamp.Value)
+            .Map(dest => dest.RegisteredDateTime, src => src.RegisteredDateTime.ToString("yyyy/MM/dd HH:mm:ss")).Config;
+            #endregion
+
             result = await _userReports.GetAllPaginatedSearchAsync<UserViewModel>(new PaginatedSearchWithSize
             {
                 Keyword = request.Keyword,
                 Page = request.Page,
                 PageSize = 20
             },
-            config: UserViewModel.Config(), cancellationToken);
+            config: mapConfig, cancellationToken);
         }
         catch (ReportExceptions exp)
         {

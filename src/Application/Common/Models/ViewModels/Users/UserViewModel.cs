@@ -14,11 +14,4 @@ public class UserViewModel
     public bool IsBaned { get; set; }
     public bool IsDeleted { get; set; }
     public string ConcurrencyStamp { get; set; }
-
-    public static TypeAdapterConfig Config()
-    {
-        return TypeAdapterConfig<User, UserViewModel>.NewConfig()
-            .Map(dest => dest.ConcurrencyStamp, src => src.ConcurrencyStamp.Value)
-            .Map(dest => dest.RegisteredDateTime, src => src.RegisteredDateTime.ToString("yyyy/MM/dd HH:mm:ss")).Config;
-    }
 }

@@ -31,9 +31,6 @@ public class IdentityContext : DbContext
             .Build();
 
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("IdentityDevelopment"));
-        //optionsBuilder.UseSqlServer(configuration.GetConnectionString("IdentityDevelopment"));
-        //optionsBuilder.UseSqlServer(configuration.GetConnectionString("DeskDevelopment"));
-        //optionsBuilder.UseSqlServer(configuration.GetConnectionString("CoreDevelopment"));
     }
 
     #region Identity

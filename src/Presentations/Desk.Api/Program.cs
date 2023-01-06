@@ -1,23 +1,21 @@
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
 using GraphQL.Types;
+using System.Reflection;
+using System.Text.Json.Serialization;
 using TechOnIt.Application;
 using TechOnIt.Application.Commands.Device.CreateDevice;
-using TechOnIt.Application.Commands.Device.DeleteDevice;
-using TechOnIt.Application.Commands.Device.UpdateDevice;
-using TechOnIt.Application.Commands.Sensor.CreatSensor;
-using TechOnIt.Application.Commands.Sensor.DeleteSensor;
-using TechOnIt.Application.Commands.Sensor.UpdateSensor;
-using TechOnIt.Application.Commands.Structures.Authentication.SignInCommands;
-using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
-using TechOnIt.Infrastructure;
-using System.Reflection;
 using TechOnIt.Desk.Api.GraphQl.PerformanceReport;
+using TechOnIt.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

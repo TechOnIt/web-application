@@ -1,14 +1,13 @@
 using AspNetCoreRateLimit;
+using Microsoft.OpenApi.Models;
+using NLog;
+using NLog.Web;
+using System.Reflection;
+using System.Text.Json.Serialization;
 using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Infrastructure;
 using TechOnIt.Infrastructure.Common.Extentions;
-using NLog;
-using NLog.Web;
-using System.Reflection;
-using Microsoft.OpenApi.Models;
-using System.Drawing.Text;
-using TechOnIt.Application;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -17,7 +16,11 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
     builder.Services.AddHsts(opts =>
     {
         opts.MaxAge = TimeSpan.FromDays(365);
@@ -55,7 +58,7 @@ try
         });
     });
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
-    ConfigureServices(builder.Services,builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>());
+    ConfigureServices(builder.Services, builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>());
     builder.Services.AddAuthorization();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -173,7 +176,7 @@ finally
 }
 
 
-void ConfigureServices(IServiceCollection services,AppSettingDto settings) // clean code 
+void ConfigureServices(IServiceCollection services, AppSettingDto settings) // clean code 
 {
     services.AddInfrastructureServices();
     services.AddApplicationServices(settings.JwtSettings);

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Infrastructure;
 
@@ -13,7 +14,10 @@ builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSecti
 builder.Services.AddFluentValidationServices();
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

@@ -21,7 +21,7 @@ public class UserController : BaseController
     [HttpGet, ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public async Task<IActionResult> GetUsers([FromQuery] GetUsersQuery query, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll([FromQuery] GetUsersQuery query, CancellationToken cancellationToken)
      => await ExecuteAsync(query, cancellationToken);
     #endregion
 

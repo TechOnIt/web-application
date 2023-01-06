@@ -220,7 +220,7 @@ public class IdentityService : IIdentityService
             #endregion
 
             #region Refresh Token
-            var getUserClaims = await user.GetClaims();
+            var getUserClaims = await user.GetIdAsClaim();
             DateTime refreshTokenExpiresAt = DateTime.Now.AddDays(3);
 #if DEBUG
             // In debug mode token life is longer.

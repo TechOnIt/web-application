@@ -33,6 +33,15 @@ public static class AuthorizationExtentions
 
         return await Task.FromResult(claims);
     }
+    public static async Task<IEnumerable<Claim>> GetIdAsClaim(this User user)
+    {
+        IList<Claim> claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        };
+
+        return await Task.FromResult(claims);
+    }
 
 
     public static async Task<IEnumerable<Claim>> GetClaims(this Structure structure)

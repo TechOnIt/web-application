@@ -1,5 +1,8 @@
-﻿using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
+﻿using System.Security.Claims;
+using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
+using TechOnIt.Application.Common.Enums.JwtServices;
+using TechOnIt.Application.Common.Security.JwtBearer;
 
 namespace TechOnIt.Identity.Api.Controllers.v1;
 
@@ -27,7 +30,7 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> Signin([FromBody] SignInUserCommand userLoginInformation, CancellationToken cancellationToken)
     {
         _logger.LogWarning($"user with ip : {Request.HttpContext.Connection.RemoteIpAddress} tried to signin");
-        var result = await _mediator.Send(userLoginInformation,cancellationToken);
+        var result = await _mediator.Send(userLoginInformation, cancellationToken);
         return Ok(result);
     }
 

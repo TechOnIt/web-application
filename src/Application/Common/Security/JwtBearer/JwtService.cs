@@ -18,8 +18,42 @@ public class JwtService : IJwtService
     }
     #endregion
 
-    #region new one
-    public async Task<AccessToken> GenerateAccessToken(IEnumerable<Claim> claims, CancellationToken cancellationToken)
+    public async Task<string> GenerateTokenAsync(IEnumerable<Claim> claims, DateTime expiresAt, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        return await Task.FromResult(Generate(claims, expiresAt));
+    }
+
+    private string Generate(IEnumerable<Claim> claims, DateTime? expiresAt = null)
+    {
+        var secretKey = Encoding.UTF8.GetBytes(_appSetting.Value.JwtSettings.SecretKey); // it must be atleast 16 characters or more
+        var signinCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature);
+
+        var descriptor = new SecurityTokenDescriptor
+        {
+            Issuer = _appSetting.Value.JwtSettings.Issuer,
+            Audience = _appSetting.Value.JwtSettings.Audience,
+            IssuedAt = DateTime.Now.ToUniversalTime(),
+            NotBefore = DateTime.Now.ToUniversalTime(),
+            SigningCredentials = signinCredentials,
+            Subject = new ClaimsIdentity(claims)
+        };
+
+        #region Token expiration
+        if (expiresAt.HasValue)
+        {
+            descriptor.Expires = expiresAt.Value.ToUniversalTime();
+        }
+        #endregion
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var securityToken = tokenHandler.CreateToken(descriptor);
+        string token = tokenHandler.WriteToken(securityToken);
+        return token;
+    }
+
+
+    public async Task<AccessToken> GenerateAccessToken(IEnumerable<Claim> claims, DateTime ExpiresAt, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         return await Task.FromResult(new AccessToken
@@ -28,7 +62,6 @@ public class JwtService : IJwtService
             TokenExpireAt = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.ExpirationMinutes).ToString()
         });
     }
-
 
     private string Generate(IEnumerable<Claim> claims)
     {
@@ -41,7 +74,7 @@ public class JwtService : IJwtService
             Audience = _appSetting.Value.JwtSettings.Audience,
             IssuedAt = DateTime.Now,
             NotBefore = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.NotBeforeMinutes),
-            Expires = DateTime.Now.AddHours(_appSetting.Value.JwtSettings.ExpirationMinutes),
+            Expires = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.ExpirationMinutes),
             SigningCredentials = signinCredentials,
             Subject = new ClaimsIdentity(claims)
         };
@@ -51,61 +84,4 @@ public class JwtService : IJwtService
         string token = tokenHandler.WriteToken(securityToken);
         return token;
     }
-    #endregion
-
-    #region the bad one
-    //public async Task<AccessToken> GenerateAccessToken(User user, IList<Role> userRoles, CancellationToken cancellationToken)
-    //{
-    //    cancellationToken.ThrowIfCancellationRequested();
-    //    return await Task.FromResult(new AccessToken
-    //    {
-    //        Token = Generate(user, userRoles),
-    //        TokenExpireAt = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.ExpirationMinutes).ToString()
-    //    });
-    //}
-
-
-    //private string Generate(User user, IList<Role> userRoles)
-    //{
-    //    var secretKey = Encoding.UTF8.GetBytes(_appSetting.Value.JwtSettings.SecretKey); // it must be atleast 16 characters or more
-    //    var signinCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey),SecurityAlgorithms.HmacSha256Signature);
-
-    //    var claims = GetClaims(user,userRoles);
-    //    var descriptor = new SecurityTokenDescriptor
-    //    {
-    //        Issuer = _appSetting.Value.JwtSettings.Issuer,
-    //        Audience = _appSetting.Value.JwtSettings.Audience,
-    //        IssuedAt = DateTime.Now,
-    //        NotBefore = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.NotBeforeMinutes),
-    //        Expires = DateTime.Now.AddHours(_appSetting.Value.JwtSettings.ExpirationMinutes),
-    //        SigningCredentials = signinCredentials,
-    //        Subject = new ClaimsIdentity(claims)
-    //    };
-
-    //    var tokenHandler = new JwtSecurityTokenHandler();
-    //    var securityToken = tokenHandler.CreateToken(descriptor);
-    //    string token = tokenHandler.WriteToken(securityToken);
-    //    return token;
-    //}
-
-    //private IEnumerable<Claim> GetClaims(User user, IList<Role> userRoles)
-    //{
-    //    IList<Claim> claims = new List<Claim>
-    //    {
-    //        new Claim(ClaimTypes.Name,$"{user.FullName.Name} {user.FullName.Surname}"),
-    //        new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-    //        new Claim(ClaimTypes.MobilePhone,user.PhoneNumber),
-    //    };
-
-    //    if (userRoles.Count() > 0)
-    //    {
-    //        foreach (var role in userRoles)
-    //        {
-    //            claims.Add(new Claim(ClaimTypes.Role, role.Name));
-    //        }
-    //    }
-
-    //    return claims;
-    //}
-    #endregion
 }

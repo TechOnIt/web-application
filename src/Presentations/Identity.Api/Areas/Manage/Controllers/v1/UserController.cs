@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
 namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
@@ -17,13 +18,13 @@ public class UserController : ControllerBase
     #endregion
 
     #region Queries
+    [Authorize]
     [HttpGet, ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    [Authorize]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll([FromQuery] GetUsersQuery request, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetUsersQuery(), cancellationToken);
+        var result = await _mediator.Send(request, cancellationToken);
         return Ok(result);
     }
     #endregion 
@@ -38,7 +39,7 @@ public class UserController : ControllerBase
         var result = await _mediator.Send(command, cancellationToken);
         return Ok(result);
     }
-    
+
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -68,7 +69,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Ban([FromRoute] string id, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new BanUserCommand() { Id = id }, cancellationToken);
-        return Ok(result); 
+        return Ok(result);
     }
 
 

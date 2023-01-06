@@ -14,6 +14,8 @@ public interface IUserRepository
     /// <returns>An specific user.</returns>
     Task<User?> FindByIdentityWithRolesAsync(string identity, CancellationToken stoppingToken = default);
     Task<User?> FindByPhoneNumberWithRolesNoTrackingAsync(string phonenumber, CancellationToken cancellationToken = default);
+
+    Task<User?> FindByUsernameWithRolesNoTrackingAsync(string username, CancellationToken cancellationToken = default);
     Task<User?> FindByIdAsNoTrackingAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<User?> FindByIdAsync(Guid userId, CancellationToken cancellationToken = default);
 

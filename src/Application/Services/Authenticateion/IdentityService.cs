@@ -1,17 +1,14 @@
-﻿using TechOnIt.Application.Common.Security.JwtBearer;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
+using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
+using TechOnIt.Application.Common.Security.JwtBearer;
+using TechOnIt.Application.Services.AssemblyServices;
+using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using TechOnIt.Infrastructure.Common.Extentions;
 using TechOnIt.Infrastructure.Common.Notifications.KaveNegarSms;
 using TechOnIt.Infrastructure.Common.Notifications.Results;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
-using Microsoft.Extensions.Caching.Distributed;
-using TechOnIt.Application.Common.Constants;
-using TechOnIt.Application.Common.Extentions;
-using TechOnIt.Application.Common.Models.ViewModels.Users;
-using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
-using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
-using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
 
 namespace TechOnIt.Application.Services.Authenticateion;
 
@@ -22,16 +19,19 @@ public class IdentityService : IIdentityService
     private readonly IDistributedCache _distributedCache;
     private readonly IKaveNegarSmsService _kavenegarAuthService;
     private readonly IJwtService _jwtService;
+    private readonly IAppSettingsService<AppSettingDto> _appSetting;
 
     public IdentityService(IUnitOfWorks unitOfWorks,
         IKaveNegarSmsService kavenegarAuthService,
         IDistributedCache distributedCache,
-        IJwtService jwtService)
+        IJwtService jwtService,
+        IAppSettingsService<AppSettingDto> appSetting)
     {
         _unitOfWorks = unitOfWorks;
         _kavenegarAuthService = kavenegarAuthService;
         _distributedCache = distributedCache;
         _jwtService = jwtService;
+        _appSetting = appSetting;
     }
     #endregion
 
@@ -99,7 +99,7 @@ public class IdentityService : IIdentityService
         return (newOtpCode, $"OTP has been sent.");
     }
 
-    public async Task<(AccessToken Token, string Message)> VerifySignInOtpAsync(string otpCode, string phonenumber,
+    public async Task<(AccessToken? Token, string Message)> VerifySignInOtpAsync(string otpCode, string phonenumber,
         CancellationToken cancellationToken = default)
     {
         // Find user by phone number.
@@ -122,39 +122,29 @@ public class IdentityService : IIdentityService
         if (user.ConfirmedPhoneNumber == false)
             return (new AccessToken(), $"phonenumber is not confirmed yet !");
 
-        AccessToken token = new();
-        var userRoles = await _unitOfWorks.RoleRepository.GetRolesByUserId(user.Id,cancellationToken);
-        var getUserClaims = await user.GetClaims(userRoles);
-        token = await _jwtService.GenerateAccessToken(getUserClaims, cancellationToken);
+        var getUserClaims = await user.GetClaims();
+        AccessToken? token = await GetUserAccessToken(user, cancellationToken);
         return (token, "welcome !");
     }
 
-    public async Task<(AccessToken Token, string Message)?> SignInUserAsync(string phoneNumber, string password,
+    public async Task<(AccessToken? Token, string Message)?> SignInUserAsync(string username, string password,
         CancellationToken cancellationToken = default)
     {
-        var user = await _unitOfWorks.UserRepository.FindByPhoneNumberWithRolesNoTrackingAsync(phoneNumber, cancellationToken);
+        AccessToken? accessToken = new();
+
+        var user = await _unitOfWorks.UserRepository.FindByUsernameWithRolesNoTrackingAsync(username, cancellationToken);
         if (user is null)
-            return null;
+            return (accessToken, "User not found.");
+
         var status = user.GetUserSignInStatusResultWithMessage(password);
+        if (!status.Status.IsSucceeded())
+            return (accessToken, status.message);
 
-        if (status.Status.IsSucceeded())
-        {
-            string message = string.Empty;
+        accessToken = await GetUserAccessToken(user, cancellationToken);
+        if (accessToken is null)
+            status.message = "user is not authenticated";
 
-            var userRoles = await _unitOfWorks.RoleRepository.GetRolesByUserId(user.Id, cancellationToken);
-            var getUserClaims = await user.GetClaims(userRoles);
-
-            AccessToken token = await _jwtService.GenerateAccessToken(getUserClaims, cancellationToken);
-
-            if (token.Token is null)
-                message = "user is not authenticated !";
-            else
-                message = status.message;
-
-            return (token, message);
-        }
-
-        return (new AccessToken(), status.message);
+        return (accessToken, status.message);
     }
     #endregion
 
@@ -182,7 +172,7 @@ public class IdentityService : IIdentityService
         return ("1234!", $"{user.PhoneNumber}");
     }
 
-    public async Task<(AccessToken Token, string Message)> SignUpWithOtpAsync(string phonenumber, string otpCode,
+    public async Task<(AccessToken? Token, string Message)> SignUpWithOtpAsync(string phonenumber, string otpCode,
         CancellationToken cancellationToken = default)
     {
         var cachedOtpCode = await _distributedCache.GetStringAsync(IdentitySettingConstant.OtpCodeKey, cancellationToken);
@@ -201,14 +191,53 @@ public class IdentityService : IIdentityService
         await _unitOfWorks.SqlRepository<User>().UpdateAsync(user);
         await _unitOfWorks.SaveAsync();
 
-        var userRoles = await _unitOfWorks.RoleRepository.GetRolesByUserId(user.Id, cancellationToken);
-        var getUserClaims = await user.GetClaims(userRoles);
-        var token = await _jwtService.GenerateAccessToken(getUserClaims, cancellationToken);
+        AccessToken? accessToken = await GetUserAccessToken(user, cancellationToken);
 
-        if (token is null)
-            return (new AccessToken(), "error !");
+        if (accessToken is null)
+            return (accessToken, "error !");
 
-        return (token, "welcome !");
+        return (accessToken, "welcome !");
+    }
+    #endregion
+
+    #region Privates
+    private async Task<AccessToken?> GetUserAccessToken(User user, CancellationToken cancellationToken)
+    {
+        AccessToken accessToken = new();
+        try
+        {
+            #region Token
+            var getUserClaimsWithRoles = await user.GetClaims();
+            DateTime tokenExpiresAt = DateTime.Now.AddMinutes(5);
+#if DEBUG
+            // In debug mode token life is longer.
+            tokenExpiresAt = tokenExpiresAt.AddMinutes(15);
+#endif
+            // Generate token with expiration date & time.
+            accessToken.Token = await _jwtService.GenerateTokenAsync(claims: getUserClaimsWithRoles,
+                expiresAt: tokenExpiresAt, cancellationToken);
+            accessToken.TokenExpireAt = tokenExpiresAt.ToString("yyyy/MM/dd HH:mm:ss");
+            #endregion
+
+            #region Refresh Token
+            var getUserClaims = await user.GetClaims();
+            DateTime refreshTokenExpiresAt = DateTime.Now.AddDays(3);
+#if DEBUG
+            // In debug mode token life is longer.
+            refreshTokenExpiresAt = refreshTokenExpiresAt.AddDays(2);
+#endif
+            // Generate refresh token with expiration date & time.
+            accessToken.RefreshToken = await _jwtService.GenerateTokenAsync(claims: getUserClaims,
+                expiresAt: refreshTokenExpiresAt, cancellationToken);
+            accessToken.RefreshTokenExpireAt = refreshTokenExpiresAt.ToString("yyyy/MM/dd HH:mm:ss");
+            #endregion
+        }
+        catch
+        {
+            // TODO:
+            // Log error!
+        }
+        return accessToken;
     }
     #endregion
 }

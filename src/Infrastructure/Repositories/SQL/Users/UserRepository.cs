@@ -1,7 +1,6 @@
 ﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using TechOnIt.Infrastructure.Common.Encryptions;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Users;
@@ -10,12 +9,10 @@ internal sealed class UserRepository : IUserRepository
 {
     #region Constructor
     private readonly IdentityContext _context;
-    private Encryptor aesEncryptor;
 
     public UserRepository(IdentityContext context)
     {
         _context = context;
-        aesEncryptor = new Encryptor(GetUserKey());
     }
     #endregion
 
@@ -26,7 +23,7 @@ internal sealed class UserRepository : IUserRepository
     => await _context.Users.FirstOrDefaultAsync(a => a.Id == userId, cancellationToken);
 
     public async Task<User?> FindByUsernameAsync(string username, CancellationToken cancellationToken = default)
-        => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => aesEncryptor.Decrypt(a.Username) == username.ToLower().Trim(), cancellationToken);
+        => await _context.Users.AsNoTracking().FirstOrDefaultAsync(a => a.Username == username.ToLower().Trim(), cancellationToken);
 
     public async Task<User?> FindByIdentityWithRolesAsync(string identity, CancellationToken stoppingToken = default)
     => await _context.Users
@@ -73,7 +70,7 @@ internal sealed class UserRepository : IUserRepository
 
     public async Task<string> GetEmailByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default)
     {
-        var user = await _context.Users.AsNoTracking().FirstAsync(a => aesEncryptor.Decrypt(a.PhoneNumber) == phonenumber);
+        var user = await _context.Users.AsNoTracking().FirstAsync(a => a.PhoneNumber == phonenumber);
         return user.Email;
     }
 
@@ -119,7 +116,7 @@ internal sealed class UserRepository : IUserRepository
     }
     public async Task DeleteByPhoneNumberAsync(string phonenumber, CancellationToken cancellationToken = default)
     {
-        var getUser = await _context.Users.FirstAsync(a => aesEncryptor.Decrypt(a.PhoneNumber) == phonenumber, cancellationToken);
+        var getUser = await _context.Users.FirstAsync(a => a.PhoneNumber == phonenumber, cancellationToken);
 
         getUser.SetIsDelete(true);
         getUser.SetIsBaned(true);
@@ -128,13 +125,4 @@ internal sealed class UserRepository : IUserRepository
         _context.Users.Update(getUser);
         await Task.CompletedTask;
     }
-
-
-    #region privates
-    private string GetUserKey()
-    {
-        var key = _context.AesKeys.AsNoTracking().First(a => a.Title == "UserKey");
-        return key.Key;
-    }
-    #endregion
 }

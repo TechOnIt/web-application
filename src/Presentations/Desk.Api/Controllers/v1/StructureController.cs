@@ -8,12 +8,10 @@ public class StructureController : ControllerBase
 {
     #region Ctor
     private readonly IMediator _mediator;
-    //private readonly IDataProtector _dataProtectionProvider;
 
-    public StructureController(IMediator mediator, IDataProtectionProvider dataProtectionProvider)
+    public StructureController(IMediator mediator)
     {
         _mediator = mediator;
-        //_dataProtectionProvider = dataProtectionProvider.CreateProtector("RouteData");
     }
 
     #endregion

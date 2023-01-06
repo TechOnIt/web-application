@@ -1,12 +1,11 @@
-﻿using TechOnIt.Domain.Entities.Identity;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
+using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using TechOnIt.Domain.Entities.Product;
 using TechOnIt.Domain.Entities.Product.SensorAggregate;
 using TechOnIt.Domain.Entities.Product.StructureAggregate;
-using TechOnIt.Domain.Entities.Secyrity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace TechOnIt.Infrastructure.Persistence.Context;
 
@@ -47,9 +46,5 @@ public class IdentityContext : DbContext
     public DbSet<Sensor> Sensors { get; set; }
     public DbSet<PerformanceReport> PerformanceReports { get; set; }
 
-    #endregion
-
-    #region keysStor for data protection
-    public DbSet<AesKey> AesKeys { get; set; }
     #endregion
 }

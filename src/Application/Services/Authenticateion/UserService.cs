@@ -1,5 +1,4 @@
 ﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Infrastructure.Common.Encryptions.Contracts;
 using TechOnIt.Application.Common.Enums.IdentityService;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
@@ -12,7 +11,7 @@ public class UserService : IUserService
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
 
-    public UserService(IUnitOfWorks unitOfWorks, IEncryptionHandlerService encryptionHandler)
+    public UserService(IUnitOfWorks unitOfWorks)
     {
         _unitOfWorks = unitOfWorks;
     }

@@ -25,10 +25,6 @@ try
         opts.Preload = true;
     });
 
-    // https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.dataprotection.idataprotectionprovider?view=aspnetcore-6.0
-    // builder.Services.AddDataProtection()
-    //    .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
-
     // Add services to the container.
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 

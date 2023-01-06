@@ -1,18 +1,26 @@
-﻿using MediatR;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TechOnIt.Core.Api.Controllers.v1;
 
-[Route("v1/[controller]/[action]")]
+[Authorize]
 [ApiController]
-public class ReportController : BaseController
+[Route("v1/[controller]/[action]")]
+public class ReportController : ControllerBase
 {
     #region DI & Ctor
+    private readonly IMediator _mediator;
     public ReportController(IMediator mediator)
-        : base(mediator)
     {
-
+        _mediator = mediator;
     }
     #endregion
 
+    #region Queries
+
+    #endregion
+
+    #region Commands
+
+    #endregion
 }

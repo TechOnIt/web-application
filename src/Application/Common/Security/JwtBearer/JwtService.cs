@@ -51,37 +51,4 @@ public class JwtService : IJwtService
         string token = tokenHandler.WriteToken(securityToken);
         return token;
     }
-
-
-    public async Task<AccessToken> GenerateAccessToken(IEnumerable<Claim> claims, DateTime ExpiresAt, CancellationToken cancellationToken)
-    {
-        cancellationToken.ThrowIfCancellationRequested();
-        return await Task.FromResult(new AccessToken
-        {
-            Token = Generate(claims),
-            TokenExpireAt = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.ExpirationMinutes).ToString()
-        });
-    }
-
-    private string Generate(IEnumerable<Claim> claims)
-    {
-        var secretKey = Encoding.UTF8.GetBytes(_appSetting.Value.JwtSettings.SecretKey); // it must be atleast 16 characters or more
-        var signinCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature);
-
-        var descriptor = new SecurityTokenDescriptor
-        {
-            Issuer = _appSetting.Value.JwtSettings.Issuer,
-            Audience = _appSetting.Value.JwtSettings.Audience,
-            IssuedAt = DateTime.Now,
-            NotBefore = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.NotBeforeMinutes),
-            Expires = DateTime.Now.AddMinutes(_appSetting.Value.JwtSettings.ExpirationMinutes),
-            SigningCredentials = signinCredentials,
-            Subject = new ClaimsIdentity(claims)
-        };
-
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var securityToken = tokenHandler.CreateToken(descriptor);
-        string token = tokenHandler.WriteToken(securityToken);
-        return token;
-    }
 }

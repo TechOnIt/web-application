@@ -11,6 +11,7 @@ using TechOnIt.Application.Common.Extentions;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
+using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
 
 namespace TechOnIt.Application.Services.Authenticateion;
 
@@ -153,7 +154,7 @@ public class IdentityService : IIdentityService
     #endregion
 
     #region Sign-Up
-    public async Task<(string? Code, string Message)> SignUpAndSendOtpCode(UserViewModel user,
+    public async Task<(string? Code, string Message)> SignUpAndSendOtpCode(CreateUserDto user,
         CancellationToken cancellationToken = default)
     {
         bool canRegister = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber);

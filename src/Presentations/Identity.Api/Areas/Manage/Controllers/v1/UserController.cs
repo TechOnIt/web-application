@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using TechOnIt.Application.Common.Security.JwtBearer;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
 namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
 
 [Authorize]
 [Area("manage")]
+[Authorize]
 public class UserController : BaseController
 {
     #region DI & Ctor's
@@ -24,6 +24,11 @@ public class UserController : BaseController
     public async Task<IActionResult> GetAll([FromQuery] GetUsersQuery query, CancellationToken cancellationToken)
      => await ExecuteAsync(query, cancellationToken);
     #endregion
+    {
+        var result = await _mediator.Send(query, cancellationToken);
+        return Ok(result);
+    }
+    #endregion 
 
     #region Commands
     [HttpPost]

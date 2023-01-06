@@ -4,6 +4,7 @@ using TechOnIt.Application.Common.Enums.IdentityService;
 using TechOnIt.Application.Common.Exceptions;
 using TechOnIt.Application.Common.Interfaces;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
+using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
 
 namespace TechOnIt.Application.Commands.Users.Management.CreateUser;
 
@@ -31,12 +32,12 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
 
     public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken = default)
     {
-        var userViewModel = new UserViewModel(request.PhoneNumber, request.PhoneNumber, request.Password,
+        var userDto = new CreateUserDto(request.PhoneNumber, request.PhoneNumber, request.Password,
             request.Name, request.Surname, request.Email);
 
         try
         {
-            var result = await _userService.CreateUserAsync(userViewModel, cancellationToken);
+            var result = await _userService.CreateUserAsync(userDto, cancellationToken);
             if (result.Status.IsDuplicate())
                 return Result.Fail("user with this phonenumber has already been registered in the system");
             else if (result.Status.IsFailed())

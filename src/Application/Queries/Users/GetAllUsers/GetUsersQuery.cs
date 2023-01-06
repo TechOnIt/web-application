@@ -2,12 +2,12 @@
 using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Reports.Users;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Queries.Users.GetAllUsers;
 
-public class GetUsersQuery : Paginated, IRequest<PaginatedList<UserViewModel>>
+public class GetUsersQuery : PaginatedSearch, IRequest<PaginatedList<UserViewModel>>
 {
-    public string? Keyword { get; set; }
 }
 
 public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList<UserViewModel>>
@@ -25,13 +25,19 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
         var result = new PaginatedList<UserViewModel>();
         try
         {
+            #region Map Config
+            var mapConfig = TypeAdapterConfig<User, UserViewModel>.NewConfig()
+            .Map(dest => dest.ConcurrencyStamp, src => src.ConcurrencyStamp.Value)
+            .Map(dest => dest.RegisteredDateTime, src => src.RegisteredDateTime.ToString("yyyy/MM/dd HH:mm:ss")).Config;
+            #endregion
+
             result = await _userReports.GetAllPaginatedSearchAsync<UserViewModel>(new PaginatedSearchWithSize
             {
                 Keyword = request.Keyword,
                 Page = request.Page,
                 PageSize = 20
             },
-            config: default, cancellationToken);
+            config: mapConfig, cancellationToken);
         }
         catch (ReportExceptions exp)
         {

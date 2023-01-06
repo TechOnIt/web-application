@@ -1,5 +1,4 @@
-﻿using TechOnIt.Application.Common.Models.ViewModels.Users;
-using TechOnIt.Application.Common.Models;
+﻿using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
 namespace TechOnIt.Application.Commands.Users.Authentication.SignUpCommands;
@@ -25,7 +24,7 @@ public class SignUpSendOtpCommandHandler : IRequestHandler<SignUpSendOtpCommand,
     {
         try
         {
-            var newUser = new UserViewModel(request.Phonenumber, request.Phonenumber, request.Password);
+            var newUser = new CreateUserDto(request.Phonenumber, request.Phonenumber, request.Password);
             var signUpresult = await _identityService.SignUpAndSendOtpCode(newUser, cancellationToken);
 
             if (signUpresult.Code is null)

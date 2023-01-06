@@ -8,12 +8,12 @@ public class StructureController : ControllerBase
 {
     #region Ctor
     private readonly IMediator _mediator;
-    private readonly IDataProtector _dataProtectionProvider;
+    //private readonly IDataProtector _dataProtectionProvider;
 
     public StructureController(IMediator mediator, IDataProtectionProvider dataProtectionProvider)
     {
         _mediator = mediator;
-        _dataProtectionProvider = dataProtectionProvider.CreateProtector("RouteData");
+        //_dataProtectionProvider = dataProtectionProvider.CreateProtector("RouteData");
     }
 
     #endregion
@@ -22,7 +22,6 @@ public class StructureController : ControllerBase
     [HttpGet]
     [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    //[ValidateAntiForgeryToken]
     public async Task<IActionResult> GetAll()
     {
         var result = await _mediator.Send(new GetAllByFilterStructureCommand());

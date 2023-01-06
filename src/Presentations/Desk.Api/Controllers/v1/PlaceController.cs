@@ -15,10 +15,13 @@ public class PlaceController : ControllerBase
     #endregion
 
     #region Queries
+
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromBody] GetAllPlacesByFilterQuery filter)
+    [ApiResultFilter]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll()
     {
-        var result = await _mediator.Send(filter);
+        var result = await _mediator.Send(new GetAllPlacesCommand());
         return Ok(result);
     }
     #endregion
@@ -39,7 +42,7 @@ public class PlaceController : ControllerBase
     [HttpPut]
     [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Update(UpdatePlaceCommand updatePlace)
+    public async Task<IActionResult> Update([FromBody] UpdatePlaceCommand updatePlace)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

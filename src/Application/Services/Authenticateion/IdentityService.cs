@@ -124,7 +124,8 @@ public class IdentityService : IIdentityService
 
         AccessToken token = new();
         var userRoles = await _unitOfWorks.RoleRepository.GetRolesByUserId(user.Id,cancellationToken);
-        token = await _jwtService.GenerateAccessToken(user, userRoles, cancellationToken);
+        var getUserClaims = await user.GetClaims(userRoles);
+        token = await _jwtService.GenerateAccessToken(getUserClaims, cancellationToken);
         return (token, "welcome !");
     }
 
@@ -139,8 +140,12 @@ public class IdentityService : IIdentityService
         if (status.Status.IsSucceeded())
         {
             string message = string.Empty;
+
             var userRoles = await _unitOfWorks.RoleRepository.GetRolesByUserId(user.Id, cancellationToken);
-            AccessToken token = await _jwtService.GenerateAccessToken(user, userRoles, cancellationToken);
+            var getUserClaims = await user.GetClaims(userRoles);
+
+            AccessToken token = await _jwtService.GenerateAccessToken(getUserClaims, cancellationToken);
+
             if (token.Token is null)
                 message = "user is not authenticated !";
             else
@@ -192,10 +197,14 @@ public class IdentityService : IIdentityService
             return (new AccessToken(), "otp code is not valid");
 
         user.ConfirmPhoneNumber();
+
         await _unitOfWorks.SqlRepository<User>().UpdateAsync(user);
         await _unitOfWorks.SaveAsync();
+
         var userRoles = await _unitOfWorks.RoleRepository.GetRolesByUserId(user.Id, cancellationToken);
-        var token = await _jwtService.GenerateAccessToken(user, userRoles, cancellationToken);
+        var getUserClaims = await user.GetClaims(userRoles);
+        var token = await _jwtService.GenerateAccessToken(getUserClaims, cancellationToken);
+
         if (token is null)
             return (new AccessToken(), "error !");
 

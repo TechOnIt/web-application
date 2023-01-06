@@ -1,23 +1,22 @@
 ﻿using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
-using TechOnIt.Application.Commands.Users.Authentication.SignUpCommands;
-using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
-using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace TechOnIt.Identity.Api.Controllers.v1;
 
+[ApiController]
 [Route("v1/[controller]/[action]")]
-public class AuthenticationController : BaseController
+public class AuthenticationController : ControllerBase
 {
     #region DI & Ctor
     private readonly ILogger<AuthenticationController> _logger;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IMediator _mediator;
 
     public AuthenticationController(IMediator mediator, ILogger<AuthenticationController> logger, IHttpContextAccessor httpContextAccessor)
-        : base(mediator)
     {
         _logger = logger;
         _httpContextAccessor = httpContextAccessor;
+        _mediator = mediator;
     }
     #endregion
 
@@ -25,22 +24,30 @@ public class AuthenticationController : BaseController
     [HttpPost]
     [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Signin([FromBody] SignInUserCommand userLoginInformation)
+    public async Task<IActionResult> Signin([FromBody] SignInUserCommand userLoginInformation, CancellationToken cancellationToken)
     {
         _logger.LogWarning($"user with ip : {Request.HttpContext.Connection.RemoteIpAddress} tried to signin");
-        return await RunCommandAsyncT(userLoginInformation);
+        var result = await _mediator.Send(userLoginInformation,cancellationToken);
+        return Ok(result);
     }
 
     [HttpPost]
     [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> SignInOtp([FromBody] SendOtpSmsCommand getSignInOtpCode)
-        => await RunCommandAsyncT(getSignInOtpCode);
+    public async Task<IActionResult> SignInOtp([FromBody] SendOtpSmsCommand getSignInOtpCode, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(getSignInOtpCode, cancellationToken);
+        return Ok(result);
+    }
+
 
     [HttpPost]
     [ApiResultFilter]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> VerifySignInOtp([FromBody] VerifyOtpSmsCommand otpCode)
-    => await RunCommandAsyncT(otpCode);
+    {
+        var result = await _mediator.Send(otpCode);
+        return Ok(result);
+    }
     #endregion
 }

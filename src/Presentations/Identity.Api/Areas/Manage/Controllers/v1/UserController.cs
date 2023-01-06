@@ -5,7 +5,6 @@ namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
 
 [Authorize]
 [Area("manage")]
-[Authorize]
 public class UserController : BaseController
 {
     #region DI & Ctor's
@@ -22,8 +21,6 @@ public class UserController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> GetAll([FromQuery] GetUsersQuery query, CancellationToken cancellationToken)
-     => await ExecuteAsync(query, cancellationToken);
-    #endregion
     {
         var result = await _mediator.Send(query, cancellationToken);
         return Ok(result);

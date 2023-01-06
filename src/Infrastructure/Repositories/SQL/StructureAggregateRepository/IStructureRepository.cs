@@ -1,11 +1,13 @@
 ﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
+using TechOnIt.Domain.ValueObjects;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 
 public interface IStructureRepository
 {
     #region Structure
+    Task<Structure?> FindByApiKeyNoTrackingAsync(Concurrency apiKey, CancellationToken cancellationToken);
     Task CreateAsync(Structure structure, CancellationToken cancellationToken = default);
     //Task UpdateAsync(Structure structure, CancellationToken cancellationToken = default);
     Task<bool> UpdateAsync(Structure structure, CancellationToken cancellationToken);

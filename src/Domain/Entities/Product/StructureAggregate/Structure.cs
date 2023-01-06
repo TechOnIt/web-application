@@ -10,7 +10,7 @@ namespace TechOnIt.Domain.Entities.Product.StructureAggregate;
 public class Structure // this class is aggregate root of Structure aggregate
 {
 
-    #region immutable constructure
+    #region Constructure
     public Structure(Guid id, string name, string description, DateTime createDate, DateTime? modifyDate, StuctureType structureType)
     {
         Id = id;
@@ -47,6 +47,7 @@ public class Structure // this class is aggregate root of Structure aggregate
     public bool IsActive { get; set; }
     public StuctureType Type { get; private set; }
     public Concurrency ApiKey { get; private set; }
+    public PasswordHash PasswordHash { get; set; }
 
     private DateTime? _CreateDate;
     public DateTime CreateDate

@@ -3,7 +3,7 @@ using TechOnIt.Application.Common.Models.ViewModels.Structures.Authentication;
 
 namespace TechOnIt.Application.Commands.Structures.Authentication.SignInCommands;
 
-public class SignInStructureCommand : IRequest<Result<StructureAccessToken>>
+public class SignInStructureCommand : IRequest<object>
 {
     public string ApiKey { get; set; }
     public string Password { get; set; }

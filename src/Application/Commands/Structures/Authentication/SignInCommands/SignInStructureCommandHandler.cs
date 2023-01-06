@@ -1,31 +1,29 @@
-﻿using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using TechOnIt.Application.Common.Models.ViewModels.Structures.Authentication;
+﻿using TechOnIt.Application.Services.Authenticateion.StructuresService;
 
 namespace TechOnIt.Application.Commands.Structures.Authentication.SignInCommands;
 
-public class SignInStructureCommandHandler : IRequestHandler<SignInStructureCommand, Result<StructureAccessToken>>
+public class SignInStructureCommandHandler : IRequestHandler<SignInStructureCommand, object?>
 {
     #region DI & Ctor
-    private readonly IUnitOfWorks _unitOfWorks;
+    private readonly IStructureService _structureService;
 
-    public SignInStructureCommandHandler(IUnitOfWorks unitOfWorks)
+    public SignInStructureCommandHandler(IStructureService structureService)
     {
-        _unitOfWorks = unitOfWorks;
+        _structureService = structureService;
     }
     #endregion
 
-    public async Task<Result<StructureAccessToken>> Handle(SignInStructureCommand request, CancellationToken cancellationToken = default)
+    public async Task<object?> Handle(SignInStructureCommand request, CancellationToken cancellationToken = default)
     {
-        //var signinPassword = await _unitOfWorks.UserRepository.UserSignInByPasswordAsync(request.Username, request.Password, cancellationToken);
+        var signinPassword = await _structureService.SignInAsync(request.ApiKey, request.Password, cancellationToken);
 
-        //if (signinPassword.Token is null)
-        //    return Result.Fail(signinPassword.Message);
+        if (!signinPassword.HasValue)
+            return signinPassword.Value.Message;
 
-        //return Result.Ok(signinPassword.Token);
-        var result = new StructureAccessToken();
-        result.Token = "aaaa";
-        result.RefreshToken = "bbbb";
+        if (signinPassword.HasValue && signinPassword.Value.Token is null
+            && !string.IsNullOrEmpty(signinPassword.Value.Message))
+            return signinPassword.Value.Message;
 
-        return Result.Ok(result);
+        return signinPassword.Value.Token;
     }
 }

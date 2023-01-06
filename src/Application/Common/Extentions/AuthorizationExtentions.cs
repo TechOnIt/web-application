@@ -15,7 +15,7 @@ public static class AuthorizationExtentions
             new Claim(ClaimTypes.MobilePhone, user.PhoneNumber)
         };
 
-        if(user.FullName is not null)
+        if (user.FullName is not null)
         {
             if (!string.IsNullOrEmpty(user.FullName.Name))
                 claims.Add(new Claim(ClaimTypes.GivenName, user.FullName.Name));
@@ -48,9 +48,19 @@ public static class AuthorizationExtentions
     {
         IList<Claim> claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name,$"{structure.Name}"),
-            new Claim(ClaimTypes.NameIdentifier,structure.Id.ToString()),
-            new Claim(ClaimTypes.SerialNumber,structure.ApiKey.ToString()),
+            new Claim(ClaimTypes.Name, $"{structure.Name}"),
+            new Claim(ClaimTypes.NameIdentifier, structure.Id.ToString()),
+            new Claim(ClaimTypes.SerialNumber, structure.ApiKey.ToString()),
+        };
+
+        return await Task.FromResult(claims);
+    }
+
+    public static async Task<IEnumerable<Claim>> GetIdAsClaim(this Structure structure)
+    {
+        IList<Claim> claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, structure.Id.ToString()),
         };
 
         return await Task.FromResult(claims);

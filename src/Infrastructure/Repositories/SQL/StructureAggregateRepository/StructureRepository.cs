@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using TechOnIt.Infrastructure.Persistence.Context;
+using TechOnIt.Domain.ValueObjects;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 
@@ -16,8 +17,12 @@ public class StructureRepository : IStructureRepository
     }
     #endregion
 
-    // attention pls : i removed default for cancellation parameter because i want all them be required !
     #region Structure
+    public async Task<Structure?> FindByApiKeyNoTrackingAsync(Concurrency apiKey, CancellationToken cancellationToken)
+        => await _context.Structures
+        .Where(structure => structure.ApiKey.Value == apiKey.Value)
+        .AsNoTracking()
+        .FirstOrDefaultAsync(cancellationToken);
     public async Task CreateAsync(Structure structure, CancellationToken cancellationToken) => await _context.Structures.AddAsync(structure, cancellationToken);
     public async Task<bool> UpdateAsync(Structure structure, CancellationToken cancellationToken)
     {

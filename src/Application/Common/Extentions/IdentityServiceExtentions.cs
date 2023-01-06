@@ -4,6 +4,7 @@ using TechOnIt.Application.Common.Enums.IdentityService;
 using System.Globalization;
 using System.Security.Claims;
 using System.Security.Principal;
+using TechOnIt.Domain.Entities.Product.StructureAggregate;
 
 namespace TechOnIt.Application.Common.Extentions;
 
@@ -14,7 +15,7 @@ public static class IdentityServiceExtentions
     const string WrongInformations = "Username or password is wrong!";
     const string LockUser = "user is locked !";
     const string WrongPassowrd = "password is wrong!";
-    const string SucceededUserValidations = "Welcome !";
+    const string SucceededValidations = "Welcome !";
     #endregion
 
     public static SigInStatus GetUserSignInStatusResult(this User user, string password = "")
@@ -48,7 +49,22 @@ public static class IdentityServiceExtentions
                 return (SigInStatus.WrongPassowrd, WrongPassowrd);
         }
 
-        return (SigInStatus.Succeeded, SucceededUserValidations);
+        return (SigInStatus.Succeeded, SucceededValidations);
+    }
+    
+    public static (SigInStatus Status, string message) GetStructureSignInStatusResultWithMessage(this Structure structure, string password = "")
+    {
+        if (structure == null)
+            return (SigInStatus.NotFound, NotFound);
+        else if (structure.IsActive is false)
+            return (SigInStatus.WrongInformations, WrongInformations);
+        else if (!string.IsNullOrWhiteSpace(password))
+        {
+            if (!structure.PasswordHash.VerifyPasswordHash(password))
+                return (SigInStatus.WrongPassowrd, WrongPassowrd);
+        }
+
+        return (SigInStatus.Succeeded, SucceededValidations);
     }
 
     public static bool IsSendSuccessfully(this SendStatus status)

@@ -9,7 +9,9 @@ public interface ISensorRepository
     Task<(bool Result, bool IsExists)> UpdateSensorAsync(Sensor sensor, CancellationToken cancellationToken);
     Task<(bool Result, bool IsExists)> DeleteSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken);
     Task<Sensor?> GetSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken = default);
-
+    Task<IList<Sensor>> GetAllSensorsByPlaceIdAsync(Guid placeId, CancellationToken cancellationToken);
+    Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsNoTrackingAsync(Guid sensorId, CancellationToken cancellationToken);
+    Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsNoTrackingWithTimeFilterAsync(Guid sensorId, DateTime minTime, DateTime maxTime, CancellationToken cancellationToken);
     #endregion
 
     #region report

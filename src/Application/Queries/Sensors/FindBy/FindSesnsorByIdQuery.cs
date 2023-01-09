@@ -1,15 +1,13 @@
-﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using TechOnIt.Application.Common.Models.ViewModels.Sensors;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Sensors;
 
 namespace TechOnIt.Application.Queries.Sensors.FindBy;
 
-public class FindSesnsorByIdQuery : IRequest<Result<SensorViewModel>>
+public class FindSesnsorByIdQuery : IRequest<object>
 {
-    public Guid Id { get; set; }
+    public Guid SensorId { get; set; }
 }
 
-public class FindSesnsorByIdQueryHandler : IRequestHandler<FindSesnsorByIdQuery, Result<SensorViewModel>>
+public class FindSesnsorByIdQueryHandler : IRequestHandler<FindSesnsorByIdQuery, object>
 {
     #region constructure
     private readonly IUnitOfWorks _unitOfWorks;
@@ -19,21 +17,21 @@ public class FindSesnsorByIdQueryHandler : IRequestHandler<FindSesnsorByIdQuery,
     }
 
     #endregion
-    public async Task<Result<SensorViewModel>> Handle(FindSesnsorByIdQuery request, CancellationToken cancellationToken = default)
+
+    public async Task<object> Handle(FindSesnsorByIdQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            var getSensor = await _unitOfWorks.SqlRepository<Sensor>()
-                .TableNoTracking.FirstOrDefaultAsync(a => a.Id == request.Id);
+            var getSensor = await _unitOfWorks.SensorRepository.GetSensorByIdAsync(request.SensorId,cancellationToken);
 
             if (getSensor is null)
-                return Result.Fail($"can not find sesnsor with id : {request.Id}");
+                return ResultExtention.NotFound($"can not find sesnsor with id : {request.SensorId}");
 
-            return Result.Ok(new SensorViewModel(getSensor.Id, getSensor.SensorType, getSensor.PlaceId));
+            return new SensorViewModel(getSensor.Id, getSensor.SensorType, getSensor.PlaceId);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new Exception(exp.Message);
         }
     }
 }

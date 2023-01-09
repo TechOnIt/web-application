@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Application.Common.Enums.IdentityService;
 using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
 using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 using TechOnIt.Application.Common.Security.JwtBearer;
@@ -127,33 +128,34 @@ public class IdentityService : IIdentityService
         return (token, "welcome !");
     }
 
-    public async Task<(AccessToken? Token, string Message)?> SignInUserAsync(string username, string password,
+    public async Task<(AccessToken? Token, SigInStatus Status)?> SignInUserAsync(string username, string password,
         CancellationToken cancellationToken = default)
     {
         AccessToken? accessToken = new();
 
         var user = await _unitOfWorks.UserRepository.FindByUsernameWithRolesNoTrackingAsync(username, cancellationToken);
         if (user is null)
-            return (accessToken, "User not found.");
+            return (accessToken, SigInStatus.NotFound);
 
         var status = user.GetUserSignInStatusResultWithMessage(password);
+
         if (!status.Status.IsSucceeded())
-            return (accessToken, status.message);
+            return (accessToken, SigInStatus.WrongInformations);
 
         accessToken = await GetUserAccessToken(user, cancellationToken);
         if (accessToken is null)
             status.message = "user is not authenticated";
 
-        return (accessToken, status.message);
+        return (accessToken, SigInStatus.Succeeded);
     }
     #endregion
 
     #region Sign-Up
-    public async Task<(string? Code, string Message)> SignUpAndSendOtpCode(CreateUserDto user,
+    public async Task<(string? Code, SigInStatus Status)> SignUpAndSendOtpCode(CreateUserDto user,
         CancellationToken cancellationToken = default)
     {
         bool canRegister = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber);
-        if (!canRegister) return (null, "user with this information is already exists in system");
+        if (!canRegister) return (null, SigInStatus.DuplicateUser);
 
         var newUser = user.Adapt<User>();
 
@@ -162,14 +164,14 @@ public class IdentityService : IIdentityService
         await _unitOfWorks.SaveAsync();
 
         if (newUser is null)
-            return (null, "error !");
+            return (null, SigInStatus.Error);
 
         var sendOtpresult = await _kavenegarAuthService.SendAuthSmsAsync(user.PhoneNumber, "", "", "1234 Test");
 
         if (!sendOtpresult.Status.IsSendSuccessfully())
-            return (null, sendOtpresult.Message);
+            return (null, SigInStatus.SmsError);
 
-        return ("1234!", $"{user.PhoneNumber}");
+        return ("1234!", SigInStatus.Succeeded);
     }
 
     public async Task<(AccessToken? Token, string Message)> SignUpWithOtpAsync(string phonenumber, string otpCode,
@@ -188,7 +190,7 @@ public class IdentityService : IIdentityService
 
         user.ConfirmPhoneNumber();
 
-        await _unitOfWorks.SqlRepository<User>().UpdateAsync(user);
+        await _unitOfWorks.UserRepository.UpdateAsync(user,cancellationToken);
         await _unitOfWorks.SaveAsync();
 
         AccessToken? accessToken = await GetUserAccessToken(user, cancellationToken);

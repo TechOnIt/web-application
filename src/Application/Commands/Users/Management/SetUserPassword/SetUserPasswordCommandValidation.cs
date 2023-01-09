@@ -7,11 +7,9 @@ public class SetUserPasswordCommandValidation : BaseFluentValidator<SetUserPassw
 {
     public SetUserPasswordCommandValidation()
     {
-        RuleFor(u => u.Id)
+        RuleFor(u => u.UserId)
             .NotEmpty()
-            .Matches(RegexConstant.Guid)
-            .MaximumLength(100)
-            ;
+            .NotNull();
 
         RuleFor(u => u.Password)
             .NotEmpty()

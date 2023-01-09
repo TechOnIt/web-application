@@ -1,17 +1,32 @@
-﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
-using TechOnIt.Application.Common.Models.ViewModels.Reports;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Reports;
 
 namespace TechOnIt.Application.Queries.PerformanceReports.FindPerformanceReportByDateTime;
 
-public class FindPerformanceReportByDateTimeQuery : IRequest<Result<IList<PerformanceReportViewModel>>>
+public class FindPerformanceReportByDateTimeQuery : IRequest<object>
 {
+    public Guid SensorId { get; set; }
     public DateTime MinDate { get; set; }
-    public DateTime? MaxDate { get; set; }
+
+    private DateTime? _maxDate;
+    public DateTime? MaxDate 
+    {
+        get
+        {
+            if (_maxDate == null)
+            {
+                _maxDate = DateTime.Now;
+            }
+
+            return _maxDate;
+        }
+        set
+        {
+            _maxDate = value;
+        }
+    }
 }
 
-public class FindPerformanceReportByDateTimeQueryHandler : IRequestHandler<FindPerformanceReportByDateTimeQuery, Result<IList<PerformanceReportViewModel>>>
+public class FindPerformanceReportByDateTimeQueryHandler : IRequestHandler<FindPerformanceReportByDateTimeQuery, object>
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -22,27 +37,23 @@ public class FindPerformanceReportByDateTimeQueryHandler : IRequestHandler<FindP
     }
     #endregion
 
-    public async Task<Result<IList<PerformanceReportViewModel>>> Handle(FindPerformanceReportByDateTimeQuery request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(FindPerformanceReportByDateTimeQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            if (request.MaxDate == null)
-                request.MaxDate = DateTime.Now;
+            var getReports = 
+                await _unitOfWorks
+                .SensorRepository
+                .GetSensorReportBySensorIdAsNoTrackingWithTimeFilterAsync(request.SensorId,request.MinDate,(DateTime)request.MaxDate,cancellationToken);
 
-            var getReports = _unitOfWorks.SqlRepository<PerformanceReport>()
-                .TableNoTracking
-                .AsParallel()
-                .Where(a => a.RecordDateTime > request.MinDate && a.RecordDateTime < request.MaxDate).ToList();
+            if (getReports is null)
+                return await Task.FromResult(ResultExtention.NotFound($"can not found any report in this time and with this id : {request.SensorId}"));
 
-            if (getReports is null || getReports.Count() == 0)
-                return Result.Fail($"there was no repoprt between {request.MinDate.ToShortDateString()} and {request.MaxDate}");
-
-            var model = getReports.Adapt<IList<PerformanceReportViewModel>>();
-            return Result.Ok(model);
+            return getReports.Adapt<IList<PerformanceReportViewModel>>();
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new Exception(exp.Message);
         }
     }
 }

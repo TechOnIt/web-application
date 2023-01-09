@@ -1,19 +1,13 @@
-﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
-using System.Linq.Expressions;
-using TechOnIt.Application.Common.Models.ViewModels.Sensors;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Sensors;
 
 namespace TechOnIt.Application.Queries.Sensors.GetAllByFilter;
 
-public class GetAllSensorsByFilterQuery : IRequest<Result<IList<SensorViewModel>>>
+public class GetAllSensorsByFilterQuery : IRequest<object>
 {
-    public Expression<Func<Sensor, bool>>? Filter { get; set; }
-    public Func<IQueryable, IOrderedQueryable<Sensor>>? Ordered { get; set; }
-    public Expression<Func<Sensor, object>>[]? IncludesTo { get; set; }
+    public Guid PlaceId { get; set; }
 }
 
-public class GetAllSensorsByFilterQueryHandler : IRequestHandler<GetAllSensorsByFilterQuery, Result<IList<SensorViewModel>>>
+public class GetAllSensorsByFilterQueryHandler : IRequestHandler<GetAllSensorsByFilterQuery, object>
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -24,39 +18,17 @@ public class GetAllSensorsByFilterQueryHandler : IRequestHandler<GetAllSensorsBy
 
     #endregion
 
-    public async Task<Result<IList<SensorViewModel>>> Handle(GetAllSensorsByFilterQuery request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(GetAllSensorsByFilterQuery request, CancellationToken cancellationToken = default)
     {
         try
         {
-            var allSensors = _unitOfWorks.SqlRepository<Sensor>().TableNoTracking.AsQueryable();
-            if (allSensors.Any())
-            {
-                if (request.IncludesTo != null)
-                {
-                    foreach (var item in request.IncludesTo)
-                    {
-                        allSensors = allSensors.Include(item);
-                    }
-                }
-
-                if (request.Filter != null)
-                {
-                    allSensors = allSensors.Where(request.Filter);
-                }
-
-                if (request.Ordered != null)
-                {
-                    allSensors = request.Ordered(allSensors);
-                }
-            }
-
-            var list = await allSensors.ToListAsync(cancellationToken) as IList<Sensor>;
-            var result = list.Adapt<IList<SensorViewModel>>();
-            return Result.Ok(result);
+            var allSensors = await _unitOfWorks.SensorRepository.GetAllSensorsByPlaceIdAsync(request.PlaceId,cancellationToken);
+            var result = allSensors.Adapt<IList<SensorViewModel>>();
+            return ResultExtention.ListResult(result);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new Exception(exp.Message);
         }
     }
 }

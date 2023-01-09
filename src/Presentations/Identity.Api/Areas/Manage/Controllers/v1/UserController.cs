@@ -66,9 +66,9 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     [Authorize]
-    public async Task<IActionResult> Ban([FromRoute] string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Ban([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new BanUserCommand() { Id = id }, cancellationToken);
+        var result = await _mediator.Send(new BanUserCommand() { UserId = id }, cancellationToken);
         return Ok(result);
     }
 
@@ -89,9 +89,9 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     [Authorize]
-    public async Task<IActionResult> RemoveAccount([FromRoute] string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> RemoveAccount([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new RemoveUserAccountCommand() { Id = id }, cancellationToken);
+        var result = await _mediator.Send(new RemoveUserAccountCommand() { UserId = id }, cancellationToken);
         return Ok(result);
     }
 

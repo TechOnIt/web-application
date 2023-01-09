@@ -1,7 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
-using TechOnIt.Application.Common.Models.ViewModels.Structures;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Structures;
 
 namespace TechOnIt.Application.Queries.Structures.FindBy;
 
@@ -25,7 +22,7 @@ public class FindByIdStructureCommandHandler : IRequestHandler<FindByIdStructure
     {
         try
         {
-            var findStruct = await _unitOfWorks.SqlRepository<Structure>().TableNoTracking.FirstOrDefaultAsync(a => a.Id == request.Id);
+           var findStruct=  await _unitOfWorks.StructureRepository.GetByIdAsyncAsNoTracking(request.Id,cancellationToken);
             if (findStruct != null)
                 return Result.Ok(findStruct.Adapt<StructureViewModel>());
             else

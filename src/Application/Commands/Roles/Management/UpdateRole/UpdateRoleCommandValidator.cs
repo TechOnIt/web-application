@@ -1,16 +1,12 @@
-﻿using TechOnIt.Application.Common.Constants;
-using TechOnIt.Application.Common.Models;
-
-namespace TechOnIt.Application.Commands.Roles.Management.UpdateRole;
+﻿namespace TechOnIt.Application.Commands.Roles.Management.UpdateRole;
 
 public class UpdateRoleCommandValidator : BaseFluentValidator<UpdateRoleCommand>
 {
     public UpdateRoleCommandValidator()
     {
-        RuleFor(r => r.Id)
+        RuleFor(r => r.RoleId)
             .NotEmpty()
-            .Matches(RegexConstant.Guid)
-            .MaximumLength(100)
+            .NotEmpty()
             ;
 
         RuleFor(r => r.Name)

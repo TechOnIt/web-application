@@ -37,7 +37,6 @@ public class DeviceRepositry : IDeviceRepositry
 
         return await Task.FromResult<Device?>(getDevice);
     }
-
     /// <summary>
     /// Create a new device.
     /// </summary>
@@ -47,7 +46,6 @@ public class DeviceRepositry : IDeviceRepositry
         var result = await _context.Devices.AddAsync(device, cancellationToken);
         await Task.CompletedTask;
     }
-
     public async Task UpdateAsync(Device device, CancellationToken cancellationToken)
     {
         if (!cancellationToken.IsCancellationRequested)
@@ -55,7 +53,6 @@ public class DeviceRepositry : IDeviceRepositry
 
         await Task.CompletedTask;
     }
-
     /// <summary>
     /// Delete an specific device by id.
     /// </summary>
@@ -73,7 +70,6 @@ public class DeviceRepositry : IDeviceRepositry
 
         await Task.CompletedTask;
     }
-
     public async Task DeleteAsync(Device device,CancellationToken cancellationToken)
     {
         if (!cancellationToken.IsCancellationRequested)
@@ -83,4 +79,17 @@ public class DeviceRepositry : IDeviceRepositry
 
         await Task.CompletedTask;
     }
+
+    #region bad method
+    public async Task<IList<Device>> GetAllDevicesAsync(CancellationToken cancellationToken,Func<Device,bool>? filter = null)
+    {
+        var devices = _context.Devices.AsNoTracking().AsQueryable();
+
+        if (filter is null)
+            return await devices.ToListAsync();
+
+        return await Task.FromResult(devices.Where(filter).ToList());
+    }
+    #endregion
+
 }

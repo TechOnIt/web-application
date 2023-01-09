@@ -1,12 +1,10 @@
-﻿using TechOnIt.Application.Common.Models;
-
-namespace TechOnIt.Application.Queries.Sensors.FindBy;
+﻿namespace TechOnIt.Application.Queries.Sensors.FindBy;
 
 public class FindSesnsorByIdValidations : BaseFluentValidator<FindSesnsorByIdQuery>
 {
     public FindSesnsorByIdValidations()
     {
-        RuleFor(a => a.Id)
+        RuleFor(a => a.SensorId)
             .NotNull()
             .NotEmpty()
             .NotEqual(Guid.Empty)

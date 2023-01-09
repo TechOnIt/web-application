@@ -1,16 +1,14 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Users.Management.BanUser;
 
-public class BanUserCommand : IRequest<Result>, ICommittableRequest
+public class BanUserCommand : IRequest<object>, ICommittableRequest
 {
-    public string? Id { get; set; }
+    public Guid UserId { get; set; }
 }
 
-public class BanUserCommandHandler : IRequestHandler<BanUserCommand, Result>
+public class BanUserCommandHandler : IRequestHandler<BanUserCommand, object>
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -24,31 +22,22 @@ public class BanUserCommandHandler : IRequestHandler<BanUserCommand, Result>
 
     #endregion
 
-    public async Task<Result> Handle(BanUserCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(BanUserCommand request, CancellationToken cancellationToken = default)
     {
-        // map id to guid instance.
-        var userId = Guid.Parse(request.Id);
-
-        // find user by id.
-        var user = await _unitOfWorks.SqlRepository<User>().GetByIdAsync(cancellationToken, userId);
-        if (user == null)
-            return Result.Fail("User was not found!");
-
-        var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
-
         try
         {
-            // ban user & save.
+            var user = await _unitOfWorks.UserRepository.FindByIdAsync(request.UserId,cancellationToken);
+
+            if (user == null)
+                return ResultExtention.NotFound("User was not found!");
+
             user.SetIsBaned(true);
-            await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
-            await transAction.CommitAsync();
+            var updateRes = _unitOfWorks.UserRepository.UpdateAsync(user,cancellationToken);
+            return ResultExtention.BooleanResult(true);
         }
         catch (Exception exp)
         {
-            _logger.Log(LogLevel.Critical, exp.Message);
-            await transAction.RollbackAsync();
+            throw new Exception(exp.Message);
         }
-
-        return Result.Ok();
     }
 }

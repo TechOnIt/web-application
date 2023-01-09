@@ -49,9 +49,9 @@ public class RoleController : ControllerBase
 
     [HttpDelete, Route("{id}")]
     [ApiResultFilter]
-    public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new DeleteRoleCommand { Id = id }, cancellationToken);
+        var result = await _mediator.Send(new DeleteRoleCommand { RoleId = id }, cancellationToken);
         return Ok(result);
     }
     #endregion

@@ -1,16 +1,13 @@
-﻿using TechOnIt.Domain.Entities.Product;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
-using TechOnIt.Application.Common.Models.ViewModels.Devices;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Devices;
 
 namespace TechOnIt.Application.Queries.Devices.FindById;
 
-public class FindByIdDeviceCommand : IRequest<Result<DeviceViewModel>>
+public class FindByIdDeviceCommand : IRequest<object>
 {
     public Guid DeviceId { get; set; }
 }
 
-public class FindByIdDeviceCommandHandler : IRequestHandler<FindByIdDeviceCommand, Result<DeviceViewModel>>
+public class FindByIdDeviceCommandHandler : IRequestHandler<FindByIdDeviceCommand, object>
 {
     #region constructure
     private readonly IUnitOfWorks _unitOfWorks;
@@ -20,12 +17,20 @@ public class FindByIdDeviceCommandHandler : IRequestHandler<FindByIdDeviceComman
     }
 
     #endregion
-    public async Task<Result<DeviceViewModel>> Handle(FindByIdDeviceCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(FindByIdDeviceCommand request, CancellationToken cancellationToken = default)
     {
-        var getDevice = await _unitOfWorks.SqlRepository<Device>().TableNoTracking.FirstOrDefaultAsync(a => a.Id == request.DeviceId);
-        if (getDevice == null)
-            return Result.Fail($"cant find device with id : {request.DeviceId}");
+        try
+        {
+            var getDevice = await _unitOfWorks.DeviceRepositry.FindByIdAsNoTrackingAsync(request.DeviceId, cancellationToken);
 
-        return getDevice.Adapt<DeviceViewModel>();
+            if (getDevice is null)
+                return ResultExtention.NotFound($"cant find device with id : {request.DeviceId}");
+
+            return getDevice.Adapt<DeviceViewModel>();
+        }
+        catch (Exception exp)
+        {
+            throw new Exception(exp.Message);
+        }
     }
 }

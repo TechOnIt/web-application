@@ -1,15 +1,13 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using TechOnIt.Application.Common.Interfaces;
+﻿using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Users.Management.RemoveUserAccount
 {
-    public class RemoveUserAccountCommand : IRequest<Result>, ICommittableRequest
+    public class RemoveUserAccountCommand : IRequest<object>, ICommittableRequest
     {
-        public string Id { get; set; }
+        public Guid UserId { get; set; }
     }
 
-    public class RemoveUserAccountCommandHandler : IRequestHandler<RemoveUserAccountCommand, Result>
+    public class RemoveUserAccountCommandHandler : IRequestHandler<RemoveUserAccountCommand, object>
     {
         #region Constructor
         private readonly IUnitOfWorks _unitOfWorks;
@@ -19,34 +17,24 @@ namespace TechOnIt.Application.Commands.Users.Management.RemoveUserAccount
         }
         #endregion
 
-        public async Task<Result> Handle(RemoveUserAccountCommand request, CancellationToken cancellationToken = default)
+        public async Task<object> Handle(RemoveUserAccountCommand request, CancellationToken cancellationToken = default)
         {
-            // map id to guid instance.
-            var userId = Guid.Parse(request.Id);
-
-            // find user by id.
-            var user = await _unitOfWorks.SqlRepository<User>().GetByIdAsync(cancellationToken, userId);
-
-            if (user == null)
-                return Result.Fail("User was not found!");
-
-            // delete user & save.
-            user.SetIsDelete(true);
-
-            // TODO:
-            // Move transaction to pipeline...
-            var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
-
             try
             {
-                await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
+                var user = await _unitOfWorks.UserRepository.FindByIdAsync(request.UserId,cancellationToken);
+
+                if (user == null)
+                    return ResultExtention.NotFound("User was not found!");
+
+                user.SetIsDelete(true);
+                await _unitOfWorks.UserRepository.UpdateAsync(user, cancellationToken);
+
+                return ResultExtention.BooleanResult(true);
             }
-            catch (Exception)
+            catch (Exception exp)
             {
-                await transAction.RollbackAsync();
-                return Result.Fail("An error was occured. try again later."); ;
+                throw new Exception(exp.Message);
             }
-            return Result.Ok();
         }
     }
 }

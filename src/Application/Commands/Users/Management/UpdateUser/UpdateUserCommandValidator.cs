@@ -7,10 +7,9 @@ public class UpdateUserCommandValidator : BaseFluentValidator<UpdateUserCommand>
 {
     public UpdateUserCommandValidator()
     {
-        RuleFor(u => u.Id)
+        RuleFor(u => u.UserId)
             .NotEmpty()
-            .MaximumLength(200)
-            .Matches(RegexConstant.Guid)
+            .NotNull()
             ;
 
         RuleFor(u => u.Name)

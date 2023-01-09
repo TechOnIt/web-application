@@ -1,19 +1,17 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using TechOnIt.Application.Common.Interfaces;
+﻿using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Users.Management.UpdateUser;
 
-public class UpdateUserCommand : IRequest<Result<string>>, ICommittableRequest
+public class UpdateUserCommand : IRequest<object>, ICommittableRequest
 {
-    public string? Id { get; set; }
+    public Guid UserId { get; set; }
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public string? Email { get; set; }
     public string? ConcurrencyStamp { get; set; }
 }
 
-public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Result<string>>
+public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, object>
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -23,51 +21,38 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
     }
     #endregion
 
-    public async Task<Result<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(UpdateUserCommand request, CancellationToken cancellationToken = default)
     {
-        var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
-        // map id to guid instance.
-        var userId = Guid.Parse(request.Id);
-
         // map concurrency stamp to instance.
         var concurrencyStamp = Concurrency.Parse(request.ConcurrencyStamp);
 
         // find user by id.
-        var user = await _unitOfWorks.SqlRepository<User>().GetByIdAsync(cancellationToken, userId);
+        var user = await _unitOfWorks.UserRepository.FindByIdAsync(request.UserId, cancellationToken);
 
         try
         {
             // user not found?
             if (user == null)
-                return Result.Fail("User was not found!");
+                return ResultExtention.NotFound("User was not found!");
 
             ;    // concurrency stamp was not match?
             if (user.ConcurrencyStamp != concurrencyStamp)
-                return Result.Fail("User was edited passed times, get latest user info.");
+                return ResultExtention.Failed("User was edited passed times, get latest user info.");
 
             // map user detail's.
             user.SetEmail(request.Email);
             user.SetFullName(new FullName(request.Name, request.Surname));
+
             // create new concurrency stamp.
             // TODO:
             // change stamp automaticly.
             user.RefreshConcurrencyStamp();
-
-            await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
-
-            // TODO:
-            // Move transaction to pipeline...
-            await transAction.CommitAsync();
+            await _unitOfWorks.UserRepository.UpdateAsync(user, cancellationToken);
+            return user.ConcurrencyStamp.ToString();
         }
-        catch
+        catch(Exception exp)
         {
-            // TODO:
-            // Move transaction to pipeline...
-            await transAction.RollbackAsync();
-            Result.Fail("an Error ocured .");
+            throw new Exception(exp.Message);
         }
-
-        // find user by id.
-        return Result.Ok(user.ConcurrencyStamp.ToString());
     }
 }

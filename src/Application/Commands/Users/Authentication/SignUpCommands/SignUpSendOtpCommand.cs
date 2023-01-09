@@ -3,13 +3,13 @@ using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 
 namespace TechOnIt.Application.Commands.Users.Authentication.SignUpCommands;
 
-public class SignUpSendOtpCommand : IRequest<Result<string>>
+public class SignUpSendOtpCommand : IRequest<object>
 {
     public string Phonenumber { get; set; }
     public string Password { get; set; }
 }
 
-public class SignUpSendOtpCommandHandler : IRequestHandler<SignUpSendOtpCommand, Result<string>>
+public class SignUpSendOtpCommandHandler : IRequestHandler<SignUpSendOtpCommand, object>
 {
     #region constructor
     private readonly IIdentityService _identityService;
@@ -20,21 +20,21 @@ public class SignUpSendOtpCommandHandler : IRequestHandler<SignUpSendOtpCommand,
 
     #endregion
 
-    public async Task<Result<string>> Handle(SignUpSendOtpCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(SignUpSendOtpCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
             var newUser = new CreateUserDto(request.Phonenumber, request.Phonenumber, request.Password);
             var signUpresult = await _identityService.SignUpAndSendOtpCode(newUser, cancellationToken);
 
-            if (signUpresult.Code is null)
-                return Result.Fail(signUpresult.Message);
+            if(signUpresult.Code is null)
+                return ResultExtention.Failed(signUpresult.Status.ToString());
 
-            return Result.Ok(signUpresult.Message);
+            return ResultExtention.OtpResult(signUpresult.Code);
         }
         catch (Exception exp)
         {
-            return Result.Fail($"error : {exp.Message}");
+            throw new Exception(exp.Message);
         }
     }
 }

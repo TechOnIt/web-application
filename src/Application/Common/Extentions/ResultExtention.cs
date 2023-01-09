@@ -18,7 +18,30 @@ public static class ResultExtention
     public static object GetJsonResult(object parameter)=>new {Result = JsonSerializer.Serialize(parameter) };
     public static object ListResult(object parameter) => new { List = parameter };
     public static object TokenResult(object parameter) => new {Token = parameter };
+    public static object OtpResult(object parameter) => new {OtpCode = parameter };
+    public static object NotFound(object parameter)
+    {
+        var type = new ManageObjects(parameter);
+        StringBuilder errors = new StringBuilder();
 
+        if (type.IsString) errors.Append(parameter.ToString());
+        else if (type.IsArray)
+        {
+            foreach (var item in parameter as IEnumerable)
+            {
+                errors.Append($"{item.ToString()}-");
+            }
+        }
+        else if (type.IsList)
+        {
+            foreach (var item in parameter as IEnumerable)
+            {
+                errors.Append($"{item.ToString()}-");
+            }
+        }
+
+        return new { NotFound = errors.ToString() };
+    }
     public static object Failed(object parameter)
     {
         var type = new ManageObjects(parameter);

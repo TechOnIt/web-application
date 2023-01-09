@@ -31,7 +31,7 @@ public sealed class SignInUserCommandHandler : IRequestHandler<SignInUserCommand
                 return ResultExtention.Failed("Server side error has occured.");
 
             if (signInUserResult.Value.Token is null)
-                return ResultExtention.Failed(signInUserResult.Value.Message);
+                return ResultExtention.Failed(signInUserResult.Value.Status.ToString());
 
             await _mediator.Publish(new SignInUserNotifications()); // notification events
             return signInUserResult.Value.Token;

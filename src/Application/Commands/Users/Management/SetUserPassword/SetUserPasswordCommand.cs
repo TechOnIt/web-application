@@ -1,17 +1,15 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using TechOnIt.Application.Common.Interfaces;
+﻿using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Users.Management.SetUserPassword;
 
-public class SetUserPasswordCommand : IRequest<Result>, ICommittableRequest
+public class SetUserPasswordCommand : IRequest<object>, ICommittableRequest
 {
-    public string Id { get; set; }
+    public Guid UserId { get; set; }
     public string Password { get; set; }
     public string RepeatPassword { get; set; }
 }
 
-public class SetUserPasswordCommandHandler : IRequestHandler<SetUserPasswordCommand, Result>
+public class SetUserPasswordCommandHandler : IRequestHandler<SetUserPasswordCommand, object>
 {
     #region Constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -21,42 +19,22 @@ public class SetUserPasswordCommandHandler : IRequestHandler<SetUserPasswordComm
     }
     #endregion
 
-
-    public async Task<Result> Handle(SetUserPasswordCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(SetUserPasswordCommand request, CancellationToken cancellationToken = default)
     {
-        // map id to guid i;nstance.
-        var userId = Guid.Parse(request.Id);
-
-        // find user by id.
-        var user = await _unitOfWorks.SqlRepository<User>().GetByIdAsync(cancellationToken, userId);
-
-
-        if (user == null)
-            return Result.Fail("User was not found!");
-
-        // Set new password.
-        user.SetPassword(PasswordHash.Parse(request.Password));
-
-        // TODO:
-        // Move transaction to pipeline...
-        var transAction = await _unitOfWorks._context.Database.BeginTransactionAsync();
         try
         {
-            // Update user.
-            await _unitOfWorks.SqlRepository<User>().UpdateAsync(user, cancellationToken);
+            var user = await _unitOfWorks.UserRepository.FindByIdAsync(request.UserId, cancellationToken);
 
-            // TODO:
-            // Move transaction to pipeline...
-            await transAction.CommitAsync();
+            if (user == null)
+                return ResultExtention.NotFound("User was not found!");
+
+            user.SetPassword(PasswordHash.Parse(request.Password));
+            await _unitOfWorks.UserRepository.UpdateAsync(user,cancellationToken);
+            return ResultExtention.BooleanResult(true);
         }
-        catch
+        catch (Exception exp)
         {
-            // TODO:
-            // Move transaction to pipeline...
-            await transAction.RollbackAsync();
-            return Result.Fail("An error was occured. try again later.");
+            throw new Exception(exp.Message);
         }
-
-        return Result.Ok();
     }
 }

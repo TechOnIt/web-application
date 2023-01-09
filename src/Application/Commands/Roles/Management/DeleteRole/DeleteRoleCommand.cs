@@ -1,14 +1,13 @@
-﻿using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using TechOnIt.Application.Common.Interfaces;
+﻿using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Roles.Management.DeleteRole;
 
-public class DeleteRoleCommand : IRequest<Result>, ICommittableRequest
+public class DeleteRoleCommand : IRequest<object>, ICommittableRequest
 {
-    public string Id { get; set; }
+    public Guid RoleId { get; set; }
 }
 
-public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, Result>
+public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, object>
 {
     #region DI $ Ctor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -19,15 +18,18 @@ public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, Resul
     }
     #endregion
 
-    public async Task<Result> Handle(DeleteRoleCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(DeleteRoleCommand request, CancellationToken cancellationToken = default)
     {
-        // Find role by id.
-        var roleId = Guid.Parse(request.Id);
-        var role = await _unitOfWorks.SqlRepository<Role>().GetByIdAsync(cancellationToken, roleId);
-        if (role == null)
-            return Result.Fail("Role was not found!");
-
-        await _unitOfWorks.SqlRepository<Role>().DeleteAsync(role, cancellationToken);
-        return Result.Ok();
+        try
+        {
+            var role = await _unitOfWorks.RoleRepository.FindRoleByIdAsync(request.RoleId, cancellationToken);
+            if (role == null) return ResultExtention.NotFound("Role was not found!");
+            await _unitOfWorks.RoleRepository.DeleteRoleAsync(role, cancellationToken);
+            return ResultExtention.BooleanResult(true);
+        }
+        catch (Exception exp)
+        {
+            throw new Exception(exp.Message);
+        }
     }
 }

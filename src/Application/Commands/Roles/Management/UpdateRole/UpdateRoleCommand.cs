@@ -1,15 +1,14 @@
-﻿using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using TechOnIt.Application.Common.Interfaces;
+﻿using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Roles.Management.UpdateRole;
 
-public class UpdateRoleCommand : IRequest<Result>, ICommittableRequest
+public class UpdateRoleCommand : IRequest<object>, ICommittableRequest
 {
-    public string Id { get; set; }
+    public Guid RoleId { get; set; }
     public string Name { get; set; }
 }
 
-public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, Result>
+public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, object>
 {
     #region DI $ Ctor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -20,17 +19,19 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, Resul
     }
     #endregion
 
-    public async Task<Result> Handle(UpdateRoleCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(UpdateRoleCommand request, CancellationToken cancellationToken = default)
     {
-        // Find role by id.
-        var roleId = Guid.Parse(request.Id);
-        var role = await _unitOfWorks.SqlRepository<Role>().GetByIdAsync(cancellationToken, roleId);
-        if (role == null)
-            return Result.Fail("Role was not found!");
-
-        // Map role name.
-        role.SetName(request.Name);
-        await _unitOfWorks.SqlRepository<Role>().UpdateAsync(role, cancellationToken);
-        return Result.Ok();
+        try
+        {
+            var role = await _unitOfWorks.RoleRepository.FindRoleByIdAsync(request.RoleId, cancellationToken);
+            if (role == null) return ResultExtention.NotFound("Role was not found!");
+            role.SetName(request.Name);
+            await _unitOfWorks.RoleRepository.UpdateRoleAsync(role, cancellationToken);
+            return ResultExtention.BooleanResult(true);
+        }
+        catch (Exception exp)
+        {
+            throw new Exception(exp.Message);
+        }
     }
 }

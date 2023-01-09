@@ -53,6 +53,20 @@ public class SensorRepository : ISensorRepository
     }
     public async Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
     => await Task.FromResult<IList<PerformanceReport>?>(await _context.PerformanceReports.Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken));
+
+    public async Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsNoTrackingAsync(Guid sensorId, CancellationToken cancellationToken)
+    => await _context.PerformanceReports.AsNoTracking().Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken);
+
+    public async Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsNoTrackingWithTimeFilterAsync(Guid sensorId, DateTime minTime, DateTime maxTime, CancellationToken cancellationToken)
+        => await _context
+            .PerformanceReports
+            .AsNoTracking()
+            .Where(a => a.SensorId == sensorId && a.RecordDateTime > minTime && a.RecordDateTime <= maxTime)
+            .ToListAsync(cancellationToken);
+
+
+    public async Task<IList<Sensor>> GetAllSensorsByPlaceIdAsync(Guid placeId, CancellationToken cancellationToken)
+        => await _context.Sensors.AsNoTracking().Where(a => a.PlaceId == placeId).ToListAsync();
     #endregion
 
     #region report

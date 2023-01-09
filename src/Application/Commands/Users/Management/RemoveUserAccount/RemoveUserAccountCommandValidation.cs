@@ -7,10 +7,9 @@ public class RemoveUserAccountCommandValidation : BaseFluentValidator<RemoveUser
 {
     public RemoveUserAccountCommandValidation()
     {
-        RuleFor(u => u.Id)
+        RuleFor(u => u.UserId)
             .NotEmpty()
-            .Matches(RegexConstant.Guid)
-            .MaximumLength(100)
+            .NotNull()
             ;
     }
 }

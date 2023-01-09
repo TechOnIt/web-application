@@ -1,17 +1,11 @@
-﻿using TechOnIt.Infrastructure.Repositories.SQL;
-using TechOnIt.Infrastructure.Repositories.SQL.Devices;
+﻿using TechOnIt.Infrastructure.Repositories.SQL.Devices;
 using TechOnIt.Infrastructure.Repositories.SQL.Roles;
 using TechOnIt.Infrastructure.Repositories.SQL.Users;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using TechOnIt.Infrastructure.Common.Extentions;
 using TechOnIt.Infrastructure.Persistence.Context;
-using TechOnIt.Infrastructure.Repositories.SQL;
-using TechOnIt.Infrastructure.Repositories.SQL.Devices;
-using TechOnIt.Infrastructure.Repositories.SQL.Roles;
 using TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 using TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
-using TechOnIt.Infrastructure.Repositories.SQL.Users;
 
 namespace TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
@@ -23,14 +17,6 @@ public class UnitOfWork : IUnitOfWorks
     public UnitOfWork(IdentityContext context)
     {
         _context = context;
-    }
-    #endregion
-
-    #region sql_Generic_Repository
-    public ISqlRepository<TEntity> SqlRepository<TEntity>() where TEntity : class
-    {
-        ISqlRepository<TEntity> repository = new SqlRepository<TEntity, IdentityContext>(_context);
-        return repository;
     }
     #endregion
 

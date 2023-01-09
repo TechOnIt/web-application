@@ -1,19 +1,13 @@
-﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
-using System.Linq.Expressions;
-using TechOnIt.Application.Common.Models.ViewModels.Reports;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Reports;
 
 namespace TechOnIt.Application.Queries.PerformanceReports.GetAllPerformanceReportByFilter;
 
-public class GetAllPerformanceReportByFilterQuery : IRequest<Result<IList<PerformanceReportViewModel>>>
+public class GetAllPerformanceReportByFilterQuery : IRequest<object>
 {
-    public Expression<Func<PerformanceReport, bool>>? Filter { get; set; }
-    public Func<IQueryable, IOrderedQueryable<PerformanceReport>>? Ordered { get; set; }
-    public Expression<Func<PerformanceReport, object>>[]? IncludesTo { get; set; }
+    public Guid SensorId { get; set; }
 }
 
-public class GetAllPerformanceReportByFilterQueryHandler : IRequestHandler<GetAllPerformanceReportByFilterQuery, Result<IList<PerformanceReportViewModel>>>
+public class GetAllPerformanceReportByFilterQueryHandler : IRequestHandler<GetAllPerformanceReportByFilterQuery, object>
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -24,31 +18,19 @@ public class GetAllPerformanceReportByFilterQueryHandler : IRequestHandler<GetAl
 
     #endregion
 
-    public async Task<Result<IList<PerformanceReportViewModel>>> Handle(GetAllPerformanceReportByFilterQuery request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(GetAllPerformanceReportByFilterQuery request, CancellationToken cancellationToken)
     {
-        var allReports = _unitOfWorks.SqlRepository<PerformanceReport>().TableNoTracking.AsQueryable();
-        if (allReports.Any())
+        try
         {
-            if (request.IncludesTo != null)
-            {
-                foreach (var item in request.IncludesTo)
-                {
-                    allReports = allReports.Include(item);
-                }
-            }
+            var allReports = _unitOfWorks.SensorRepository.GetSensorReportBySensorIdAsNoTrackingAsync(request.SensorId,cancellationToken);
+            if (allReports is null)
+                return await Task.FromResult(ResultExtention.NotFound($"can not found reports for sensor with id : {request.SensorId}"));
 
-            if (request.Filter != null)
-            {
-                allReports = allReports.Where(request.Filter);
-            }
-
-            if (request.Ordered != null)
-            {
-                allReports = request.Ordered(allReports);
-            }
+            return await Task.FromResult(ResultExtention.ListResult(allReports.Adapt<IList<PerformanceReportViewModel>>()));
         }
-
-        var exutedQuery = await allReports.ToListAsync(cancellationToken);
-        return Result.Ok(exutedQuery.Adapt<IList<PerformanceReportViewModel>>());
+        catch (Exception exp)
+        {
+            throw new Exception(exp.Message);
+        }
     }
 }

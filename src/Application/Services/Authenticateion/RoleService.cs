@@ -38,15 +38,6 @@ public class RoleService : IRoleService
         }
     }
 
-    public async Task<(IdentityCrudStatus Result, string Message)> UpdateRoleAsync(Guid roleId, string roleName, CancellationToken cancellationToken = default)
-    {
-        var result = _unitOfWorks.RoleRepository.UpdateRoleAsync(roleId, roleName, cancellationToken).IsCompletedSuccessfully;
-        if (!result)
-            return (IdentityCrudStatus.Failed, "An error occurred");
-
-        return (IdentityCrudStatus.Succeeded, "done successfully");
-    }
-
     #region privates
     #endregion
 }

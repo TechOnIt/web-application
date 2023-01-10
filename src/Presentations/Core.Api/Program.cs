@@ -51,6 +51,8 @@ app.UseHttpsRedirection();
 
 // Routing
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(

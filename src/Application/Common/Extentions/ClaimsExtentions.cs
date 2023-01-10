@@ -45,7 +45,7 @@ public static class ClaimsExtentions
     #endregion
 
     #region structure
-    public static async Task<StructureClaims?> GetCurrentStructureAsync(this System.Security.Claims.ClaimsPrincipal claims)
+    public static async Task<StructureClaims?> GetCurrentStructureAsync(this ClaimsPrincipal claims)
     {
         try
         {
@@ -64,7 +64,7 @@ public static class ClaimsExtentions
         }
     }
 
-    public static async Task<(Guid Id, IdentityCurrentType Type)> GetCurrentStructureIdAsync(this System.Security.Claims.ClaimsPrincipal claims)
+    public static async Task<(Guid Id, IdentityCurrentType Type)> GetCurrentStructureIdAsync(this ClaimsPrincipal claims)
     {
         try
         {

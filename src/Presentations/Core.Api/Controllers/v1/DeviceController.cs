@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechOnIt.Application.Common.Extentions;
+using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 
 namespace TechOnIt.Core.Api.Controllers.v1;
 
 [Authorize]
 [ApiController]
+[ApiResultFilter]
 [Route("v1/[controller]/[action]")]
 public class DeviceController : ControllerBase
 {
@@ -29,7 +31,7 @@ public class DeviceController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var currentStructure = User.GetCurrentStructureIdAsync();
+        var currentStructure = await User.GetCurrentStructureAsync();
         return Ok(currentStructure);
     }
     #endregion

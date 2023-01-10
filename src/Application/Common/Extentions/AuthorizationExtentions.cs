@@ -50,7 +50,7 @@ public static class AuthorizationExtentions
         {
             new Claim(ClaimTypes.Name, $"{structure.Name}"),
             new Claim(ClaimTypes.NameIdentifier, structure.Id.ToString()),
-            new Claim(ClaimTypes.SerialNumber, structure.ApiKey.ToString()),
+            new Claim(ClaimTypes.SerialNumber, structure.ApiKey.Value.ToString()),
         };
 
         return await Task.FromResult(claims);

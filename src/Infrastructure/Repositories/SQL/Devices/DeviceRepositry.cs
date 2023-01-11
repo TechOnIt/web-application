@@ -1,5 +1,5 @@
-﻿using TechOnIt.Domain.Entities.Product;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using TechOnIt.Domain.Entities.Product;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Devices;
@@ -13,8 +13,8 @@ public class DeviceRepositry : IDeviceRepositry
     {
         _context = context;
     }
-
     #endregion
+
     public async Task<Device?> FindByIdAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
         var getDevice = await _context.Devices.FirstOrDefaultAsync(a => a.Id == deviceId, cancellationToken);
@@ -58,7 +58,7 @@ public class DeviceRepositry : IDeviceRepositry
     /// </summary>
     /// <param name="DeviceId"></param>
     /// <returns></returns>
-    public async Task DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken =default)
+    public async Task DeleteByIdAsync(Guid DeviceId, CancellationToken cancellationToken = default)
     {
         var getDevice = await _context.Devices.FirstOrDefaultAsync(a => a.Id == DeviceId);
 
@@ -70,7 +70,7 @@ public class DeviceRepositry : IDeviceRepositry
 
         await Task.CompletedTask;
     }
-    public async Task DeleteAsync(Device device,CancellationToken cancellationToken)
+    public async Task DeleteAsync(Device device, CancellationToken cancellationToken)
     {
         if (!cancellationToken.IsCancellationRequested)
         {
@@ -81,7 +81,7 @@ public class DeviceRepositry : IDeviceRepositry
     }
 
     #region bad method
-    public async Task<IList<Device>> GetAllDevicesAsync(CancellationToken cancellationToken,Func<Device,bool>? filter = null)
+    public async Task<IList<Device>> GetAllDevicesAsync(CancellationToken cancellationToken, Func<Device, bool>? filter = null)
     {
         var devices = _context.Devices.AsNoTracking().AsQueryable();
 

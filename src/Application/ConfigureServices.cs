@@ -21,6 +21,7 @@ using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 using TechOnIt.Application.Common.Security.JwtBearer;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Application.Services.Authenticateion.StructuresService;
+using TechOnIt.Application.Reports.Devices;
 
 namespace TechOnIt.Application;
 
@@ -98,6 +99,7 @@ public static class ConfigureServices
     public static IServiceCollection AddReportServices(this IServiceCollection services)
     {
         services.AddTransient<IUserReports, UserReports>();
+        services.AddTransient<IDeviceReport, DeviceReport>();
         services.AddTransient<IRoleReports, RoleReports>();
         services.AddTransient<IStructureAggregateReports, StructureAggregateReports>();
 

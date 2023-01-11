@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TechOnIt.Application.Common.Extentions;
 using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
+using TechOnIt.Application.Queries.Devices.GetAllCurrentDevices;
 
 namespace TechOnIt.Core.Api.Controllers.v1;
 
@@ -32,7 +33,11 @@ public class DeviceController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var currentStructure = await User.GetCurrentStructureAsync();
-        return Ok(currentStructure);
+        if (currentStructure == null)
+            return Unauthorized();
+
+        var result = await _mediatR.Send(new GetAllDevicesByStructureIdQuery { StructureId = currentStructure.StructureId });
+        return Ok(result);
     }
     #endregion
 }

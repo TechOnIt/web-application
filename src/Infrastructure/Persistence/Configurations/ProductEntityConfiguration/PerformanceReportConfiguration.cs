@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TechOnIt.Infrastructure.Common.Consts;
 
-namespace TechOnIt.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
+namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
 
 public class PerformanceReportConfiguration : IEntityTypeConfiguration<PerformanceReport>
 {

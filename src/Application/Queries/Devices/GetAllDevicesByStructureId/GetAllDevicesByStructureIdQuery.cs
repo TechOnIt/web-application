@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Application.Reports.Devices;
 
-namespace TechOnIt.Application.Queries.Devices.GetAllCurrentDevices;
+namespace TechOnIt.Application.Queries.Devices.GetAllDevicesByStructureId;
 
 public class GetAllDevicesByStructureIdQuery : IRequest<object>
 {

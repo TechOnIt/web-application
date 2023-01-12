@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using TechOnIt.Infrastructure.Common.Consts;
 
-namespace TechOnIt.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
+namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
 
 public class PlaceConfiguration : IEntityTypeConfiguration<Place>
 {

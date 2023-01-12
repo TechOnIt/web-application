@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TechOnIt.Infrastructure.Common.Consts;
 
-namespace TechOnIt.Infrastructure.EntityConfigurations;
+namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {

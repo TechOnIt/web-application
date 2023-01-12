@@ -1,10 +1,9 @@
 ﻿using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using TechOnIt.Domain.ValueObjects;
-using TechOnIt.Infrastructure.Initializer;
 using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
-namespace TechOnIt.Infrastructure.Initializer.Identities;
+namespace TechOnIt.Infrastructure.Persistence.SeedInitializer.Identities;
 
 internal class UserDataInitializer : IDataInitializer
 {

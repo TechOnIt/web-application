@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
-using TechOnIt.Infrastructure.Initializer;
 using TechOnIt.Infrastructure.Persistence.Context;
+using TechOnIt.Infrastructure.Persistence.SeedInitializer;
 
 namespace TechOnIt.Infrastructure.Common.Extentions;
 

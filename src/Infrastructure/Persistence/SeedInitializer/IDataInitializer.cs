@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Infrastructure.Initializer;
+﻿namespace TechOnIt.Infrastructure.Persistence.SeedInitializer;
 
 internal interface IDataInitializer
 {

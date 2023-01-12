@@ -8,7 +8,7 @@ using System.Reflection.Emit;
 using System.Xml;
 using TechOnIt.Infrastructure.Common.Consts;
 
-namespace TechOnIt.Infrastructure.EntityConfigurations.ProductEntityConfiguration;
+namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
 
 public class DeviceConfiguration : IEntityTypeConfiguration<Device>
 {

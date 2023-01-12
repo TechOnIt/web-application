@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TechOnIt.Infrastructure.Common.Notifications.KaveNegarSms;
 using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
-using TechOnIt.Infrastructure.Initializer;
-using TechOnIt.Infrastructure.Initializer.Identities;
 using TechOnIt.Infrastructure.Persistence.Context;
+using TechOnIt.Infrastructure.Persistence.SeedInitializer;
+using TechOnIt.Infrastructure.Persistence.SeedInitializer.Identities;
 
 namespace TechOnIt.Infrastructure;
 

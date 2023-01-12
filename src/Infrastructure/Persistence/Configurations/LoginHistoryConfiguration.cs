@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace TechOnIt.Infrastructure.EntityConfigurations;
+namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
 public class LoginHistoryConfiguration : IEntityTypeConfiguration<LoginHistory>
 {

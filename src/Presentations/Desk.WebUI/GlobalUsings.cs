@@ -4,3 +4,4 @@ global using System.Reflection;
 global using TechOnIt.Application;
 global using TechOnIt.Desk.WebUI.Models;
 global using TechOnIt.Infrastructure;
+global using Microsoft.AspNetCore.Authorization;

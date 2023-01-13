@@ -18,6 +18,13 @@ public class StructureAggregateReports : IStructureAggregateReports
 
     #endregion
 
+    public async Task<IList<StructureCardViewModel>> GetStructureCardByUserIdNoTrackAsync(Guid userId, CancellationToken cancellationToken)
+        => await _unitOfWorks._context.Structures
+        .AsNoTracking()
+        .Where(s => s.UserId == userId)
+        .ProjectToType<StructureCardViewModel>()
+        .ToListAsync(cancellationToken);
+
     public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure, bool>> filter, CancellationToken cancellationToken = default)
     {
         try

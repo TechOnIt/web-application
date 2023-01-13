@@ -8,6 +8,8 @@ namespace TechOnIt.Application.Reports.StructuresAggregate;
 
 public interface IStructureAggregateReports : IReport
 {
+    Task<IList<StructureCardViewModel>> GetStructureCardByUserIdNoTrackAsync(Guid userId, CancellationToken cancellationToken);
+
     /// <summary>
     /// filter is a Expression linq
     /// </summary>

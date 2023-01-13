@@ -58,7 +58,7 @@ try
         });
     });
     builder.Services.AddRouting(options => options.LowercaseUrls = true);
-    ConfigureServices(builder.Services, builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>());
+    ConfigureServices(builder);
     builder.Services.AddAuthorization();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -176,15 +176,18 @@ finally
 }
 
 
-void ConfigureServices(IServiceCollection services, AppSettingDto settings) // clean code 
+void ConfigureServices(WebApplicationBuilder builder) // clean code 
 {
-    services.AddInfrastructureServices();
-    services.AddApplicationServices(settings.JwtSettings);
-    services.AddFluentValidationServices();
+    var jwtSetting = builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings;
+
+    builder.Services.AddInfrastructureServices()
+        .AddApplicationServices()
+        .AddFluentValidationServices()
+        .AddJwtAuthentication(jwtSetting);
 
     #region Api Limit-rate
-    services.AddMemoryCache();
-    services.Configure<IpRateLimitOptions>(options =>
+    builder.Services.AddMemoryCache();
+    builder.Services.Configure<IpRateLimitOptions>(options =>
     {
         options.EnableEndpointRateLimiting = true;
         options.StackBlockedRequests = false;
@@ -261,11 +264,11 @@ void ConfigureServices(IServiceCollection services, AppSettingDto settings) // c
             }
         };
     });
-    services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
-    services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
-    services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-    services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
-    services.AddInMemoryRateLimiting();
+    builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+    builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+    builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+    builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+    builder.Services.AddInMemoryRateLimiting();
     #endregion
 }
 

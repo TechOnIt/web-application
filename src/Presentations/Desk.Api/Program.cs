@@ -70,12 +70,14 @@ app.UseEndpoints(endpoints =>
 
 await app.RunAsync();
 
-
 void ConfigureServices(IServiceCollection services)
 {
-    services.AddInfrastructureServices();
-    services.AddApplicationServices(builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings);
-    services.AddFluentValidationServices();
+    var jwtSetting = builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings;
+
+    services.AddInfrastructureServices()
+        .AddApplicationServices()
+        .AddFluentValidationServices()
+        .AddJwtAuthentication(jwtSetting);
 
     // Add services to the container.
     // add notes schema

@@ -27,7 +27,7 @@ namespace TechOnIt.Application;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services, JwtSettingsDto settings)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services
             .AddScoped<IUnitOfWorks, UnitOfWork>();
@@ -43,7 +43,7 @@ public static class ConfigureServices
         // Add cache service.
         services.AddDistributedMemoryCache();
         services.AddReportServices();
-        services.AuthenticationCustomServices(settings);
+        services.AuthenticationCustomServices();
 
         return services;
     }
@@ -84,14 +84,13 @@ public static class ConfigureServices
         return services;
     }
 
-    public static IServiceCollection AuthenticationCustomServices(this IServiceCollection services, JwtSettingsDto settings)
+    public static IServiceCollection AuthenticationCustomServices(this IServiceCollection services)
     {
         services.TryAddTransient<IIdentityService, IdentityService>();
         services.TryAddTransient<IStructureService, StructureService>();
         services.TryAddTransient<IRoleService, RoleService>();
         services.TryAddTransient<IUserService, UserService>();
         services.TryAddScoped<IJwtService, JwtService>();
-        services.AddJwtAuthentication(settings);
 
         return services;
     }
@@ -113,6 +112,8 @@ public static class ConfigureServices
 
     public static void AddJwtAuthentication(this IServiceCollection services,JwtSettingsDto settings)
     {
+        if (settings is null)
+            return;
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;

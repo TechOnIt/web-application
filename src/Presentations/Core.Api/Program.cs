@@ -70,7 +70,10 @@ await app.RunAsync();
 
 void ConfigureServices(IServiceCollection services, AppSettingDto settings) // clean code 
 {
-    services.AddInfrastructureServices();
-    services.AddApplicationServices(settings.JwtSettings);
-    services.AddFluentValidationServices();
+    var jwtSetting = builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings;
+
+    services.AddInfrastructureServices()
+        .AddApplicationServices()
+        .AddFluentValidationServices()
+        .AddJwtAuthentication(jwtSetting);
 }

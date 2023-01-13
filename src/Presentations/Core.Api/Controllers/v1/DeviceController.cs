@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TechOnIt.Application.Common.Extentions;
 using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
-using TechOnIt.Application.Queries.Devices.GetAllCurrentDevices;
+using TechOnIt.Application.Queries.Devices.GetAllDevicesByStructureId;
 
 namespace TechOnIt.Core.Api.Controllers.v1;
 

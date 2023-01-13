@@ -21,6 +21,11 @@ public class UserReports : IUserReports
     }
     #endregion
 
+    public async Task<User?> FindByIdentityNoTrackAsync(string identity, CancellationToken cancellationToken)
+        => await _unitOfWorks._context.Users
+        .AsNoTracking()
+        .FirstOrDefaultAsync(u => u.Email == identity || u.PhoneNumber == identity || u.Username == identity);
+
     /// <summary>
     /// try to do not use of this method when you have less than 1000 users in database for better perfomance
     /// </summary>

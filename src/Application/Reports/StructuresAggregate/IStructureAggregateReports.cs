@@ -43,4 +43,8 @@ public interface IStructureAggregateReports : IReport
     /// <returns></returns>
     /// <exception cref="StructureException"></exception>
     Task<IList<StructureViewModel>> GetstructuresParallel(CancellationToken cancellationToken, int degreeOfParallelism = 3);
+
+    #region Place
+    Task<StructurePlacesWithDevicesViewModel> GetStructureWithPlacesAndDevicesByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken);
+    #endregion
 }

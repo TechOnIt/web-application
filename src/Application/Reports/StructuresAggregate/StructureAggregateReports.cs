@@ -116,8 +116,7 @@ public class StructureAggregateReports : IStructureAggregateReports
         return structures;
     }
 
-    #region Places
-    public async Task<StructurePlacesWithDevicesViewModel> GetStructureWithPlacesAndDevicesByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken)
+    public async Task<StructurePlacesWithDevicesViewModel?> GetStructureWithPlacesAndDevicesByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken)
         => await _unitOfWorks._context.Structures
         .AsNoTracking()
         .Include(s => s.Places)
@@ -125,5 +124,4 @@ public class StructureAggregateReports : IStructureAggregateReports
         .Where(s => s.Id == structureId)
         .ProjectToType<StructurePlacesWithDevicesViewModel>()
         .FirstOrDefaultAsync(cancellationToken);
-    #endregion
 }

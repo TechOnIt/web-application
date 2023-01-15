@@ -37,7 +37,21 @@ builder.Services.AddControllers()
     });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "_myAllowSpecificOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("*", "http://localhost:3000")
+            .SetIsOriginAllowed(_ => true)
+            .AllowCredentials()
+            .WithMethods("GET", "PUT", "DELETE", "POST", "PATCH")
+            ;
+        });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

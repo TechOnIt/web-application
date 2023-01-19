@@ -29,7 +29,10 @@ public class IdentityContext : DbContext
             .AddJsonFile("appsettings.json")
             .Build();
 
-        optionsBuilder.UseSqlServer(configuration.GetConnectionString("IdentityDevelopment"));
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("Database"), options =>
+        {
+            options.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+        });
     }
 
     #region Identity

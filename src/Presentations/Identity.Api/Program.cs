@@ -146,7 +146,7 @@ try
     {
         endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Swagger}/{action=Index}/{id?}");
 
         endpoints.MapControllerRoute(
         name: "areas",

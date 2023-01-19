@@ -1,8 +1,12 @@
+using NLog;
+using NLog.Web;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Infrastructure;
+
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,9 +36,11 @@ ConfigureServices(builder.Services, builder.Configuration.GetSection("SiteSettin
 builder.Services.AddAuthorization();
 // Add services to the container.
 builder.Services.AddControllers()
-    .AddJsonOptions(options => {
+    .AddJsonOptions(options =>
+    {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
@@ -52,14 +58,20 @@ builder.Services.AddCors(options =>
             ;
         });
 });
+
 var app = builder.Build();
+
+// middlewares
+// if you want to catch all exceptions by custom middleware Uncomment the following line
+// And if you don't need it, then comment the following line
+app.UseCustomExceptionHandler();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 }
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -71,7 +83,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Swagger}/{action=Index}/{id?}");
 
     endpoints.MapControllerRoute(
     name: "areas",
@@ -84,7 +96,7 @@ await app.RunAsync();
 
 void ConfigureServices(IServiceCollection services, AppSettingDto settings) // clean code 
 {
-    var jwtSetting = builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings;
+    var jwtSetting = settings.JwtSettings;
 
     services.AddInfrastructureServices()
         .AddApplicationServices()

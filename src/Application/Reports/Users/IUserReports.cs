@@ -11,6 +11,12 @@ namespace TechOnIt.Application.Reports.Users;
 public interface IUserReports : IReport
 {
     /// <summary>
+    /// Find an specific user by Email, phone number, username.
+    /// </summary>
+    /// <param name="identity">Email, Phone Number, Username</param>
+    Task<User?> FindByIdentityNoTrackAsync(string identity, CancellationToken cancellationToken);
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="filter"></param>

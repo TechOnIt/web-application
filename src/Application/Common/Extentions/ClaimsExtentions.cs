@@ -12,12 +12,6 @@ public static class ClaimsExtentions
     {
         try
         {
-            if (claims is null || claims.Identity is null || !claims.Identity.IsAuthenticated)
-                return await Task.FromResult((Guid.Empty, IdentityCurrentType.NotAuthenticated));
-
-            if (claims.Identity.FindFirstValue(ClaimTypes.MobilePhone) == null)
-                return await Task.FromResult((Guid.Empty, IdentityCurrentType.Structure));
-
             return await Task.FromResult((Guid.Parse(claims.Identity.FindFirstValue(ClaimTypes.NameIdentifier)), IdentityCurrentType.User));
         }
         catch (Exception exp)

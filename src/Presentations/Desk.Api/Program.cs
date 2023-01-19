@@ -59,7 +59,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Swagger}/{action=Index}/{id?}");
 
     endpoints.MapControllerRoute(
     name: "areas",
@@ -70,12 +70,14 @@ app.UseEndpoints(endpoints =>
 
 await app.RunAsync();
 
-
 void ConfigureServices(IServiceCollection services)
 {
-    services.AddInfrastructureServices();
-    services.AddApplicationServices(builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings);
-    services.AddFluentValidationServices();
+    var jwtSetting = builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings;
+
+    services.AddInfrastructureServices()
+        .AddApplicationServices()
+        .AddFluentValidationServices()
+        .AddJwtAuthentication(jwtSetting);
 
     // Add services to the container.
     // add notes schema

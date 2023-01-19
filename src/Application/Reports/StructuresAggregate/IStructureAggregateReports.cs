@@ -8,6 +8,8 @@ namespace TechOnIt.Application.Reports.StructuresAggregate;
 
 public interface IStructureAggregateReports : IReport
 {
+    Task<IList<StructureCardViewModel>> GetStructureCardByUserIdNoTrackAsync(Guid userId, CancellationToken cancellationToken);
+
     /// <summary>
     /// filter is a Expression linq
     /// </summary>
@@ -41,4 +43,8 @@ public interface IStructureAggregateReports : IReport
     /// <returns></returns>
     /// <exception cref="StructureException"></exception>
     Task<IList<StructureViewModel>> GetstructuresParallel(CancellationToken cancellationToken, int degreeOfParallelism = 3);
+
+    #region Place
+    Task<StructurePlacesWithDevicesViewModel?> GetStructureWithPlacesAndDevicesByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken);
+    #endregion
 }

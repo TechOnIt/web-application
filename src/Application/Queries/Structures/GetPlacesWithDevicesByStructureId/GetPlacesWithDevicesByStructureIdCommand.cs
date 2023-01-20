@@ -1,7 +1,7 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Reports.StructuresAggregate;
 
-namespace TechOnIt.Application.Queries.Structures.GetPlacesWithDevicesById;
+namespace TechOnIt.Application.Queries.Structures.GetPlacesWithDevicesByStructureId;
 
 public class GetPlacesWithDevicesByStructureIdCommand : IRequest<StructurePlacesWithDevicesViewModel>
 {

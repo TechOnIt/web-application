@@ -1,6 +1,6 @@
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -38,4 +38,8 @@ table tr td.tools {
 
 table tr:hover td.tools {
     opacity: 1;
+}
+
+.backdrop-filter-blur {
+    backdrop-filter: blur(5px);
 }

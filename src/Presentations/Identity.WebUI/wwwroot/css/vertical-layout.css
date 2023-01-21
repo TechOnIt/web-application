@@ -166,5 +166,6 @@ body.menu-collapsed .main-menu ul li a {
         transition: .3s ease all,background 0s;
         -webkit-transition: .3s ease all,background 0s;
         -moz-transition: .3s ease all,background 0s;
+        z-index: 500;
     }
 }

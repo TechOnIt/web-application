@@ -25,3 +25,17 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+table tbody tr:hover {
+    background: #1a083312;
+    transition: 0.3s linear;
+}
+
+table tr td.tools {
+    opacity: 0;
+    transition: 0.3s linear;
+}
+
+table tr:hover td.tools {
+    opacity: 1;
+}

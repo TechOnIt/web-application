@@ -1,20 +1,36 @@
-﻿@{
+﻿@model PaginatedList<TechOnIt.Application.Common.Models.ViewModels.Users.UserViewModel>
+@{
     ViewData["Title"] = "Index";
 }
 
 <h1>Users list</h1>
 
-<div class="container-fluid">
+<div class="mt-3">
     <table class="table table-responsive table-borderless">
         <thead>
             <tr>
                 <th>#</th>
-                <th>Username</th>
                 <th>Full Name</th>
+                <th>Username</th>
                 <th>Phone Number</th>
                 <th>Email</th>
             </tr>
         </thead>
+        <tbody>
+            @foreach (var user in Model.items)
+            {
+                int count = 1 * Model.pageIndex;
+                <tr>
+                    <td>@count</td>
+                    @if (user.FullName is not null)
+                    {
+                        <td>@user.FullName.Name @user.FullName.Surname</td>
+                    }
+                    <td>@user.Username</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@user.Email</td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
-

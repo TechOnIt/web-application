@@ -7,7 +7,7 @@
 
 <div class="mt-3">
     <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">+ Add new</button>
-    <table class="table table-responsive table-borderless">
+    <table class="table table-responsive table-borderless table-hover-mark">
         <thead>
             <tr>
                 <th>#</th>
@@ -27,7 +27,7 @@
                     <td>
                         @if (user.FullName is not null)
                         {
-                            @user.FullName.Name @user.FullName.Surname
+                            <label>@user.FullName.Name <b>@user.FullName.Surname</b></label>
                         }
                     </td>
                     <td>@user.Username</td>

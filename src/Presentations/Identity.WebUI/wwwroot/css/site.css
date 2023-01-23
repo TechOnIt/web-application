@@ -26,9 +26,11 @@ body {
     white-space: nowrap;
 }
 
-table tbody tr:hover {
-    background: #1a083312;
+table-hover-mark tbody tr:hover {
+    background: rgb(74, 46, 127, 0.10);
     transition: 0.3s linear;
+    border-radius: .5rem;
+    overflow: hidden;
 }
 
 table tr td.tools {

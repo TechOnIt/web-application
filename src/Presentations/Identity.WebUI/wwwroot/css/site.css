@@ -26,7 +26,7 @@ body {
     white-space: nowrap;
 }
 
-table-hover-mark tbody tr:hover {
+.table-hover-mark tbody tr:not(.no-content):hover {
     background: rgb(74, 46, 127, 0.10);
     transition: 0.3s linear;
     border-radius: .5rem;

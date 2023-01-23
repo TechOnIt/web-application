@@ -21,7 +21,7 @@ public class AuthenticationServiceTest
 
     private User NewUserInstance()
     {
-        var user = User.CreateNewInstance("ashnoori11@gmail.com", "09124133486");
+        var user = new User("ashnoori11@gmail.com", "09124133486");
         user.SetPassword(PasswordHash.Parse("Aa123456@"));
         return user;
     }

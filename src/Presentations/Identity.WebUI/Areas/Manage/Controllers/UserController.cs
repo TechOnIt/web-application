@@ -1,4 +1,5 @@
-﻿using TechOnIt.Application.Common.Models;
+﻿using TechOnIt.Application.Commands.Users.Management.CreateUser;
+using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
 namespace TechOnIt.Identity.WebUI.Areas.Manage.Controllers;
@@ -31,5 +32,12 @@ public class UserController : Controller
     public IActionResult Info()
     {
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateUserCommand command, CancellationToken cancellationToken)
+    {
+        var createUserResult = await _mediator.Send(command, cancellationToken);
+        return Redirect("/manage/user");
     }
 }

@@ -9,9 +9,29 @@ namespace TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 public class User
 {
-    public User()
-    {
+    User() { }
 
+    public User(string email, string phoneNumber)
+    {
+        GenerateNewId();
+        SetEmail(email);
+        SetPhoneNumber(phoneNumber);
+        ConcurrencyStamp = Concurrency.NewToken();
+        RegisteredDateTime = DateTime.Now;
+        IsBaned = false;
+        IsDeleted = false;
+        MaxFailCount = 0;
+    }
+
+    public User(string phoneNumber)
+    {
+        GenerateNewId();
+        SetPhoneNumber(phoneNumber);
+        ConcurrencyStamp = Concurrency.NewToken();
+        RegisteredDateTime = DateTime.Now;
+        UnBan();
+        IsDeleted = false;
+        MaxFailCount = 0;
     }
 
     public Guid Id { get; private set; }
@@ -31,22 +51,9 @@ public class User
     public DateTime? LockOutDateTime { get; private set; }
 
     #region Methods
-    public static User CreateNewInstance(string email, string phoneNumber)
+    private void GenerateNewId()
     {
-        var instance = new User();
-        instance.Id = Guid.NewGuid();
-        instance.SetEmail(email);
-        instance.SetPhoneNumber(phoneNumber);
-        instance.ConcurrencyStamp = Concurrency.NewToken();
-        instance.RegisteredDateTime = DateTime.Now;
-        instance.IsBaned = false;
-        instance.IsDeleted = false;
-        instance.MaxFailCount = 0;
-        return instance;
-    }
-    public void SetIsDelete(bool value)
-    {
-        IsDeleted = value;
+        Id = Guid.NewGuid();
     }
     public void RefreshConcurrencyStamp()
     {
@@ -59,10 +66,6 @@ public class User
     public void SetFullName(FullName fullname)
     {
         FullName = fullname;
-    }
-    public void SetIsBaned(bool isBane)
-    {
-        IsBaned = isBane;
     }
     public void SetEmail(string email)
     {
@@ -89,6 +92,10 @@ public class User
             throw new ArgumentNullException("While the phone number is empty, it cannot be verified.");
         ConfirmedPhoneNumber = true;
     }
+    public void IncreaseMaxFailCount()
+    {
+        MaxFailCount++;
+    }
     public void SetLockOut(DateTime lockoutUntill)
     {
         if (lockoutUntill <= DateTime.Now)
@@ -100,10 +107,6 @@ public class User
         MaxFailCount = 0;
         LockOutDateTime = null;
     }
-    public void IncreaseMaxFailCount()
-    {
-        MaxFailCount++;
-    }
     public string GenerateNewOtpCode()
     {
         Random random = new Random();
@@ -112,6 +115,18 @@ public class User
           .Select(s => s[random.Next(s.Length)]).ToArray());
     }
 
+    public void Ban()
+    {
+        IsBaned = true;
+    }
+    public void UnBan()
+    {
+        IsBaned = false;
+    }
+    public void Delete()
+    {
+        IsDeleted = true;
+    }
     #region Login History Aggregate
     public IList<LoginHistory> GetLoginHistories()
         => LoginHistories.ToList();

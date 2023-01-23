@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Application.Commands.Structures.Dashboard.GetMyStructures;
 using TechOnIt.Application.Common.Extentions;
-using TechOnIt.Application.Queries.Structures.GetPlacesWithDevicesById;
+using TechOnIt.Application.Queries.Structures.GetPlacesWithDevicesByStructureId;
 
 namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers;
 

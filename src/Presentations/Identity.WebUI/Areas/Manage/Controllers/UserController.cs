@@ -17,8 +17,11 @@ public class UserController : Controller
     #endregion
 
     [HttpGet]
-    public async Task<IActionResult> Index(PaginatedSearch paginatedSearch, CancellationToken cancellationToken)
+    public async Task<IActionResult> Index([FromQuery] PaginatedSearch paginatedSearch, CancellationToken cancellationToken)
     {
+        if (!string.IsNullOrEmpty(paginatedSearch.Keyword))
+            ViewData["search"] = paginatedSearch.Keyword;
+
         var users = await _mediator.Send(new GetUsersQuery
         {
             Page = paginatedSearch.Page,

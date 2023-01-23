@@ -1,4 +1,6 @@
-﻿namespace TechOnIt.Application.Common.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace TechOnIt.Application.Common.Models;
 
 public class Paginated
 {

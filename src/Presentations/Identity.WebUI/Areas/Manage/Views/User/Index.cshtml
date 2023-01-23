@@ -24,15 +24,22 @@
                 int count = 1 * Model.pageIndex;
                 <tr>
                     <td>@count</td>
-                    @if (user.FullName is not null)
-                    {
-                        <td>@user.FullName.Name @user.FullName.Surname</td>
-                    }
+                    <td>
+                        @if (user.FullName is not null)
+                        {
+                            @user.FullName.Name @user.FullName.Surname
+                        }
+                    </td>
                     <td>@user.Username</td>
                     <td>@user.PhoneNumber</td>
                     <td>@user.Email</td>
                     <td class="tools">
-                        <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+                        @*- Delete button -*@
+                        @*<button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>*@
+                        @*- Edit button -*@
+                        @*<button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>*@
+                        @*- Info button -*@
+                        @*<button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>*@
                     </td>
                 </tr>
             }
@@ -54,21 +61,21 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="mb-1" for="user-first-name">Name</label>
-                                <input id="user-first-name" class="form-control" placeholder="John" />
+                                <input id="user-first-name" class="form-control" name="Name" placeholder="John" />
                             </div>
                             <div class="col-md-6">
                                 <label class="mb-1" for="user-surname">Surname</label>
-                                <input id="user-surname" class="form-control" placeholder="Marston" />
+                                <input id="user-surname" class="form-control" name="Surname" placeholder="Marston" />
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-12 mb-1">
                                 <label class="mb-1" for="user-email">Email</label>
-                                <input id="user-email" class="form-control" placeholder="sample@example.com" maxlength="150" />
+                                <input id="user-email" class="form-control" name="Email" type="email" placeholder="sample@example.com" maxlength="150" />
                             </div>
                             <div class="col-12">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="isEmailConfirmed" name="isEmailConfirmed" checked>
+                                    <input id="isEmailConfirmed" class="form-check-input" name="isEmailConfirmed" type="checkbox" value="" checked>
                                     <label class="form-check-label" for="isEmailConfirmed">
                                         Is email confirmed?
                                     </label>
@@ -77,8 +84,8 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-12 mb-1">
-                                <label class="mb-1" for="user-email">Phone Number</label>
-                                <input id="user-email" class="form-control" placeholder="09123456789" maxlength="11" />
+                                <label class="mb-1" for="userPhoneNumber">Phone Number</label>
+                                <input id="userPhoneNumber" class="form-control" name="PhoneNumber" placeholder="09123456789" maxlength="11" />
                             </div>
                             <div class="col-12">
                                 <div class="form-check">
@@ -92,11 +99,11 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="mb-1" for="user-password">Password</label>
-                                <input id="user-password" class="form-control" type="password" placeholder="a-z, 0-9, *&^%..." maxlength="50" />
+                                <input id="user-password" class="form-control" name="Password" type="password" placeholder="a-z, 0-9, *&^%..." maxlength="50" />
                             </div>
                             <div class="col-md-6">
-                                <label class="mb-1" for="user-repeat-password">Repeat Password</label>
-                                <input id="user-repeat-password" class="form-control" type="password" maxlength="50" />
+                                <label class="mb-1" for="user-password-repeat">Repeat Password</label>
+                                <input id="user-password-repeat" class="form-control" name="PasswordRepeat" type="password" maxlength="50" />
                             </div>
                         </div>
                     </div>

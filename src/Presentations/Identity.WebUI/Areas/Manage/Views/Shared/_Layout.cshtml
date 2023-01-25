@@ -10,7 +10,7 @@
     <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body class="dark-layout menu-collapsed">
+<body class="dark-layout menu-collapsed bg-dark-noise">
     <!-- BEGIN: Header-->
     <nav class="header-navbar fixed-top navbar-dark">
         <div class="w-100 d-flex justify-content-between container-fluid">
@@ -87,6 +87,8 @@
     </main>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.0/chart.umd.js"></script>
     <script src="~/lib/persian-date/persian-date.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

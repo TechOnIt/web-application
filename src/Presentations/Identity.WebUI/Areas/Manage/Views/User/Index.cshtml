@@ -34,7 +34,7 @@
                 <tr>
                     <th>#</th>
                     <th>Full Name</th>
-                    <th>Username</th>
+                    <th class="d-none d-md-block">Username</th>
                     <th>Phone Number</th>
                     <th>Email</th>
                     <th></th>
@@ -51,18 +51,22 @@
                             <td>
                                 @if (user.FullName is not null)
                                 {
-                                    <label>@user.FullName.Name @user.FullName.Surname</label>
+                                    <a href="#">
+                                        @user.FullName.Name @user.FullName.Surname
+                                    </a>
                                 }
                             </td>
-                            <td>@user.Username</td>
-                            <td>@user.PhoneNumber</td>
-                            <td>@user.Email</td>
+                            <td class="d-none d-md-block">
+                                <a href="#">@user.Username</a>
+                            </td>
+                            <td>
+                                <a href="#">@user.PhoneNumber</a>
+                            </td>
+                            <td class="ellipsis-text">@user.Email</td>
                             <td class="tools">
                                 @*- Delete button -*@
                                 @*<button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>*@
                                 @*- Edit button -*@
-                                @*<button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>*@
-                                @*- Info button -*@
                                 @*<button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>*@
                             </td>
                         </tr>

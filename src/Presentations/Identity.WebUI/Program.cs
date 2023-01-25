@@ -30,6 +30,9 @@ builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSecti
 
 ConfigureServices(builder.Services);
 
+// Add PWA service
+builder.Services.AddProgressiveWebApp();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

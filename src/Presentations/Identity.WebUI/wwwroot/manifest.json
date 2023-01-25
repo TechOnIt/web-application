@@ -1,7 +1,13 @@
 {
-  "name": "Technology On It",
-  "short_name": "Techonit",
-  "description": "The most awesome application in the world",
+  "name": "Desk - Technology On It",
+  "short_name": "Desk.Techonit",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#24262b",
+  "lang": "en",
+  "scope": "/",
+  "description": "",
+  "theme_color": "#24262b",
   "icons": [
     {
       "src": "/assets/images/logo/icon192x192.png",
@@ -11,7 +17,5 @@
       "src": "/assets/images/logo/icon512x512.png",
       "sizes": "512x512"
     }
-  ],
-  "display": "standalone",
-  "start_url": "/"
+  ]
 }

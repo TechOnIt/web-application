@@ -24,14 +24,22 @@
 @section Scripts {
 
     <script>
-        const ctx = document.getElementById('myChart').getContext("2d");
+        const ctx = document.getElementById('myChart');
+        const ctx2d = document.getElementById('myChart').getContext("2d");
 
-        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(250,174,50,1)');
-        gradient.addColorStop(1, 'rgba(250,174,50,0.1)');
+        var gradient = ctx2d.createLinearGradient(0, 25, 0, 95);
+        gradient.addColorStop(0, 'rgba(34, 1, 181, 0.8)');
+        gradient.addColorStop(0.1, 'rgba(34, 1, 181, 0.6)');
+        gradient.addColorStop(0.9, 'rgba(73, 0, 114, 0.1)');
+
+        var linegradient = ctx2d.createLinearGradient(0, 0, ctx.offsetWidth, 0);
+        linegradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        linegradient.addColorStop(0.1, 'rgba(255, 255, 255, 0.8)');
+        linegradient.addColorStop(0.9, 'rgba(255, 255, 255, 0.8)');
+        linegradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
         new Chart(ctx, {
-            type: 'line',
+            type: 'line', // 004917671750205
             data: {
                 labels: ['May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
                 datasets: [{
@@ -40,15 +48,17 @@
                     tension: 0.4,
                     fill: true,
                     backgroundColor: gradient, // Put the gradient here as a fill color
-                    borderColor: '#eee',
+                    fillColor: gradient, // Put the gradient here as a fill color
+                    borderColor: linegradient,
                     pointBackgroundColor: "#fff",
                     pointBorderColor: "#ff6c23",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "#ff6c23",
-                    pointRadius: 0
+                    pointRadius: 0,
                 }]
             },
             options: {
+                bezierCurve: false,
                 responsive: true,
                 scales: {
                     x: {
@@ -72,6 +82,12 @@
                 plugins: {
                     legend: {
                         display: false
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 3,
+                        right: 3
                     }
                 }
             }

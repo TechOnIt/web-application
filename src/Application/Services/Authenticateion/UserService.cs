@@ -1,8 +1,7 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Application.Common.Enums.IdentityService;
+﻿using TechOnIt.Application.Common.Enums.IdentityService;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
-using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Services.Authenticateion;
 
@@ -18,7 +17,7 @@ public class UserService : IUserService
 
     #endregion
 
-    public async Task<(Guid? UserId, IdentityCrudStatus Status)> CreateUserAsync(CreateUserDto user, CancellationToken cancellationToken = default)
+    public async Task<(Guid? UserId, IdentityCrudStatus Status)> CreateUserAsync(User user, CancellationToken cancellationToken = default)
     {
         if (user.PhoneNumber is null)
             return (null, IdentityCrudStatus.Failed);
@@ -27,12 +26,11 @@ public class UserService : IUserService
         if (isDuplicate)
             return (null, IdentityCrudStatus.Duplicate);
 
-        var model = user.Adapt<User>();
-        await _unitOfWorks.UserRepository.CreateAsync(model, cancellationToken);
-        if (model is null)
+        await _unitOfWorks.UserRepository.CreateAsync(user, cancellationToken);
+        if (user is null)
             return (null, IdentityCrudStatus.Failed);
         else
-            return (model.Id, IdentityCrudStatus.Succeeded);
+            return (user.Id, IdentityCrudStatus.Succeeded);
     }
 
     public async Task<IdentityCrudStatus> DeleteUserAsync(Guid userId, CancellationToken cancellationToken = default)

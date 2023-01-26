@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Overview";
+}
+<h1>Overview</h1>
+<div class="row">
+    <div class="col-md-8">
+    </div>
+    <div class="col-md-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                </div>
+                <div class="col-md-6">
+                    <h5>New users</h5>
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext("2d");
+
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(250,174,50,1)');
+        gradient.addColorStop(1, 'rgba(250,174,50,0.1)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+                datasets: [{
+                    data: [12, 19, 14, 5, 14, 6, 13, 8, 21],
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: gradient, // Put the gradient here as a fill color
+                    borderColor: '#eee',
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: "#ff6c23",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "#ff6c23",
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        display: false,
+                        title: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        display: false,
+                        title: {
+                            display: false
+                        }
+                    },
+                    suggestedMin: -10,
+                    suggestedMax: 200
+                },
+                interaction: {
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+}

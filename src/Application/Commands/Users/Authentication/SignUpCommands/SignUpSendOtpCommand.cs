@@ -1,5 +1,5 @@
-﻿using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
-using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Commands.Users.Authentication.SignUpCommands;
 
@@ -24,10 +24,14 @@ public class SignUpSendOtpCommandHandler : IRequestHandler<SignUpSendOtpCommand,
     {
         try
         {
-            var newUser = new CreateUserDto(request.Phonenumber, request.Phonenumber, request.Password);
+            // Signup with phone number and password
+            var newUser = new User(phoneNumber: request.Phonenumber);
+            // Set password for user.
+            newUser.SetPassword(new PasswordHash(request.Password));
+
             var signUpresult = await _identityService.SignUpAndSendOtpCode(newUser, cancellationToken);
 
-            if(signUpresult.Code is null)
+            if (signUpresult.Code is null)
                 return ResultExtention.Failed(signUpresult.Status.ToString());
 
             return ResultExtention.OtpResult(signUpresult.Code);

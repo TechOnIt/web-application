@@ -31,7 +31,7 @@ public class BanUserCommandHandler : IRequestHandler<BanUserCommand, object>
             if (user == null)
                 return ResultExtention.NotFound("User was not found!");
 
-            user.SetIsBaned(true);
+            user.Ban();
             var updateRes = _unitOfWorks.UserRepository.UpdateAsync(user,cancellationToken);
             return ResultExtention.BooleanResult(true);
         }

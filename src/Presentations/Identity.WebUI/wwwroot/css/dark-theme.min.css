@@ -17,8 +17,8 @@ body.dark-layout {
     }
 
     body.dark-layout .header-navbar {
-        background-color: #1a233a56;
-        backdrop-filter: blur(8px);
+        background-color: #1a233aaf;
+        backdrop-filter: blur(18px);
     }
 
         body.dark-layout .header-navbar .nav-link {

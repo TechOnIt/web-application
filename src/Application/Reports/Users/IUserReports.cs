@@ -46,4 +46,6 @@ public interface IUserReports : IReport
     Task<IList<UserViewModel>> GetAllUsersAsync();
     IList<UserViewModel> GetAllUsersSync();
     Task<IList<UserViewModel>> GetAllUsersParallel();
+
+    Task<object> GetNewUsersCountGroupbyRegisterDateAsync(DateTime from, CancellationToken cancellationToken);
 }

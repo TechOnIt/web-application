@@ -220,4 +220,19 @@ public class UserReports : IUserReports
 
         return result;
     }
+
+    public async Task<object> GetNewUsersCountGroupbyRegisterDateAsync(DateTime from, CancellationToken cancellationToken)
+    {
+        return await _unitOfWorks._context.Users
+            .AsNoTracking()
+            .Where(user => user.RegisteredDateTime > from)
+            .GroupBy(user => user.RegisteredDateTime.Month)
+            .Select(u => new
+            {
+                month = u.First().RegisteredDateTime.ToString("MMM"),
+                count = u.Count()
+            })
+            .ToListAsync(cancellationToken)
+            ;
+    }
 }

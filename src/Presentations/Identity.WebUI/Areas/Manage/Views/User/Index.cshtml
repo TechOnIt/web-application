@@ -33,10 +33,10 @@
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>Username</th>
                     <th>Full Name</th>
-                    <th class="d-none d-md-block">Username</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
+                    <th class="d-none d-md-table-cell">Phone Number</th>
+                    <th class="d-none d-sm-table-cell">Email</th>
                     <th></th>
                 </tr>
             </thead>
@@ -49,20 +49,25 @@
                         <tr>
                             <th>@count.ToString("00")</th>
                             <td>
-                                @if (user.FullName is not null)
-                                {
-                                    <a href="#">
-                                        @user.FullName.Name @user.FullName.Surname
-                                    </a>
-                                }
-                            </td>
-                            <td class="d-none d-md-block">
-                                <a href="#">@user.Username</a>
+                                <a class="nav-link p-0" href="#">@user.Username</a>
                             </td>
                             <td>
-                                <a href="#">@user.PhoneNumber</a>
+                                @if (user.FullName is not null)
+                                {
+                                    <span>
+                                        @user.FullName.Name
+                                    </span>
+                                    <span>
+                                        @user.FullName.Surname
+                                    </span>
+                                }
                             </td>
-                            <td class="ellipsis-text">@user.Email</td>
+                            <td class="d-none d-md-table-cell">
+                                @user.PhoneNumber
+                            </td>
+                            <td class="d-none d-sm-table-cell">
+                                @user.Email
+                            </td>
                             <td class="tools">
                                 @*- Delete button -*@
                                 @*<button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>*@

@@ -14,7 +14,7 @@
     transition: .3s ease all,background 0s;
     -webkit-transition: .3s ease all,background 0s;
     -moz-transition: .3s ease all,background 0s;
-    backdrop-filter: blur(45px);
+    backdrop-filter: blur(25px);
     z-index: 1031;
 }
 

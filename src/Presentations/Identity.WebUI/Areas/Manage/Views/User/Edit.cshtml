@@ -1,0 +1,68 @@
+﻿@model TechOnIt.Application.Common.Models.ViewModels.Users.UserViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2 class="text-primary text-uppercase">Edit @Model.Username Account</h2>
+
+<div class="mt-4">
+    <form>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <img class="rounded-2" src="~/assets/images/profile_avatar_placeholder.png" style="width: 115px;" />
+                            </div>
+                        </div>
+                        <h3 class="text-uppercase">Account Information</h3>
+                        @*- Name And Surname -*@
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="mb-1">First Name</label>
+                                    <input class="form-control" type="text" maxlength="30" value="@Model.FullName.Name" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="mb-1">Surname</label>
+                                    <input class="form-control" type="text" maxlength="30" value="@Model.FullName.Surname" />
+                                </div>
+                            </div>
+                        </div>
+                        @*- Username -*@
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="mb-1">Username</label>
+                                    <input class="form-control" type="text" maxlength="10" value="@Model.Username" />
+                                </div>
+                            </div>
+                        </div>
+                        @*- Email -*@
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="mb-1">Email</label>
+                                    <input class="form-control" type="email" maxlength="200" value="@Model.Email" />
+                                </div>
+                            </div>
+                        </div>
+                        @*- Phone Number -*@
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="mb-1">Phone Number</label>
+                                    <input class="form-control" type="text" maxlength="11" value="@Model.PhoneNumber" />
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-uppercase">Change Password</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

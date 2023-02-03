@@ -21,6 +21,21 @@ public class UserReports : IUserReports
     }
     #endregion
 
+    public async Task<UserViewModel?> FindByIdAsViewModelAsync(Guid id, CancellationToken cancellationToken)
+        => await _unitOfWorks._context.Users
+        .Where(u => u.Id == id)
+        .ProjectToType<UserViewModel>()
+        .FirstOrDefaultAsync(cancellationToken)
+        ;
+
+    public async Task<UserViewModel?> FindByIdNoTrackAsViewModelAsync(Guid id, CancellationToken cancellationToken)
+        => await _unitOfWorks._context.Users
+        .AsNoTracking()
+        .Where(u => u.Id == id)
+        .ProjectToType<UserViewModel>()
+        .FirstOrDefaultAsync(cancellationToken)
+        ;
+
     public async Task<User?> FindByIdentityNoTrackAsync(string identity, CancellationToken cancellationToken)
         => await _unitOfWorks._context.Users
         .AsNoTracking()

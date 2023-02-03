@@ -10,6 +10,9 @@ namespace TechOnIt.Application.Reports.Users;
 
 public interface IUserReports : IReport
 {
+    Task<UserViewModel?> FindByIdAsViewModelAsync(Guid id, CancellationToken cancellationToken);
+    Task<UserViewModel?> FindByIdNoTrackAsViewModelAsync(Guid id, CancellationToken cancellationToken);
+
     /// <summary>
     /// Find an specific user by Email, phone number, username.
     /// </summary>

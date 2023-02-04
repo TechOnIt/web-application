@@ -46,11 +46,11 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Edit(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Edit(string id, CancellationToken cancellationToken)
     {
-        var userViewModel = await _mediator.Send(new FindUserViewModelByIdQuery()
+        var userViewModel = await _mediator.Send(new GetUserInfoByUsernameQuery()
         {
-            Id = id
+            username = id
         }, cancellationToken);
         if (userViewModel == null)
         {

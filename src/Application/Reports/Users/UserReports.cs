@@ -36,6 +36,14 @@ public class UserReports : IUserReports
         .FirstOrDefaultAsync(cancellationToken)
         ;
 
+    public async Task<UserViewModel?> FindByUsernameNoTrackAsViewModelAsync(string username, CancellationToken cancellationToken)
+        => await _unitOfWorks._context.Users
+        .AsNoTracking()
+        .Where(u => u.Username == username)
+        .ProjectToType<UserViewModel>()
+        .FirstOrDefaultAsync(cancellationToken)
+        ;
+
     public async Task<User?> FindByIdentityNoTrackAsync(string identity, CancellationToken cancellationToken)
         => await _unitOfWorks._context.Users
         .AsNoTracking()

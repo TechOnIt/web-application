@@ -14,6 +14,12 @@ public interface IUserReports : IReport
     Task<UserViewModel?> FindByIdNoTrackAsViewModelAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
+    /// Get specific user information by userame.
+    /// </summary>
+    /// <param name="username">unique username</param>
+    Task<UserViewModel?> FindByUsernameNoTrackAsViewModelAsync(string username, CancellationToken cancellationToken);
+
+    /// <summary>
     /// Find an specific user by Email, phone number, username.
     /// </summary>
     /// <param name="identity">Email, Phone Number, Username</param>

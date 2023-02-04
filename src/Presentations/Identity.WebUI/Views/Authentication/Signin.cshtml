@@ -1,15 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Login into your account";
 }
-
+@*- Mobile Navigation -*@
+<div class="d-sm-none my-3">
+    <div class="d-flex">
+        <a class="nav-link text-dark" href="/"><i class="fa fa-angle-left me-2"></i> Home</a>
+    </div>
+</div>
 @*- Desktop mode icon -*@
-<h3 class="d-none d-sm-block">Login into your account</h3>
-<br />
+<div class="d-none d-sm-block">
+    <h3>Login into your account</h3>
+    <br />
+</div>
 <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
     <div class="p-3 pb-4">
         @*- Mobile icon -*@
         <div class="d-sm-none text-center mb-5">
-            <h2 class="d-sm-none fw-bold">Login into your account</h2>
+            <h2 class="d-sm-none fw-bold text-success">Login into your account</h2>
         </div>
         <form method="post" action="signin">
             @*<div>
@@ -33,9 +40,9 @@
             </div>
             <div class="d-grid mt-5">
                 @*- Desktop btn -*@
-                <button class="d-none d-sm-block btn btn-primary" type="submit">Signin</button>
+                <button class="d-none d-sm-block btn btn-success" type="submit">Signin</button>
                 @*- Mobile btn -*@
-                <button class="d-sm-none btn btn-primary btn-lg" type="submit">Signin</button>
+                <button class="d-sm-none btn btn-success btn-lg" type="submit">Signin</button>
             </div>
         </form>
     </div>

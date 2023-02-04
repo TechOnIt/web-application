@@ -9,7 +9,7 @@
 }
 <div class="d-none d-sm-block text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Manage and track users activities and assets in identity panel.</p>
 </div>
 
 <div class="container-fluid py-3 d-sm-none vh-100 d-flex flex-column justify-content-between">
@@ -22,7 +22,7 @@
         <div class="d-grid">
             @if (User.Identity.IsAuthenticated)
             {
-                <a class="btn btn-primary btn-lg rounded-pill" href="/manage/dashboard">Manage</a>
+                <a class="btn btn-success btn-lg rounded-pill" href="/manage/dashboard">Manage</a>
             }
             else
             {

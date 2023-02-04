@@ -1,7 +1,4 @@
-﻿using TechOnIt.Application.Common.Extentions;
-using TechOnIt.Application.Common.Models;
-
-namespace TechOnIt.Application.Reports.Roles;
+﻿namespace TechOnIt.Application.Reports.Roles;
 
 public class RoleReports : IRoleReports
 {

@@ -11,17 +11,17 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TechOnIt.Application.Commands.Roles.Management.CreateRole;
 using TechOnIt.Application.Common.Behaviors;
+using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Application.Common.Frameworks.Middlewares;
+using TechOnIt.Application.Common.Security.JwtBearer;
+using TechOnIt.Application.Reports.Devices;
 using TechOnIt.Application.Reports.Roles;
 using TechOnIt.Application.Reports.StructuresAggregate;
 using TechOnIt.Application.Reports.Users;
 using TechOnIt.Application.Services.AssemblyServices;
 using TechOnIt.Application.Services.Authenticateion;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
-using TechOnIt.Application.Common.Security.JwtBearer;
-using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Application.Services.Authenticateion.StructuresService;
-using TechOnIt.Application.Reports.Devices;
 
 namespace TechOnIt.Application;
 
@@ -97,10 +97,10 @@ public static class ConfigureServices
 
     public static IServiceCollection AddReportServices(this IServiceCollection services)
     {
-        services.AddTransient<IUserReports, UserReports>();
-        services.AddTransient<IDeviceReport, DeviceReport>();
-        services.AddTransient<IRoleReports, RoleReports>();
-        services.AddTransient<IStructureAggregateReports, StructureAggregateReports>();
+        services.AddScoped<IUserReports, UserReports>()
+            .AddScoped<IDeviceReport, DeviceReport>()
+            .AddScoped<IRoleReports, RoleReports>()
+            .AddScoped<IStructureAggregateReports, StructureAggregateReports>();
 
         return services;
     }
@@ -110,34 +110,34 @@ public static class ConfigureServices
         app.UseMiddleware<CustomExceptionHandlerMiddleware>();
     }
 
-    public static void AddJwtAuthentication(this IServiceCollection services,JwtSettingsDto settings)
+    public static void AddJwtAuthentication(this IServiceCollection services, JwtSettingsDto settings)
     {
         if (settings is null)
             return;
         services.AddAuthentication(options =>
         {
-            options.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(option =>
         {
             var secretKey = Encoding.UTF8.GetBytes(settings.SecretKey);
             var validationParameters = new TokenValidationParameters
             {
-                ClockSkew=TimeSpan.Zero,
-                RequireSignedTokens=true,
+                ClockSkew = TimeSpan.Zero,
+                RequireSignedTokens = true,
 
-                ValidateIssuerSigningKey=true,
-                IssuerSigningKey=new SymmetricSecurityKey(secretKey),
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(secretKey),
 
-                RequireExpirationTime=true,
-                ValidateLifetime=true,
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
 
-                ValidateAudience=false,
-                ValidAudience= settings.Audience,
+                ValidateAudience = false,
+                ValidAudience = settings.Audience,
 
-                ValidateIssuer=true,
-                ValidIssuer=settings.Issuer,
+                ValidateIssuer = true,
+                ValidIssuer = settings.Issuer,
             };
 
             option.RequireHttpsMetadata = false;

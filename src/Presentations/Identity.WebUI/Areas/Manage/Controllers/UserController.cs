@@ -1,5 +1,6 @@
 ﻿using TechOnIt.Application.Commands.Users.Management.CreateUser;
 using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Queries.Users.Dashboard.GetUserInfoById;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
 namespace TechOnIt.Identity.WebUI.Areas.Manage.Controllers;
@@ -42,5 +43,19 @@ public class UserController : Controller
     {
         var createUserResult = await _mediator.Send(command, cancellationToken);
         return Redirect("/manage/user");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(string id, CancellationToken cancellationToken)
+    {
+        var userViewModel = await _mediator.Send(new GetUserInfoByUsernameQuery()
+        {
+            username = id
+        }, cancellationToken);
+        if (userViewModel == null)
+        {
+            // NotFound
+        }
+        return View(userViewModel);
     }
 }

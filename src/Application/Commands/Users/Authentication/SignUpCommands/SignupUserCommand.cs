@@ -1,5 +1,4 @@
 ﻿using TechOnIt.Application.Events.IdentityNotifications.Authentication;
-using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 

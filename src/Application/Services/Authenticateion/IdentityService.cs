@@ -197,6 +197,29 @@ public class IdentityService : IIdentityService
 
         return (accessToken, "welcome !");
     }
+
+    public async Task<AccessToken?> RegularSingUpAsync(User user, CancellationToken cancellationToken)
+    {
+        bool preventDuplicate = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber,cancellationToken);
+        if (!preventDuplicate)
+        {
+            Task createUser = Task
+                .Factory.StartNew(()=> 
+                _unitOfWorks.UserRepository.CreateAsync(user, cancellationToken),
+                cancellationToken);
+
+            await createUser;
+
+            if (createUser.IsCompleted)
+            {
+                AccessToken? accessToken = await GetUserAccessToken(user, cancellationToken);
+                if (!(accessToken is null))
+                    return await Task.FromResult(accessToken);
+            }
+        }
+
+        return await Task.FromResult<AccessToken?>(null);
+    }
     #endregion
 
     #region Privates
@@ -236,6 +259,7 @@ public class IdentityService : IIdentityService
             // TODO:
             // Log error!
         }
+
         return accessToken;
     }
     #endregion

@@ -16,4 +16,6 @@ public interface IIdentityService
         CancellationToken cancellationToken = default);
     Task<(AccessToken? Token, string Message)> SignUpWithOtpAsync(string phonenumber, string otpCode,
         CancellationToken cancellationToken = default);
+
+    Task<AccessToken?> RegularSingUpAsync(User user, CancellationToken cancellationToken);
 }

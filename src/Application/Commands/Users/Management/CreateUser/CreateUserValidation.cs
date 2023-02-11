@@ -1,7 +1,4 @@
-﻿using TechOnIt.Application.Common.Constants;
-using TechOnIt.Application.Common.Models;
-
-namespace TechOnIt.Application.Commands.Users.Management.CreateUser;
+﻿namespace TechOnIt.Application.Commands.Users.Management.CreateUser;
 
 public class CreateUserValidation : BaseFluentValidator<CreateUserCommand>
 {

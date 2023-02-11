@@ -88,7 +88,6 @@ public static class ConfigureServices
     {
         services.TryAddTransient<IIdentityService, IdentityService>();
         services.TryAddTransient<IStructureService, StructureService>();
-        services.TryAddTransient<IUserService, UserService>();
         services.TryAddScoped<IJwtService, JwtService>();
 
         return services;

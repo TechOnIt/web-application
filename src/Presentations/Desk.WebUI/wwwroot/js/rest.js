@@ -13,15 +13,14 @@ rest = {
             headers.append('Accept', 'application/json',);
             headers.append('Content-Type', 'application/json');
         }
-        var requestOptions = {
+        fetch('https://localhost:7073/v1/' + url, {
             method: method,
             headers: headers,
             body: body,
             redirect: 'follow',
             cache: 'no-cache',
             mode: 'cors'
-        };
-        fetch('https://localhost:7073/v1/' + url, requestOptions)
+        })
             .then(response => response.json())
             .then(result => callback(result, true))
             .catch(error => callback(error, false));

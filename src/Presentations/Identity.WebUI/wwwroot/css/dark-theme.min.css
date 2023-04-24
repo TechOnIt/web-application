@@ -17,8 +17,8 @@ body.dark-layout {
     }
 
     body.dark-layout .header-navbar {
-        background-color: #1a233aaf;
-        backdrop-filter: blur(18px);
+        background-color: #1a233aa9;
+        backdrop-filter: blur(10px);
     }
 
         body.dark-layout .header-navbar .nav-link {
@@ -132,4 +132,12 @@ body.dark-layout table {
 
 body.dark-layout .table > :not(caption) > * > * {
     color: #d9e1f1;
+}
+
+body.dark-layout .password-control button {
+    color: #f0f0f0;
+}
+
+body.dark-layout input:autofill, input:autofill:hover, input:autofill:focus, input:autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #212740 inset !important;
 }

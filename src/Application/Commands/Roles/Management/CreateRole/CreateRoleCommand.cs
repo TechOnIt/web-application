@@ -1,42 +1,37 @@
-﻿using TechOnIt.Application.Common.Extentions;
-using TechOnIt.Application.Common.Interfaces;
-using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
+﻿using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Roles.Management.CreateRole;
 
-public class CreateRoleCommand : IRequest<Result<string>>, ICommittableRequest
+public class CreateRoleCommand : IRequest<object>, ICommittableRequest
 {
     public string Name { get; set; }
 }
 
-public class CreateRoleCommandHanlder : IRequestHandler<CreateRoleCommand, Result<string>>
+public class CreateRoleCommandHanlder : IRequestHandler<CreateRoleCommand, object>
 {
     #region DI & Ctor
-    private readonly IRoleService _roleService;
+    private readonly IUnitOfWorks _unitOfWorks;
 
-    public CreateRoleCommandHanlder(IRoleService roleService)
+    public CreateRoleCommandHanlder(IUnitOfWorks unitOfWorks)
     {
-        _roleService = roleService;
+        _unitOfWorks = unitOfWorks;
     }
     #endregion
 
-    public async Task<Result<string>> Handle(CreateRoleCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(CreateRoleCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
-            var result = await _roleService.CreateRoleAsync(new Role(request.Name), cancellationToken);
-            if (result.Result.IsDuplicate())
-                return Result.Fail(result.Message);
+            if(await _unitOfWorks.RoleRepository.IsExistsRoleNameAsync(request.Name, cancellationToken) == true)
+                return Result.Fail("Duplicate: role name already exists in system");
 
-            return Result.Ok(result.Message);
-
+            Role newRole = new Role(request.Name);
+            await _unitOfWorks.RoleRepository.CreateRoleAsync(newRole, cancellationToken);
+            return ResultExtention.IdResult(newRole.Id);
         }
         catch (Exception exp)
         {
-            if (exp.InnerException != null)
-                return Result.Fail($"innerException : {exp.InnerException.Message} - exception :{exp.Message}");
-            else
-                return Result.Fail(exp.Message);
+            return ResultExtention.Failed(exp.Message);
         }
     }
 }

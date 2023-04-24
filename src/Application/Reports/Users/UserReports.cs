@@ -21,6 +21,29 @@ public class UserReports : IUserReports
     }
     #endregion
 
+    public async Task<UserViewModel?> FindByIdAsViewModelAsync(Guid id, CancellationToken cancellationToken)
+        => await _unitOfWorks._context.Users
+        .Where(u => u.Id == id)
+        .ProjectToType<UserViewModel>()
+        .FirstOrDefaultAsync(cancellationToken)
+        ;
+
+    public async Task<UserViewModel?> FindByIdNoTrackAsViewModelAsync(Guid id, CancellationToken cancellationToken)
+        => await _unitOfWorks._context.Users
+        .AsNoTracking()
+        .Where(u => u.Id == id)
+        .ProjectToType<UserViewModel>()
+        .FirstOrDefaultAsync(cancellationToken)
+        ;
+
+    public async Task<UserViewModel?> FindByUsernameNoTrackAsViewModelAsync(string username, CancellationToken cancellationToken)
+        => await _unitOfWorks._context.Users
+        .AsNoTracking()
+        .Where(u => u.Username == username)
+        .ProjectToType<UserViewModel>()
+        .FirstOrDefaultAsync(cancellationToken)
+        ;
+
     public async Task<User?> FindByIdentityNoTrackAsync(string identity, CancellationToken cancellationToken)
         => await _unitOfWorks._context.Users
         .AsNoTracking()
@@ -219,5 +242,20 @@ public class UserReports : IUserReports
         }
 
         return result;
+    }
+
+    public async Task<object> GetNewUsersCountGroupbyRegisterDateAsync(DateTime from, CancellationToken cancellationToken)
+    {
+        return await _unitOfWorks._context.Users
+            .AsNoTracking()
+            .Where(user => user.RegisteredDateTime > from)
+            .GroupBy(user => user.RegisteredDateTime.Month)
+            .Select(u => new
+            {
+                month = u.First().RegisteredDateTime.ToString("MMM"),
+                count = u.Count()
+            })
+            .ToListAsync(cancellationToken)
+            ;
     }
 }

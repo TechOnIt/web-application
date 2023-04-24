@@ -10,6 +10,15 @@ namespace TechOnIt.Application.Reports.Users;
 
 public interface IUserReports : IReport
 {
+    Task<UserViewModel?> FindByIdAsViewModelAsync(Guid id, CancellationToken cancellationToken);
+    Task<UserViewModel?> FindByIdNoTrackAsViewModelAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Get specific user information by userame.
+    /// </summary>
+    /// <param name="username">unique username</param>
+    Task<UserViewModel?> FindByUsernameNoTrackAsViewModelAsync(string username, CancellationToken cancellationToken);
+
     /// <summary>
     /// Find an specific user by Email, phone number, username.
     /// </summary>
@@ -46,4 +55,6 @@ public interface IUserReports : IReport
     Task<IList<UserViewModel>> GetAllUsersAsync();
     IList<UserViewModel> GetAllUsersSync();
     Task<IList<UserViewModel>> GetAllUsersParallel();
+
+    Task<object> GetNewUsersCountGroupbyRegisterDateAsync(DateTime from, CancellationToken cancellationToken);
 }

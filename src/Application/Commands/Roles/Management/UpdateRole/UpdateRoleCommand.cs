@@ -24,7 +24,9 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, objec
         try
         {
             var role = await _unitOfWorks.RoleRepository.FindRoleByIdAsync(request.RoleId, cancellationToken);
-            if (role == null) return ResultExtention.NotFound("Role was not found!");
+            if (role == null) 
+                return ResultExtention.NotFound($"can not find role with id : {request.RoleId}");
+
             role.SetName(request.Name);
             await _unitOfWorks.RoleRepository.UpdateRoleAsync(role, cancellationToken);
             return ResultExtention.BooleanResult(true);

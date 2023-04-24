@@ -1,8 +1,5 @@
 ﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-using Mapster;
 using System.Linq.Expressions;
-using TechOnIt.Application.Common.Exceptions;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 
 namespace TechOnIt.Application.Reports.StructuresAggregate;
@@ -27,93 +24,26 @@ public class StructureAggregateReports : IStructureAggregateReports
 
     public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure, bool>> filter, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            IQueryable<Structure> query = _unitOfWorks._context.Structures
-                .Where(filter);
-            var executeQuery = await query
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
+        IQueryable<Structure> query = _unitOfWorks._context.Structures;
+        List<Structure> result = await query.AsNoTracking().Where(filter).ToListAsync(cancellationToken);
 
-            return executeQuery.Adapt<IList<StructureViewModel>>();
-        }
-        catch (StructureException exp)
-        {
-            throw new StructureException($"server error : {exp.Message}");
-        }
+        return result.Adapt<IList<StructureViewModel>>();
     }
 
     public async Task<IList<StructureViewModel>> GetstructuresAsync(CancellationToken cancellationToken = default)
     {
-        IList<StructureViewModel> structures = new List<StructureViewModel>();
-
-        try
-        {
-            var strs = await _unitOfWorks._context.Structures
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
-
-            if (strs != null)
-                structures = strs.Adapt<IList<StructureViewModel>>();
-        }
-        catch (StructureException exp)
-        {
-            throw new StructureException($"server error {exp.Message}");
-        }
-
-        return structures;
+        var strs = await _unitOfWorks._context.Structures.AsNoTracking().ToListAsync(cancellationToken);
+        return strs.Adapt<IList<StructureViewModel>>();
     }
 
-    public IList<StructureViewModel>? GetstructuresSync(CancellationToken cancellationToken = default)
+    public async Task<IList<StructureViewModel>> GetstructuresParallel(CancellationToken cancellationToken)
     {
-        if (!cancellationToken.IsCancellationRequested)
-        {
-            try
-            {
-                return _unitOfWorks._context.Users
-                    .AsNoTracking()
-                    .ToList()
-                    .Adapt<IList<StructureViewModel>>();
-            }
-            catch (StructureException exp)
-            {
-                throw new StructureException($"server error : {exp.Message}");
-            }
-        }
+        var structures = _unitOfWorks._context.Users
+            .AsNoTracking()
+            .AsParallel()
+            .Adapt<IList<StructureViewModel>>();
 
-        return null;
-    }
-
-    /// <summary>
-    /// TODO
-    /// </summary>
-    /// <param name="cancellationToken"></param>
-    /// <param name="degreeOfParallelism"></param>
-    /// <returns></returns>
-    /// <exception cref="StructureException"></exception>
-    public async Task<IList<StructureViewModel>> GetstructuresParallel(CancellationToken cancellationToken, int degreeOfParallelism = 3)
-    {
-        IList<StructureViewModel> structures = new List<StructureViewModel>();
-
-        try
-        {
-            if (!cancellationToken.IsCancellationRequested)
-            {
-                degreeOfParallelism = degreeOfParallelism == 0 || degreeOfParallelism > 5 == true ? 3 : degreeOfParallelism;
-
-                structures = _unitOfWorks._context.Users
-                    .AsNoTracking()
-                    .AsParallel()
-                    .WithDegreeOfParallelism(degreeOfParallelism)
-                    .Adapt<IList<StructureViewModel>>();
-            }
-        }
-        catch (StructureException exp)
-        {
-            throw new StructureException($"server error : {exp.Message}");
-        }
-
-        return structures;
+        return await Task.FromResult(structures);
     }
 
     public async Task<StructurePlacesWithDevicesViewModel?> GetStructureWithPlacesAndDevicesByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken)

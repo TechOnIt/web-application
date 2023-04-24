@@ -10,7 +10,7 @@
     <a href="https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-6.0" target="_blank"><img src="https://badgen.net/badge/.net/6.0/purple"/></a>
     <a href="desk.techonit.org" target="_blank"><img src="https://badgen.net/badge/build/passing/orange"/></a>
     <a href="#" target="_blank"><img src="https://badgen.net/npm/license/lodash"/></a>
-    <a href="#buy-me-a-coffee" target="_blank"><img src="https://badgen.net/badge/icon/buymeacoffee/green?icon=buymeacoffee&label"/></a>
+    <a href="#buy-me-a-coffee-:)" target="_blank"><img src="https://badgen.net/badge/icon/buymeacoffee/green?icon=buymeacoffee&label"/></a>
   </p>
   <h6>Internet Of Things panel for manage your places and devices.</h6>
 </div>

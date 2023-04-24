@@ -12,7 +12,7 @@
     <a href="#" target="_blank"><img src="https://badgen.net/npm/license/lodash"/></a>
     <a href="#buy-me-a-coffee" target="_blank"><img src="https://badgen.net/badge/icon/buymeacoffee/green?icon=buymeacoffee&label"/></a>
   </p>
-  <h6>Internet Of Things panel for manage your places.</h6>
+  <h6>Internet Of Things panel for manage your places and devices.</h6>
 </div>
 
 # Technologies

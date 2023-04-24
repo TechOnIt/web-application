@@ -29,6 +29,6 @@
 ## Status
 We are building user feature...
 
-## Buy Me A Coffee
+## Buy Me A Coffee :)
 BTC 
 `bc1qhw3rxcyexz6arxn2azxl459fkp85vq5a82d9s6`

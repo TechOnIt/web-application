@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCookieCommands;
 
 namespace TechOnIt.Desk.WebUI.Controllers;

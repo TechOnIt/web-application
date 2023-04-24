@@ -142,18 +142,16 @@ try
     app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllerRoute(
+
+    #region Endpoint
+    app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Swagger}/{action=Index}/{id?}");
-
-        endpoints.MapControllerRoute(
+    app.MapControllerRoute(
         name: "areas",
         pattern: "{area:exists}/{controller=General}/{action=Index}/{id?}");
-
-        endpoints.MapControllers();
-    });
+    app.MapControllers();
+    #endregion
 
     app.UseIpRateLimiting();
 

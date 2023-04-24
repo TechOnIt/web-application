@@ -2,33 +2,32 @@
     ViewData["Title"] = "Login into your account";
 }
 
-<h3>Login into your account</h3>
-<br />
 <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-    <div class="p-3 pb-4">
-            <form method="post" action="signin">
-                @*<div>
-                    @Html.AntiForgeryToken()
-                </div>*@
-                <div class="mb-3">
-                    <label class="mb-2">Username</label>
-                    <input name="Username" class="form-control" placeholder="Username, Email" type="text" maxlength="50" />
+    <h3>Login into your account</h3>
+    <div class="pb-4">
+        <form method="post" action="signin">
+            @*<div>
+            @Html.AntiForgeryToken()
+            </div>*@
+            <div class="form_group field mb-3">
+                <input id="username" class="form_field" name="username" type="text" placeholder="Username" required />
+                <label for="name" class="form_label">Username</label>
+            </div>
+            <div class="form_group field mb-3">
+                <input id="password" class="form_field" name="password" type="password" placeholder="Password" required />
+                <label for="name" class="form_label">Password</label>
+            </div>
+            <div class="mb-3">
+                <div class="form-check">
+                    <input name="IsPersistent" class="form-check-input" type="checkbox" id="isPersistentCheck" value="True">
+                    <label class="form-check-label" for="isPersistentCheck">
+                        Remember me
+                    </label>
                 </div>
-                <div class="mb-3">
-                    <label class="mb-2">Password</label>
-                    <input name="Password" class="form-control" placeholder="Password" type="password" maxlength="50" />
-                </div>
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input name="IsPersistent" class="form-check-input" type="checkbox" id="isPersistentCheck" value="True">
-                        <label class="form-check-label" for="isPersistentCheck">
-                            Remember me
-                        </label>
-                    </div>
-                </div>
-                <div class="d-grid mt-5">
-                    <button class="btn btn-primary" type="submit">Signin</button>
-                </div>
-            </form>
+            </div>
+            <div class="d-grid mt-5">
+                <button class="btn btn-primary" type="submit">Signin</button>
+            </div>
+        </form>
     </div>
 </div>

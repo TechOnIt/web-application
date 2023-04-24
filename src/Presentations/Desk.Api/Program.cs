@@ -1,10 +1,9 @@
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
 using GraphQL.Types;
-using System.Reflection;
 using System.Text.Json.Serialization;
 using TechOnIt.Application;
-using TechOnIt.Application.Commands.Device.CreateDevice;
+using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Desk.Api.GraphQl.PerformanceReport;
 using TechOnIt.Infrastructure;
@@ -22,7 +21,8 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-RegisterMediatRCommands(builder.Services);
+// Register MediatR.
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SignInUserCommand).Assembly));
 
 // Map app setting json to app setting object.
 // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
@@ -55,29 +55,26 @@ app.UseCors();
 // make sure all our schemas registered to route
 app.UseGraphQL<ISchema>();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
+#region Endpoint
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Swagger}/{action=Index}/{id?}");
-
-    endpoints.MapControllerRoute(
+app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=General}/{action=Index}/{id?}");
-
-    endpoints.MapControllers();
-});
+app.MapControllers();
+#endregion
 
 await app.RunAsync();
 
 void ConfigureServices(IServiceCollection services)
 {
-    var jwtSetting = builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>().JwtSettings;
+    var appSetting = builder.Configuration.GetSection("SiteSettings").Get<AppSettingDto>();
 
     services.AddInfrastructureServices()
         .AddApplicationServices()
         .AddFluentValidationServices()
-        .AddJwtAuthentication(jwtSetting);
+        .AddJwtAuthentication(appSetting.JwtSettings);
 
     // Add services to the container.
     // add notes schema
@@ -97,9 +94,4 @@ void ConfigureServices(IServiceCollection services)
                        .AllowAnyHeader();
             });
     });
-}
-
-void RegisterMediatRCommands(IServiceCollection services)
-{
-    services.AddMediatR(typeof(CreateDeviceCommand).GetTypeInfo().Assembly);
 }

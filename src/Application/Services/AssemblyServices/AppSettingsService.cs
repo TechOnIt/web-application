@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
 using System.Text.Json;
 
 namespace TechOnIt.Application.Services.AssemblyServices;
@@ -42,17 +41,19 @@ public class AppSettingsService<T> : IAppSettingsService<T> where T : class, new
         var fileInfo = fileProvider.GetFileInfo(_file);
         var physicalPath = fileInfo.PhysicalPath;
 
-        var jObject = JsonSerializer.Deserialize<JObject>(File.ReadAllText(physicalPath));
-        var sectionObject = jObject.TryGetValue(_section, out JToken section) ?
-            JsonSerializer.Deserialize<T>(section.ToString()) : Value ?? new T();
+        // TODO:
+        // Complete this.
+        //var Object = JsonSerializer.Deserialize<Object>(File.ReadAllText(physicalPath));
+        //var sectionObject = Object.TryGetValue(_section, out JToken section) ?
+        //    JsonSerializer.Deserialize<T>(section.ToString()) : Value ?? new T();
 
-        applyChanges(sectionObject);
+        //applyChanges(sectionObject);
 
-        jObject[_section] = JObject.Parse(JsonSerializer.Serialize(sectionObject));
-        File.WriteAllText(physicalPath, JsonSerializer.Serialize(jObject, options: new JsonSerializerOptions
-        {
-            WriteIndented = true
-        }));
+        //jObject[_section] = JObject.Parse(JsonSerializer.Serialize(sectionObject));
+        //File.WriteAllText(physicalPath, JsonSerializer.Serialize(jObject, options: new JsonSerializerOptions
+        //{
+        //    WriteIndented = true
+        //}));
 
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)

@@ -44,7 +44,7 @@ internal class UserDataInitializer : IDataInitializer
         }
         if (!await _uow.UserRepository.IsExistsByQueryAsync(u => u.Username == username || u.PhoneNumber == username || u.Email == username))
         {
-            var newUser = User.CreateNewInstance(email, username);
+            var newUser = new User(email: email, phoneNumber: phoneNumber);
             newUser.SetFullName(new FullName(name, surname));
             newUser.ConfirmPhoneNumber();
             newUser.ConfirmEmail();

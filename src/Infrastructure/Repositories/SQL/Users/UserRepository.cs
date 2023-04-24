@@ -104,8 +104,8 @@ internal sealed class UserRepository : IUserRepository
 
     public async Task RemoveAsync(User user, CancellationToken cancellationToken = default)
     {
-        user.SetIsDelete(true);
-        user.SetIsBaned(true);
+        user.Delete();
+        user.Ban();
         user.RefreshConcurrencyStamp();
 
         _context.Users.Update(user);
@@ -115,8 +115,8 @@ internal sealed class UserRepository : IUserRepository
     {
         var getUser = await _context.Users.FindAsync(userId, cancellationToken);
 
-        getUser.SetIsDelete(true);
-        getUser.SetIsBaned(true);
+        getUser.Delete();
+        getUser.Ban();
         getUser.RefreshConcurrencyStamp();
 
         _context.Users.Update(getUser);
@@ -126,8 +126,8 @@ internal sealed class UserRepository : IUserRepository
     {
         var getUser = await _context.Users.FirstAsync(a => a.PhoneNumber == phonenumber, cancellationToken);
 
-        getUser.SetIsDelete(true);
-        getUser.SetIsBaned(true);
+        getUser.Delete();
+        getUser.Ban();
         getUser.RefreshConcurrencyStamp();
 
         _context.Users.Update(getUser);

@@ -1,0 +1,52 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.bg-dark-noise {
+    background-image: url(/assets/images/dark-noise.jpg);
+    background-repeat: repeat;
+}
+
+.central {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ltr {
+    direction: ltr;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+.ellipsis-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table-hover-mark tbody tr:not(.no-content):hover {
+    background: rgb(74, 46, 127, 0.10);
+    transition: 0.3s linear;
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+table tr td.tools {
+    opacity: 0;
+    transition: 0.3s linear;
+}
+
+table tr:hover td.tools {
+    opacity: 1;
+}
+
+.backdrop-filter-blur {
+    backdrop-filter: blur(5px);
+}

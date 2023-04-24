@@ -26,7 +26,7 @@ namespace TechOnIt.Application.Commands.Users.Management.RemoveUserAccount
                 if (user == null)
                     return ResultExtention.NotFound("User was not found!");
 
-                user.SetIsDelete(true);
+                user.Delete();
                 await _unitOfWorks.UserRepository.UpdateAsync(user, cancellationToken);
 
                 return ResultExtention.BooleanResult(true);

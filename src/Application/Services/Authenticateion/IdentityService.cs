@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Application.Common.Enums.IdentityService;
-using TechOnIt.Application.Common.Models.DTOs.Users.Authentication;
 using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 using TechOnIt.Application.Common.Security.JwtBearer;
 using TechOnIt.Application.Services.AssemblyServices;
@@ -151,19 +150,17 @@ public class IdentityService : IIdentityService
     #endregion
 
     #region Sign-Up
-    public async Task<(string? Code, SigInStatus Status)> SignUpAndSendOtpCode(CreateUserDto user,
+    public async Task<(string? Code, SigInStatus Status)> SignUpAndSendOtpCode(User user,
         CancellationToken cancellationToken = default)
     {
         bool canRegister = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber);
         if (!canRegister) return (null, SigInStatus.DuplicateUser);
 
-        var newUser = user.Adapt<User>();
-
-        await _unitOfWorks.UserRepository.CreateAsync(newUser, cancellationToken);
-        newUser.GenerateNewOtpCode();
+        await _unitOfWorks.UserRepository.CreateAsync(user, cancellationToken);
+        user.GenerateNewOtpCode();
         await _unitOfWorks.SaveAsync();
 
-        if (newUser is null)
+        if (user is null)
             return (null, SigInStatus.Error);
 
         var sendOtpresult = await _kavenegarAuthService.SendAuthSmsAsync(user.PhoneNumber, "", "", "1234 Test");
@@ -190,7 +187,7 @@ public class IdentityService : IIdentityService
 
         user.ConfirmPhoneNumber();
 
-        await _unitOfWorks.UserRepository.UpdateAsync(user,cancellationToken);
+        await _unitOfWorks.UserRepository.UpdateAsync(user, cancellationToken);
         await _unitOfWorks.SaveAsync();
 
         AccessToken? accessToken = await GetUserAccessToken(user, cancellationToken);

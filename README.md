@@ -16,12 +16,12 @@
 
 # Technologies
 - [Asp.NET Core 6.0](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-6.0)
-- Entity Framework Core 6
-- Domain-Driven-Design
-- Clean Architecture
-- MediatR
-- Mapster
-- FluentValidation
+- [Entity Framework Core 6](https://learn.microsoft.com/en-us/ef/core/)
+- [Domain-Driven Design](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/ddd-oriented-microservice)
+- [Clean Architecture](https://github.com/jasontaylordev/CleanArchitecture)
+- [MediatR](https://github.com/jbogard/MediatR)
+- [Mapster](https://github.com/MapsterMapper/Mapster)
+- [FluentValidation](https://github.com/FluentValidation/FluentValidation)
 - NUnit, FluentAssertation, Shouldly, BDD, Moq
 
 ## Status

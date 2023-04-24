@@ -1,2 +1,2 @@
-# iot-core
-IOT panel api in dotnet platform.
+# Technology In It
+Internet Of Things panel for manage your places.

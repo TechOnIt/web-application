@@ -24,10 +24,8 @@
 - FluentValidation
 - NUnit, FluentAssertation, Shouldly, BDD, Moq
 
-
-
-## Bold Design Patterns
-Comming Soon...
+## Status
+We are building user feature...
 
 ## Buy Me A Coffee
 BTC 

@@ -6,29 +6,43 @@
 <h2 class="text-primary text-uppercase">Edit @Model.Username Account</h2>
 
 <div class="mt-4">
-    <form>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12 mb-3">
-                                <img class="rounded-2" src="~/assets/images/profile_avatar_placeholder.png" style="width: 115px;" />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="rounded-2" style="width:115px; height:115px;background-image:url('/assets/images/profile_avatar_placeholder.png');background-size:cover;" data-bs-toggle="tooltip" data-bs-title="Comming Soon...">
+                                <div class="h-100 w-100 d-flex flex-column justify-content-end">
+                                    <div class="text-center d-grid" style="background-color:#1e1e1e66">
+                                        <span class="text-white pointer-event py-1">
+                                            <i class="fa fa-camera"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <form method="post" action="edit">
                         <h3 class="text-uppercase">Account Information</h3>
+                        @*- Concorrency stamp -*@
+                        <div class="row">
+                            <div>
+                                <input type="hidden" value="@Model.ConcurrencyStamp" />
+                            </div>
+                        </div>
                         @*- Name And Surname -*@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="mb-1">First Name</label>
-                                    <input class="form-control" type="text" maxlength="30" value="@Model.FullName.Name" />
+                                    <input class="form-control form-control-sm" type="text" maxlength="30" value="@Model.FullName.Name" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="mb-1">Surname</label>
-                                    <input class="form-control" type="text" maxlength="30" value="@Model.FullName.Surname" />
+                                    <input class="form-control form-control-sm" type="text" maxlength="30" value="@Model.FullName.Surname" />
                                 </div>
                             </div>
                         </div>
@@ -37,7 +51,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="mb-1">Username</label>
-                                    <input class="form-control" type="text" maxlength="10" value="@Model.Username" />
+                                    <input class="form-control form-control-sm" type="text" maxlength="10" value="@Model.Username" />
                                 </div>
                             </div>
                         </div>
@@ -46,7 +60,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="mb-1">Email</label>
-                                    <input class="form-control" type="email" maxlength="200" value="@Model.Email" />
+                                    <input class="form-control form-control-sm" type="email" maxlength="200" value="@Model.Email" />
                                 </div>
                             </div>
                         </div>
@@ -55,14 +69,50 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="mb-1">Phone Number</label>
-                                    <input class="form-control" type="text" maxlength="11" value="@Model.PhoneNumber" />
+                                    <input class="form-control form-control-sm" type="text" maxlength="11" value="@Model.PhoneNumber" />
                                 </div>
                             </div>
                         </div>
-                        <h3 class="text-uppercase">Change Password</h3>
+                        @*- Save Button -*@
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3 class="text-uppercase">Change Password</h3>
+                <div class="mb-3">
+                    <label class="mb-1">Old Password</label>
+                    <div class="password-control">
+                        <input class="form-control form-control-sm" type="password" maxlength="30" />
+                        <button type="button" tabindex="-1"><i class="fa fa-eye-slash"></i></button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="mb-1">New Password</label>
+                    <div class="password-control">
+                        <input class="form-control form-control-sm" type="password" maxlength="30" />
+                        <button type="button" tabindex="-1"><i class="fa fa-eye-slash"></i></button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="mb-1">Repeat New Password</label>
+                    <div class="password-control">
+                        <input class="form-control form-control-sm" type="password" maxlength="30" />
+                        <button type="button" tabindex="-1"><i class="fa fa-eye-slash"></i></button>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="d-grid">
+                        <button class="btn btn-sm btn-primary">Change Password</button>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>

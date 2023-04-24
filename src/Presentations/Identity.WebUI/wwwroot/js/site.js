@@ -1,4 +1,18 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-// Write your JavaScript code.
+$('.password-control button').click(function () {
+    debugger
+    // Hide
+    if ($(this).parent().find('input[type=password]').attr('type') == 'password') {
+        $(this).parent().find('input[type=password]').attr('type', 'text')
+        $(this).parent().find('i').addClass('fa-eye')
+        $(this).parent().find('i').removeClass('fa-eye-slash')
+    }
+    // Show
+    else {
+        $(this).parent().find('input[type=text]').attr('type', 'password')
+        $(this).parent().find('i').addClass('fa-eye-slash')
+        $(this).parent().find('i').removeClass('fa-eye')
+    }
+});

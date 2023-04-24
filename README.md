@@ -7,7 +7,8 @@
   <h1>TECHNOLOGY ON IT</h1>
   <p>
     <a href="https://www.nuget.org/packages/Rest.Service/" target="_blank"><img src="https://badges.frapsoft.com/os/v2/open-source.svg?v=103" alt="NuGet" /></a>
-    <a href="https://docs.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-5.0" target="_blank"><img src="https://badgen.net/badge/.net/6.0/green"/></a>
+    <a href="https://docs.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-5.0" target="_blank"><img src="https://badgen.net/badge/.net/6.0/purple"/></a>
+        <a href="#buy-me-a-coffee" target="_blank"><img src="https://badgen.net/badge/build/passing/yellow"/></a>
     <a href="#buy-me-a-coffee" target="_blank"><img src="https://badgen.net/badge/icon/buymeacoffee?icon=buymeacoffee&label"/></a>
   </p>
   <h6>Internet Of Things panel for manage your places.</h6>
@@ -23,10 +24,9 @@
 - FluentValidation
 - NUnit, FluentAssertation, Shouldly, BDD, Moq
 
-## Bold Design Patterns
-Comming Soon...
 
-## Bold Packages
+
+## Bold Design Patterns
 Comming Soon...
 
 ## Buy Me A Coffee

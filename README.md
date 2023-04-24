@@ -22,7 +22,8 @@
 - [MediatR](https://github.com/jbogard/MediatR)
 - [Mapster](https://github.com/MapsterMapper/Mapster)
 - [FluentValidation](https://github.com/FluentValidation/FluentValidation)
-- NUnit, FluentAssertation, Shouldly, BDD, Moq
+- [NLog](https://github.com/NLog/NLog.Web)
+- xunit, [FluentAssertation](https://fluentassertions.com/), [Shouldly](https://github.com/shouldly/shouldly), BDD, Moq
 
 ## Status
 We are building user feature...

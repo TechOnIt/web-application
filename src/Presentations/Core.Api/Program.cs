@@ -1,8 +1,7 @@
 using NLog;
 using NLog.Web;
-using System.Reflection;
 using System.Text.Json.Serialization;
-using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
+using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Infrastructure;
 
@@ -11,7 +10,7 @@ var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentCla
 var builder = WebApplication.CreateBuilder(args);
 
 // Register MediatR.
-builder.Services.AddMediatR(typeof(SendOtpSmsCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SignInUserCommand).Assembly));
 
 // Map app setting json to app setting object.
 // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows

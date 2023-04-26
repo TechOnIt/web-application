@@ -21,22 +21,36 @@
             <div class="d-flex">
                 <ul class="nav">
                     @* Notification *@
-@*                    <li class="nav-item">
-                        <button class="nav-link">
-                            <i class="fa fa-bell"></i>
-                            <div class="badge bg-danger sticky rounded-pill">3</div>
-                        </button>
+                    @*                    <li class="nav-item">
+                    <button class="nav-link">
+                    <i class="fa fa-bell"></i>
+                    <div class="badge bg-danger sticky rounded-pill">3</div>
+                    </button>
                     </li>*@
                 </ul>
                 @* Profile *@
-                <div>
+                <div class="dropdown">
                     <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="profile rounded-circle" src="~/assets/images/profile_avatar_placeholder.png" width="40" />
+                        @{
+                            Random rnd = new Random();
+                            string avatarPath = $"/assets/images/avatars/avatar-{rnd.Next(1, 6)}.png";
+                        }
+                        <img class="profile rounded-circle" src="@avatarPath" width="40" />
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">ویرایش</a>
-                        <a class="dropdown-item" href="/identity/manage/signout">Signout</a>
-                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end ">
+                        <li>
+                            <a class="dropdown-item" href="/dashboard/profile">
+                                <i class="far fa-user me-1"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/authentication/signout">
+                                <i class="far fa-sign-out-alt me-1"></i>
+                                <span>Signout</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -79,6 +93,7 @@
     </main>
     <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/popper/dist/js/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

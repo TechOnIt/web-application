@@ -10,6 +10,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="wwwroot\fonts\barlow\files\**" />
+	  <Content Remove="wwwroot\fonts\barlow\files\**" />
+	  <EmbeddedResource Remove="wwwroot\fonts\barlow\files\**" />
+	  <None Remove="wwwroot\fonts\barlow\files\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="compilerconfig.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
 		<PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.65" />
 	</ItemGroup>
@@ -20,6 +31,10 @@
 
 	<ItemGroup>
 		<Folder Include="Areas\Dashboard\Models\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="compilerconfig.json" />
 	</ItemGroup>
 
 </Project>

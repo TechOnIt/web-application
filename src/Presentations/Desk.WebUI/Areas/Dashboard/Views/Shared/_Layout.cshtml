@@ -12,7 +12,7 @@
     <link href="~/css/style.min.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
 </head>
-<body class="d-flex flex-column">
+<body class="d-flex flex-column menu-collapsed">
     <!-- Navbar -->
     <nav class="header-navbar navbar fixed-top bg-body-tertiary">
         <div class="w-100 d-flex justify-content-between container-fluid">
@@ -98,7 +98,7 @@
     </div>
     <!-- Content -->
     <main role="main" class="content">
-        <div id="app" class="content-wrapper container-fluid px-4">
+        <div id="app" class="content-wrapper container-fluid">
             @RenderBody()
         </div>
     </main>

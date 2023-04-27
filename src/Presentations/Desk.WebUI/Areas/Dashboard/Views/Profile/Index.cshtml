@@ -6,6 +6,9 @@
         @* Information *@
         <div class="card">
             <div class="card-body text-center">
+                <div class="mb-3">
+                    <img class="profile rounded-circle" src="" width="70" />
+                </div>
                 <div>
                     <h5 class="fw-bolder">Reza Ahmadi</h5>
                 </div>
@@ -23,7 +26,48 @@
     @* Edit profile *@
     <div class="col-12 col-md-8">
         <div class="card">
-            <div class="card-body"></div>
+            <div class="card-body">
+                @* Full Name *@
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form_group field mb-3">
+                            <input id="name" class="form_field" type="text" name="name" placeholder=" " maxlength="50" />
+                            <label class="form_label" for="name">Name</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form_group field mb-3">
+                            <input id="surname" class="form_field" type="text" name="surname" placeholder=" " maxlength="50" />
+                            <label class="form_label" for="surname">Surname</label>
+                        </div>
+                    </div>
+                </div>
+                @* Email *@
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form_group field mb-3">
+                            <input id="email" class="form_field" type="text" name="email" placeholder=" " maxlength="100" />
+                            <label class="form_label" for="email">Email</label>
+                        </div>
+                    </div>
+                </div>
+                @* Phone Number *@
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form_group field mb-3">
+                            <input id="phonenumber" class="form_field" type="text" name="phonenumber" placeholder=" " maxlength="11" />
+                            <label class="form_label" for="surname">Phone Number</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mt-4">
+                            <button class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

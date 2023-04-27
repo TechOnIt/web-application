@@ -33,8 +33,4 @@
 		<Folder Include="Areas\Dashboard\Models\" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Include="compilerconfig.json" />
-	</ItemGroup>
-
 </Project>

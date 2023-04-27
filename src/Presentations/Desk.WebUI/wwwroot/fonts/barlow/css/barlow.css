@@ -19,12 +19,11 @@
     url('../fonts/otf/barlows-Extrabold.otf') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
     url('../fonts/tff/Barlow-ExtraBold.ttf') format('truetype');
 }
-}
 
 @font-face {
     font-family: Barlow;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 600;
     src: url('../fonts/otf/Barlow-Bold.otf');
     src: url('../fonts/otf/Barlow-Bold.otf?#iefix') format('embedded-opentype'), /* IE6-8 */
     url('../fonts/otf/Barlow-Bold.otf') format('woff2'), /* FF39+,Chrome36+, Opera24+*/

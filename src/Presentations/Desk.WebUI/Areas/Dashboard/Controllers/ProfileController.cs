@@ -1,18 +1,23 @@
-﻿namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers;
+﻿using TechOnIt.Application.Commands.Users.Dashboards.ProfileCommands;
+using TechOnIt.Application.Common.Extentions;
 
+namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers;
+
+[Authorize]
 [Area("Dashboard")]
 public class ProfileController : Controller
 {
     private IMediator _mediator;
-
     public ProfileController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var getUserId = await User.GetCurrentUserIdAsync();
+        var userViewModel = await _mediator.Send(new GetUserProfileQuery() { UserId = getUserId.Id });
+        return View(userViewModel);
     }
 }

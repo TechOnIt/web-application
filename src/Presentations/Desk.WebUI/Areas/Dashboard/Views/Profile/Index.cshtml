@@ -1,43 +1,71 @@
-﻿@{
+﻿@model TechOnIt.Application.Common.Models.ViewModels.Users.UserViewModel
+@{
     ViewData["Title"] = "Profile";
 }
 <div class="row">
     <div class="col-12 col-md-4">
         @* Information *@
-        <div class="card mb-3">
+        <div class="card mb-4">
             <div class="card-body text-center">
                 <div class="mb-3">
                     <img class="profile rounded-circle" src="" width="70" />
                 </div>
                 <div>
-                    <h5 class="fw-bolder">Reza Ahmadi</h5>
+                    <h5 class="fw-bolder">@(Model.FullName is null ? "" : Model.FullName.GetFullName())</h5>
                 </div>
                 <div class="small">
                     <div>
-                        <label>rezaahmadidvlp@gmail.com</label>
+                        <label>@Model.Email</label>
                     </div>
                     <div>
-                        <label>09058089095</label>
+                        <label>@Model.PhoneNumber</label>
                     </div>
                 </div>
             </div>
         </div>
+        @* Confirm Email *@
+        @if (!string.IsNullOrEmpty(Model.Email) && Model.ConfirmedEmail is false)
+        {
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="text-center fw-bold">Verify your email address</h5>
+                    <p class="text-muted small text-justified">We will send you an email containing a one-time link, Open the link to verify your account email.</p>
+                    <div class="d-grid mt-3">
+                        <button class="btn btn-sm btn-outline-primary">Verify</button>
+                    </div>
+                </div>
+            </div>
+        }
+        @* Confirm Phone Number *@
+        @if (!string.IsNullOrEmpty(Model.PhoneNumber) && Model.ConfirmedPhoneNumber is false)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-center fw-bold">Verify your phone number</h5>
+                    <p class="text-muted small text-justified">We will send a one-time code for your phone number, Give us the code to verify your account phone number.</p>
+                    <div class="d-grid mt-3">
+                        <button class="btn btn-sm btn-outline-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-    @* Edit profile *@
     <div class="col-12 col-md-8">
+        @* Update profile *@
         <div class="card mb-3">
             <div class="card-body">
+                <div><input value="@Model.ConcurrencyStamp" /></div>
                 @* Full Name *@
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="form_group field mb-3">
-                            <input id="name" class="form_field" type="text" name="name" placeholder=" " maxlength="50" />
+                            <input id="name" class="form_field" type="text" name="name" placeholder=" " maxlength="50" value="@(Model.FullName is null ? "" : Model.FullName.Name)" />
                             <label class="form_label" for="name">Name</label>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form_group field mb-3">
-                            <input id="surname" class="form_field" type="text" name="surname" placeholder=" " maxlength="50" />
+                            <input id="surname" class="form_field" type="text" name="surname" placeholder=" " maxlength="50" value="@(Model.FullName is null ? "" : Model.FullName.Surname)" />
                             <label class="form_label" for="surname">Surname</label>
                         </div>
                     </div>
@@ -46,7 +74,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form_group field mb-3">
-                            <input id="email" class="form_field" type="text" name="email" placeholder=" " maxlength="100" />
+                            <input id="email" class="form_field" type="text" name="email" placeholder=" " maxlength="100" value="@(Model.Email is null ? "" : Model.Email)" />
                             <label class="form_label" for="email">Email</label>
                         </div>
                     </div>
@@ -55,11 +83,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form_group field mb-3">
-                            <input id="phonenumber" class="form_field" type="text" name="phonenumber" placeholder=" " maxlength="11" />
+                            <input id="phonenumber" class="form_field" type="text" name="phonenumber" placeholder=" " maxlength="11" value="@(Model.PhoneNumber is null ? "" : Model.PhoneNumber)" />
                             <label class="form_label" for="surname">Phone Number</label>
                         </div>
                     </div>
                 </div>
+                @* Update Button *@
                 <div class="row">
                     <div class="col-12">
                         <div class="mt-4">

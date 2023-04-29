@@ -48,7 +48,6 @@
                     <h5 class="fw-bold"><i class="fa fa-exclamation-triangle"></i> Verify your phone number</h5>
                     <p class="text-muted small text-justified">We will send a one-time code for your phone number, Give us the code to verify your account phone number.</p>
                     <div class="d-grid mt-3">
-                        <button class="btn btn-sm btn-outline-primary">Send</button>
                         <a class="btn btn-sm btn-outline-primary" href="/dashboard/user/verifyPhoneNumber">Send</a>
                     </div>
                 </div>
@@ -94,7 +93,7 @@
                         <div class="col-12">
                             <div class="form_group field mb-3">
                                 <input id="phonenumber" class="form_field" type="text" name="phonenumber" placeholder=" " maxlength="11" value="@(Model.PhoneNumber is null ? "" : Model.PhoneNumber)" />
-                                <label class="form_label" for="surname">Phone Number</label>
+                                <label class="form_label" for="phonenumber">Phone Number</label>
                             </div>
                         </div>
                     </div>

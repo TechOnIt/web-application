@@ -1,5 +1,7 @@
-﻿$primary: #11998e;
-$secondary: #38ef7d;
+﻿$primary: #075fe1;
+$secondary: #48d8f9;
+$successPrimary: #11998e;
+$successSecondary: #38ef7d;
 $white: #fff;
 $gray: #9b9b9b;
 $dark: #282d38;
@@ -7,7 +9,6 @@ $dark: #282d38;
 .form_group {
     position: relative;
     padding: 15px 0 0;
-    margin-top: 10px;
     width: 100%;
 }
 
@@ -50,13 +51,48 @@ $dark: #282d38;
         display: block;
         transition: 0.2s;
         font-size: 1rem;
-        color: $primary;
         font-weight: 700;
     }
 
     padding-bottom: 6px;
     font-weight: 700;
     border-width: 3px;
+}
+
+.form_primary .form_field:focus {
+    ~ .form_label {
+        color: $primary;
+    }
+
+    border-image: linear-gradient(to right, $primary,$secondary);
+}
+
+.form_primary .form_field:focus {
+    ~ .form_label {
+        color: $primary;
+    }
+
     border-image: linear-gradient(to right, $primary,$secondary);
     border-image-slice: 1;
+}
+
+.form_group_sm {
+    .form_field {
+        font-size: 1rem !important;
+    }
+
+    .form_label {
+        font-size: 1rem !important;
+    }
+
+    .form_field:focus {
+        ~ .form_label {
+            font-size: 1rem !important;
+        }
+    }
+
+    &:placeholder-shown ~ .form_label {
+        font-size: 1.1rem !important;
+        top: 23px;
+    }
 }

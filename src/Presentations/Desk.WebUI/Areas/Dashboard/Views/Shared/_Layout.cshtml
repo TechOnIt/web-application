@@ -4,14 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Technology on it!</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/fonts/barlow/css/barlow.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/fonts/iran-sans/css/fontiran.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
     <link href="~/css/vertical-layout.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/css/style.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
 </head>
-<body class="d-flex flex-column">
+<body class="d-flex flex-column menu-collapsed">
     <!-- Navbar -->
-    <nav class="header-navbar navbar fixed-top navbar-dark">
+    <nav class="header-navbar navbar fixed-top bg-body-tertiary">
         <div class="w-100 d-flex justify-content-between container-fluid">
             <div class="d-grid">
                 <button class="nav-link" onclick="$('body').toggleClass('menu-collapsed')">
@@ -21,41 +24,53 @@
             <div class="d-flex">
                 <ul class="nav">
                     @* Notification *@
-@*                    <li class="nav-item">
-                        <button class="nav-link">
-                            <i class="fa fa-bell"></i>
-                            <div class="badge bg-danger sticky rounded-pill">3</div>
-                        </button>
+                    @*                    <li class="nav-item">
+                    <button class="nav-link">
+                    <i class="fa fa-bell"></i>
+                    <div class="badge bg-danger sticky rounded-pill">3</div>
+                    </button>
                     </li>*@
                 </ul>
                 @* Profile *@
-                <div>
+                <div class="dropdown">
                     <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="profile rounded-circle" src="~/assets/images/profile_avatar_placeholder.png" width="40" />
+                        <img class="profile rounded-circle" width="40" />
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">ویرایش</a>
-                        <a class="dropdown-item" href="/identity/manage/signout">Signout</a>
-                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end ">
+                        <li>
+                            <a class="dropdown-item" href="/dashboard/profile">
+                                <i class="far fa-user me-1"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/authentication/signout">
+                                <i class="far fa-sign-out-alt me-1"></i>
+                                <span>Signout</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </nav>
     <!-- Sidebar Menu -->
-    <div class="menu-fixed main-menu vh-100" style="touch-action: none; user-select: none;">
+    <div class="menu-fixed bg-noise sidebar-menu vh-100" style="touch-action: none; user-select: none;">
         <div class="d-block d-sm-none pt-5">
             <div class="pt-4"></div>
         </div>
         <div class="d-none d-sm-block mb-3">
-            <div class="central">
-                <a class="navbar-brand text-center m-0" href="/">
-                    <img src="~/assets/images/logo/logo-x40.png" style="height:40px;" />
-                    <label class="ellipsis-text extra ms-2">Techonit</label>
+            <div class="text-center py-2">
+                <a class="navbar-brand m-0" href="/">
+                    <div class="d-flex justify-content-center">
+                        <img src="~/assets/images/logo/logo-x40.png" style="height:40px;" />
+                        <label class="ellipsis-text extra h5 ms-2 central">Techonit</label>
+                    </div>
                 </a>
             </div>
         </div>
         <div class="pr-4 pr-sm-0 pl-4 pl-sm-0">
-            <ul class="navbar flex-column">
+            <ul class="navbar">
                 @*                <li class="nav-item">
                 <a class="nav-link active" href="/dashboard/overview">
                 <i class="fa fa-tachometer-alt"></i>
@@ -63,9 +78,19 @@
                 </a>
                 </li>*@
                 <li class="nav-item">
-                    <a class="nav-link active" href="/dashboard/structure">
-                        <i class="fa fa-home"></i>
-                        <div class="extra">Structures</div>
+                    <a class="nav-link" href="/dashboard/structure">
+                        <div class="nav-icon">
+                            <i class="far fa-home"></i>
+                        </div>
+                        <div class="extra ms-2">Structures</div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/dashboard/profile">
+                        <div class="nav-icon">
+                            <i class="far fa-user"></i>
+                        </div>
+                        <div class="extra ms-2">Profile</div>
                     </a>
                 </li>
             </ul>
@@ -73,14 +98,22 @@
     </div>
     <!-- Content -->
     <main role="main" class="content">
-        <div id="app" class="content-wrapper container-fluid px-4">
+        <div id="app" class="content-wrapper container-fluid">
             @RenderBody()
         </div>
     </main>
     <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/popper/dist/js/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            var rand = parseInt(Math.random() * (6 - 1) + 1);
+            var avatarPath = '/assets/images/avatars/avatar-' + rand + '.png';
+            $('img.profile').attr("src", avatarPath);
+        });
+    </script>
 </body>
 </html>

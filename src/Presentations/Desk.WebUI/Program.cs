@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.DataProtection;
-using System.Web.Helpers;
 using TechOnIt.Application.Commands.Device.CreateDevice;
+using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +17,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 builder.Services.AddAuthorization();
 
-RegisterMediatRCommands(builder.Services);
+// Register MediatR.
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SignInUserCommand).Assembly));
 
 // Map app setting json to app setting object.
 // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
@@ -60,8 +60,4 @@ void ConfigureServices(IServiceCollection services)
     builder.Services.AddInfrastructureServices();
     builder.Services.AddApplicationServices();
     builder.Services.AddFluentValidationServices();
-}
-void RegisterMediatRCommands(IServiceCollection services)
-{
-    services.AddMediatR(typeof(CreateDeviceCommand).GetTypeInfo().Assembly);
 }

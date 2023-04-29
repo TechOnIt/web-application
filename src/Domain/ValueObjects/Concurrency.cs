@@ -40,6 +40,8 @@ public class Concurrency : ValueObject
         return instance;
     }
 
+    public override string ToString() => Value;
+
     #region Operator's
     //public static bool operator ==(Concurrency left, Concurrency right) => left.Value == right.Value;
     public static bool operator ==(Concurrency left, Concurrency right)

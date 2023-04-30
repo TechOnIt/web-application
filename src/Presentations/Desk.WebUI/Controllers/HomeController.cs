@@ -4,14 +4,11 @@ namespace TechOnIt.Desk.WebUI.Controllers;
 
 public class HomeController : Controller
 {
-    #region Ctor
     private readonly ILogger<HomeController> _logger;
-
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
     }
-    #endregion
 
     [HttpGet]
     public IActionResult Index()

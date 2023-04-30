@@ -23,18 +23,29 @@
                         <label class="h4 mb-0">@place.Name</label>
                     </div>
                     <div class="central">
-                        <button class="btn btn-primary btn-sm" type="button">+ New Device</button>
+                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#newDeviceModal" data-place-id="@place.Id">+ New Device</button>
                     </div>
                 </div>
                 <hr>
                 @* Devices *@
-                @if (place.Devices.Count > 0)
+                @if (place.Devices is not null && place.Devices.Count > 0)
                 {
-                    <div class="d-flex">
+                    <div class="d-flex flex-wrap gap-1">
                         @foreach (var device in place.Devices)
                         {
-                            <button class="btn btn-lg @(device.IsHigh ? "btn-primary":"btn-outline-primary")" onclick="toggleDeviceStatus(this,'@device.Id', '@(device.IsHigh ? "off":"on")', '@Model.Id')" type="button">
-                                <i class="far @(device.IsHigh ? "fa-lightbulb-on":"fa-lightbulb")"></i>
+                            string deviceIcon = "far fa-lightbulb";
+
+                            if (device.DeviceType == TechOnIt.Domain.Enums.DeviceType.Light)
+                                deviceIcon = device.IsHigh ? "fa fa-lightbulb-on" : "far fa-lightbulb";
+                            if (device.DeviceType == TechOnIt.Domain.Enums.DeviceType.Heater)
+                                deviceIcon = device.IsHigh ? "fa fa-temperature-high" : "far fa-temperature-high";
+                            if (device.DeviceType == TechOnIt.Domain.Enums.DeviceType.Cooler)
+                                deviceIcon = device.IsHigh ? "fa fa-snowflake" : "fa fa-snowflake";
+                            if (device.DeviceType == TechOnIt.Domain.Enums.DeviceType.Fan)
+                                deviceIcon = device.IsHigh ? "fa fa-fan" : "far fa-fan";
+
+                            <button class="btn btn-lg @(device.IsHigh ? "btn-primary":"btn-outline-primary")" onclick="toggleDeviceStatus(this,'@device.Id', '@(device.IsHigh ? "off":"on")', '@Model.Id')" type="button" data-bs-toggle="tooltip" data-bs-title="Pin: #@device.Pin">
+                                <i class="@deviceIcon"></i>
                             </button>
                         }
                     </div>
@@ -96,9 +107,45 @@
     </div>
 </div>
 
+<!-- New Device Modal -->
+<div class="modal fade" id="newDeviceModal" tabindex="-1" aria-labelledby="newDeviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newDeviceModalLabel">New device</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/dashboard/device/new">
+                @* Place Id *@
+                <input id="new-device-place-id" type="hidden" name="PlaceId" value="@Model.Id" />
+                <div class="modal-body">
+                    <div class="form_group field mb-3">
+                        <select id="new-device-type" class="form_field" required>
+                            <option value="1">💡 Light, Lamp, LED</option>
+                            <option value="2">🔥 Heater, Warmer</option>
+                            <option value="3">❄️ Cooler, Air conditioner</option>
+                            <option value="4">🌬️ Fan, Chiller</option>
+                        </select>
+                        <label for="new-device-description" class="form_label">Type</label>
+                    </div>
+                    <div class="form_group field mb-3">
+                        <input id="new-device-name" class="form_field" name="Pin" type="number" placeholder="#0 - #255" min="1" max="255" maxlength="3" required />
+                        <label for="new-device-name" class="form_label">Pin</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
-        const toggleDeviceStatus = function (e,deviceId, status, structureId) {
+        // Device On/Off
+        const toggleDeviceStatus = function (e, deviceId, status, structureId) {
             $(e).prop("disabled", true);
             var requestOptions = {
                 method: 'GET',
@@ -110,10 +157,15 @@
                 .then(function () {
                     location.reload();
                 })
-                .catch(error => function(){
+                .catch(error => function () {
                     console.log('error', error);
                     $(e).prop("disabled", false);
                 });
         }
+
+        // New Device Click
+        $(document).on('click', '[data-bs-target="#newDeviceModal"]', function () {
+            $('#newDeviceModal #new-device-place-id').val($(this).attr('data-place-id'));
+        });
     </script>
 }

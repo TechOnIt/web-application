@@ -1,17 +1,26 @@
-﻿@model IList<TechOnIt.Application.Common.Models.ViewModels.Structures.StructureCardViewModel>
+﻿@using TechOnIt.Domain.Enums;
+@model IList<TechOnIt.Application.Common.Models.ViewModels.Structures.StructureCardViewModel>
 @{
     ViewData["Title"] = "Structures";
 }
 <div class="container-fluid">
     <h3>My structures</h3>
-    <div class="row">
+    <div class="row mb-3">
         @if (Model.Count > 0)
         {
             foreach (var structure in Model)
             {
+                string structureIcon = "fa-home";
+                if (structure.Type == StuctureType.Agriculture)
+                {
+                    structureIcon = "fa-seedling";
+                }
+                else if (structure.Type == StuctureType.Aviculture)
+                {
+                    structureIcon = "fa-tractor";
+                }
                 if (structure.IsActive)
                 {
-
                     <div class="col-12 col-sm-6 col-md-3">
                         <div class="card user-select-none">
                             <div class="card-body">
@@ -20,11 +29,11 @@
                                         <div class="col smallest text-start">
                                             <i class="fa fa-circle text-green"></i>
                                         </div>
-                                        <div class="col h2"><i class="fa fa-home text-secondary"></i></div>
+                                        <div class="col h2"><i class="fa @structureIcon text-secondary"></i></div>
                                         <div class="col"></div>
                                     </div>
                                     <label class="h5 fw-bolder text-primary">@structure.Name</label>
-                                    <label class="text-muted smaller">Name</label>
+                                    <label class="text-muted smaller">@structure.Description</label>
                                 </div>
                             </div>
                             <div class="card-footer d-flex gap-1">
@@ -44,7 +53,7 @@
                                         <div class="col smallest text-start">
                                             <i class="fa fa-circle text-secondary opacity-50"></i>
                                         </div>
-                                        <div class="col h2"><i class="fa fa-home text-secondary opacity-50"></i></div>
+                                        <div class="col h2"><i class="fa @structureIcon text-secondary opacity-50"></i></div>
                                         <div class="col"></div>
                                     </div>
                                     <label class="h5 fw-bolder text-secondary">@structure.Name</label>
@@ -61,19 +70,15 @@
         }
         else
         {
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col-12 col-md-6 offset-md-3">
-                        <img class="w-100 opacity-50" src="~/assets/images/stocks/farm-house-bro.svg" />
-                    </div>
-                    <div class="col-12">
-                        <div class="text-center">
-                            <label class="h3 fw-bold">There is no structure found!</label>
-                        </div>
-                        <div class="d-grid d-sm-block text-center mt-3">
-                            <button class="btn btn-primary btn-lg">+ New</button>
-                        </div>
-                    </div>
+            <div class="col-12 col-md-6 offset-md-3">
+                <img class="w-100 opacity-50" src="~/assets/images/stocks/farm-house-bro.svg" />
+            </div>
+            <div class="col-12">
+                <div class="text-center">
+                    <label class="h3 fw-bold">No structures were found!</label>
+                </div>
+                <div class="d-grid d-sm-block text-center mt-3">
+                    <button class="btn btn-primary btn-lg">+ New</button>
                 </div>
             </div>
         }

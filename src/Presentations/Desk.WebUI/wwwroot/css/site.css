@@ -115,7 +115,7 @@ ul {
     --bs-danger: #dc3545;
     --bs-light: #f8f9fa;
     --bs-dark: #212529;
-    --bs-primary-rgb: 14, 81, 68;
+    --bs-primary-rgb: 64, 109, 18;
     --bs-secondary-rgb: 108,117,125;
     --bs-success-rgb: 25,135,84;
     --bs-info-rgb: 13,202,240;
@@ -269,4 +269,8 @@ ul {
 .card {
     border: none;
     box-shadow: 2px 8px 8px #333b4316;
+}
+
+.text-green {
+    color: var(--primary-500);
 }

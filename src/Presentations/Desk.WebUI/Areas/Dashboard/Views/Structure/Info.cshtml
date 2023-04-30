@@ -3,22 +3,49 @@
     ViewData["Title"] = "Info";
 }
 
-<h1>@Model.Name Places</h1>
+<h1>@Model.Name Place's</h1>
 
 <div class="container-fluid">
     <div class="row">
-        @foreach (var place in Model.Places)
+        @* Places *@
+        @if (Model.Places is not null && Model.Places.Count > 0)
         {
-            <div class="col-12 col-sm-3 col-md-4">
-                <h4>@place.Name</h4>
-                <hr>
-                <div class="d-flex">
-                    @foreach (var device in place.Devices)
-                    {
-                        <a href="/dashboard/device/@(device.IsHigh ? "off":"on")?id=@device.Id&structureId=@Model.Id" class="btn btn-sm @(device.IsHigh ? "btn-primary":"btn-secondary")">
-                            <i class="fa @(device.IsHigh ? "fa-lightbulb-on":"fa-lightbulb")"></i>
-                        </a>
-                    }
+            foreach (var place in Model.Places)
+            {
+                <div class="col-12 col-sm-3 col-md-4">
+                    <h4>@place.Name</h4>
+                    <hr>
+                    @* Devices *@
+                    <div class="d-flex">
+                        @if (place.Devices.Count > 0)
+                        {
+                            foreach (var device in place.Devices)
+                            {
+                                <a href="/dashboard/device/@(device.IsHigh ? "off":"on")?id=@device.Id&structureId=@Model.Id" class="btn btn-sm @(device.IsHigh ? "btn-primary":"btn-secondary")">
+                                    <i class="fa @(device.IsHigh ? "fa-lightbulb-on":"fa-lightbulb")"></i>
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            @* Device Not Found *@
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            @* Places not found *@
+            <div class="col-12 col-md-6 offset-md-3">
+                <img class="w-100 opacity-50" src="~/assets/images/stocks/Shed-pana.svg" />
+            </div>
+            <div class="col-12">
+                <div class="text-center">
+                    <label class="h3 fw-bold">No places were found!</label>
+                </div>
+                <div class="d-grid d-sm-block text-center mt-3">
+                    <button id="new-place" class="btn btn-primary btn-lg">+ New</button>
                 </div>
             </div>
         }

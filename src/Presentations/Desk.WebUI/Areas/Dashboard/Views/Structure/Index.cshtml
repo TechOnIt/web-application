@@ -3,12 +3,19 @@
 @{
     ViewData["Title"] = "Manage structures";
 }
-<h2 class="fw-bold">My structures</h2>
 <div class="row mb-3">
     @* Structures *@
     @if (Model.Count > 0)
     {
-        foreach (var structure in Model)
+        <div class="d-flex justify-content-between">
+            <div class="central">
+                <label class="fw-bold h2">My structures</label>
+            </div>
+            <div class="central">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newStructureModal">+ New</button>
+            </div>
+        </div>
+        @foreach (var structure in Model)
         {
             string structureIcon = "fa-home";
             if (structure.Type == StuctureType.Agriculture)

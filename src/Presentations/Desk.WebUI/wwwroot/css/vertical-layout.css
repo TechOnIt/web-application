@@ -4,7 +4,7 @@
     transition: .3s ease all,background 0s;
     -webkit-transition: .3s ease all,background 0s;
     -moz-transition: .3s ease all,background 0s;
-    z-index: 10000;
+    z-index: 1050;
 }
 
 .sidebar-menu {

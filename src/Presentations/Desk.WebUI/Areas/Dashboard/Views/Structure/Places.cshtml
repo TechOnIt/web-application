@@ -1,35 +1,62 @@
 ﻿@model TechOnIt.Application.Common.Models.ViewModels.Structures.StructurePlacesWithDevicesViewModel
 @{
-    ViewData["Title"] = "Manage places";
+    ViewData["Title"] = @Model.Name + " places";
 }
-
-<h2 class="fw-bold">@Model.Name Place's</h2>
 
 <div class="row">
     @* Places *@
     @if (Model.Places is not null && Model.Places.Count > 0)
     {
+        <div class="d-flex justify-content-between">
+            <div class="central">
+                <label class="fw-bold h2">@Model.Name Place's</label>
+            </div>
+            <div class="central">
+                <button id="new-place" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newPlaceModal">+ New Place</button>
+            </div>
+        </div>
         foreach (var place in Model.Places)
         {
             <div class="col-12 col-sm-3 col-md-4">
-                <h4>@place.Name</h4>
+                <div class="d-flex justify-content-between">
+                    <div class="central">
+                        <label class="h4 mb-0">@place.Name</label>
+                    </div>
+                    <div class="central">
+                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#newDeviceModal" data-place-id="@place.Id">+ New Device</button>
+                    </div>
+                </div>
                 <hr>
                 @* Devices *@
-                <div class="d-flex">
-                    @if (place.Devices.Count > 0)
-                    {
-                        foreach (var device in place.Devices)
+                @if (place.Devices is not null && place.Devices.Count > 0)
+                {
+                    <div class="d-flex flex-wrap gap-1">
+                        @foreach (var device in place.Devices)
                         {
-                            <a href="/dashboard/device/@(device.IsHigh ? "off":"on")?id=@device.Id&structureId=@Model.Id" class="btn btn-sm @(device.IsHigh ? "btn-primary":"btn-secondary")">
-                                <i class="fa @(device.IsHigh ? "fa-lightbulb-on":"fa-lightbulb")"></i>
-                            </a>
+                            string deviceIcon = "far fa-lightbulb";
+
+                            if (device.DeviceType == TechOnIt.Domain.Enums.DeviceType.Light)
+                                deviceIcon = device.IsHigh ? "fa fa-lightbulb-on" : "far fa-lightbulb";
+                            if (device.DeviceType == TechOnIt.Domain.Enums.DeviceType.Heater)
+                                deviceIcon = device.IsHigh ? "fa fa-temperature-high" : "far fa-temperature-high";
+                            if (device.DeviceType == TechOnIt.Domain.Enums.DeviceType.Cooler)
+                                deviceIcon = device.IsHigh ? "fa fa-snowflake" : "fa fa-snowflake";
+                            if (device.DeviceType == TechOnIt.Domain.Enums.DeviceType.Fan)
+                                deviceIcon = device.IsHigh ? "fa fa-fan" : "far fa-fan";
+
+                            <button class="btn btn-lg @(device.IsHigh ? "btn-primary":"btn-outline-primary")" onclick="toggleDeviceStatus(this,'@device.Id', '@(device.IsHigh ? "off":"on")', '@Model.Id')" type="button" data-bs-toggle="tooltip" data-bs-title="Pin: #@device.Pin">
+                                <i class="@deviceIcon"></i>
+                            </button>
                         }
-                    }
-                    else
-                    {
-                        @* Device Not Found *@
-                    }
-                </div>
+                    </div>
+                }
+                else
+                {
+                    @* Device Not Found *@
+                    <div class="text-center">
+                        <p class="text-muted small mt-4">No devices found.</p>
+                    </div>
+                }
             </div>
         }
     }
@@ -59,13 +86,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="/dashboard/place/new">
+                @* Structure Id *@
+                <input type="hidden" name="StructureId" value="@Model.Id" />
                 <div class="modal-body">
                     <div class="form_group field mb-3">
-                        <input id="new-place-name" class="form_field" name="name" type="text" placeholder="Name" maxlength="20" required />
+                        <input id="new-place-name" class="form_field" name="Name" type="text" placeholder="Name" maxlength="20" required />
                         <label for="new-place-name" class="form_label">Name</label>
                     </div>
                     <div class="form_group field mb-3">
-                        <textarea id="new-place-description" class="form_field" name="description" placeholder="Description" maxlength="100"></textarea>
+                        <textarea id="new-place-description" class="form_field" name="Description" placeholder="Description" maxlength="100"></textarea>
                         <label for="new-place-description" class="form_label">Description</label>
                     </div>
                 </div>
@@ -77,3 +106,66 @@
         </div>
     </div>
 </div>
+
+<!-- New Device Modal -->
+<div class="modal fade" id="newDeviceModal" tabindex="-1" aria-labelledby="newDeviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newDeviceModalLabel">New device</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/dashboard/device/new">
+                @* Place Id *@
+                <input id="new-device-place-id" type="hidden" name="PlaceId" value="@Model.Id" />
+                <div class="modal-body">
+                    <div class="form_group field mb-3">
+                        <select id="new-device-type" class="form_field" required>
+                            <option value="1">💡 Light, Lamp, LED</option>
+                            <option value="2">🔥 Heater, Warmer</option>
+                            <option value="3">❄️ Cooler, Air conditioner</option>
+                            <option value="4">🌬️ Fan, Chiller</option>
+                        </select>
+                        <label for="new-device-description" class="form_label">Type</label>
+                    </div>
+                    <div class="form_group field mb-3">
+                        <input id="new-device-name" class="form_field" name="Pin" type="number" placeholder="#0 - #255" min="1" max="255" maxlength="3" required />
+                        <label for="new-device-name" class="form_label">Pin</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Device On/Off
+        const toggleDeviceStatus = function (e, deviceId, status, structureId) {
+            $(e).prop("disabled", true);
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+            var url = '/dashboard/device/' + status + '?id=' + deviceId + '&structureId=' + structureId;
+            fetch(url, requestOptions)
+                .then(response => response.text())
+                .then(function () {
+                    location.reload();
+                })
+                .catch(error => function () {
+                    console.log('error', error);
+                    $(e).prop("disabled", false);
+                });
+        }
+
+        // New Device Click
+        $(document).on('click', '[data-bs-target="#newDeviceModal"]', function () {
+            $('#newDeviceModal #new-device-place-id').val($(this).attr('data-place-id'));
+        });
+    </script>
+}

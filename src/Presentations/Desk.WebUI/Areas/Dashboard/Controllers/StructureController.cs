@@ -26,9 +26,9 @@ public class StructureController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Info([FromQuery] string id)
+    public async Task<IActionResult> Places([FromQuery] string structureId)
     {
-        var structure = await _mediator.Send(new GetPlacesWithDevicesByStructureIdCommand { StructureId = Guid.Parse(id) });
+        var structure = await _mediator.Send(new GetPlacesWithDevicesByStructureIdCommand { StructureId = Guid.Parse(structureId) });
         return View(structure);
     }
 }

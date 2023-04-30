@@ -6,6 +6,6 @@ public class StructurePlacesWithDevicesViewModel
 {
     public string Id { get; set; }
     public string Name { get; set; }
-    public string Description { get; set; }
-    public List<PlaceWithDevicesViewModel> Places { get; set; }
+    public string? Description { get; set; }
+    public List<PlaceWithDevicesViewModel>? Places { get; set; }
 }

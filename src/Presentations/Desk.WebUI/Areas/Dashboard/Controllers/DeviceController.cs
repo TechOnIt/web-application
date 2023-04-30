@@ -22,7 +22,7 @@ public class DeviceController : Controller
             DeviceId = Guid.Parse(id),
             IsHigh = true
         }, cancellationToken);
-        return Redirect("/dashboard/structure/info?id=" + structureId);
+        return Ok();
     }
 
     [HttpGet]
@@ -33,7 +33,6 @@ public class DeviceController : Controller
             DeviceId = Guid.Parse(id),
             IsHigh = false
         }, cancellationToken);
-        return Redirect("/dashboard/structure/info?id=" + structureId);
-
+        return Ok();
     }
 }

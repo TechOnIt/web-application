@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="auto">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -107,13 +107,21 @@
     <script src="~/lib/popper/dist/js/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
     <script>
         $(document).ready(function () {
             var rand = parseInt(Math.random() * (6 - 1) + 1);
             var avatarPath = '/assets/images/avatars/avatar-' + rand + '.png';
             $('img.profile').attr("src", avatarPath);
         });
+        // Direction auto
+        $('input[type=text], textarea').keyup(function () {
+            $(this).val().charAt(0).charCodeAt(0) > 200 ?
+            $(this).css('direction', 'rtl') : $(this).css('direction', 'ltr');
+        });
+        // Setup bootstrap tooltip.
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     </script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

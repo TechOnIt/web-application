@@ -29,8 +29,10 @@ public class SignInCookieCommandHandler : IRequestHandler<SignInCookieCommand, b
     public async Task<bool> Handle(SignInCookieCommand request, CancellationToken cancellationToken)
     {
         var user = await _userReports.FindByIdentityNoTrackAsync(request.Username, cancellationToken);
-        if (user == null)
-            return false;
+        // Check exist.
+        if (user == null) return false;
+        // Check password.
+        if(user.Password != PasswordHash.Parse(request.Password)) return false;
 
         var claims = new List<Claim>
             {

@@ -6,6 +6,7 @@
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<AssemblyName>$(SolutionName).$(MSBuildProjectName)</AssemblyName>
 		<RootNamespace>$(SolutionName).$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<AssemblyVersion>1.2.4.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

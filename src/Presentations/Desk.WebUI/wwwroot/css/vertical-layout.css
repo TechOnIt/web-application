@@ -160,7 +160,7 @@ body.menu-collapsed .sidebar-menu ul li a {
 /* lg */
 @media only screen and (min-width: 576px) {
     .sidebar-menu {
-        width: 260px;
+        width: 250px;
     }
 
     .menu-collapsed .sidebar-menu {
@@ -176,7 +176,7 @@ body.menu-collapsed .sidebar-menu ul li a {
     }
 
     body .content {
-        margin-left: 260px;
+        margin-left: 250px;
     }
 
     .mobile-header {
@@ -184,6 +184,6 @@ body.menu-collapsed .sidebar-menu ul li a {
     }
 
     .header-navbar {
-        left: 260px;
+        left: 250px;
     }
 }

@@ -1,0 +1,37 @@
+﻿@using TechOnIt.Application.Common.Models.ViewModels.Places;
+@model IList<PlaceWithDevicesViewModel>
+
+@if (Model is not null && Model.Count > 0)
+{
+    foreach (var place in Model)
+    {
+        <div class="col-12 col-sm-3 col-md-4">
+            <div class="place-box d-flex justify-content-between">
+                <div class="central">
+                    <label class="place-name h4 mb-0">@place.Name</label>
+                </div>
+                <div class="central">
+                    <button class="new-place-btn btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#newDeviceModal" data-place-id="@place.Id">+ New Device</button>
+                </div>
+            </div>
+            <hr>
+            @* Devices List *@
+            @await Component.InvokeAsync(typeof(PlaceDeviceListViewComponent), new { place.Devices })
+        </div>
+    }
+}
+else
+{
+    @* Places not found *@
+    <div class="col-12 col-md-6 offset-md-3">
+        <img class="w-100 opacity-75" src="~/assets/images/stocks/Shed-pana.svg" />
+    </div>
+    <div class="col-12">
+        <div class="text-center">
+            <label class="h3 fw-bold">No places were found!</label>
+        </div>
+        <div class="d-grid d-sm-block text-center mt-3">
+            <button id="new-place" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newPlaceModal">+ New</button>
+        </div>
+    </div>
+}

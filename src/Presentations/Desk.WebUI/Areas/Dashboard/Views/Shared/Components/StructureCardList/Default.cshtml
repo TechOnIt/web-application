@@ -15,7 +15,7 @@
         </div>
         @foreach (var structure in Model)
         {
-            <div class="col-12 col-sm-6 col-md-3">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4">
                 @await Component.InvokeAsync(typeof(StructureCardViewComponent),new { structure })
             </div>
         }

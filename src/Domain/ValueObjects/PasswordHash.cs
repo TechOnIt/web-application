@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using TechOnIt.Domain.Common;
 
 namespace TechOnIt.Domain.ValueObjects;
@@ -81,7 +82,7 @@ public class PasswordHash : ValueObject
 
     public static string _encode(string userPassword)
     {
-        var saltBytes = Generate128BitSalt();
+        var saltBytes = Encoding.ASCII.GetBytes("6067CF0158F61D1751751D5FD4F7E287");
         var hashPasswordBytes =
             KeyDerivation.Pbkdf2(
                 password: userPassword,
@@ -92,7 +93,7 @@ public class PasswordHash : ValueObject
 
         return string.Concat(
             Convert.ToBase64String(saltBytes),
-            " ",
+            "TOI",
             Convert.ToBase64String(hashPasswordBytes));
     }
 

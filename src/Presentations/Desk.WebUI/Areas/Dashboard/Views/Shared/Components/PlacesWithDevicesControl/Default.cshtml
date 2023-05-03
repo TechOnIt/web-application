@@ -11,7 +11,19 @@
                     <label class="place-name h4 mb-0">@place.Name</label>
                 </div>
                 <div class="central">
-                    <button class="new-place-btn btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#newDeviceModal" data-place-id="@place.Id">+ New Device</button>
+                    @* More *@
+                    <div class="dropdown">
+                        <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newDeviceModal" data-place-id="@place.Id">
+                                    <i class="fa fa-plus me-2"></i> Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <hr>

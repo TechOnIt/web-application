@@ -206,6 +206,8 @@ ul {
     --bs-form-invalid-color: #dc3545;
     --bs-form-invalid-border-color: #dc3545;
     --bs-navbar-brand-padding-y: .25rem;
+    --bs-dropdown-link-active-bg: #66c60c !important;
+    --bs-dropdown-link-hover-bg: #66c60c !important;
     --bg-noise-url: url(/assets/images/light-noise.png);
     --primary-50: #e7fefa;
     --primary-100: #cbfcd5;
@@ -271,6 +273,8 @@ ul {
     --bs-form-invalid-color: #ea868f !important;
     --bs-form-invalid-border-color: #ea868f !important;
     --bg-noise-url: url(/assets/images/dark-noise.jpg);
+    --bs-dropdown-link-active-bg: #66c60c !important;
+    --bs-dropdown-link-hover-color: var(--bs-body-color);
 }
 
 .card {
@@ -284,4 +288,10 @@ ul {
 
 .modal {
     backdrop-filter: blur(3px);
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: var(--bs-dropdown-link-active-color);
+    text-decoration: none;
+    background-color: var(--bs-dropdown-link-active-bg);
 }

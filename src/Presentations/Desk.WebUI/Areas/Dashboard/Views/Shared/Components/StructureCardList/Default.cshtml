@@ -1,0 +1,35 @@
+﻿@using TechOnIt.Application.Common.Models.ViewModels.Structures;
+@model IList<StructureCardViewModel>
+
+<div class="row">
+    @* Structures *@
+    @if (Model.Count > 0)
+    {
+        <div class="d-flex justify-content-between">
+            <div class="central">
+                <label class="fw-bold h2">My structures</label>
+            </div>
+            <div class="central">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newStructureModal">+ New</button>
+            </div>
+        </div>
+        @foreach (var structure in Model)
+        {
+            @await Component.InvokeAsync(typeof(StructureCardViewComponent),new { structure })
+        }
+    }
+    else
+    {
+        <div class="col-12 col-md-6 offset-md-3">
+            <img class="w-100 opacity-75" src="~/assets/images/stocks/farm-house-bro.svg" />
+        </div>
+        <div class="col-12">
+            <div class="text-center">
+                <label class="h3 fw-bold">No structures were found!</label>
+            </div>
+            <div class="d-grid d-sm-block text-center mt-3">
+                <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newStructureModal">+ New</button>
+            </div>
+        </div>
+    }
+</div>

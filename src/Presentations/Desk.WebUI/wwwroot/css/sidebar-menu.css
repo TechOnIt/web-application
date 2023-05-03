@@ -41,9 +41,9 @@ body.menu-collapsed .sidebar-menu .nav-item {
     overflow: hidden;
 }
 
-body.menu-collapsed .sidebar-menu .nav-item .nav-link {
-    border-radius: .75rem;
-}
+    body.menu-collapsed .sidebar-menu .nav-item .nav-link {
+        border-radius: .75rem;
+    }
 
 .sidebar-menu .nav-link .nav-icon {
     display: flex;

@@ -6,7 +6,7 @@
     <h3 class="text-center mb-4">Login into your account</h3>
     <div class="pt-4">
         <form method="post" action="signin">
-            @if(TempData["signin-summery"] is not null)
+            @if (TempData["signin-summery"] is not null)
             {
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     @TempData["signin-summery"]
@@ -33,7 +33,9 @@
                 </div>
             </div>
             <div class="d-grid mt-5">
-                <button class="btn btn-primary" type="submit">Signin</button>
+                <button class="d-none d-sm-block btn btn-primary" type="submit">Signin</button>
+                @* Mobile Btn *@
+                <button class="d-block d-sm-none btn btn-lg btn-primary" type="submit">Signin</button>
             </div>
         </form>
     </div>

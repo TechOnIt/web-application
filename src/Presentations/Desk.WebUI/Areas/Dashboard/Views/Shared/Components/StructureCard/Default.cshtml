@@ -28,7 +28,9 @@
             </div>
         </div>
         <div class="card-footer d-flex gap-1">
-            <a class="btn py-3 py-md-2 btn-sm mx-auto btn-primary w-100" href="structure/places?name=@Model.Name.Replace(" ", "_")&structureId=@Model.Id">Manage</a>
+            <a class="d-none d-sm-block btn btn-sm mx-auto btn-primary w-100" href="structure/places?name=@Model.Name.Replace(" ", "_")&structureId=@Model.Id">Manage</a>
+            @* Mobile btn *@
+            <a class="d-block d-sm-none btn btn-lg btn mx-auto btn-primary w-100" href="structure/places?name=@Model.Name.Replace(" ", "_")&structureId=@Model.Id">Manage</a>
             @*<a class="btn btn-sm mx-auto btn-secondary" href="#"><i class="fa fa-cog"></i></a>*@
         </div>
     </div>

@@ -16,4 +16,9 @@
     // Setup bootstrap tooltip.
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    // Dark mode
+    var mode = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        mode = 'dark';
+    $('body').attr("data-bs-theme", mode);
 </script>

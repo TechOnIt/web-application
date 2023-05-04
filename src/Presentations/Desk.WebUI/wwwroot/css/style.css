@@ -80,3 +80,7 @@
   font-size: 1.1rem !important;
   top: 23px;
 }
+
+input:-internal-autofill-selected {
+  background-color: transparent;
+}

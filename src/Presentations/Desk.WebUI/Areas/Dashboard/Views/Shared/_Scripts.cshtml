@@ -1,8 +1,8 @@
-﻿<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/popper/dist/js/popper.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+﻿<script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+<script src="~/lib/popper/dist/js/popper.min.js" asp-append-version="true"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-<script>
+<script asp-append-version="true">
     $(document).ready(function () {
         var rand = parseInt(Math.random() * (6 - 1) + 1);
         var avatarPath = '/assets/images/avatars/avatar-' + rand + '.png';

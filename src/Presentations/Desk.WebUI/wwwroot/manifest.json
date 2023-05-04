@@ -1,6 +1,6 @@
 {
   "name": "Desk - Technology On It",
-  "short_name": "Desk.Techonit",
+  "short_name": "Techonit",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#24262b",
@@ -17,5 +17,6 @@
       "src": "/assets/images/logo/icon512x512.png",
       "sizes": "512x512"
     }
-  ]
+  ],
+  "purpose": "To manage your devices and sensors."
 }

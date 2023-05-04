@@ -17,5 +17,6 @@
       "src": "/assets/images/logo/icon512x512.png",
       "sizes": "512x512"
     }
-  ]
+  ],
+  "purpose": "To manage your devices and sensors."
 }

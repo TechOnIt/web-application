@@ -4,15 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Technology on it!</title>
-    <link href="~/fonts/barlow/css/barlow.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/fonts/iran-sans/css/fontiran.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
-    <link href="~/css/sidebar-menu.css" rel="stylesheet" />
-    <link href="~/css/style.min.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
-    @* Css Isolation *@
-    <link rel="stylesheet" href="~/@(nameof(TechOnIt)).styles.css" asp-append-version="true" />
+    <meta http-equiv="Cache-control" content="public">
+    @* Styles *@
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/sidebar-menu.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/style.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+    @* Fonts *@
+    <link rel="preload" as="style" href="/fonts/barlow/css/barlow.min.css" onload="this.rel='stylesheet'" />
+    <link rel="preload" as="style" href="/fonts/iran-sans/css/fontiran.min.css" onload="this.rel='stylesheet'" />
+    <link rel="preload" as="style" href="/lib/font-awesome/css/fontawesome.min.css" onload="this.rel='stylesheet'" />
 </head>
 <body class="d-flex flex-column menu-collapsed">
     @{

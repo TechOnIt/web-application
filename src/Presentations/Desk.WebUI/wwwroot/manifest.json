@@ -1,6 +1,6 @@
 {
   "name": "Desk - Technology On It",
-  "short_name": "Desk.Techonit",
+  "short_name": "Techonit",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#24262b",
@@ -11,11 +11,15 @@
   "icons": [
     {
       "src": "/assets/images/logo/icon192x192.png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/assets/images/logo/icon512x512.png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

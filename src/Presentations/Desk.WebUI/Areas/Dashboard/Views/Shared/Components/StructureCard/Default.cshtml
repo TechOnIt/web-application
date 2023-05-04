@@ -16,15 +16,17 @@
     <div class="card user-select-none">
         <div class="card-body">
             <div class="d-flex flex-column text-center mb-2">
-                <div class="row mt-2 mb-4">
+                <div class="row mt-2 mb-3">
                     <div class="col smallest text-start">
                         <i class="fa fa-circle text-green"></i>
                     </div>
-                    <div class="col h2"><i class="fa @structureIcon text-success"></i></div>
+                    <div class="col h1"><i class="fa @structureIcon text-success"></i></div>
                     <div class="col"></div>
                 </div>
-                <label class="h4 fw-bolder">@Model.Name</label>
-                <label class="text-muted smaller">@Model.Description</label>
+                <div style="height:55px;">
+                    <label class="h4 fw-bolder">@Model.Name</label>
+                    <p class="text-muted smaller m-0">@Model.Description</p>
+                </div>
             </div>
         </div>
         <div class="card-footer d-flex gap-1">

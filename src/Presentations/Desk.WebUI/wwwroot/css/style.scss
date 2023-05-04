@@ -35,6 +35,10 @@ $dark: #282d38;
     }
 }
 
+.form_field:disabled {
+    color: $gray;
+}
+
 .form_label {
     position: absolute;
     top: 0;

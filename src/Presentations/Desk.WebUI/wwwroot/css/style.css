@@ -25,6 +25,10 @@
   top: 20px;
 }
 
+.form_field:disabled {
+  color: #9b9b9b;
+}
+
 .form_label {
   position: absolute;
   top: 0;

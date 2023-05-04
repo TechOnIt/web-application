@@ -21,11 +21,11 @@ body {
 }
 
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    -webkit-box-shadow: none;
 }
 
     input:-webkit-autofill:focus {
-        -webkit-box-shadow: 0 0 0px 1000px white inset;
+        -webkit-box-shadow: none;
     }
 
 :root, [data-bs-theme=light] {
@@ -68,6 +68,7 @@ input:-webkit-autofill {
     --bs-danger-rgb: 220,53,69;
     --bs-light-rgb: 248,249,250;
     --bs-dark-rgb: 33,37,41;
+    --card-bg: #fff;
     --bs-primary-text-emphasis: #386505;
     --bs-secondary-text-emphasis: #2b2f32;
     --bs-success-text-emphasis: #0a3622;
@@ -102,7 +103,7 @@ input:-webkit-autofill {
     --bs-body-line-height: 1.5;
     --bs-body-color: #3f444a;
     --bs-body-color-rgb: 33,37,41;
-    --bs-body-bg: #fff;
+    --bs-body-bg: #ededed;
     --bs-body-bg-rgb: 255,255,255;
     --bs-emphasis-color: #000;
     --bs-emphasis-color-rgb: 0,0,0;
@@ -237,6 +238,10 @@ ul {
 .bg-noise {
     background-image: var(--bg-noise-url);
     background-repeat: repeat;
+}
+
+.card {
+    background-color: var(--card-bg) !important;
 }
 
 .btn {

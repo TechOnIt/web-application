@@ -75,7 +75,7 @@ body.menu-collapsed .sidebar-menu .nav-item {
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: .5rem 1.5rem;
+    padding: .75rem 1.75rem;
 }
 
     .sidebar-menu ul li a .extra {
@@ -83,10 +83,6 @@ body.menu-collapsed .sidebar-menu .nav-item {
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-
-.sidebar-menu ul li {
-    margin: .25rem 1rem;
-}
 
 .menu-collapsed .sidebar-menu ul li {
     width: auto;

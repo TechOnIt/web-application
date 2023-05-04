@@ -212,7 +212,7 @@ input:-webkit-autofill {
     --bs-form-valid-border-color: #75b798 !important;
     --bs-form-invalid-color: #ea868f !important;
     --bs-form-invalid-border-color: #ea868f !important;
-    --bg-noise-url: url(/assets/images/dark-noise.jpg);
+    --bg-noise-url: url(/assets/images/dark-noise.png);
     --bs-dropdown-link-active-bg: #66c60c !important;
     --bs-dropdown-link-hover-color: var(--bs-body-color);
     --card-bg: #242935;

@@ -27,6 +27,8 @@ builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSecti
 
 ConfigureServices(builder.Services);
 
+builder.Services.AddResponseCaching();
+
 // Add PWA service
 builder.Services.AddProgressiveWebApp();
 
@@ -40,9 +42,24 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions()
+{
+    HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
+    OnPrepareResponse = (context) =>
+    {
+        var headers = context.Context.Response.GetTypedHeaders();
+        headers.CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue
+        {
+            Public = true,
+            MaxAge = TimeSpan.FromDays(100)
+        };
+    }
+});
+
 // Routing
 app.UseRouting();
+app.UseResponseCaching();
 // Auth
 app.UseAuthentication();
 app.UseAuthorization();

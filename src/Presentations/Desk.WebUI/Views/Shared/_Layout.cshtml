@@ -10,7 +10,7 @@
 </head>
 <body class="d-flex flex-column">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-body-tertiary border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img class="me-2" src="~/assets/images/logo/logo.svg" width="20" height="30" />
@@ -72,6 +72,11 @@
             $(this).val().charAt(0).charCodeAt(0) > 200 ?
                 $(this).css('direction', 'rtl') : $(this).css('direction', 'ltr');
         });
+        // Dark mode
+        var mode = "light";
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            mode = 'dark';
+        $('body').attr("data-bs-theme", mode);
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

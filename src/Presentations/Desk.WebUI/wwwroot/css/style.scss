@@ -19,7 +19,7 @@ $dark: #282d38;
     border-bottom: 2px solid $gray;
     outline: 0;
     font-size: 1.3rem;
-    color: $dark;
+    color: var(--bs-body-color);
     padding: 7px 0;
     background: transparent;
     transition: border-color 0.2s;
@@ -33,6 +33,10 @@ $dark: #282d38;
         cursor: text;
         top: 20px;
     }
+}
+
+.form_field:disabled {
+    color: $gray;
 }
 
 .form_label {

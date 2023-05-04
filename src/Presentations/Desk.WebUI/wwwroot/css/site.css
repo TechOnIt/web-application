@@ -281,3 +281,7 @@ ul {
 .text-green {
     color: var(--primary-500);
 }
+
+.modal {
+    backdrop-filter: blur(3px);
+}

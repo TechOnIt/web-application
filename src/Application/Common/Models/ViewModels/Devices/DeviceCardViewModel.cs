@@ -2,7 +2,7 @@
 
 namespace TechOnIt.Application.Common.Models.ViewModels.Devices;
 
-public class DeviceCardViewModel
+public class DeviceCardControlViewModel
 {
     public string Id { get; set; }
     public int Pin { get; set; }

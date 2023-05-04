@@ -31,8 +31,11 @@ public class AuthenticationController : Controller
     {
         var isSignedin = await _mediator.Send(command, cancellationToken);
         if (!isSignedin)
-            return View();
-        return Redirect("/");
+        {
+            TempData["signin-summery"] = "Username or password is wrong!";
+            return View(command);
+        }
+        return Redirect("/dashboard/structure");
     }
 
     [HttpGet]

@@ -7,5 +7,5 @@ public class PlaceWithDevicesViewModel
     public string Id { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
-    public List<DeviceCardViewModel>? Devices { get; set; }
+    public List<DeviceCardControlViewModel>? Devices { get; set; }
 }

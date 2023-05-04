@@ -1,5 +1,4 @@
 ﻿using TechOnIt.Application.Commands.Users.Dashboards.ProfileCommands;
-using TechOnIt.Application.Common.Extentions;
 
 namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers;
 

@@ -16,6 +16,7 @@ public class StructureController : Controller
     public IActionResult Index() => View();
 
     [HttpGet]
+    [ResponseCache(Duration = 50, Location = ResponseCacheLocation.Client)]
     public async Task<IActionResult> Places([FromQuery] string structureId)
     {
         var structure = await _mediator.Send(new GetPlacesWithDevicesByStructureIdCommand { StructureId = Guid.Parse(structureId) });

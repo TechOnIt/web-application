@@ -27,6 +27,8 @@ builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSecti
 
 ConfigureServices(builder.Services);
 
+builder.Services.AddResponseCaching();
+
 // Add PWA service
 builder.Services.AddProgressiveWebApp();
 
@@ -57,6 +59,7 @@ app.UseStaticFiles(new StaticFileOptions()
 
 // Routing
 app.UseRouting();
+app.UseResponseCaching();
 // Auth
 app.UseAuthentication();
 app.UseAuthorization();

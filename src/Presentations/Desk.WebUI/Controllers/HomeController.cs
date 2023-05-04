@@ -13,7 +13,10 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        return View();
+        if (User.Identity is not null && User.Identity.IsAuthenticated)
+            return Redirect("/dashboard/structure");
+        return Redirect("/authentication/signin");
+        //return View();
     }
 
     [HttpGet]

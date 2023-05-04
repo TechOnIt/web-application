@@ -17,6 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Remove="bundleconfig.json" />
 	  <Content Remove="compilerconfig.json" />
 	</ItemGroup>
 
@@ -30,6 +31,10 @@
 
 	<ItemGroup>
 		<Folder Include="Areas\Dashboard\Models\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="bundleconfig.json" />
 	</ItemGroup>
 
 </Project>

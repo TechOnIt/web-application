@@ -12,6 +12,7 @@ html {
 
 body {
     min-height: 100vh;
+    background-color: var(--body-bg) !important;
     background-image: var(--bg-noise-url);
     font-family: Barlow, IRANSans !important;
 }
@@ -60,7 +61,7 @@ input:-webkit-autofill {
     --bs-danger: #dc3545;
     --bs-light: #f8f9fa;
     --bs-dark: #212529;
-    --bs-primary-rgb: 64, 109, 18;
+    --bs-primary-rgb: 118, 170, 64;
     --bs-secondary-rgb: 108,117,125;
     --bs-success-rgb: 25,135,84;
     --bs-info-rgb: 13,202,240;
@@ -113,7 +114,7 @@ input:-webkit-autofill {
     --bs-secondary-bg-rgb: 233,236,239;
     --bs-tertiary-color: rgba(33, 37, 41, 0.5);
     --bs-tertiary-color-rgb: 33,37,41;
-    --bs-tertiary-bg: #f8f9fa;
+    --bs-tertiary-bg: #dee9f5;
     --bs-tertiary-bg-rgb: 248,249,250;
     --bs-link-color: #0d6efd;
     --bs-link-color-rgb: 13,110,253;
@@ -162,10 +163,10 @@ input:-webkit-autofill {
 
 [data-bs-theme=dark] {
     color-scheme: dark !important;
-    --bs-body-color: #adb5bd !important;
+    --bs-body-color: #e7fce7;
     --bs-body-color-rgb: 173,181,189 !important;
-    --bs-body-bg: #212529 !important;
-    --bs-body-bg-rgb: 33,37,41 !important;
+    --body-bg: #20272d;
+    --body-bg-rgb: 33,37,41 !important;
     --bs-emphasis-color: #fff !important;
     --bs-emphasis-color-rgb: 255,255,255 !important;
     --bs-secondary-color: rgba(173, 181, 189, 0.75) !important;
@@ -175,7 +176,7 @@ input:-webkit-autofill {
     --bs-tertiary-color: rgba(173, 181, 189, 0.5) !important;
     --bs-tertiary-color-rgb: 173,181,189 !important;
     --bs-tertiary-bg: #2b3035 !important;
-    --bs-tertiary-bg-rgb: 43,48,53 !important;
+    --bs-tertiary-bg-rgb: 36, 41, 53 !important;
     --bs-primary-text-emphasis: #acfe6e !important;
     --bs-secondary-text-emphasis: #a7acb1 !important;
     --bs-success-text-emphasis: #75b798 !important;
@@ -214,8 +215,8 @@ input:-webkit-autofill {
     --bg-noise-url: url(/assets/images/dark-noise.jpg);
     --bs-dropdown-link-active-bg: #66c60c !important;
     --bs-dropdown-link-hover-color: var(--bs-body-color);
+    --card-bg: #242935;
 }
-
 
 .central {
     display: flex;
@@ -259,8 +260,8 @@ ul {
 }
 
 .btn-outline-primary {
-    --bs-btn-color: #65a108;
-    --bs-btn-border-color: #65a108;
+    --bs-btn-color: var(--primary-600);
+    --bs-btn-border-color: var(--primary-600);
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #7cc015;
     --bs-btn-hover-border-color: #5f9807;

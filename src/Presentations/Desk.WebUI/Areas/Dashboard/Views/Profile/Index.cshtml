@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-12 col-md-4">
         @* Display Information *@
-        <div class="card mb-4">
+        <div class="card">
             <div class="card-body text-center">
                 <div class="mb-3">
                     <img class="profile rounded-circle" src="" width="70" height="70" />
@@ -30,7 +30,7 @@
         @* Confirm Email *@
         @if (!string.IsNullOrEmpty(Model.Email) && Model.ConfirmedEmail is false)
         {
-            <div class="card mb-4">
+            <div class="alert alert-dismissible fade show card mt-4">
                 <div class="card-body">
                     <h5 class="fw-bold"><i class="fa fa-exclamation-triangle"></i> Verify your email address</h5>
                     <p class="text-muted small text-justified">We will send you an email containing a one-time link, Open the link to verify your account email.</p>
@@ -38,12 +38,13 @@
                         <a class="btn btn-sm btn-outline-primary" href="/dashboard/user/verifyEmail">Verify</a>
                     </div>
                 </div>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
         @* Confirm Phone Number *@
         @if (!string.IsNullOrEmpty(Model.PhoneNumber) && Model.ConfirmedPhoneNumber is false)
         {
-            <div class="card">
+            <div class="alert alert-dismissible fade show card mt-4">
                 <div class="card-body">
                     <h5 class="fw-bold"><i class="fa fa-exclamation-triangle"></i> Verify your phone number</h5>
                     <p class="text-muted small text-justified">We will send a one-time code for your phone number, Give us the code to verify your account phone number.</p>
@@ -51,6 +52,7 @@
                         <a class="btn btn-sm btn-outline-primary" href="/dashboard/user/verifyPhoneNumber">Send</a>
                     </div>
                 </div>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
     </div>

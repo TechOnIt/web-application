@@ -93,13 +93,13 @@ public class PasswordHash : ValueObject
 
         return string.Concat(
             Convert.ToBase64String(saltBytes),
-            "TOI",
+            "-TOI-",
             Convert.ToBase64String(hashPasswordBytes));
     }
 
     public bool VerifyPasswordHash(string password)
     {
-        var splitHash = Value.Split(" ");
+        var splitHash = Value.Split("-TOI-");
 
         var saltHash = Convert.FromBase64String(splitHash[0]);
         var passwordHashed = Convert.FromBase64String(splitHash[1]);

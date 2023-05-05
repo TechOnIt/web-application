@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using TechOnIt.Domain.Entities;
 using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using TechOnIt.Domain.Entities.Product;
@@ -48,5 +49,9 @@ public class IdentityContext : DbContext
     public DbSet<Device> Devices { get; set; }
     public DbSet<Sensor> Sensors { get; set; }
     public DbSet<PerformanceReport> PerformanceReports { get; set; }
+    #endregion
+
+    #region Generals
+    public DbSet<LogRecord> Logs { get; set; }
     #endregion
 }

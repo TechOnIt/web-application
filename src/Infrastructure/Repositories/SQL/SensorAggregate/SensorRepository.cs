@@ -1,6 +1,6 @@
-﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TechOnIt.Infrastructure.Persistence.Context;
+using TechOnIt.Domain.Entities.SensorAggregate;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 

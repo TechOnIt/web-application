@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Entities.StructureAggregate;
 using TechOnIt.Domain.ValueObjects;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;

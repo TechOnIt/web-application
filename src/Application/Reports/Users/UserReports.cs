@@ -1,5 +1,4 @@
 ﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
 using System.Reflection;
 using TechOnIt.Application.Common.Exceptions;
@@ -8,6 +7,7 @@ using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Common.Models.ViewModels.Devices;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
+using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Application.Reports.Users;
 
@@ -202,7 +202,7 @@ public class UserReports : IUserReports
                                  {
                                      Id = de.Id,
                                      Pin = de.Pin,
-                                     DeviceType = de.DeviceType,
+                                     DeviceType = de.Type,
                                      IsHigh = de.IsHigh,
                                      PlaceId = de.PlaceId,
 

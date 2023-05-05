@@ -1,6 +1,4 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Application.Common.Interfaces;
-using TechOnIt.Domain.Entities.Product.StructureAggregate;
 
 namespace TechOnIt.Application.Commands.Structures.Management.CreateStructure;
 
@@ -30,7 +28,7 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
     {
         try
         {
-            var model = new Structure(Guid.NewGuid(),request.UserId, request.Name, request.Description, DateTime.Now, DateTime.Now, request.Type);
+            var model = new Structure(Guid.NewGuid(), request.UserId, request.Name, request.Description, DateTime.Now, DateTime.Now, request.Type);
             await _unitOfWorks.StructureRepository.CreateAsync(model, cancellationToken);
 
             await _mediator.Publish(new StructureNotifications(), cancellationToken);

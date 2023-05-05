@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using TechOnIt.Application.Commands.Device.CreateDevice;
+using TechOnIt.Application.Commands.Devices.CreateDevice;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 

@@ -1,50 +1,35 @@
-﻿using TechOnIt.Domain.Entities.Product;
-using Shouldly;
+﻿using Shouldly;
+using System;
+using TechOnIt.Domain.Enums;
 
 namespace TechOnIt.Domain.UnitTests.Entities;
 
 public class DeviceTests
 {
     [Fact]
-    public void Should_Set_DeviceType_By_DeviceType_Name()
+    public void Should_Set_DeviceType_By_DeviceType()
     {
         // arrange
-        var device = new Device();
+        var device = new Device(3, DeviceType.Fan, Guid.Empty);
 
         // act
-        device.SetDeviceType("Thermometer");
+        device.SetDeviceType(DeviceType.Cooler);
 
         // assert
-        device.DeviceType.ShouldNotBeNull();
-        device.DeviceType.DisplayName.ShouldBe("Thermometer");
-    }
-
-    [Fact]
-    public void Should_Set_DeviceType_By_DeviceType_Value()
-    {
-        // arrange
-        var device = new Device();
-
-        // act
-        device.SetDeviceType(1);
-
-        // assert
-        device.DeviceType.ShouldNotBeNull();
-        device.DeviceType.DisplayName.ShouldBe("Thermometer");
-        device.DeviceType.Value.ShouldBe(1);
+        device.Type.ShouldNotBeNull();
+        device.Type.DisplayName.ShouldBe("Cooler");
     }
 
     [Fact]
     public void Should_Returns_DeviceType_When_DeviceType_Not_Null()
     {
         // arrange
-        var device = new Device();
+        var device = new Device(63, DeviceType.Heater, Guid.NewGuid());
 
         // act
-        device.SetDeviceType("Thermometer");
-        var result = device.GetDeviceType();
+        device.SetDeviceType(DeviceType.Light);
 
         // assert
-        result.ShouldNotBeNull();
+        device.Type.ShouldNotBeNull();
     }
 }

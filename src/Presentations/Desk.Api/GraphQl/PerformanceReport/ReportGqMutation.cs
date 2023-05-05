@@ -1,6 +1,6 @@
 ﻿using GraphQL;
 using GraphQL.Types;
-using TechOnIt.Application.Commands.PerformanceReport.CreatePerformanceReport;
+using TechOnIt.Application.Commands.PerformanceReports.CreatePerformanceReport;
 using MediatR;
 
 namespace TechOnIt.Desk.Api.GraphQl.PerformanceReport;

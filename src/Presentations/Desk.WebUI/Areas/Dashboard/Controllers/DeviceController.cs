@@ -1,4 +1,4 @@
-﻿using TechOnIt.Application.Commands.Device.Dashboard.DeviceChangeHighState;
+﻿using TechOnIt.Application.Commands.Devices.Dashboard.DeviceChangeHighState;
 
 namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers;
 

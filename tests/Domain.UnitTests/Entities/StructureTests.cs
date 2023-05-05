@@ -1,6 +1,5 @@
-﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
+﻿using Shouldly;
 using TechOnIt.Domain.Enums;
-using Shouldly;
 
 namespace TechOnIt.Domain.UnitTests.Entities;
 

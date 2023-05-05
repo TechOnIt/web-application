@@ -1,7 +1,7 @@
-﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TechOnIt.Infrastructure.Common.Consts;
+using TechOnIt.Domain.Entities.SensorAggregate;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
 

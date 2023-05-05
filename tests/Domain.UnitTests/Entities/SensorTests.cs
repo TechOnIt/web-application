@@ -1,5 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
-using Shouldly;
+﻿using Shouldly;
 
 namespace TechOnIt.Domain.UnitTests.Entities;
 

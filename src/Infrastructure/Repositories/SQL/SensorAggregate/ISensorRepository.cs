@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
+﻿using TechOnIt.Domain.Entities.SensorAggregate;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 

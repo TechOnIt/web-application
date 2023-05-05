@@ -4,9 +4,8 @@ using System.Reflection;
 using TechOnIt.Domain.Entities;
 using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.Entities.Product;
-using TechOnIt.Domain.Entities.Product.SensorAggregate;
-using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Entities.SensorAggregate;
+using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Infrastructure.Persistence.Context;
 

@@ -1,7 +1,7 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Reports.Users;
 
-namespace TechOnIt.Application.Commands.Users.Dashboards.ProfileCommands;
+namespace TechOnIt.Application.Queries.Users.Dashboard.ProfileQueries;
 
 public class GetUserProfileQuery : IRequest<UserViewModel?>
 {

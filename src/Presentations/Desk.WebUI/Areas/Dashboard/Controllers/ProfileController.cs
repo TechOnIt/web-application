@@ -1,4 +1,4 @@
-﻿using TechOnIt.Application.Commands.Users.Dashboards.ProfileCommands;
+﻿using TechOnIt.Application.Queries.Users.Dashboard.ProfileQueries;
 
 namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers;
 

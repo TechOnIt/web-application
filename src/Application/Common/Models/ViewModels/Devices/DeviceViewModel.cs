@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Product;
+﻿using TechOnIt.Domain.Entities;
 using TechOnIt.Domain.Enums;
 
 namespace TechOnIt.Application.Common.Models.ViewModels.Devices;
@@ -22,14 +22,14 @@ public class DeviceViewModel
 
     public Guid Id { get; set; }
     public int Pin { get; set; }
-    public DeviceType DeviceType { get; set; }
+    public DeviceType DeviceType { get; set; } = DeviceType.Light;
     public bool IsHigh { get; set; }
     public Guid PlaceId { get; set; }
 
     #region explicit casting
     public static explicit operator Device(DeviceViewModel viewModel)
     {
-        return new Device(viewModel.Pin, viewModel.DeviceType, viewModel.IsHigh, viewModel.PlaceId);
+        return new Device(viewModel.Pin, viewModel.DeviceType, viewModel.PlaceId);
     }
     #endregion
 }

@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Product;
+﻿using TechOnIt.Domain.Entities;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Devices;
 

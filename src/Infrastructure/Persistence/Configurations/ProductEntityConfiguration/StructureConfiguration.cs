@@ -1,9 +1,9 @@
 ﻿using TechOnIt.Domain.Common;
-using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using TechOnIt.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TechOnIt.Infrastructure.Common.Consts;
+using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
 

@@ -1,10 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using TechOnIt.Application.Common.DTOs.Settings;
-using TechOnIt.Application;
-using MediatR;
-using TechOnIt.Application.Commands.Device.CreateDevice;
-using TechOnIt.Infrastructure;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
+using TechOnIt.Application.Common.DTOs.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 

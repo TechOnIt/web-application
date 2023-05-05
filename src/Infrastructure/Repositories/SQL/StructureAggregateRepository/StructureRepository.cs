@@ -1,8 +1,8 @@
-﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using TechOnIt.Infrastructure.Persistence.Context;
 using TechOnIt.Domain.ValueObjects;
+using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 

@@ -1,5 +1,4 @@
-﻿using TechOnIt.Domain.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace TechOnIt.Domain.Entities.Identity;
@@ -7,7 +6,7 @@ namespace TechOnIt.Domain.Entities.Identity;
 public class Role
 {
     #region Ctor
-    public Role() { }
+    private Role() { }
 
     public Role(string name)
     {
@@ -16,15 +15,15 @@ public class Role
     }
     #endregion
 
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string NormalizedName { get; set; }
+    public Guid Id { get; private set; }
+    public string Name { get; private set; } = string.Empty;
+    public string NormalizedName { get; private set; } = string.Empty;
 
     #region Methods
     public void SetName(string name)
     {
         name = name.Trim();
-        if (string.IsNullOrEmpty(name))
+        if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
             throw new ArgumentNullException("Role name cannot be null or empty.");
         Name = name;
         NormalizedName = name.ToLower();
@@ -32,6 +31,6 @@ public class Role
     #endregion
 
     #region relations
-    public virtual ICollection<UserRole> UserRoles { get; set; }
+    public virtual ICollection<UserRole>? UserRoles { get; set; }
     #endregion
 }

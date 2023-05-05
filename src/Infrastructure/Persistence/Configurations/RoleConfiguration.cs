@@ -1,7 +1,5 @@
-﻿using TechOnIt.Domain.Entities.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TechOnIt.Infrastructure.Common.Consts;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TechOnIt.Domain.Entities.Identity;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
@@ -9,12 +7,20 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {
+        // Id
         builder.HasKey(a => a.Id);
-        builder.Property(a => a.Id).ValueGeneratedNever();
+        builder.Property(a => a.Id)
+            .IsRequired()
+            .ValueGeneratedNever();
 
-        #region column types
-        builder.Property(a => a.Name).HasColumnType(DataTypes.varchar50);
-        builder.Property(a => a.NormalizedName).HasColumnType(DataTypes.varchar50);
-        #endregion
+        // Name
+        builder.Property(a => a.Name)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        // NormalizedName
+        builder.Property(a => a.NormalizedName)
+            .IsRequired(false)
+            .HasMaxLength(100);
     }
 }

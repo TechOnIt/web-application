@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using TechOnIt.Infrastructure.Common.Consts;
-using TechOnIt.Domain.Entities.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
 
@@ -10,17 +6,35 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
 {
     public void Configure(EntityTypeBuilder<Place> builder)
     {
-        builder.HasKey(a => a.Id);
-        builder.Property(a => a.Name).IsRequired();
-        builder.Property(a => a.CreatedAt).IsRequired();
-
-        builder.HasOne(a => a.Structure)
-            .WithMany(a => a.Places)
-            .HasForeignKey(a => a.StructureId);
-
-        #region column types
-        builder.Property(a => a.Name).HasColumnType(DataTypes.nvarchar50);
-        builder.Property(a => a.Description).HasColumnType(DataTypes.nvarchar150);
-        #endregion
+        // Id
+        builder.HasKey(b => b.Id);
+        builder.Property(b => b.Id)
+            .IsRequired()
+            .ValueGeneratedNever();
+        // Name
+        builder.Property(b => b.Name)
+            .IsRequired()
+            .HasColumnType(DataTypes.nvarchar50);
+        // Description
+        builder.Property(b => b.Description)
+            .IsRequired(false)
+            .HasColumnType(DataTypes.nvarchar150);
+        // CreatedAt
+        builder.Property(b => b.CreatedAt)
+            .IsRequired()
+            .HasColumnType(DataTypes.datetime2);
+        // ModifiedAt
+        builder.Property(b => b.ModifiedAt)
+            .ValueGeneratedOnUpdate()
+            .IsRequired(false)
+            .HasColumnType(DataTypes.datetime2);
+        // StructureId
+        builder.HasOne(b => b.Structure)
+            .WithMany(b => b.Places)
+            .HasForeignKey(b => b.StructureId);
+        // Devices
+        builder.HasMany(a => a.Devices)
+            .WithOne(a => a.Place)
+            .HasForeignKey(a => a.PlaceId);
     }
 }

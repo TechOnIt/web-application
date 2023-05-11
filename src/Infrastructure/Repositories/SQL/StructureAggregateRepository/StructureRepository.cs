@@ -29,14 +29,11 @@ public class StructureRepository : IStructureRepository
         var getStructure = await _context.Structures
             .FirstOrDefaultAsync(a => a.Id == structure.Id, cancellationToken);
 
-        if (getStructure is not null)
+        if (getStructure is null)
             return false;
 
         getStructure.Description = structure.Description;
-        getStructure.SetStructureType(structure.Type);
-        getStructure.IsActive = structure.IsActive;
-        getStructure.Name = structure.Name;
-        getStructure.SetModifyDate();
+        getStructure.SetName(structure.Name);
 
         cancellationToken.ThrowIfCancellationRequested();
         _context.Structures.Update(getStructure);
@@ -63,10 +60,10 @@ public class StructureRepository : IStructureRepository
         else
             return false;
     }
-    public async Task<Structure> GetByIdAsync(Guid structureId, CancellationToken cancellationToken)
-        => await Task.FromResult(await _context.Structures.FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken) ?? new Structure());
-    public async Task<Structure> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
-    => await Task.FromResult(await _context.Structures.FirstOrDefaultAsync(a => a.UserId == userId, cancellationToken) ?? new Structure());
+    public async Task<Structure?> GetByIdAsync(Guid structureId, CancellationToken cancellationToken)
+        => await Task.FromResult(await _context.Structures.FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken));
+    public async Task<Structure?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    => await Task.FromResult(await _context.Structures.FirstOrDefaultAsync(a => a.UserId == userId, cancellationToken));
     public async Task<Structure?> GetByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken)
     => await Task.FromResult(await _context.Structures.AsNoTracking().FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken));
     public async Task<IList<Structure>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken)
@@ -120,7 +117,7 @@ public class StructureRepository : IStructureRepository
 
     public async Task<Place?> GetPlaceByStructureIdAsync(Guid structorId, Guid placeId, CancellationToken cancellationToken)
     {
-        var place = await _context.Places.FirstOrDefaultAsync(a => a.StuctureId == structorId && a.Id == placeId, cancellationToken);
+        var place = await _context.Places.FirstOrDefaultAsync(a => a.StructureId == structorId && a.Id == placeId, cancellationToken);
         if (place is null) return await Task.FromResult<Place?>(null);
 
         return await Task.FromResult(place);
@@ -129,8 +126,8 @@ public class StructureRepository : IStructureRepository
     #endregion
 
     #region Place
-    public async Task<Place> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken)
-        => await _context.Places.FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken) ?? new Place();
+    public async Task<Place?> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken)
+        => await _context.Places.FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken);
     public async Task<Place?> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken)
         => await Task.FromResult(await _context.Places.AsNoTracking().FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken));
     public async Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>>? filter = null)
@@ -146,7 +143,7 @@ public class StructureRepository : IStructureRepository
     }
     public async Task<bool> DeletePlaceAsync(Guid placeId, Guid structureId, CancellationToken cancellationToken)
     {
-        Place? place = await _context.Places.FirstOrDefaultAsync(a => a.StuctureId == structureId && a.Id == placeId, cancellationToken);
+        Place? place = await _context.Places.FirstOrDefaultAsync(a => a.StructureId == structureId && a.Id == placeId, cancellationToken);
         if (place is null) return false;
 
         _context.Places.Remove(place);

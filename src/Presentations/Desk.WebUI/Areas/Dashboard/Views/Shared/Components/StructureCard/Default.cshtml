@@ -2,11 +2,11 @@
 @model StructureCardViewModel
 @{
     string structureIcon = "fa-home";
-    if (Model.Type == StuctureType.Agriculture)
+    if (Model.Type == StructureType.Agriculture)
     {
         structureIcon = "fa-seedling";
     }
-    else if (Model.Type == StuctureType.Aviculture)
+    else if (Model.Type == StructureType.Aviculture)
     {
         structureIcon = "fa-tractor";
     }

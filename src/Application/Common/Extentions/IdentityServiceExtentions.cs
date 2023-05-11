@@ -60,7 +60,7 @@ public static class IdentityServiceExtentions
             return (SigInStatus.WrongInformations, WrongInformations);
         else if (!string.IsNullOrWhiteSpace(password))
         {
-            if (!structure.PasswordHash.VerifyPasswordHash(password))
+            if (!structure.Password.VerifyPasswordHash(password))
                 return (SigInStatus.WrongPassowrd, WrongPassowrd);
         }
 

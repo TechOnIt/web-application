@@ -5,55 +5,67 @@ namespace TechOnIt.Domain.Entities.StructureAggregate;
 
 public class Place
 {
-    #region constructor
-    public Place(Guid id, string name, string description, DateTime createdate, DateTime modifydate, Guid structureId)
-    {
-        Id = id;
-        Name = name;
-        Description = description;
-        CreateDate = createdate;
-        ModifyDate = modifydate;
-        StuctureId = structureId;
-    }
-
-    public Place()
-    {
-    }
-    #endregion
-
-    #region methods
-    public void SetModifyDate()
-    {
-        ModifyDate = DateTime.Now;
-    }
-
-    internal DateTime GetModifyDate()
-    {
-        return (DateTime)ModifyDate;
-    }
-
-    public void SetCreateDate() => CreateDate = DateTime.Now;
-    #endregion
-
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-
-
-    private DateTime? _CreateDate;
-    public DateTime CreateDate
-    {
-        get { return _CreateDate ?? DateTime.Now; }
-        private set { _CreateDate = value; }
-    }
-
-
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public string Name { get; private set; } = string.Empty;
+    public string? Description { get; private set; }
+    public DateTime CreatedAt { get; private set; } = DateTime.Now;
     public DateTime? ModifyDate { get; private set; }
 
-    #region relations and foreignkeys
-    public Guid StuctureId { get; set; }
-    public virtual Structure Structure { get; set; }
+    #region Ctor
+    private Place() { }
+    public Place(string name, Guid structureId)
+    {
+        SetName(name);
+        StructureId = structureId;
+    }
+    #endregion
 
-    public virtual ICollection<Device> Devices { get; set; }
+    #region Methods
+    /// <summary>
+    /// Add description for place.
+    /// </summary>
+    /// <param name="description">Description content.</param>
+    public Place SetDescription(string description)
+    {
+        if (!string.IsNullOrEmpty(description) && !string.IsNullOrWhiteSpace(description))
+        {
+            Description = description;
+            ModifyDate = DateTime.Now;
+        }
+        return this;
+    }
+
+    /// <summary>
+    /// Set name for place.
+    /// </summary>
+    /// <param name="name">Place name</param>
+    private void SetName(string name)
+    {
+        if(string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
+            throw new ArgumentNullException("Place name cannot be null.");
+        Name = name;
+    }
+
+    /// <summary>
+    /// Change place name.
+    /// </summary>
+    /// <param name="name">Place new name you want to change.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public Place ChangeName(string name)
+    {
+        if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Place name cannot be null.");
+        Name = name;
+        ModifyDate = DateTime.Now;
+        return this;
+    }
+    #endregion
+
+    #region Relations and Foreignkeys
+    public Guid StructureId { get; set; }
+    public virtual Structure? Structure { get; set; }
+
+    public virtual ICollection<Device>? Devices { get; set; }
     #endregion
 }

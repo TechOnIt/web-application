@@ -188,7 +188,7 @@ public class UserReports : IUserReports
         {
             var devices = await (from str in _unitOfWorks._context.Structures
 
-                                 join plc in _unitOfWorks._context.Places on str.Id equals plc.StuctureId
+                                 join plc in _unitOfWorks._context.Places on str.Id equals plc.StructureId
                                  into place
                                  from pl in place.DefaultIfEmpty()
 

@@ -12,11 +12,11 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
     {
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Name).IsRequired();
-        builder.Property(a => a.CreateDate).IsRequired();
+        builder.Property(a => a.CreatedAt).IsRequired();
 
         builder.HasOne(a => a.Structure)
             .WithMany(a => a.Places)
-            .HasForeignKey(a => a.StuctureId);
+            .HasForeignKey(a => a.StructureId);
 
         #region column types
         builder.Property(a => a.Name).HasColumnType(DataTypes.nvarchar50);

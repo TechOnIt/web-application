@@ -25,7 +25,7 @@ public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
             .HasColumnType(DataTypes.datetime2);
         // ModifiedAt
         builder.Property(b => b.CreatedAt)
-            .IsRequired(false)
+            .IsRequired()
             .ValueGeneratedOnUpdate()
             .HasColumnType(DataTypes.datetime2);
         // PlaceId

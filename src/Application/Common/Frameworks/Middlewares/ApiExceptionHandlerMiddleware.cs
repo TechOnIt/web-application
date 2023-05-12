@@ -5,18 +5,18 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text.Json;
-using TechOnIt.Application.Common.Exceptions;
-using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 
 namespace TechOnIt.Application.Common.Frameworks.Middlewares;
 
-public class CustomExceptionHandlerMiddleware
+public class ApiExceptionHandlerMiddleware
 {
     private readonly RequestDelegate next;
-    private readonly ILogger<CustomExceptionHandlerMiddleware> logger;
+    private readonly ILogger<ApiExceptionHandlerMiddleware> logger;
     private readonly IWebHostEnvironment hostEnvironment;
 
-    public CustomExceptionHandlerMiddleware(RequestDelegate next, ILogger<CustomExceptionHandlerMiddleware> logger, IWebHostEnvironment hostEnvironment)
+    public ApiExceptionHandlerMiddleware(RequestDelegate next,
+        ILogger<ApiExceptionHandlerMiddleware> logger,
+        IWebHostEnvironment hostEnvironment)
     {
         this.next = next;
         this.logger = logger;

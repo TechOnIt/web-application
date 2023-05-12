@@ -103,9 +103,9 @@ public static class ConfigureServices
         return services;
     }
 
-    public static void UseCustomExceptionHandler(this WebApplication app)
+    public static void UseApiExceptionHandler(this WebApplication app)
     {
-        app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+        app.UseMiddleware<ApiExceptionHandlerMiddleware>();
     }
 
     public static void AddJwtAuthentication(this IServiceCollection services, JwtSettingsDto settings)

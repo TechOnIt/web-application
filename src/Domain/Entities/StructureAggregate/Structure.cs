@@ -12,7 +12,7 @@ public class Structure
     public string? Description { get; set; }
     public StructureType Type { get; private set; } = StructureType.Home;
     public Concurrency ApiKey { get; private set; } = Concurrency.NewToken();
-    public PasswordHash Password { get; private set; } = PasswordHash.Parse("");
+    public PasswordHash? Password { get; private set; }
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
     public DateTime? ModifiedAt { get; private set; }
     public bool IsActive { get; private set; } = true;

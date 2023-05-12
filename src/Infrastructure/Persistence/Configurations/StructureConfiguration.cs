@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TechOnIt.Domain.Common;
-using TechOnIt.Domain.Entities.StructureAggregate;
-using TechOnIt.Domain.Enums;
+﻿using TechOnIt.Domain.Entities.StructureAggregate;
 
-namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
+namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
 public class StructureConfiguration : IEntityTypeConfiguration<Structure>
 {
     public void Configure(EntityTypeBuilder<Structure> builder)
     {
+        builder.ToTable("Structures", TableSchema.Default);
+
         // Id
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Id)
@@ -51,10 +50,9 @@ public class StructureConfiguration : IEntityTypeConfiguration<Structure>
             .HasColumnType(DataTypes.boolean);
         // ConcurrencyStamp
         builder.Property(s => s.ConcurrencyStamp)
-            .ValueGeneratedOnAddOrUpdate()
-            .IsRowVersion()
             .IsConcurrencyToken()
-            .HasColumnType(DataTypes.nvarchar500);
+            .ValueGeneratedOnAddOrUpdate()
+            .HasColumnType(DataTypes.rowVersion);
         // UserId
         builder.HasOne(s => s.User)
             .WithMany(s => s.Structures)

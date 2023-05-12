@@ -42,7 +42,7 @@ public class IdentityContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     #endregion
 
-    #region products
+    #region Defaults
     public DbSet<Structure> Structures { get; set; }
     public DbSet<Place> Places { get; set; }
     public DbSet<Device> Devices { get; set; }
@@ -50,7 +50,7 @@ public class IdentityContext : DbContext
     public DbSet<SensorReport> SensorReports { get; set; }
     #endregion
 
-    #region Generals
+    #region Metadata
     public DbSet<LogRecord> Logs { get; set; }
     #endregion
 }

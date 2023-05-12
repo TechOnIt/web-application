@@ -16,7 +16,7 @@ public class Structure
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
     public DateTime? ModifiedAt { get; private set; }
     public bool IsActive { get; private set; } = true;
-    public string? ConcurrencyStamp { get; private set; }
+    public byte[] ConcurrencyStamp { get; private set; } = new byte[0];
 
     #region Relations and Foreign key
     public Guid UserId { get; private set; }
@@ -76,11 +76,10 @@ public class Structure
         IsActive = false;
     }
     /// <summary>
-    /// Check concurrency token is valid?
+    /// Check row version is validate?
     /// </summary>
-    /// <param name="concurrencyStamp">Concurrency stamp string.</param>
-    public bool IsConcurrencyStampValid(string concurrencyStamp)
-        => ConcurrencyStamp == concurrencyStamp;
+    public bool IsConcurrencyStampValidate(string concurrencyStamp)
+        => ConcurrencyStamp == Encoding.ASCII.GetBytes(concurrencyStamp);
     #endregion
 
     #region Place Aggregate Methods

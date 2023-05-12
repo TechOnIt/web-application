@@ -8,7 +8,7 @@ public class Device
     public int Pin { get; private set; }
     public DeviceType Type { get; private set; } = DeviceType.Light;
     public bool IsHigh { get; set; } = false;
-    public string ConcurrencyStamp { get; private set; } = string.Empty;
+    public byte[] ConcurrencyStamp { get; private set; } = new byte[0];
     #region relations & foreignkeys
     public Guid PlaceId { get; private set; }
     public virtual Place? Place { get; private set; } = null;
@@ -54,6 +54,6 @@ public class Device
     /// Check row version is validate?
     /// </summary>
     public bool IsConcurrencyStampValidate(string concurrencyStamp)
-        => ConcurrencyStamp == concurrencyStamp;
+        => ConcurrencyStamp == Encoding.ASCII.GetBytes(concurrencyStamp);
     #endregion
 }

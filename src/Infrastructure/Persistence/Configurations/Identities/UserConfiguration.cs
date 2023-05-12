@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
-namespace TechOnIt.Infrastructure.Persistence.Configurations;
+namespace TechOnIt.Infrastructure.Persistence.Configurations.Identities;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        builder.ToTable("Users", TableSchema.Identity);
+
         // Id
         builder.HasKey(u => u.Id);
         builder.Property(a => a.Id)
@@ -24,23 +25,18 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("Password")
             .HasColumnType(DataTypes.nvarchar500);
         });
-
         // Email
         builder.Property(u => u.Email)
             .HasColumnType(DataTypes.nvarchar50);
-
         // ConfirmedEmail
         builder.Property(u => u.ConfirmedEmail)
             .HasColumnType(DataTypes.boolean);
-
         // PhoneNumber
         builder.Property(u => u.PhoneNumber)
             .HasColumnType(DataTypes.nvarchar50);
-
         // ConfirmedPhoneNumber
         builder.Property(u => u.ConfirmedPhoneNumber)
             .HasColumnType(DataTypes.boolean);
-
         // FullName
         builder.OwnsOne(u => u.FullName, b =>
             {
@@ -51,28 +47,23 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 .HasColumnName("Surname")
                 .HasColumnType(DataTypes.nvarchar50);
             });
-
         // RegisteredDateTime
         builder.Property(u => u.RegisteredAt)
             .HasColumnType(DataTypes.datetime2);
-
         // ConcurrencyStamp
         builder.Property(b => b.ConcurrencyStamp)
+            .IsConcurrencyToken()
             .ValueGeneratedOnAddOrUpdate()
-            .IsRowVersion()
-            .IsConcurrencyToken(true)
-            .HasColumnType(DataTypes.nvarchar500);
+            .HasColumnType(DataTypes.rowVersion);
         // IsBaned
         builder.Property(u => u.IsBaned)
             .HasColumnType(DataTypes.boolean);
         // IsDeleted
         builder.Property(u => u.IsDeleted)
             .HasColumnType(DataTypes.boolean);
-
         // MaxFailCount
         builder.Property(u => u.MaxFailCount)
             .HasColumnType(DataTypes.varchar50);
-
         // LockOutDateTime
         builder.Property(u => u.LockOutDateTime)
             .IsRequired(false)

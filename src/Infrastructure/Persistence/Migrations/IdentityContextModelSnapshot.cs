@@ -27,11 +27,11 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ConcurrencyStamp")
+                    b.Property<byte[]>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("rowversion");
 
                     b.Property<bool>("IsHigh")
                         .HasColumnType("bit");
@@ -52,7 +52,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PlaceId");
 
-                    b.ToTable("Devices");
+                    b.ToTable("Devices", "dbo");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.Role", b =>
@@ -71,7 +71,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", "identity");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserAggregate.LoginHistory", b =>
@@ -90,7 +90,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("LoginHistories");
+                    b.ToTable("LoginHistories", "identity");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserAggregate.User", b =>
@@ -98,10 +98,11 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ConcurrencyStamp")
+                    b.Property<byte[]>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("rowversion");
 
                     b.Property<bool>("ConfirmedEmail")
                         .HasColumnType("bit");
@@ -140,7 +141,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", "identity");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserRole", b =>
@@ -155,7 +156,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRole_Mapping", "identity");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.LogRecord", b =>
@@ -204,7 +205,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Logs");
+                    b.ToTable("Logs", "metadata");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.Sensor", b =>
@@ -234,7 +235,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PlaceId");
 
-                    b.ToTable("Sensors");
+                    b.ToTable("Sensors", "dbo");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorReport", b =>
@@ -256,7 +257,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("SensorId");
 
-                    b.ToTable("SensorReports");
+                    b.ToTable("SensorReports", "dbo");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Place", b =>
@@ -286,7 +287,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StructureId");
 
-                    b.ToTable("Places");
+                    b.ToTable("Places", "dbo");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Structure", b =>
@@ -294,10 +295,11 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ConcurrencyStamp")
+                    b.Property<byte[]>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("rowversion");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -326,7 +328,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Structures");
+                    b.ToTable("Structures", "dbo");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.Device", b =>
@@ -359,7 +361,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("LoginHistoryId");
 
-                            b1.ToTable("LoginHistories");
+                            b1.ToTable("LoginHistories", "identity");
 
                             b1.WithOwner()
                                 .HasForeignKey("LoginHistoryId");
@@ -383,7 +385,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("Users", "identity");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
@@ -406,7 +408,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("Users", "identity");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
@@ -497,7 +499,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("StructureId");
 
-                            b1.ToTable("Structures");
+                            b1.ToTable("Structures", "dbo");
 
                             b1.WithOwner()
                                 .HasForeignKey("StructureId");
@@ -514,7 +516,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("StructureId");
 
-                            b1.ToTable("Structures");
+                            b1.ToTable("Structures", "dbo");
 
                             b1.WithOwner()
                                 .HasForeignKey("StructureId");

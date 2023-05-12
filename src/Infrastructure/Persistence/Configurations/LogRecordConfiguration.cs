@@ -1,15 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TechOnIt.Domain.Entities;
-using TechOnIt.Domain.Enums;
-using TechOnIt.Infrastructure.Common.Consts;
-
-namespace TechOnIt.Infrastructure.Persistence.Configurations;
+﻿namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
 public class LogRecordConfiguration : IEntityTypeConfiguration<LogRecord>
 {
     public void Configure(EntityTypeBuilder<LogRecord> builder)
     {
+        builder.ToTable("Logs", TableSchema.Metadata);
+
         // Id
         builder.HasKey(l => l.Id);
         builder.Property(l => l.Id)
@@ -46,7 +42,7 @@ public class LogRecordConfiguration : IEntityTypeConfiguration<LogRecord>
         // ReferrerUrl
         builder.Property(l => l.ReferrerUrl)
             .HasColumnType(DataTypes.nvarchar100);
-        
+
         // UserId
         builder.Property(l => l.UserId)
             .HasColumnType(DataTypes.guid);

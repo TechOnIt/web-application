@@ -1,11 +1,13 @@
 ﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
-namespace TechOnIt.Infrastructure.Persistence.Configurations;
+namespace TechOnIt.Infrastructure.Persistence.Configurations.Identities;
 
 public class LoginHistoryConfiguration : IEntityTypeConfiguration<LoginHistory>
 {
     public void Configure(EntityTypeBuilder<LoginHistory> builder)
     {
+        builder.ToTable("LoginHistories", TableSchema.Identity);
+
         // Id
         builder.HasKey(a => a.Id);
         // Ip

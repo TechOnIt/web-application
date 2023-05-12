@@ -1,11 +1,13 @@
 ﻿using TechOnIt.Domain.Entities.SensorAggregate;
 
-namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
+namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
 public class SensorReportConfiguration : IEntityTypeConfiguration<SensorReport>
 {
     public void Configure(EntityTypeBuilder<SensorReport> builder)
     {
+        builder.ToTable("SensorReports", TableSchema.Default);
+
         // Id
         builder.HasKey(a => a.Id);
         builder.Property(b => b.Id)

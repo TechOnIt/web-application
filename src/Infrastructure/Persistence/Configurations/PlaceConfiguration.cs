@@ -1,11 +1,13 @@
 ﻿using TechOnIt.Domain.Entities.StructureAggregate;
 
-namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
+namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
 public class PlaceConfiguration : IEntityTypeConfiguration<Place>
 {
     public void Configure(EntityTypeBuilder<Place> builder)
     {
+        builder.ToTable("Places", TableSchema.Default);
+
         // Id
         builder.HasKey(b => b.Id);
         builder.Property(b => b.Id)

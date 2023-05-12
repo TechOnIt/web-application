@@ -17,7 +17,7 @@ public class User
     public bool IsDeleted { get; private set; } = false;
     public short MaxFailCount { get; private set; } = 0;
     public DateTime? LockOutDateTime { get; private set; }
-    public string? ConcurrencyStamp { get; private set; }
+    public byte[] ConcurrencyStamp { get; private set; } = new byte[0];
     #region Relations
     public virtual ICollection<UserRole>? UserRoles { get; set; }
     public virtual ICollection<Structure>? Structures { get; set; }
@@ -114,6 +114,11 @@ public class User
     {
         IsDeleted = true;
     }
+    /// <summary>
+    /// Check row version is validate?
+    /// </summary>
+    public bool IsConcurrencyStampValidate(string concurrencyStamp)
+        => ConcurrencyStamp == Encoding.ASCII.GetBytes(concurrencyStamp);
     #region Login History Aggregate
     public IList<LoginHistory> GetLoginHistories()
         => LoginHistories.ToList();

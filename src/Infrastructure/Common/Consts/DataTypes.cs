@@ -1,6 +1,6 @@
 ﻿namespace TechOnIt.Infrastructure.Common.Consts;
 
-public static class DataTypes
+public class DataTypes
 {
 	#region sql-data types
 	public const string boolean = "bit"; // https://learn.microsoft.com/en-us/sql/t-sql/data-types/bit-transact-sql?view=sql-server-ver16
@@ -42,5 +42,6 @@ public static class DataTypes
 
     #region date
     public const string datetime2 = "datetime2"; // https://learn.microsoft.com/en-us/sql/t-sql/data-types/datetime2-transact-sql?view=sql-server-ver16
+    public const string rowVersion = "rowversion";
     #endregion
 }

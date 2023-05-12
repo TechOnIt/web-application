@@ -1,9 +1,11 @@
-﻿namespace TechOnIt.Infrastructure.Persistence.Configurations.ProductEntityConfiguration;
+﻿namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
 public class DeviceConfiguration : IEntityTypeConfiguration<Device>
 {
     public void Configure(EntityTypeBuilder<Device> builder)
     {
+        builder.ToTable("Devices", TableSchema.Default);
+
         // Id
         builder.HasKey(b => b.Id);
         builder.Property(b => b.Id)
@@ -25,10 +27,9 @@ public class DeviceConfiguration : IEntityTypeConfiguration<Device>
             .HasColumnType(DataTypes.boolean);
         // ConcurrencyStamp
         builder.Property(b => b.ConcurrencyStamp)
+            .IsConcurrencyToken()
             .ValueGeneratedOnAddOrUpdate()
-            .IsRowVersion()
-            .IsConcurrencyToken(true)
-            .HasColumnType(DataTypes.nvarchar500);
+            .HasColumnType(DataTypes.rowVersion);
         // PlaceId
         builder.HasOne(b => b.Place)
             .WithMany(b => b.Devices)

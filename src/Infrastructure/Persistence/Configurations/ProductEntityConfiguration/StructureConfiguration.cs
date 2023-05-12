@@ -50,9 +50,10 @@ public class StructureConfiguration : IEntityTypeConfiguration<Structure>
         builder.Property(s => s.IsActive).HasColumnType(DataTypes.boolean);
         // ConcurrencyStamp
         builder.Property(s => s.ConcurrencyStamp)
-            .IsRequired(false)
             .ValueGeneratedOnAddOrUpdate()
-            .IsRowVersion();
+            .IsRowVersion()
+            .IsConcurrencyToken()
+            .HasColumnType(DataTypes.nvarchar500);
         // UserId
         builder.HasOne(s => s.User)
             .WithMany(s => s.Structures)

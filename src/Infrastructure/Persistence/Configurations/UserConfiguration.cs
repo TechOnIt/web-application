@@ -60,7 +60,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(b => b.RowVersion)
             .ValueGeneratedOnAddOrUpdate()
             .IsRowVersion()
-            .IsConcurrencyToken(true);
+            .IsConcurrencyToken(true)
+            .HasColumnType(DataTypes.nvarchar500);
         // IsBaned
         builder.Property(u => u.IsBaned)
             .HasColumnType(DataTypes.boolean);

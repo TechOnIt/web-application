@@ -17,6 +17,8 @@ public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
         // Type
         builder.Property(a => a.Type)
             .IsRequired()
+            .HasColumnType(DataTypes.tinyint)
+            .HasDefaultValue(SensorType.Thermometer)
             .HasConversion(x => x.Value, x => Enumeration.FromValue<SensorType>(x));
         // CreatedAt
         builder.Property(b => b.CreatedAt)

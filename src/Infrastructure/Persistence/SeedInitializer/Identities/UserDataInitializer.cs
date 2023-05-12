@@ -1,5 +1,6 @@
 ﻿using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.StructureAggregate;
 using TechOnIt.Domain.ValueObjects;
 using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
@@ -18,15 +19,34 @@ internal class UserDataInitializer : IDataInitializer
 
     public async Task InitializeDataAsync()
     {
-        await CreateUserAsync("RezaAmd", "09058089095", "rezaahmadidvlp@gmail.com",
-            roles: new List<string> { "Admin" }, name: "Reza", surname: "Ahmadi");
+        User user1 = new(email: "rezaahmadidvlp@gmail.com", phoneNumber: "09058089095");
+        user1.SetFullName(new FullName("Reza", "Ahmadi"));
+        user2.SetPassword(PasswordHash.Parse("123456"));
+        user1.ConfirmEmail();
+        user1.ConfirmPhoneNumber();
+        #region Structure
+        user1.Structures = new List<Structure>();
+        Structure newStructure = new ("My Structure", PasswordHash.Parse("123456"), user1.Id, StructureType.Agriculture);
+        #region Place
+        Place newPlace = new("Hall", newStructure.Id);
+        newPlace.Devices = new List<Device>();
+        newPlace.Devices.Add(new Device(13, DeviceType.Light, newPlace.Id));
+        newStructure.AddPlace(newPlace);
+        
+        #endregion
+        user1.Structures.Add(newStructure);
+        #endregion
+        await CreateUserAsync(user1, new string[] { "Admin" });
 
-        await CreateUserAsync("MohsenMahv", "09128395645", "mohsen.mahv@gmail.com",
-            roles: new List<string> { "Admin" }, name: "Mohsen", surname: "Heydari");
+        User user2 = new(email: "ashnoori@gmail.com", phoneNumber: "09124133486");
+        user2.SetFullName(new FullName("Ashkan", "Noori"));
+        user2.SetPassword(PasswordHash.Parse("123456"));
+        user2.ConfirmEmail();
+        user2.ConfirmPhoneNumber();
+        await CreateUserAsync(user2, new string[] { "Admin" });
     }
 
-    private async Task CreateUserAsync(string username, string phoneNumber, string email, string? password = null,
-        List<string>? roles = null, string? name = null, string? surname = null)
+    private async Task CreateUserAsync(User newUser, string[]? roles = null)
     {
         bool haveSaveChange = false;
         if (roles != null)
@@ -42,17 +62,9 @@ internal class UserDataInitializer : IDataInitializer
                 }
             }
         }
-        if (!await _uow.UserRepository.IsExistsByQueryAsync(u => u.Username == username || u.PhoneNumber == username || u.Email == username))
+        if (!await _uow.UserRepository.IsExistsByQueryAsync(u => u.Username == newUser.Username ||
+        u.PhoneNumber == newUser.PhoneNumber || u.Email == newUser.Email))
         {
-            var newUser = new User(email: email, phoneNumber: phoneNumber);
-            newUser.SetFullName(new FullName(name, surname));
-            newUser.ConfirmPhoneNumber();
-            newUser.ConfirmEmail();
-
-            // Set password for new user.
-            if (!string.IsNullOrEmpty(password))
-                newUser.SetPassword(new PasswordHash(password));
-
             // Create new user in entities.
             await _uow.UserRepository.CreateAsync(newUser);
             haveSaveChange = true;

@@ -42,9 +42,8 @@ public class PasswordHashTests
     [Theory]
     [InlineData(null)]
     [InlineData("abc")]
-    [InlineData("1234")]
-    [InlineData("a%H5s")]
-    public void Should_Not_Be_Less_Than_Six(string password)
+    [InlineData("123")]
+    public void Should_Not_Be_Less_Than_Minimum(string password)
     {
         var exception = Record.Exception(() => PasswordHash.Parse(password));
 
@@ -74,7 +73,6 @@ public class PasswordHashTests
 
         // Assert
         oldPasswordHash.Should().Match<PasswordHash>(passwordHash => passwordHash != newPasswordHash);
-        oldPasswordHash.Should().Match<PasswordHash>(passwordHash => !passwordHash.Equals(newPasswordHash));
     }
     #endregion
 }

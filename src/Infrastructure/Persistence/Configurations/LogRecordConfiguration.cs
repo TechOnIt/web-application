@@ -33,7 +33,7 @@ public class LogRecordConfiguration : IEntityTypeConfiguration<LogRecord>
 
         // FullMessage
         builder.Property(l => l.FullMessage)
-            .HasColumnType(DataTypes.nvarchar5000);
+            .HasColumnType(DataTypes.nvarchar4000);
 
         // IpAddreess
         builder.Property(l => l.IpAddress)

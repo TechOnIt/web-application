@@ -14,7 +14,7 @@ public static class DataTypes
     public const string nvarchar100 = "nvarchar(100)";
     public const string nvarchar150 = "nvarchar(150)";
     public const string nvarchar500 = "nvarchar(500)";
-    public const string nvarchar5000 = "nvarchar(5000)";
+    public const string nvarchar4000 = "nvarchar(4000)";
     public const string nvarcharMax = "nvarchar(max)";
 
     // https://learn.microsoft.com/en-us/sql/t-sql/data-types/char-and-varchar-transact-sql?view=sql-server-ver16

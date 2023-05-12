@@ -41,8 +41,7 @@ public class StructureConfiguration : IEntityTypeConfiguration<Structure>
         // ModifiedAt
         builder.Property(s => s.ModifiedAt)
             .IsRequired(false)
-            .ValueGeneratedOnUpdate()
-            .HasColumnName(DataTypes.datetime2);
+            .ValueGeneratedOnUpdate();
         // IsActive
         builder.Property(s => s.IsActive).HasColumnType(DataTypes.boolean);
         // ConcurrencyStamp

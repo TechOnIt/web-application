@@ -22,7 +22,7 @@ public class UpdateUserCommandValidator : BaseFluentValidator<UpdateUserCommand>
             .MaximumLength(200)
             .Matches(RegexConstant.Email);
 
-        RuleFor(u => u.RowVersion)
+        RuleFor(u => u.ConcurrencyStamp)
             .NotEmpty()
             .MaximumLength(200);
     }

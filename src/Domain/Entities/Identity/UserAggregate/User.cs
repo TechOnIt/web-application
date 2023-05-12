@@ -17,7 +17,7 @@ public class User
     public bool IsDeleted { get; private set; } = false;
     public short MaxFailCount { get; private set; } = 0;
     public DateTime? LockOutDateTime { get; private set; }
-    public string? RowVersion { get; private set; }
+    public string? ConcurrencyStamp { get; private set; }
     #region Relations
     public virtual ICollection<UserRole>? UserRoles { get; set; }
     public virtual ICollection<Structure>? Structures { get; set; }

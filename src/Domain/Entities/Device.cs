@@ -8,7 +8,7 @@ public class Device
     public int Pin { get; private set; }
     public DeviceType Type { get; private set; } = DeviceType.Light;
     public bool IsHigh { get; set; } = false;
-    public string RowVersion { get; private set; } = string.Empty;
+    public string ConcurrencyStamp { get; private set; } = string.Empty;
     #region relations & foreignkeys
     public Guid PlaceId { get; private set; }
     public virtual Place? Place { get; private set; } = null;
@@ -53,7 +53,7 @@ public class Device
     /// <summary>
     /// Check row version is validate?
     /// </summary>
-    public bool IsRowVersionValidate(string rowVersion)
-        => RowVersion == rowVersion;
+    public bool IsConcurrencyStampValidate(string concurrencyStamp)
+        => ConcurrencyStamp == concurrencyStamp;
     #endregion
 }

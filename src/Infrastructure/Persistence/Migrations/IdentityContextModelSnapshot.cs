@@ -27,6 +27,12 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<bool>("IsHigh")
                         .HasColumnType("bit");
 
@@ -36,12 +42,6 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.Property<Guid>("PlaceId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("Type")
                         .ValueGeneratedOnAdd()
@@ -98,6 +98,11 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<bool>("ConfirmedEmail")
                         .HasColumnType("bit");
 
@@ -125,11 +130,6 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTime>("RegisteredAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -300,8 +300,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("datetime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(150)");

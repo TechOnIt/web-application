@@ -41,13 +41,14 @@ public class StructureConfiguration : IEntityTypeConfiguration<Structure>
         });
         // CreatedAt
         builder.Property(s => s.CreatedAt)
-            .HasColumnName(DataTypes.datetime2);
+            .HasColumnType(DataTypes.datetime2);
         // ModifiedAt
         builder.Property(s => s.ModifiedAt)
             .IsRequired(false)
             .ValueGeneratedOnUpdate();
         // IsActive
-        builder.Property(s => s.IsActive).HasColumnType(DataTypes.boolean);
+        builder.Property(s => s.IsActive)
+            .HasColumnType(DataTypes.boolean);
         // ConcurrencyStamp
         builder.Property(s => s.ConcurrencyStamp)
             .ValueGeneratedOnAddOrUpdate()

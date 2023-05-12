@@ -23,8 +23,8 @@ public class DeviceConfiguration : IEntityTypeConfiguration<Device>
         // IsHigh
         builder.Property(b => b.IsHigh)
             .HasColumnType(DataTypes.boolean);
-        // RowVersion
-        builder.Property(b => b.RowVersion)
+        // ConcurrencyStamp
+        builder.Property(b => b.ConcurrencyStamp)
             .ValueGeneratedOnAddOrUpdate()
             .IsRowVersion()
             .IsConcurrencyToken(true)

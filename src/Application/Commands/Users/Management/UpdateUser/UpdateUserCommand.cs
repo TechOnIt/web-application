@@ -6,7 +6,7 @@ public class UpdateUserCommand : IRequest<object>, ICommittableRequest
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public string? Email { get; set; }
-    public string RowVersion { get; set; }
+    public string ConcurrencyStamp { get; set; }
 }
 
 public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, object>
@@ -27,12 +27,12 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, objec
             var user = await _unitOfWorks.UserRepository.FindByIdAsync(request.UserId, cancellationToken);
             if (user == null)
                 return ResultExtention.NotFound("User was not found!");
-            if (user.RowVersion != request.RowVersion)
+            if (user.ConcurrencyStamp != request.ConcurrencyStamp)
                 return ResultExtention.Failed("User was edited passed times, get latest user info.");
             user.SetEmail(request.Email);
             user.SetFullName(new FullName(request.Name, request.Surname));
             await _unitOfWorks.UserRepository.UpdateAsync(user, cancellationToken);
-            return user.RowVersion.ToString();
+            return user.ConcurrencyStamp.ToString();
         }
         catch (Exception exp)
         {

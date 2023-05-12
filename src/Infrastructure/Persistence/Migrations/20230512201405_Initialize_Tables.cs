@@ -42,7 +42,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     MaxFailCount = table.Column<string>(type: "varchar(50)", nullable: false),
                     LockOutDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RowVersion = table.Column<string>(type: "nvarchar(500)", rowVersion: true, nullable: true)
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(500)", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -105,7 +105,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     Type = table.Column<byte>(type: "tinyint", nullable: false),
                     ApiKey = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(500)", nullable: true),
-                    datetime2 = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(500)", rowVersion: true, nullable: true),
@@ -176,7 +176,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     Pin = table.Column<decimal>(type: "numeric(18,0)", maxLength: 4, nullable: false),
                     Type = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)1),
                     IsHigh = table.Column<bool>(type: "bit", nullable: false),
-                    RowVersion = table.Column<string>(type: "nvarchar(500)", rowVersion: true, nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(500)", rowVersion: true, nullable: false),
                     PlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

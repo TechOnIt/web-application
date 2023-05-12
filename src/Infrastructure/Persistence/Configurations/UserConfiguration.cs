@@ -57,7 +57,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnType(DataTypes.datetime2);
 
         // ConcurrencyStamp
-        builder.Property(b => b.RowVersion)
+        builder.Property(b => b.ConcurrencyStamp)
             .ValueGeneratedOnAddOrUpdate()
             .IsRowVersion()
             .IsConcurrencyToken(true)

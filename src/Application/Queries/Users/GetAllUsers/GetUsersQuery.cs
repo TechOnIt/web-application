@@ -27,7 +27,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
         {
             #region Map Config
             var mapConfig = TypeAdapterConfig<User, UserViewModel>.NewConfig()
-            .Map(dest => dest.ConcurrencyStamp, src => src.RowVersion)
+            .Map(dest => dest.ConcurrencyStamp, src => src.ConcurrencyStamp)
             .Map(dest => dest.RegisteredDateTime, src => src.RegisteredAt.ToString("yyyy/MM/dd HH:mm:ss")).Config;
             #endregion
 

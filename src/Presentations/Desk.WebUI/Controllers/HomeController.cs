@@ -19,7 +19,7 @@ public class HomeController : Controller
         //return View();
     }
 
-    [HttpGet("/Error")]
+    [HttpGet]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

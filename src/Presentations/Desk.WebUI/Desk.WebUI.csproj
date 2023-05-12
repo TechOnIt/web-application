@@ -2,15 +2,26 @@
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
-		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<AssemblyName>$(SolutionName).$(MSBuildProjectName)</AssemblyName>
 		<RootNamespace>$(SolutionName).$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<AssemblyVersion>1.4.0.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
+	  <Compile Remove="wwwroot\fonts\barlow\files\**" />
+	  <Content Remove="wwwroot\fonts\barlow\files\**" />
+	  <EmbeddedResource Remove="wwwroot\fonts\barlow\files\**" />
+	  <None Remove="wwwroot\fonts\barlow\files\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="bundleconfig.json" />
+	  <Content Remove="compilerconfig.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.65" />
 	</ItemGroup>
 
@@ -20,6 +31,11 @@
 
 	<ItemGroup>
 		<Folder Include="Areas\Dashboard\Models\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="bundleconfig.json" />
+	  <None Include="compilerconfig.json" />
 	</ItemGroup>
 
 </Project>

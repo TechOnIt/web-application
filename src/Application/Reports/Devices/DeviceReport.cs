@@ -14,10 +14,11 @@ public class DeviceReport : IDeviceReport
     #endregion
 
     public async Task<List<TDestination>> GetDevicesByStructureIdNoTrackAsync<TDestination>(Guid structureId,
-        TypeAdapterConfig config = null, CancellationToken cancellationToken = default)
+        TypeAdapterConfig? config = null, CancellationToken cancellationToken = default)
         => await _context.Devices
             .AsNoTracking()
-            .Where(device => device.Place.StuctureId == structureId)
+            .Include(device => device.Place)
+            .Where(device => device.Place.StructureId == structureId)
             .ProjectToType<TDestination>(config)
             .ToListAsync(cancellationToken);
 }

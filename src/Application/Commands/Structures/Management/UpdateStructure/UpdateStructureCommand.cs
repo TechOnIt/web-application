@@ -1,6 +1,6 @@
-﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
-using TechOnIt.Domain.Enums;
+﻿using TechOnIt.Domain.Enums;
 using TechOnIt.Application.Common.Interfaces;
+using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Application.Commands.Structures.Management.UpdateStructure;
 
@@ -10,7 +10,7 @@ public class UpdateStructureCommand : IRequest<object>, ICommittableRequest
     public string? Name { get; set; }
     public string? Description { get; set; }
     public bool IsActive { get; set; }
-    public StuctureType Type { get; set; }
+    public StructureType Type { get; set; }
 }
 
 public class UpdatetructureCommandHandler : IRequestHandler<UpdateStructureCommand, object>

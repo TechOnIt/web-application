@@ -1,16 +1,15 @@
-﻿using TechOnIt.Domain.Entities.Product.SensorAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using TechOnIt.Domain.Entities.SensorAggregate;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 
 public class SensorRepository : ISensorRepository
 {
-    #region constructor
+    #region Ctor
     private readonly IdentityContext _context;
-    public SensorRepository(IdentityContext identityContext)
+    public SensorRepository(IdentityContext context)
     {
-        _context = identityContext;
+        _context = context;
     }
     #endregion
 
@@ -44,24 +43,21 @@ public class SensorRepository : ISensorRepository
         if (findSensor is null)
             return (false, false);
 
-        findSensor.SetSensorType(sensor.SensorType);
-        findSensor.PlaceId = sensor.PlaceId;
-
         cancellationToken.ThrowIfCancellationRequested();
         _context.Sensors.Update(findSensor);
         return (true, true);
     }
-    public async Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
-    => await Task.FromResult<IList<PerformanceReport>?>(await _context.PerformanceReports.Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken));
+    public async Task<IList<SensorReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
+    => await Task.FromResult<IList<SensorReport>?>(await _context.SensorReports.Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken));
 
-    public async Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsNoTrackingAsync(Guid sensorId, CancellationToken cancellationToken)
-    => await _context.PerformanceReports.AsNoTracking().Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken);
+    public async Task<IList<SensorReport>?> GetSensorReportBySensorIdAsNoTrackingAsync(Guid sensorId, CancellationToken cancellationToken)
+    => await _context.SensorReports.AsNoTracking().Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken);
 
-    public async Task<IList<PerformanceReport>?> GetSensorReportBySensorIdAsNoTrackingWithTimeFilterAsync(Guid sensorId, DateTime minTime, DateTime maxTime, CancellationToken cancellationToken)
+    public async Task<IList<SensorReport>?> GetSensorReportBySensorIdAsNoTrackingWithTimeFilterAsync(Guid sensorId, DateTime minTime, DateTime maxTime, CancellationToken cancellationToken)
         => await _context
-            .PerformanceReports
+            .SensorReports
             .AsNoTracking()
-            .Where(a => a.SensorId == sensorId && a.RecordDateTime > minTime && a.RecordDateTime <= maxTime)
+            .Where(a => a.SensorId == sensorId && a.CreatedAt > minTime && a.CreatedAt <= maxTime)
             .ToListAsync(cancellationToken);
 
 
@@ -69,35 +65,10 @@ public class SensorRepository : ISensorRepository
         => await _context.Sensors.AsNoTracking().Where(a => a.PlaceId == placeId).ToListAsync();
     #endregion
 
-    #region report
-    public async Task ClearReportsBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
-    {
-        var sensor = await _context.Sensors.Include(r => r.Reports).FirstOrDefaultAsync(a => a.Id == sensorId, cancellationToken);
-        if (sensor != null)
-        {
-            if (!cancellationToken.IsCancellationRequested)
-            {
-                sensor.ClearReports();
-                _context.Update(sensor);
-            }
-        }
-
-        await Task.CompletedTask;
-    }
-    public async Task DeleteReportByIdAsync(Guid sensorId, Guid reportId, CancellationToken cancellationToken)
-    {
-        var getReport = await _context.PerformanceReports
-            .FirstOrDefaultAsync(a => a.Id == reportId && a.SensorId == sensorId);
-
-        if (getReport is not null)
-            if (!cancellationToken.IsCancellationRequested)
-                _context.PerformanceReports.Remove(getReport);
-
-        await Task.CompletedTask;
-    }
-    public async Task<PerformanceReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken)
-        => await Task.FromResult(await _context.PerformanceReports.FirstOrDefaultAsync(a => a.Id == reportId, cancellationToken));
-    public async Task AddReportToSensorAsync(PerformanceReport model, CancellationToken cancellationToken)
+    #region Report
+    public async Task<SensorReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken)
+        => await Task.FromResult(await _context.SensorReports.FirstOrDefaultAsync(a => a.Id == reportId, cancellationToken));
+    public async Task AddReportToSensorAsync(SensorReport model, CancellationToken cancellationToken)
     {
         var sensor = await _context.Sensors.FirstOrDefaultAsync(a => a.Id == model.SensorId);
 

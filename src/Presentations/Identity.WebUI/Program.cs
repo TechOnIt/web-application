@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
-using TechOnIt.Application;
-using MediatR;
-using TechOnIt.Application.Commands.Device.CreateDevice;
-using TechOnIt.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +18,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 builder.Services.AddAuthorization();
 
-RegisterMediatRCommands(builder.Services);
+// Register MediatR.
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SignInUserCommand).Assembly));
 
 // Map app setting json to app setting object.
 // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
@@ -44,7 +42,20 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions()
+{
+    HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
+    OnPrepareResponse = (context) =>
+    {
+        var headers = context.Context.Response.GetTypedHeaders();
+        headers.CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue
+        {
+            Public = true,
+            MaxAge = TimeSpan.FromDays(100)
+        };
+    }
+});
 
 app.UseRouting();
 
@@ -64,8 +75,4 @@ void ConfigureServices(IServiceCollection services)
     builder.Services.AddInfrastructureServices();
     builder.Services.AddApplicationServices();
     builder.Services.AddFluentValidationServices();
-}
-void RegisterMediatRCommands(IServiceCollection services)
-{
-    services.AddMediatR(typeof(CreateDeviceCommand).GetTypeInfo().Assembly);
 }

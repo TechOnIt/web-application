@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TechOnIt.Domain.Entities.Product;
+using TechOnIt.Domain.Entities;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Devices;
@@ -21,7 +21,7 @@ public class DeviceRepositry : IDeviceRepositry
         if (getDevice is null)
         {
             await Task.CompletedTask;
-            return await Task.FromResult<Domain.Entities.Product.Device?>(null);
+            return await Task.FromResult<Device?>(null);
         }
 
         return await Task.FromResult(getDevice);
@@ -66,7 +66,7 @@ public class DeviceRepositry : IDeviceRepositry
             await Task.CompletedTask;
 
         if (!cancellationToken.IsCancellationRequested)
-            _context.Entry<Domain.Entities.Product.Device>(getDevice).State = EntityState.Deleted;
+            _context.Entry<Device>(getDevice).State = EntityState.Deleted;
 
         await Task.CompletedTask;
     }

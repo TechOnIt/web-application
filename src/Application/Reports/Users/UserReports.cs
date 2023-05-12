@@ -1,5 +1,4 @@
 ﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.Entities.Product.StructureAggregate;
 using System.Linq.Expressions;
 using System.Reflection;
 using TechOnIt.Application.Common.Exceptions;
@@ -8,6 +7,7 @@ using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Common.Models.ViewModels.Devices;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
+using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Application.Reports.Users;
 
@@ -47,7 +47,7 @@ public class UserReports : IUserReports
     public async Task<User?> FindByIdentityNoTrackAsync(string identity, CancellationToken cancellationToken)
         => await _unitOfWorks._context.Users
         .AsNoTracking()
-        .FirstOrDefaultAsync(u => u.Email == identity || u.PhoneNumber == identity || u.Username == identity);
+        .FirstOrDefaultAsync(u => u.Email == identity || u.PhoneNumber == identity || u.Username == identity, cancellationToken);
 
     /// <summary>
     /// try to do not use of this method when you have less than 1000 users in database for better perfomance
@@ -187,27 +187,22 @@ public class UserReports : IUserReports
         try
         {
             var devices = await (from str in _unitOfWorks._context.Structures
-
-                                 join plc in _unitOfWorks._context.Places on str.Id equals plc.StuctureId
+                                 join plc in _unitOfWorks._context.Places on str.Id equals plc.StructureId
                                  into place
                                  from pl in place.DefaultIfEmpty()
-
                                  join dev in _unitOfWorks._context.Devices on pl.Id equals dev.PlaceId
                                  into device
                                  from de in device.DefaultIfEmpty()
-
                                  where str.UserId == userId
-
                                  select new DeviceViewModel
                                  {
                                      Id = de.Id,
                                      Pin = de.Pin,
-                                     DeviceType = de.DeviceType,
+                                     DeviceType = de.Type,
                                      IsHigh = de.IsHigh,
                                      PlaceId = de.PlaceId,
 
                                  }).AsNoTracking().ToListAsync();
-
             return devices;
         }
         catch (ReportExceptions exp)
@@ -222,14 +217,11 @@ public class UserReports : IUserReports
         PropertyInfo[] propertyInfos;
         propertyInfos = typeof(User)
             .GetProperties(BindingFlags.Public | BindingFlags.Static);
-
         // sort properties by name
         Array.Sort(propertyInfos,
                 delegate (PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
                 { return propertyInfo1.Name.CompareTo(propertyInfo2.Name); });
-
         PropertyInfo? result = null;
-
         // write property names
         foreach (PropertyInfo propertyInfo in propertyInfos)
         {
@@ -240,7 +232,6 @@ public class UserReports : IUserReports
                 if (!string.IsNullOrWhiteSpace(result.Name))
                     break;
         }
-
         return result;
     }
 
@@ -248,14 +239,13 @@ public class UserReports : IUserReports
     {
         return await _unitOfWorks._context.Users
             .AsNoTracking()
-            .Where(user => user.RegisteredDateTime > from)
-            .GroupBy(user => user.RegisteredDateTime.Month)
+            .Where(user => user.RegisteredAt > from)
+            .GroupBy(user => user.RegisteredAt.Month)
             .Select(u => new
             {
-                month = u.First().RegisteredDateTime.ToString("MMM"),
+                month = u.First().RegisteredAt.ToString("MMM"),
                 count = u.Count()
             })
-            .ToListAsync(cancellationToken)
-            ;
+            .ToListAsync(cancellationToken);
     }
 }

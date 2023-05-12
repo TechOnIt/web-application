@@ -1,89 +1,57 @@
-﻿using System.Collections.Generic;
-using TechOnIt.Domain.Common;
-
-namespace TechOnIt.Domain.ValueObjects;
+﻿namespace TechOnIt.Domain.ValueObjects;
 
 public class IPv4 : ValueObject
 {
-    #region Constructors
+    public string? Value { get; set; }
 
-    public IPv4(byte firstOct, byte secondOct, byte thirdOct, byte fourthOct)
+    #region Ctor
+    private IPv4() { }
+    public IPv4(string ipAddress)
     {
-        FirstOct = firstOct;
-        SecondOct = secondOct;
-        ThirdOct = thirdOct;
-        FourthOct = fourthOct;
-    }
-
-    public IPv4()
-    {
+        setValue(ipAddress);
     }
     #endregion
 
-    private byte? _FirstOct;
-    private byte? _SecondOct;
-    private byte? _ThirdOct;
-    private byte? _FourthOct;
-
-    public byte FirstOct
-    {
-        get { return _FirstOct ?? 0; }
-        private set { _FirstOct = value; }
-    }
-
-    public byte SecondOct
-    {
-        get { return _SecondOct ?? 0; }
-        private set { _SecondOct = value; }
-    }
-
-    public byte ThirdOct
-    {
-        get { return _ThirdOct ?? 0; }
-        private set { _ThirdOct = value; }
-    }
-
-    public byte FourthOct
-    {
-        get { return _FourthOct ?? 0; }
-        private set
-        {
-            _FourthOct = value;
-        }
-    }
-
     #region Methods
-    public static IPv4 Parse(string address)
+    private void setValue(string value)
     {
-        string[] ipScopes = address.Split('.');
-        return new IPv4(byte.Parse(ipScopes[0]), byte.Parse(ipScopes[1]), byte.Parse(ipScopes[2]), byte.Parse(ipScopes[3]));
+        if (value is null)
+        {
+            Value = null;
+            return;
+        }
+        if (value.Length < 7) throw new ArgumentException("Invalid Ip address.");
+        if (value.Split('.').Length < 4) throw new ArgumentException("Invalid Ip address.");
+
+        Value = value;
     }
-    public override string ToString() => $"{FirstOct}.{SecondOct}.{ThirdOct}.{FourthOct}";
+    public static IPv4 Parse(string ipAddress)
+        => new IPv4(ipAddress);
+    public override string ToString() => Value;
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return FirstOct;
+        yield return Value;
     }
     #endregion
 
     #region Operators
     public static bool operator ==(IPv4 left, IPv4 right)
-    {
-        if (left.FirstOct == right.FirstOct &&
-            left.SecondOct == right.SecondOct &&
-            left.ThirdOct == right.ThirdOct &&
-            left.FourthOct == right.FourthOct) return true;
-        else
-            return false;
-    }
-
+        => (left.Value == right.Value);
     public static bool operator !=(IPv4 left, IPv4 right)
+        => (left.Value != right.Value);
+    public override bool Equals(object obj)
     {
-        if (left.FirstOct != right.FirstOct ||
-            left.SecondOct != right.SecondOct ||
-            left.ThirdOct != right.ThirdOct ||
-            left.FourthOct != right.FourthOct) return true;
-        else
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+        if (ReferenceEquals(obj, null))
+        {
             return false;
+        }
+        return ((IPv4)obj == this);
     }
+    public override int GetHashCode()
+        => Value is null ? 0 : Value.GetHashCode();
     #endregion
 }

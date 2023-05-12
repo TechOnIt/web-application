@@ -23,24 +23,4 @@ public class UserTests
         // Assert
         user.Username.Should().Be(user.PhoneNumber);
     }
-
-    [Fact]
-    public void Concurrency_token_should_change_on_new()
-    {
-        // Arrange
-        var user = new User(email: "test@gmail.com", phoneNumber: "09124133486");
-        user.SetPassword(PasswordHash.Parse("123456"));
-        user.SetFullName(new FullName(name: "testName", surname: "testSurname"));
-
-        string oldConcurrencyToken = user.ConcurrencyStamp.Value;
-
-        user = new User(email: "test@gmail.com", phoneNumber: "09124133486");
-        user.SetPassword(PasswordHash.Parse("123456"));
-        user.SetFullName(new FullName(name: "testName", surname: "testSurname"));
-
-        string newConcurrencyToken = user.ConcurrencyStamp.Value;
-
-        // Assert
-        oldConcurrencyToken.Should().NotBe(newConcurrencyToken);
-    }
 }

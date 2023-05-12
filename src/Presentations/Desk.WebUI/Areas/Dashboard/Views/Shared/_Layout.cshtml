@@ -1,86 +1,38 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="auto">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Technology on it!</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
-    <link href="~/css/vertical-layout.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <meta http-equiv="Cache-control" content="public">
+    @* Styles *@
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/sidebar-menu.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/style.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+    @* Fonts *@
+    <link rel="preload" as="style" href="/fonts/barlow/css/barlow.min.css" onload="this.rel='stylesheet'" />
+    <link rel="preload" as="style" href="/fonts/iran-sans/css/fontiran.min.css" onload="this.rel='stylesheet'" />
+    <link rel="preload" as="style" href="/lib/font-awesome/css/fontawesome.min.css" onload="this.rel='stylesheet'" />
 </head>
-<body class="d-flex flex-column">
-    <!-- Navbar -->
-    <nav class="header-navbar navbar fixed-top navbar-dark">
-        <div class="w-100 d-flex justify-content-between container-fluid">
-            <div class="d-grid">
-                <button class="nav-link" onclick="$('body').toggleClass('menu-collapsed')">
-                    <i class="fa fa-list"></i>
-                </button>
-            </div>
-            <div class="d-flex">
-                <ul class="nav">
-                    @* Notification *@
-@*                    <li class="nav-item">
-                        <button class="nav-link">
-                            <i class="fa fa-bell"></i>
-                            <div class="badge bg-danger sticky rounded-pill">3</div>
-                        </button>
-                    </li>*@
-                </ul>
-                @* Profile *@
-                <div>
-                    <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="profile rounded-circle" src="~/assets/images/profile_avatar_placeholder.png" width="40" />
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">ویرایش</a>
-                        <a class="dropdown-item" href="/identity/manage/signout">Signout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+<body class="d-flex flex-column menu-collapsed">
+    @{
+        await Html.RenderPartialAsync("_Header");
+    }
     <!-- Sidebar Menu -->
-    <div class="menu-fixed main-menu vh-100" style="touch-action: none; user-select: none;">
-        <div class="d-block d-sm-none pt-5">
-            <div class="pt-4"></div>
-        </div>
-        <div class="d-none d-sm-block mb-3">
-            <div class="central">
-                <a class="navbar-brand text-center m-0" href="/">
-                    <img src="~/assets/images/logo/logo-x40.png" style="height:40px;" />
-                    <label class="ellipsis-text extra ms-2">Techonit</label>
-                </a>
-            </div>
-        </div>
-        <div class="pr-4 pr-sm-0 pl-4 pl-sm-0">
-            <ul class="navbar flex-column">
-                @*                <li class="nav-item">
-                <a class="nav-link active" href="/dashboard/overview">
-                <i class="fa fa-tachometer-alt"></i>
-                <div class="extra">Overview</div>
-                </a>
-                </li>*@
-                <li class="nav-item">
-                    <a class="nav-link active" href="/dashboard/structure">
-                        <i class="fa fa-home"></i>
-                        <div class="extra">Structures</div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    @{
+        await Html.RenderPartialAsync("_SidebarMenu");
+    }
     <!-- Content -->
     <main role="main" class="content">
-        <div id="app" class="content-wrapper container-fluid px-4">
+        <div id="app" class="content-wrapper container-fluid">
             @RenderBody()
         </div>
     </main>
     <!-- Scripts -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @{
+        await Html.RenderPartialAsync("_Scripts");
+        await RenderSectionAsync("Scripts", required: false);
+    }
 </body>
 </html>

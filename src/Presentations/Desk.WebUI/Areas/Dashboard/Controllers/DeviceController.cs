@@ -1,4 +1,4 @@
-﻿using TechOnIt.Application.Commands.Device.Dashboard.DeviceChangeHighState;
+﻿using TechOnIt.Application.Commands.Devices.Dashboard.DeviceChangeHighState;
 
 namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers;
 
@@ -15,25 +15,24 @@ public class DeviceController : Controller
     #endregion
 
     [HttpGet]
-    public async Task<IActionResult> On(string id, string structureId, CancellationToken cancellationToken)
+    public async Task<IActionResult> On(string deviceId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new DeviceChangeHighStateCommand
         {
-            DeviceId = Guid.Parse(id),
+            DeviceId = Guid.Parse(deviceId),
             IsHigh = true
         }, cancellationToken);
-        return Redirect("/dashboard/structure/info?id=" + structureId);
+        return Ok();
     }
 
     [HttpGet]
-    public async Task<IActionResult> Off(string id, string structureId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Off(string deviceId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new DeviceChangeHighStateCommand
         {
-            DeviceId = Guid.Parse(id),
+            DeviceId = Guid.Parse(deviceId),
             IsHigh = false
         }, cancellationToken);
-        return Redirect("/dashboard/structure/info?id=" + structureId);
-
+        return Ok();
     }
 }

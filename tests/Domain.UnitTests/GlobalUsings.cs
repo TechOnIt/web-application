@@ -1,5 +1,11 @@
-﻿global using TechOnIt.Domain.Entities;
+﻿global using FluentAssertions;
+global using Shouldly;
+global using System;
+global using TechOnIt.Domain.Common;
+global using TechOnIt.Domain.Entities;
 global using TechOnIt.Domain.Entities.Identity;
+global using TechOnIt.Domain.Entities.SensorAggregate;
+global using TechOnIt.Domain.Entities.StructureAggregate;
+global using TechOnIt.Domain.Enums;
 global using TechOnIt.Domain.ValueObjects;
-global using FluentAssertions;
 global using Xunit;

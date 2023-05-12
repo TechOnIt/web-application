@@ -2,10 +2,8 @@ using AspNetCoreRateLimit;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
-using System.Reflection;
 using System.Text.Json.Serialization;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
-using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Infrastructure;
 using TechOnIt.Infrastructure.Common.Extentions;
@@ -122,13 +120,6 @@ try
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    // Middlewares - Pipelines
-    #region Exception Handlers
-    // if you want to catch all exceptions by custom middleware Uncomment the following line
-    // And if you don't need it, then comment the following line
-    app.UseCustomExceptionHandler();
-    #endregion
-
     #region HSTS
     if (!app.Environment.IsDevelopment())
     {
@@ -159,6 +150,11 @@ try
     #region Custom Middlewares
     // Initialize database data seed.
     await app.InitializeDatabaseAsync(builder);
+    #region Exception Handlers
+    // if you want to catch all exceptions by custom middleware Uncomment the following line
+    // And if you don't need it, then comment the following line
+    app.UseApiExceptionHandler();
+    #endregion
     #endregion
     await app.RunAsync();
 }

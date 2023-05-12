@@ -1,6 +1,6 @@
-﻿using TechOnIt.Application.Commands.Device.CreateDevice;
-using TechOnIt.Application.Commands.Device.DeleteDevice;
-using TechOnIt.Application.Commands.Device.UpdateDevice;
+﻿using TechOnIt.Application.Commands.Devices.DeleteDevice;
+using TechOnIt.Application.Commands.Devices.CreateDevice;
+using TechOnIt.Application.Commands.Devices.UpdateDevice;
 using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 
 namespace TechOnIt.Desk.Api.Controllers.v1;

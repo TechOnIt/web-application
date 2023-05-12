@@ -3,9 +3,19 @@
 }
 
 <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-    <h3>Login into your account</h3>
-    <div class="pb-4">
+    <div class="w-100 text-center">
+        <img class="mx-auto" src="~/assets/images/logo/logo.svg" width="60" height="85" />
+    </div>
+    <h3 class="fw-bold text-center mb-4 mt-3">Welcome back!</h3>
+    <div class="pt-4">
         <form method="post" action="signin">
+            @if (TempData["signin-summery"] is not null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["signin-summery"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
             @*<div>
             @Html.AntiForgeryToken()
             </div>*@
@@ -26,7 +36,9 @@
                 </div>
             </div>
             <div class="d-grid mt-5">
-                <button class="btn btn-primary" type="submit">Signin</button>
+                <button class="d-none d-sm-block btn btn-primary" type="submit">Signin</button>
+                @* Mobile Btn *@
+                <button class="d-block d-sm-none btn btn-lg btn-primary" type="submit">Signin</button>
             </div>
         </form>
     </div>

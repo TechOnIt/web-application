@@ -63,7 +63,7 @@ var app = builder.Build();
 // middlewares
 // if you want to catch all exceptions by custom middleware Uncomment the following line
 // And if you don't need it, then comment the following line
-app.UseCustomExceptionHandler();
+app.UseApiExceptionHandler();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -6124,7 +6124,7 @@
     font-style: normal;
     font-weight: 300;
     font-display: block;
-    src: url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-light-300.woff2) format("woff2"),url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-light-300.woff) format("woff"),url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-light-300.ttf) format("truetype")
+    src: url(../webfonts/fa-light-300.woff2) format("woff2"),url(../webfonts/fa-light-300.woff) format("woff"),url(../webfonts/fa-light-300.ttf) format("truetype")
 }
 
 @font-face {
@@ -6132,7 +6132,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: block;
-    src: url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-regular-400.woff2) format("woff2"),url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-regular-400.woff) format("woff"),url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-regular-400.ttf) format("truetype")
+    src: url(../webfonts/fa-regular-400.woff2) format("woff2"),url(../webfonts/fa-regular-400.woff) format("woff"),url(../webfonts/fa-regular-400.ttf) format("truetype"),url(../webfonts/fa-regular-400.svg#fontawesome) format("svg")
 }
 
 @font-face {
@@ -6140,7 +6140,7 @@
     font-style: normal;
     font-weight: 400;
     font-display: block;
-    src: url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-brands-400.woff2) format("woff2"),url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-brands-400.woff) format("woff"),url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-brands-400.ttf) format("truetype")
+    src: url(../webfonts/fa-brands-400.woff2) format("woff2"),url(../webfonts/fa-brands-400.woff) format("woff"),url(../webfonts/fa-brands-400.ttf) format("truetype")
 }
 
 @font-face {
@@ -6148,5 +6148,5 @@
     font-style: normal;
     font-weight: 900;
     font-display: block;
-    src: url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-duotone-900.woff2) format("woff2"),url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-duotone-900.woff) format("woff"),url(https://pro.fontawesome.com/releases/v6.0.0-beta1/webfonts/fa-duotone-900.ttf) format("truetype")
+    src: url(../webfonts/fa-duotone-900.woff2) format("woff2"),url(../webfonts/fa-duotone-900.woff) format("woff"),url(../webfonts/fa-duotone-900.ttf) format("truetype")
 }

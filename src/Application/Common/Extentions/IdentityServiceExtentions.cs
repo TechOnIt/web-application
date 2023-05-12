@@ -4,7 +4,7 @@ using TechOnIt.Application.Common.Enums.IdentityService;
 using System.Globalization;
 using System.Security.Claims;
 using System.Security.Principal;
-using TechOnIt.Domain.Entities.Product.StructureAggregate;
+using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Application.Common.Extentions;
 
@@ -60,7 +60,7 @@ public static class IdentityServiceExtentions
             return (SigInStatus.WrongInformations, WrongInformations);
         else if (!string.IsNullOrWhiteSpace(password))
         {
-            if (!structure.PasswordHash.VerifyPasswordHash(password))
+            if (!structure.Password.VerifyPasswordHash(password))
                 return (SigInStatus.WrongPassowrd, WrongPassowrd);
         }
 

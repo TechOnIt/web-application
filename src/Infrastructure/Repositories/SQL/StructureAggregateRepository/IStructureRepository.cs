@@ -1,5 +1,5 @@
-﻿using TechOnIt.Domain.Entities.Product.StructureAggregate;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using TechOnIt.Domain.Entities.StructureAggregate;
 using TechOnIt.Domain.ValueObjects;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
@@ -14,8 +14,8 @@ public interface IStructureRepository
     Task DeleteAsync(Structure structure, CancellationToken cancellationToken);
     //Task DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
     Task<bool> DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken);
-    Task<Structure> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<Structure> GetByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
+    Task<Structure?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<Structure?> GetByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
     Task<Structure?> GetByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken = default);
     Task<IList<Structure>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<IList<Structure>> GetAllByFilterAsync(CancellationToken cancellationToken, Expression<Func<Structure, bool>> filter = null);
@@ -29,7 +29,7 @@ public interface IStructureRepository
     #endregion
 
     #region Place
-    Task<Place> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken = default);
+    Task<Place?> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken = default);
     Task<Place?> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken = default);
     Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>> filter = null);
     Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken = default);

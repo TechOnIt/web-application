@@ -1,7 +1,4 @@
-﻿using TechOnIt.Application.Common.Constants;
-using TechOnIt.Application.Common.Models;
-
-namespace TechOnIt.Application.Commands.Users.Management.UpdateUser;
+﻿namespace TechOnIt.Application.Commands.Users.Management.UpdateUser;
 
 public class UpdateUserCommandValidator : BaseFluentValidator<UpdateUserCommand>
 {
@@ -9,29 +6,24 @@ public class UpdateUserCommandValidator : BaseFluentValidator<UpdateUserCommand>
     {
         RuleFor(u => u.UserId)
             .NotEmpty()
-            .NotNull()
-            ;
+            .NotNull();
 
         RuleFor(u => u.Name)
-            .MaximumLength(50)
-            ;
+            .MaximumLength(50);
 
         RuleFor(u => u.Surname)
             .MaximumLength(50)
-            .NotEmpty()
-            ;
+            .NotEmpty();
 
         RuleFor(u => u.Email)
             .NotEmpty()
             .NotNull()
             .MinimumLength(10)
             .MaximumLength(200)
-            .Matches(RegexConstant.Email)
-            ;
+            .Matches(RegexConstant.Email);
 
         RuleFor(u => u.ConcurrencyStamp)
             .NotEmpty()
-            .MaximumLength(200)
-            ;
+            .MaximumLength(200);
     }
 }

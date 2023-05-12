@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 using TechOnIt.Application;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
-using TechOnIt.Desk.Api.GraphQl.PerformanceReport;
+using TechOnIt.Desk.Api.GraphQl.SensorReport;
 using TechOnIt.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +35,7 @@ var app = builder.Build();
 // middlewares
 // if you want to catch all exceptions by custom middleware Uncomment the following line
 // And if you don't need it, then comment the following line
-app.UseCustomExceptionHandler();
+app.UseApiExceptionHandler();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

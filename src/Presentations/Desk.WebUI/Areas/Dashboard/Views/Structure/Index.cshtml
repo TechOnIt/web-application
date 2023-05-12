@@ -1,62 +1,44 @@
 ﻿@model IList<TechOnIt.Application.Common.Models.ViewModels.Structures.StructureCardViewModel>
 @{
-    ViewData["Title"] = "Structures";
+    ViewData["Title"] = "Manage structures";
 }
-<div class="container-fluid">
-    <h3>My structures</h3>
-    <div class="mt-5">
-        <div class="row">
-            @foreach (var structure in Model)
-            {
-                if (structure.IsActive)
-                {
+@* Structure List *@
+<div>
+    @await Component.InvokeAsync(typeof(StructureCardListViewComponent), new { User })
+</div>
 
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card user-select-none">
-                            <div class="card-body">
-                                <div class="d-flex flex-column text-center">
-                                    <div class="row mb-2">
-                                        <div class="col smallest text-start">
-                                            <i class="fa fa-circle text-green"></i>
-                                        </div>
-                                        <div class="col h2"><i class="fa fa-home text-secondary"></i></div>
-                                        <div class="col"></div>
-                                    </div>
-                                    <label class="h5 fw-bolder text-primary">@structure.Name</label>
-                                    <label class="text-muted smaller">Name</label>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex gap-1">
-                                <a class="btn btn-sm mx-auto btn-primary w-100" href="structure/info?id=@structure.Id">Manage</a>
-                                <a class="btn btn-sm mx-auto btn-secondary" href="#"><i class="fa fa-cog"></i></a>
-                            </div>
-                        </div>
+<!-- New Structure Modal -->
+<div class="modal fade" id="newStructureModal" tabindex="-1" aria-labelledby="newStructureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newStructureModalLabel">New Structure</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/dashboard/structure/new">
+                <div class="modal-body">
+                    <div class="form_group field mb-3">
+                        <select id="new-structure-type" class="form_field" name="type">
+                            <option value="1">🏘️ Home, Shop, Office</option>
+                            <option value="2">🌱 Aviculture, Garden, Greenhouse</option>
+                            <option value="3">🐥 Agriculture, Livestock, poultry</option>
+                        </select>
+                        <label for="new-structure-type" class="form_label">Type</label>
                     </div>
-                }
-                else
-                {
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card user-select-none">
-                            <div class="card-body">
-                                <div class="d-flex flex-column text-center">
-                                    <div class="row mb-2">
-                                        <div class="col smallest text-start">
-                                            <i class="fa fa-circle text-secondary opacity-50"></i>
-                                        </div>
-                                        <div class="col h2"><i class="fa fa-home text-secondary opacity-50"></i></div>
-                                        <div class="col"></div>
-                                    </div>
-                                    <label class="h5 fw-bolder text-secondary">@structure.Name</label>
-                                    <label class="text-muted smaller">Name</label>
-                                </div>
-                            </div>
-                            <div class="card-footer text-center">
-                                <label class="text-secondary small">This structure is deactive.</label>
-                            </div>
-                        </div>
+                    <div class="form_group field mb-3">
+                        <input id="new-structure-name" class="form_field" name="name" type="text" placeholder="Name" maxlength="20" required />
+                        <label for="new-structure-name" class="form_label">Name</label>
                     </div>
-                }
-            }
+                    <div class="form_group field mb-3">
+                        <textarea id="new-structure-description" class="form_field" name="description" placeholder="Description" maxlength="100"></textarea>
+                        <label for="new-structure-description" class="form_label">Description</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Reports.Users;
 
-namespace TechOnIt.Application.Queries.Users.Dashboard.GetUserInfoById;
+namespace TechOnIt.Application.Queries.Users.Dashboard.GetUserInfoByUsername;
 
 public class GetUserInfoByUsernameQuery : IRequest<UserViewModel?>
 {

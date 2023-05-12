@@ -12,7 +12,7 @@ public class GetUsersQuery : PaginatedSearch, IRequest<PaginatedList<UserViewMod
 
 public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList<UserViewModel>>
 {
-    #region constructor
+    #region Ctor
     private readonly IUserReports _userReports;
     public GetUsersQueryHandler(IUserReports userReports)
     {
@@ -27,8 +27,8 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
         {
             #region Map Config
             var mapConfig = TypeAdapterConfig<User, UserViewModel>.NewConfig()
-            .Map(dest => dest.ConcurrencyStamp, src => src.ConcurrencyStamp.Value)
-            .Map(dest => dest.RegisteredDateTime, src => src.RegisteredDateTime.ToString("yyyy/MM/dd HH:mm:ss")).Config;
+            .Map(dest => dest.ConcurrencyStamp, src => src.ConcurrencyStamp)
+            .Map(dest => dest.RegisteredDateTime, src => src.RegisteredAt.ToString("yyyy/MM/dd HH:mm:ss")).Config;
             #endregion
 
             result = await _userReports.GetAllPaginatedSearchAsync<UserViewModel>(new PaginatedSearchWithSize

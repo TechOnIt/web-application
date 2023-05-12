@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.DataProtection;
-using System.Web.Helpers;
-using TechOnIt.Application.Commands.Device.CreateDevice;
+using TechOnIt.Application.Commands.Devices.CreateDevice;
+using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +17,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 builder.Services.AddAuthorization();
 
-RegisterMediatRCommands(builder.Services);
+// Register MediatR.
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SignInUserCommand).Assembly));
 
 // Map app setting json to app setting object.
 // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
@@ -27,25 +27,49 @@ builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSecti
 
 ConfigureServices(builder.Services);
 
+builder.Services.AddResponseCaching();
+
 // Add PWA service
 builder.Services.AddProgressiveWebApp();
 
 var app = builder.Build();
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
+    app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
+// Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions()
+{
+    HttpsCompression = Microsoft.AspNetCore.Http.Features.HttpsCompressionMode.Compress,
+    OnPrepareResponse = (context) =>
+    {
+        var headers = context.Context.Response.GetTypedHeaders();
+        headers.CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue
+        {
+            Public = true,
+            MaxAge = TimeSpan.FromDays(100)
+        };
+    }
+});
+
 // Routing
 app.UseRouting();
+app.UseResponseCaching();
 // Auth
 app.UseAuthentication();
 app.UseAuthorization();
+
 // Endpoints
 app.MapControllerRoute(
     name: "default",
@@ -60,8 +84,4 @@ void ConfigureServices(IServiceCollection services)
     builder.Services.AddInfrastructureServices();
     builder.Services.AddApplicationServices();
     builder.Services.AddFluentValidationServices();
-}
-void RegisterMediatRCommands(IServiceCollection services)
-{
-    services.AddMediatR(typeof(CreateDeviceCommand).GetTypeInfo().Assembly);
 }

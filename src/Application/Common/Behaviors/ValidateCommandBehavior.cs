@@ -24,6 +24,7 @@ namespace TechOnIt.Application.Common.Behaviors
 
         public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             // validate our commands in these lines of linq expression
             // what we did here ? we found our validation class related 
             // to our command - we have command on method parameter-

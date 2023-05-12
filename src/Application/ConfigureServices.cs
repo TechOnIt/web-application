@@ -29,16 +29,11 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services
-            .AddScoped<IUnitOfWorks, UnitOfWork>();
+        services.AddScoped<IUnitOfWorks, UnitOfWork>();
 
-        services
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>))
-            ;
-
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>));
-        services.AddScoped(typeof(IRequestPostProcessor<,>), typeof(CommitCommandBehavior<,>));
+            .AddScoped(typeof(IRequestPostProcessor<,>), typeof(CommitCommandBehavior<,>));
 
         // Add cache service.
         services.AddDistributedMemoryCache();
@@ -103,9 +98,9 @@ public static class ConfigureServices
         return services;
     }
 
-    public static void UseCustomExceptionHandler(this WebApplication app)
+    public static void UseApiExceptionHandler(this WebApplication app)
     {
-        app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+        app.UseMiddleware<ApiExceptionHandlerMiddleware>();
     }
 
     public static void AddJwtAuthentication(this IServiceCollection services, JwtSettingsDto settings)

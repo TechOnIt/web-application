@@ -22,6 +22,7 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
         // CreatedAt
         builder.Property(b => b.CreatedAt)
             .IsRequired()
+            .ValueGeneratedOnAdd()
             .HasColumnType(DataTypes.datetime2);
         // ModifiedAt
         builder.Property(b => b.ModifiedAt)

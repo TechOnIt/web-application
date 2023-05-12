@@ -19,9 +19,11 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
     #region Ctor
     private readonly IUnitOfWorks _unitOfWorks;
     private readonly IMediator _mediator;
-    private readonly ILogger _logger;
+    private readonly ILogger<CreateStructureCommandHandler> _logger;
 
-    public CreateStructureCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator, ILogger logger)
+    public CreateStructureCommandHandler(IUnitOfWorks unitOfWorks,
+        IMediator mediator,
+        ILogger<CreateStructureCommandHandler> logger)
     {
         _unitOfWorks = unitOfWorks;
         _mediator = mediator;

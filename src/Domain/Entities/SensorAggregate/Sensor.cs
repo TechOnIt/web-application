@@ -1,72 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using TechOnIt.Domain.Common;
-using TechOnIt.Domain.Enums;
+﻿using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Domain.Entities.SensorAggregate;
 
 public class Sensor
 {
-    #region constructure
-    public Sensor()
-    {
+    public Guid Id { get; private set; }
+    public int Pin { get; private set; }
+    public SensorType Type { get; private set; } = SensorType.Thermometer;
+    public DateTime CreatedAt { get; private set; } = DateTime.Now;
+    public DateTime? ModifiedAt { get; private set; }
+    // Relations & Foreignkeys
+    public Guid PlaceId { get; private set; }
+    public virtual Place? Place { get; private set; }
+    public virtual ICollection<SensorReport>? Reports { get; private set; }
 
-    }
-
-    public Sensor(Guid id, SensorType sensorType, Guid placeId)
+    #region Ctor
+    private Sensor() { }
+    public Sensor(int pin, SensorType type, Guid placeId)
     {
-        Id = id;
-        SensorType = sensorType;
+        SetPin(pin);
+        Type = type;
         PlaceId = placeId;
     }
     #endregion
 
-    public Guid Id { get; set; }
-    public SensorType SensorType { get; private set; }
-
-    #region methods
-    public void SetSensorType(string typeName)
+    #region Methods
+    /// <summary>
+    /// Set a pin number for sensor.
+    /// </summary>
+    /// <param name="pin">Pin number between 1-255.</param>
+    public void SetPin(int pin)
     {
-        SensorType = Enumeration.FromDisplayName<SensorType>(typeName);
-    }
+        if (pin <= 0) throw new ArgumentOutOfRangeException("Pin number must between 1-255.");
 
-    public void SetSensorType(int value)
-    {
-        SensorType = Enumeration.FromValue<SensorType>(value);
+        Pin = pin;
     }
-
-    public void SetSensorType(SensorType sensorType)
-    {
-        SensorType = sensorType;
-    }
-
-    public SensorType GetSensorType()
-        => SensorType;
     #endregion
 
-    #region aggregate methods
-    public void ClearReports()
+    #region Aggregate methods
+    /// <summary>
+    /// Add new report for this sensor.
+    /// </summary>
+    /// <param name="newReport">Sensor object model.</param>
+    public void AddReport(SensorReport newReport)
     {
-        Reports.Clear();
-    }
-
-    public void AddReport(PerformanceReport newReport)
-    {
+        if(Reports is null)
+            throw new ArgumentNullException("Sensor reports list is null.");
         Reports.Add(newReport);
     }
-
-    public void RemoveReport(PerformanceReport newReport)
+    /// <summary>
+    /// Remove a specific sensor report.
+    /// </summary>
+    /// <param name="newReport">Sensor report object model.</param>
+    public void RemoveReport(SensorReport newReport)
     {
         Reports.Remove(newReport);
     }
-
-    public ICollection<PerformanceReport> GetReports()
-        => Reports;
-    #endregion
-
-    #region relations & foreignkeys
-    public Guid PlaceId { get; set; }
-
-    public virtual ICollection<PerformanceReport> Reports { get; set; }
     #endregion
 }

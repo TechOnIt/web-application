@@ -1,4 +1,6 @@
-﻿namespace TechOnIt.Domain.Entities.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.SensorAggregate;
+
+namespace TechOnIt.Domain.Entities.StructureAggregate;
 
 public class Place
 {
@@ -12,6 +14,7 @@ public class Place
     public Guid StructureId { get; private set; }
     public virtual Structure? Structure { get; private set; }
     public virtual ICollection<Device>? Devices { get; private set; }
+    public virtual ICollection<Sensor>? Sensors { get; private set; }
     #endregion
 
     #region Ctor

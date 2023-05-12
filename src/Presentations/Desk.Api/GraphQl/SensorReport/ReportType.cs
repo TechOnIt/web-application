@@ -1,6 +1,6 @@
 ﻿using GraphQL.Types;
 
-namespace TechOnIt.Desk.Api.GraphQl.PerformanceReport;
+namespace TechOnIt.Desk.Api.GraphQl.SensorReport;
 
 public class ReportType : ObjectGraphType<ReportGqModel>
 {

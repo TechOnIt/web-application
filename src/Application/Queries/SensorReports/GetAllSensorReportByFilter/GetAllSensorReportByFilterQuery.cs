@@ -1,24 +1,21 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Reports;
 
-namespace TechOnIt.Application.Queries.PerformanceReports.GetAllPerformanceReportByFilter;
+namespace TechOnIt.Application.Queries.SensorReports.GetAllSensorReportByFilter;
 
-public class GetAllPerformanceReportByFilterQuery : IRequest<object>
+public class GetAllSensorReportByFilterQuery : IRequest<object>
 {
     public Guid SensorId { get; set; }
 }
 
-public class GetAllPerformanceReportByFilterQueryHandler : IRequestHandler<GetAllPerformanceReportByFilterQuery, object>
+public class GetAllSensorReportByFilterQueryHandler : IRequestHandler<GetAllSensorReportByFilterQuery, object>
 {
-    #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
-    public GetAllPerformanceReportByFilterQueryHandler(IUnitOfWorks unitOfWorks)
+    public GetAllSensorReportByFilterQueryHandler(IUnitOfWorks unitOfWorks)
     {
         _unitOfWorks = unitOfWorks;
     }
 
-    #endregion
-
-    public async Task<object> Handle(GetAllPerformanceReportByFilterQuery request, CancellationToken cancellationToken)
+    public async Task<object> Handle(GetAllSensorReportByFilterQuery request, CancellationToken cancellationToken)
     {
         try
         {
@@ -26,7 +23,7 @@ public class GetAllPerformanceReportByFilterQueryHandler : IRequestHandler<GetAl
             if (allReports is null)
                 return await Task.FromResult(ResultExtention.NotFound($"can not found reports for sensor with id : {request.SensorId}"));
 
-            return await Task.FromResult(ResultExtention.ListResult(allReports.Adapt<IList<PerformanceReportViewModel>>()));
+            return await Task.FromResult(ResultExtention.ListResult(allReports.Adapt<IList<SensorReportViewModel>>()));
         }
         catch (Exception exp)
         {

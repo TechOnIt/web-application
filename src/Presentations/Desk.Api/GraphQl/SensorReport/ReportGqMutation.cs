@@ -1,9 +1,8 @@
 ﻿using GraphQL;
 using GraphQL.Types;
-using TechOnIt.Application.Commands.PerformanceReports.CreatePerformanceReport;
-using MediatR;
+using TechOnIt.Application.Commands.SensorReports.CreateSensorReport;
 
-namespace TechOnIt.Desk.Api.GraphQl.PerformanceReport;
+namespace TechOnIt.Desk.Api.GraphQl.SensorReport;
 
 public class ReportGqMutation : ObjectGraphType
 {
@@ -17,7 +16,7 @@ public class ReportGqMutation : ObjectGraphType
             {
                 var value = context.GetArgument<int>("Value");
                 var reportContext = context.RequestServices.GetRequiredService<IMediator>();
-                var report = new CreatePerformanceReportCommand
+                var report = new CreateSensorReportCommand
                 {
                     Value = value
                 };

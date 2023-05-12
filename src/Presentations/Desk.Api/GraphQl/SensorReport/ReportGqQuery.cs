@@ -1,8 +1,7 @@
 ﻿using GraphQL.Types;
-using TechOnIt.Application.Queries.PerformanceReports.GetAllPerformanceReportByFilter;
-using MediatR;
+using TechOnIt.Application.Queries.SensorReports.GetAllSensorReportByFilter;
 
-namespace TechOnIt.Desk.Api.GraphQl.PerformanceReport;
+namespace TechOnIt.Desk.Api.GraphQl.SensorReport;
 
 public class ReportGqQuery : ObjectGraphType
 {
@@ -17,7 +16,7 @@ public class ReportGqQuery : ObjectGraphType
         Field<ListGraphType<ReportType>>("ReportFromDb", resolve: context =>
         {
             var reportContext = context.RequestServices.GetRequiredService<IMediator>();
-            return reportContext.Send(new GetAllPerformanceReportByFilterQuery());
+            return reportContext.Send(new GetAllSensorReportByFilterQuery());
         });
     }
 }

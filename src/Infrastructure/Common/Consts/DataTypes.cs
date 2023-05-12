@@ -32,6 +32,10 @@ public static class DataTypes
     /// </summary>
     public const string tinyint = "tinyint"; // https://learn.microsoft.com/en-us/sql/t-sql/data-types/int-bigint-smallint-and-tinyint-transact-sql?view=sql-server-ver16
     public const string numerics = "numeric"; // https://learn.microsoft.com/en-us/sql/t-sql/data-types/decimal-and-numeric-transact-sql?view=sql-server-ver16
+    /// <summary>
+    /// double
+    /// </summary>
+    public const string bigint = "bigint";
     public const string forMoney = "money"; // https://learn.microsoft.com/en-us/sql/t-sql/data-types/money-and-smallmoney-transact-sql?view=sql-server-ver16
     #endregion
 

@@ -47,7 +47,7 @@ public class IdentityContext : DbContext
     public DbSet<Place> Places { get; set; }
     public DbSet<Device> Devices { get; set; }
     public DbSet<Sensor> Sensors { get; set; }
-    public DbSet<PerformanceReport> PerformanceReports { get; set; }
+    public DbSet<SensorReport> SensorReports { get; set; }
     #endregion
 
     #region Generals

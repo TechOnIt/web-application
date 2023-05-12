@@ -27,7 +27,7 @@ public class FindSesnsorByIdQueryHandler : IRequestHandler<FindSesnsorByIdQuery,
             if (getSensor is null)
                 return ResultExtention.NotFound($"can not find sesnsor with id : {request.SensorId}");
 
-            return new SensorViewModel(getSensor.Id, getSensor.SensorType, getSensor.PlaceId);
+            return new SensorViewModel(getSensor.Id, getSensor.Type, getSensor.PlaceId);
         }
         catch (Exception exp)
         {

@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 using TechOnIt.Application;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
-using TechOnIt.Desk.Api.GraphQl.PerformanceReport;
+using TechOnIt.Desk.Api.GraphQl.SensorReport;
 using TechOnIt.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -5,3 +5,6 @@ global using TechOnIt.Domain.Entities.SensorAggregate;
 global using TechOnIt.Domain.Entities.StructureAggregate;
 global using TechOnIt.Domain.ValueObjects;
 global using Xunit;
+global using TechOnIt.Domain.Enums;
+global using Shouldly;
+global using System;

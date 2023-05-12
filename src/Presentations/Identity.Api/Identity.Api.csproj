@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
@@ -6,7 +6,7 @@
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<AssemblyName>$(SolutionName).$(MSBuildProjectName)</AssemblyName>
 		<RootNamespace>$(SolutionName).$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-		<AssemblyVersion>1.2.0.0</AssemblyVersion>
+		<AssemblyVersion>2.0.0.0</AssemblyVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

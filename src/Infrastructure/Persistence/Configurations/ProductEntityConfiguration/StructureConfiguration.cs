@@ -28,12 +28,16 @@ public class StructureConfiguration : IEntityTypeConfiguration<Structure>
         // ApiKey
         builder.OwnsOne(s => s.ApiKey, apiKey =>
         {
-            apiKey.Property(c => c.Value).HasColumnName("ApiKey");
+            apiKey.Property(c => c.Value)
+            .HasColumnName("ApiKey")
+            .HasColumnType(DataTypes.nvarchar100);
         });
         // Password
         builder.OwnsOne(s => s.Password, ph =>
         {
-            ph.Property(pass => pass.Value).HasColumnName("Password");
+            ph.Property(pass => pass.Value)
+            .HasColumnName("Password")
+            .HasColumnType(DataTypes.nvarchar500);
         });
         // CreatedAt
         builder.Property(s => s.CreatedAt)

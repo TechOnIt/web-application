@@ -25,7 +25,7 @@ public class DeviceConfiguration : IEntityTypeConfiguration<Device>
             .HasColumnType(DataTypes.boolean);
         // RowVersion
         builder.Property(a => a.RowVersion)
-            .ValueGeneratedOnUpdate()
+            .ValueGeneratedOnAddOrUpdate()
             .IsRowVersion()
             .IsConcurrencyToken(true);
         // PlaceId

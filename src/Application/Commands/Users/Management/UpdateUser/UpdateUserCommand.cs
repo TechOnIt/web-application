@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Interfaces;
-
-namespace TechOnIt.Application.Commands.Users.Management.UpdateUser;
+﻿namespace TechOnIt.Application.Commands.Users.Management.UpdateUser;
 
 public class UpdateUserCommand : IRequest<object>, ICommittableRequest
 {
@@ -8,7 +6,7 @@ public class UpdateUserCommand : IRequest<object>, ICommittableRequest
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public string? Email { get; set; }
-    public string? ConcurrencyStamp { get; set; }
+    public string RowVersion { get; set; }
 }
 
 public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, object>
@@ -26,21 +24,15 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, objec
 
         try
         {
-            var concurrencyStamp = Concurrency.Parse(request.ConcurrencyStamp);
             var user = await _unitOfWorks.UserRepository.FindByIdAsync(request.UserId, cancellationToken);
-
             if (user == null)
                 return ResultExtention.NotFound("User was not found!");
-
-            if (user.ConcurrencyStamp != concurrencyStamp)
+            if (user.RowVersion != request.RowVersion)
                 return ResultExtention.Failed("User was edited passed times, get latest user info.");
-
             user.SetEmail(request.Email);
             user.SetFullName(new FullName(request.Name, request.Surname));
-
-            user.RefreshConcurrencyStamp();
             await _unitOfWorks.UserRepository.UpdateAsync(user, cancellationToken);
-            return user.ConcurrencyStamp.ToString();
+            return user.RowVersion.ToString();
         }
         catch (Exception exp)
         {

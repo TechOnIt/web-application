@@ -7,16 +7,16 @@ public class LogRecord
 {
     LogRecord() { }
 
-    public int Id { get; private set; }
+    public long Id { get; private set; }
     public string ShortMessage { get; private set; } = string.Empty;
-    public LogLevelType LevelId { get; private set; }
+    public LogLevelType LevelId { get; private set; } = LogLevelType.Information;
     public PresentationAssembly PresentationId { get; set; }
     public string? FullMessage { get; private set; }
     public string? IpAddress { get; private set; }
     public string? Url { get; private set; }
     public string? ReferrerUrl { get; private set; }
     public Guid? UserId { get; private set; }
-    public DateTime CreatedAt { get; private set; }
+    public DateTime CreatedAt { get; private set; } = DateTime.Now;
 
     #region Methods
     /// <summary>

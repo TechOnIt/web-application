@@ -7,17 +7,13 @@ namespace TechOnIt.Domain.ValueObjects;
 
 public class Concurrency : ValueObject
 {
-    public Concurrency()
-    {
-
-    }
-
-    private const string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789qwertyuiopasdfghjklzxcvbnm";
-
     // all value objcets must be immutable
     // its mean : we cant change properties value without constructor
-    public string Value { get; private set; }
+    public string? Value { get; private set; }
 
+    private Concurrency() { }
+
+    private const string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789qwertyuiopasdfghjklzxcvbnm";
     private string GenerateToken(int count = 16)
     {
         var random = new Random();
@@ -51,13 +47,27 @@ public class Concurrency : ValueObject
             return right is null;
         }
 
-        return left.Equals(right);
+        return left.Value.Equals(right.Value);
     }
-
     public static bool operator !=(Concurrency left, Concurrency right) => left.Value != right.Value;
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;
     }
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (ReferenceEquals(obj, null))
+        {
+            return false;
+        }
+        return ((Concurrency)obj == this);
+    }
+    public override int GetHashCode()
+        => Value is null ? 0 : Value.GetHashCode();
     #endregion
 }

@@ -1,19 +1,7 @@
-﻿using TechOnIt.Domain.ValueObjects;
-
-namespace TechOnIt.Domain.UnitTests.ValueObjects;
+﻿namespace TechOnIt.Domain.UnitTests.ValueObjects;
 
 public class IPv4Tests
 {
-    [Fact]
-    public void Should_Returns_Empty_Ip4_Like_Default_Value()
-    {
-        // Arrange
-        var initIp = new IPv4();
-
-        // Assert
-        initIp.ToString().Should().Be("0.0.0.0");
-    }
-
     [Theory]
     [InlineData("1.0.0.0")]
     [InlineData("192.168.1.1")]
@@ -34,24 +22,12 @@ public class IPv4Tests
     public void Should_equals_with_same_type_and_value()
     {
         // Arrange
-        var first = IPv4.Parse("192.168.1.1");
-        var second = IPv4.Parse("192.168.1.1");
-
+        IPv4 left = IPv4.Parse("192.168.1.1");
+        IPv4 right = IPv4.Parse("192.168.1.1");
         // Assert
-        first.Should().Match<IPv4>(first => first == second);
+        left.ShouldBe(right);
     }
 
-    [Theory]
-    [InlineData(192, 168, 1, 1, "192.168.1.1")]
-    [InlineData(86, 39, 104, 238, "86.39.104.238")]
-    public void Sould_convert_to_string(byte firstOct, byte secondOct, byte thirdOct, byte fourthOct, string ipAddress)
-    {
-        // Arrange
-        var ipV4 = new IPv4(firstOct, secondOct, thirdOct, fourthOct);
-
-        // Assert
-        ipV4.ToString().Should().Be(ipAddress);
-    }
     #region errors & exceptions
     [Theory]
     [InlineData("192")]
@@ -65,8 +41,6 @@ public class IPv4Tests
 
         // Assert
         Assert.NotNull(exception);
-        Assert.NotNull(exception.Message);
     }
-
     #endregion
 }

@@ -8,19 +8,21 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         // Id
-        builder.HasKey(u => u.Id); // primary key
+        builder.HasKey(u => u.Id);
         builder.Property(a => a.Id)
             .ValueGeneratedNever();
-
-        // Username
+        // Username - index
+        builder.HasIndex(u => u.Username)
+            .IsUnique();
         builder.Property(u => u.Username)
             .IsRequired()
             .HasColumnType(DataTypes.nvarchar50);
-
         // Password
         builder.OwnsOne(u => u.Password, ph =>
         {
-            ph.Property(u => u.Value).HasColumnName("Password");
+            ph.Property(u => u.Value)
+            .HasColumnName("Password")
+            .HasColumnType(DataTypes.nvarchar500);
         });
 
         // Email
@@ -31,9 +33,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.ConfirmedEmail)
             .HasColumnType(DataTypes.boolean);
 
-        // PhoneNumber - index
-        builder.HasIndex(u => u.PhoneNumber)
-            .IsUnique();
+        // PhoneNumber
         builder.Property(u => u.PhoneNumber)
             .HasColumnType(DataTypes.nvarchar50);
 
@@ -44,17 +44,23 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         // FullName
         builder.OwnsOne(u => u.FullName, b =>
             {
-                b.Property(u => u.Name).HasColumnName("Name");
-                b.Property(u => u.Surname).HasColumnName("Surname");
+                b.Property(u => u.Name)
+                .HasColumnName("Name")
+                .HasColumnType(DataTypes.nvarchar50);
+                b.Property(u => u.Surname)
+                .HasColumnName("Surname")
+                .HasColumnType(DataTypes.nvarchar50);
             });
 
         // RegisteredDateTime
-        builder.Property(u => u.RegisteredDateTime)
+        builder.Property(u => u.RegisteredAt)
             .HasColumnType(DataTypes.datetime2);
 
         // ConcurrencyStamp
-        builder.OwnsOne(u => u.ConcurrencyStamp);
-
+        builder.Property(b => b.RowVersion)
+            .ValueGeneratedOnAddOrUpdate()
+            .IsRowVersion()
+            .IsConcurrencyToken(true);
         // IsBaned
         builder.Property(u => u.IsBaned)
             .HasColumnType(DataTypes.boolean);

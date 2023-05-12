@@ -1,62 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TechOnIt.Domain.Entities.StructureAggregate;
-using TechOnIt.Domain.ValueObjects;
+﻿using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 public class User
 {
-    User() { }
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public string Username { get; private set; } = string.Empty;
+    public string? Email { get; private set; }
+    public bool ConfirmedEmail { get; private set; } = false;
+    public string? PhoneNumber { get; private set; }
+    public bool ConfirmedPhoneNumber { get; private set; } = false;
+    public FullName? FullName { get; private set; }
+    public PasswordHash? Password { get; private set; }
+    public DateTime RegisteredAt { get; private set; } = DateTime.Now;
+    public bool IsBaned { get; private set; } = false;
+    public bool IsDeleted { get; private set; } = false;
+    public short MaxFailCount { get; private set; } = 0;
+    public DateTime? LockOutDateTime { get; private set; }
+    public string? RowVersion { get; private set; }
+    #region Relations
+    public virtual ICollection<UserRole>? UserRoles { get; set; }
+    public virtual ICollection<Structure>? Structures { get; set; }
+    public virtual ICollection<LoginHistory>? LoginHistories { get; set; }
+    public virtual ICollection<LogRecord>? LogHistories { get; set; }
+    #endregion
 
+    #region Ctor
+    User() { }
     public User(string email, string phoneNumber)
     {
         GenerateNewId();
         SetEmail(email);
         SetPhoneNumber(phoneNumber);
-        ConcurrencyStamp = Concurrency.NewToken();
-        RegisteredDateTime = DateTime.Now;
-        IsBaned = false;
-        IsDeleted = false;
-        MaxFailCount = 0;
     }
-
     public User(string phoneNumber)
     {
         GenerateNewId();
         SetPhoneNumber(phoneNumber);
-        ConcurrencyStamp = Concurrency.NewToken();
-        RegisteredDateTime = DateTime.Now;
         UnBan();
-        IsDeleted = false;
-        MaxFailCount = 0;
     }
-
-    public Guid Id { get; private set; }
-    public string Username { get; private set; } = string.Empty;
-    public PasswordHash? Password { get; private set; } // Must be nullable. maybe we use otp in future!
-    public string Email { get; private set; } = string.Empty;
-    public bool ConfirmedEmail { get; private set; }
-    public string PhoneNumber { get; private set; } = string.Empty;
-    public bool ConfirmedPhoneNumber { get; private set; }
-
-    public FullName? FullName { get; private set; }
-    public DateTime RegisteredDateTime { get; private set; }
-    public Concurrency? ConcurrencyStamp { get; private set; }
-    public bool IsBaned { get; private set; }
-    public bool IsDeleted { get; private set; }
-    public short MaxFailCount { get; private set; }
-    public DateTime? LockOutDateTime { get; private set; }
+    #endregion
 
     #region Methods
     private void GenerateNewId()
     {
         Id = Guid.NewGuid();
-    }
-    public void RefreshConcurrencyStamp()
-    {
-        ConcurrencyStamp = Concurrency.NewToken();
     }
     public void SetPassword(PasswordHash password)
     {
@@ -134,12 +122,5 @@ public class User
     public void DeleteLoginHistory(LoginHistory loginHistory)
         => LoginHistories.Remove(loginHistory);
     #endregion
-    #endregion
-
-    #region Relations
-    public virtual ICollection<UserRole>? UserRoles { get; set; }
-    public virtual ICollection<Structure>? Structures { get; set; }
-    public virtual ICollection<LoginHistory>? LoginHistories { get; set; }
-    public virtual ICollection<LogRecord>? LogHistories { get; set; }
     #endregion
 }

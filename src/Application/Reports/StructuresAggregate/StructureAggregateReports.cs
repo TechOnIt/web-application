@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
-using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Application.Reports.StructuresAggregate;
 

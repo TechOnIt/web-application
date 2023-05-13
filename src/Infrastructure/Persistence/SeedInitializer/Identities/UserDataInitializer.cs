@@ -21,7 +21,7 @@ internal class UserDataInitializer : IDataInitializer
     {
         User user1 = new(email: "rezaahmadidvlp@gmail.com", phoneNumber: "09058089095");
         user1.SetFullName(new FullName("Reza", "Ahmadi"));
-        user2.SetPassword(PasswordHash.Parse("123456"));
+        user1.SetPassword(PasswordHash.Parse("123456"));
         user1.ConfirmEmail();
         user1.ConfirmPhoneNumber();
         #region Structure

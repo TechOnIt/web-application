@@ -13,3 +13,4 @@ global using TechOnIt.Domain.Entities.Identity;
 global using TechOnIt.Domain.Entities.StructureAggregate;
 global using TechOnIt.Domain.ValueObjects;
 global using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
+global using Microsoft.Extensions.Logging;

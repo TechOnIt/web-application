@@ -18,23 +18,6 @@ public static class IdentityServiceExtentions
     const string SucceededValidations = "Welcome !";
     #endregion
 
-    public static SigInStatus GetUserSignInStatusResult(this User user, string password = "")
-    {
-        if (user == null)
-            return SigInStatus.NotFound;
-        else if (user.IsBaned is true)
-            return SigInStatus.WrongInformations;
-        else if (user.LockOutDateTime != null)
-            return SigInStatus.LockUser;
-        else if (!string.IsNullOrWhiteSpace(password))
-        {
-            if (user.Password != PasswordHash.Parse(password))
-                return SigInStatus.WrongPassowrd;
-        }
-
-        return SigInStatus.Succeeded;
-    }
-
     public static (SigInStatus Status, string message) GetUserSignInStatusResultWithMessage(this User user, string password = "")
     {
         if (user == null)
@@ -52,21 +35,6 @@ public static class IdentityServiceExtentions
         return (SigInStatus.Succeeded, SucceededValidations);
     }
     
-    public static (SigInStatus Status, string message) GetStructureSignInStatusResultWithMessage(this Structure structure, string password = "")
-    {
-        if (structure == null)
-            return (SigInStatus.NotFound, NotFound);
-        else if (structure.IsActive is false)
-            return (SigInStatus.WrongInformations, WrongInformations);
-        else if (!string.IsNullOrWhiteSpace(password))
-        {
-            if (!structure.Password.VerifyPasswordHash(password))
-                return (SigInStatus.WrongPassowrd, WrongPassowrd);
-        }
-
-        return (SigInStatus.Succeeded, SucceededValidations);
-    }
-
     public static bool IsSendSuccessfully(this SendStatus status)
         => status == SendStatus.Successeded ? true : false;
 
@@ -83,23 +51,4 @@ public static class IdentityServiceExtentions
         var claimsIdentity = identity as ClaimsIdentity;
         return claimsIdentity?.FindFirstValue(claimType);
     }
-
-    public static string GetUserId(this IIdentity identity)
-    {
-        return identity?.FindFirstValue(ClaimTypes.NameIdentifier);
-    }
-
-    public static T GetUserId<T>(this IIdentity identity) where T : IConvertible
-    {
-        var userId = identity?.GetUserId();
-        return userId.HasValue() ? (T)Convert.ChangeType(userId, typeof(T), CultureInfo.InvariantCulture) : default(T);
-    }
-
-    public static string GetUserName(this IIdentity identity)
-    {
-        return identity?.FindFirstValue(ClaimTypes.Name);
-    }
-
-    public static bool HasValue(this string parameter)
-        => parameter != null;
 }

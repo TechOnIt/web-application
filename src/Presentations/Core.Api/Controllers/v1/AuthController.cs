@@ -17,9 +17,20 @@ public class AuthController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SignIn([FromBody] SignInStructureCommand command)
     {
-        var result = await _mediator.Send(command);
-        if (result == null)
-            return NotFound();
-        return Ok(result);
+        try
+        {
+            var result = await _mediator.Send(command);
+            return Ok();
+        }
+        // Wrong api key & password
+        catch (IdentityArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        // Deactive structure.
+        catch (StructureException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }

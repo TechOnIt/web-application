@@ -1,8 +1,5 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Structures.Authentication;
-using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 using TechOnIt.Application.Common.Security.JwtBearer;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Application.Services.Authenticateion.StructuresService;
 
@@ -11,37 +8,38 @@ public class StructureService : IStructureService
     #region Ctor
     private readonly IUnitOfWorks _unitOfWorks;
     private readonly IJwtService _jwtService;
-
-    public StructureService(IUnitOfWorks unitOfWorks, IJwtService jwtService)
+    private readonly ILogger<StructureService> _logger;
+    public StructureService(IUnitOfWorks unitOfWorks,
+        IJwtService jwtService,
+        ILogger<StructureService> logger)
     {
         _jwtService = jwtService;
         _unitOfWorks = unitOfWorks;
+        _logger = logger;
     }
     #endregion
 
-    public async Task<(StructureAccessToken? Token, string Message)?> SignInAsync(string apiKey, string password, CancellationToken cancellationToken = default)
+    public async Task<StructureAccessToken> SignInAsync(string apiKey,
+        string password, CancellationToken cancellationToken = default)
     {
-        StructureAccessToken? accessToken = new();
-        var apiKeyObject = Concurrency.Parse(apiKey);
-        var structure = await _unitOfWorks.StructureRepository.FindByApiKeyNoTrackingAsync(apiKeyObject, cancellationToken);
+        var structure = await _unitOfWorks.StructureRepository.FindByApiKeyAndPasswordAsync(Concurrency.Parse(apiKey), PasswordHash.Parse(password), cancellationToken);
         if (structure is null)
-            return (accessToken, "Structure not found.");
-        var status = structure.GetStructureSignInStatusResultWithMessage(password);
-        if (!status.Status.IsSucceeded())
-            return (accessToken, status.message);
+            throw new IdentityArgumentException("Username or password is wrong!");
+        if(structure.IsActive == false)
+            throw new StructureException("Structure is deactive.");
 
-        accessToken = await GetStructureAccessToken(structure, cancellationToken);
+
+        StructureAccessToken accessToken = await GetStructureAccessToken(structure, cancellationToken);
         if (accessToken is null)
-            status.message = "user is not authenticated";
+            throw new Exception("An error has occured.");
 
-        return (accessToken, status.message);
-
+        return accessToken;
     }
 
     #region Privates
     private async Task<StructureAccessToken?> GetStructureAccessToken(Structure structure, CancellationToken cancellationToken)
     {
-        StructureAccessToken? accessToken = new();
+        StructureAccessToken accessToken = new();
         try
         {
             #region Token
@@ -70,10 +68,9 @@ public class StructureService : IStructureService
             accessToken.RefreshTokenExpireAt = refreshTokenExpiresAt.ToString("yyyy/MM/dd HH:mm:ss");
             #endregion
         }
-        catch
+        catch (Exception ex)
         {
-            // TODO:
-            // Log error!
+            _logger.LogError(ex.Message);
         }
         return accessToken;
     }

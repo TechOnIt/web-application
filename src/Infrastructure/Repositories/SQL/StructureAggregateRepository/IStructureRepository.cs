@@ -7,19 +7,13 @@ namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 public interface IStructureRepository
 {
     #region Structure
-    Task<Structure?> FindByApiKeyNoTrackingAsync(Concurrency apiKey, CancellationToken cancellationToken);
+    Task<Structure?> FindByApiKeyAndPasswordAsync(Concurrency apiKey, PasswordHash password, CancellationToken cancellationToken);
     Task CreateAsync(Structure structure, CancellationToken cancellationToken = default);
-    //Task UpdateAsync(Structure structure, CancellationToken cancellationToken = default);
     Task<bool> UpdateAsync(Structure structure, CancellationToken cancellationToken);
-    Task DeleteAsync(Structure structure, CancellationToken cancellationToken);
-    //Task DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
     Task<bool> DeleteByIdAsync(Guid structureId, CancellationToken cancellationToken);
-    Task<Structure?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<Structure?> GetByIdAsync(Guid structureId, CancellationToken cancellationToken = default);
     Task<Structure?> GetByIdAsyncAsNoTracking(Guid structureId, CancellationToken cancellationToken = default);
-    Task<IList<Structure>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<IList<Structure>> GetAllByFilterAsync(CancellationToken cancellationToken, Expression<Func<Structure, bool>> filter = null);
-    Task<bool> IsExistsStructoreByIdAsync(Guid structoreId, CancellationToken cancellationToken);
     #endregion
 
     #region Common

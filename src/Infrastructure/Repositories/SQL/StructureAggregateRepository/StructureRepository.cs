@@ -18,7 +18,7 @@ public class StructureRepository : IStructureRepository
 
     #region Structure
     public async Task<Structure?> FindByApiKeyAndPasswordAsync(Concurrency apiKey, PasswordHash password, CancellationToken cancellationToken)
-        => await _context.Structures.AsNoTracking().Where(s => s.ApiKey == apiKey && s.Password == password).FirstOrDefaultAsync(cancellationToken);
+        => await _context.Structures.AsNoTracking().Where(s => s.ApiKey.Value == apiKey.Value && s.Password.Value == password.Value).FirstOrDefaultAsync(cancellationToken);
     public async Task CreateAsync(Structure structure, CancellationToken cancellationToken) => await _context.Structures.AddAsync(structure, cancellationToken);
     public async Task<bool> UpdateAsync(Structure structure, CancellationToken cancellationToken)
     {

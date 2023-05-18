@@ -20,7 +20,7 @@ public class AuthController : ControllerBase
         try
         {
             var result = await _mediator.Send(command);
-            return Ok();
+            return Ok(result);
         }
         // Wrong api key & password
         catch (IdentityArgumentException ex)

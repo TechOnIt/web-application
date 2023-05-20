@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TechOnIt.Core.Api.Controllers.v1;
+namespace TechOnIt.Board.Api.Controllers.v1;
 
 [Authorize]
 [ApiController]

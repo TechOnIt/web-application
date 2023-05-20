@@ -156,7 +156,7 @@ input:-webkit-autofill {
 
 [data-bs-theme=dark] {
     color-scheme: dark !important;
-    --bs-body-color: #e7fce7;
+    --bs-body-color: #daedda;
     --bs-body-color-rgb: 173,181,189 !important;
     --body-bg: #20272d;
     --body-bg-rgb: 33,37,41 !important;
@@ -329,4 +329,10 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px var(--bs-body-bg) inset !important;
+}
+
+.special-text-color {
+    background: linear-gradient(41deg,#ffe727,#05892c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

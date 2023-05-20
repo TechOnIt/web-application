@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCookieCommands;
 
-namespace TechOnIt.Identity.WebUI.Controllers;
+namespace TechOnIt.Admin.WebUI.Controllers;
 
 public class AuthenticationController : Controller
 {

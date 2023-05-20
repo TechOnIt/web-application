@@ -3,7 +3,7 @@ using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Queries.Users.Dashboard.GetUserInfoByUsername;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
-namespace TechOnIt.Identity.WebUI.Areas.Manage.Controllers;
+namespace TechOnIt.Admin.WebUI.Areas.Manage.Controllers;
 
 [Area("Manage")]
 public class UserController : Controller

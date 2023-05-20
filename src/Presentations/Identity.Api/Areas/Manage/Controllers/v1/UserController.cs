@@ -2,7 +2,7 @@
 using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
-namespace TechOnIt.Identity.Api.Areas.Manage.Controllers.v1;
+namespace TechOnIt.Admin.Api.Areas.Manage.Controllers.v1;
 
 [ApiController]
 [Area("manage")]

@@ -28,7 +28,7 @@
     <ProjectReference Include="..\..\..\src\Application\Application.csproj" />
     <ProjectReference Include="..\..\..\src\Domain\Domain.csproj" />
     <ProjectReference Include="..\..\..\src\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\src\Presentations\Identity.Api\Identity.Api.csproj" />
+    <ProjectReference Include="..\..\..\src\Presentations\Identity.Api\Admin.Api.csproj" />
   </ItemGroup>
 
 </Project>

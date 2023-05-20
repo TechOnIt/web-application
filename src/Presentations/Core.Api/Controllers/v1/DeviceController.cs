@@ -4,7 +4,7 @@ using TechOnIt.Application.Common.Extentions;
 using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork.Filters;
 using TechOnIt.Application.Queries.Devices.GetAllDevicesByStructureId;
 
-namespace TechOnIt.Core.Api.Controllers.v1;
+namespace TechOnIt.Board.Api.Controllers.v1;
 
 [Authorize]
 [ApiController]

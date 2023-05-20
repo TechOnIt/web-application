@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TechOnIt.Application.Commands.Structures.Authentication.SignInCommands;
 
-namespace TechOnIt.Core.Api.Controllers.v1;
+namespace TechOnIt.Board.Api.Controllers.v1;
 
 [Route("v1/[controller]/[action]")]
 public class AuthController : ControllerBase
@@ -20,7 +20,7 @@ public class AuthController : ControllerBase
         try
         {
             var result = await _mediator.Send(command);
-            return Ok();
+            return Ok(result);
         }
         // Wrong api key & password
         catch (IdentityArgumentException ex)

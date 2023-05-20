@@ -24,8 +24,10 @@ public class DeviceChangeHighStateCommandHandler : IRequestHandler<DeviceChangeH
         var device = await _unitOfWork.DeviceRepositry.FindByIdAsync(request.DeviceId, cancellationToken);
         if (device is null)
             return false;
-
-        device.High();
+        if (request.IsHigh)
+            device.High();
+        else
+            device.Low();
         await _unitOfWork.DeviceRepositry.UpdateAsync(device, cancellationToken);
         await _unitOfWork.SaveAsync(cancellationToken);
         return true;

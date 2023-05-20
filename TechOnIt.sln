@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Applicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentations", "Presentations", "{1657E8FF-8204-41A8-B43F-5FA4E518FA1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Api", "src\Presentations\Identity.Api\Identity.Api.csproj", "{C2E790A1-39F7-4D42-A513-F4E93631ABA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Api", "src\Presentations\Identity.Api\Admin.Api.csproj", "{C2E790A1-39F7-4D42-A513-F4E93631ABA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{519DB740-4628-4817-A590-FC6904C70DE3}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Board.Api", "src\Presentati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Desk.WebUI", "src\Presentations\Desk.WebUI\Desk.WebUI.csproj", "{E4DFE766-D45F-42DE-A188-5733E057A913}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.WebUI", "src\Presentations\Identity.WebUI\Identity.WebUI.csproj", "{B7F5C5D2-3D29-47DD-95E2-FF552DAA7E31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.WebUI", "src\Presentations\Identity.WebUI\Admin.WebUI.csproj", "{B7F5C5D2-3D29-47DD-95E2-FF552DAA7E31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

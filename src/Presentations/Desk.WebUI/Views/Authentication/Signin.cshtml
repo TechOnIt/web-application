@@ -4,9 +4,10 @@
 
 <div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
     <div class="w-100 text-center">
-        <img class="mx-auto" src="~/assets/images/logo/logo.svg" width="60" height="85" />
+        <img class="mx-auto user-select-none" src="~/assets/images/logo/logo.svg" width="60" height="85" />
     </div>
-    <h3 class="fw-bold text-center mb-4 mt-3">Welcome back!</h3>
+    <h1 class="special-text-color fw-bolder text-center mt-3">Technology On It</h1>
+    <h4 class="text-center mb-4 mt-3 text-muted">Welcome back!</h4>
     <div class="pt-4">
         <form method="post" action="signin">
             @if (TempData["signin-summery"] is not null)
@@ -21,11 +22,11 @@
             </div>*@
             <div class="form_group field mb-3">
                 <input id="username" class="form_field" name="username" type="text" placeholder="Username" required />
-                <label for="name" class="form_label">Username</label>
+                <label for="username" class="form_label">Username</label>
             </div>
             <div class="form_group field mb-3">
                 <input id="password" class="form_field" name="password" type="password" placeholder="Password" required />
-                <label for="name" class="form_label">Password</label>
+                <label for="password" class="form_label">Password</label>
             </div>
             <div class="mb-3">
                 <div class="form-check">

@@ -4,7 +4,7 @@ using TechOnIt.Application.Commands.Users.Authentication.SignInOtpCommands;
 using TechOnIt.Application.Common.Enums.JwtServices;
 using TechOnIt.Application.Common.Security.JwtBearer;
 
-namespace TechOnIt.Identity.Api.Controllers.v1;
+namespace TechOnIt.Admin.Api.Controllers.v1;
 
 [ApiController]
 [Route("v1/[controller]/[action]")]

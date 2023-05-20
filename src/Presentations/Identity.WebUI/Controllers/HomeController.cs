@@ -1,8 +1,6 @@
-﻿using TechOnIt.Identity.WebUI.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
-namespace TechOnIt.Identity.WebUI.Controllers
+namespace TechOnIt.Admin.WebUI.Controllers
 {
     public class HomeController : Controller
     {

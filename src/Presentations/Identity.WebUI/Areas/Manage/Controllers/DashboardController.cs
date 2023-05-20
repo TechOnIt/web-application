@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Application.Queries.Users.Dashboard.GetNewUsersCount;
 
-namespace TechOnIt.Identity.WebUI.Areas.Manage.Controllers;
+namespace TechOnIt.Admin.WebUI.Areas.Manage.Controllers;
 
 [Area("Manage")]
 public class DashboardController : Controller

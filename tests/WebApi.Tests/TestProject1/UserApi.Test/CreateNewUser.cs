@@ -2,6 +2,7 @@
 using FluentResults;
 using TechOnIt.Application.Commands.Users.Management.CreateUser;
 using Microsoft.AspNetCore.Mvc;
+using TechOnIt.Admin.Api.Areas.Manage.Controllers.v1;
 
 namespace WebApi.Tests.UserApi.Test;
 

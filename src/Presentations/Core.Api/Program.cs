@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
     {
         policy.AllowAnyHeader()
             .AllowAnyMethod()
-            .WithOrigins("*", "http://localhost:3000")
+            .AllowAnyOrigin()
             .SetIsOriginAllowed(_ => true)
             .AllowCredentials()
             .WithMethods("GET", "PUT", "DELETE", "POST", "PATCH"); //not really necessary when AllowAnyMethods is used.;
@@ -78,18 +78,14 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Swagger}/{action=Index}/{id?}");
-
-    endpoints.MapControllerRoute(
+app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=General}/{action=Index}/{id?}");
-
-    endpoints.MapControllers();
-});
+app.MapControllers();
 
 await app.RunAsync();
 

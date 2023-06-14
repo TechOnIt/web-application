@@ -4,3 +4,4 @@ global using Microsoft.AspNetCore.Mvc;
 global using TechOnIt.Admin.WebUI.Models;
 global using TechOnIt.Application;
 global using TechOnIt.Infrastructure;
+global using TechOnIt.Admin.WebUI.Consts;

@@ -32,6 +32,9 @@ $dark: #282d38;
         font-size: 1.3rem;
         cursor: text;
         top: 20px;
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        user-select: none !important;
     }
 }
 

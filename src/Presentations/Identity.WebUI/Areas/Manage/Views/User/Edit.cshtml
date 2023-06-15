@@ -10,6 +10,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="container-fluid">
+                    @*- User Avatar -*@
                     <div class="row">
                         <div class="col-12 mb-3">
                             <div class="rounded-2" style="width:115px; height:115px;background-image:url('/assets/images/profile_avatar_placeholder.png');background-size:cover;" data-bs-toggle="tooltip" data-bs-title="Comming Soon...">
@@ -23,7 +24,8 @@
                             </div>
                         </div>
                     </div>
-                    <form action="/Manage/User/Update" method="post">
+                    @*- Update User Information -*@
+                    <form action="/manage/user/update" method="post">
                         <h3 class="text-uppercase">Account Information</h3>
                         @*- User Id -*@
                         <div class="row">

@@ -23,12 +23,18 @@
                             </div>
                         </div>
                     </div>
-                    <form method="post" action="edit">
+                    <form action="/Manage/User/Update" method="post">
                         <h3 class="text-uppercase">Account Information</h3>
+                        @*- User Id -*@
+                        <div class="row">
+                            <div>
+                                <input name="UserId" type="hidden" value="@Model.Id" />
+                            </div>
+                        </div>
                         @*- Concorrency stamp -*@
                         <div class="row">
                             <div>
-                                <input type="hidden" value="@Model.ConcurrencyStamp" />
+                                <input name="ConcurrencyStamp" type="hidden" value="@Model.ConcurrencyStamp" />
                             </div>
                         </div>
                         @*- Name And Surname -*@
@@ -36,13 +42,13 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="mb-1">First Name</label>
-                                    <input class="form-control form-control-sm" type="text" maxlength="30" value="@Model.FullName.Name" />
+                                    <input class="form-control form-control-sm" name="Name" type="text" maxlength="30" value="@Model.FullName.Name" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="mb-1">Surname</label>
-                                    <input class="form-control form-control-sm" type="text" maxlength="30" value="@Model.FullName.Surname" />
+                                    <input class="form-control form-control-sm" name="Surname" type="text" maxlength="30" value="@Model.FullName.Surname" />
                                 </div>
                             </div>
                         </div>
@@ -51,7 +57,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="mb-1">Username</label>
-                                    <input class="form-control form-control-sm" type="text" maxlength="10" value="@Model.Username" />
+                                    <input class="form-control form-control-sm" name="Username" type="text" maxlength="200" value="@Model.Username" />
                                 </div>
                             </div>
                         </div>
@@ -60,7 +66,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="mb-1">Email</label>
-                                    <input class="form-control form-control-sm" type="email" maxlength="200" value="@Model.Email" />
+                                    <input class="form-control form-control-sm" name="Email" type="email" maxlength="200" value="@Model.Email" />
                                 </div>
                             </div>
                         </div>
@@ -69,7 +75,7 @@
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label class="mb-1">Phone Number</label>
-                                    <input class="form-control form-control-sm" type="text" maxlength="11" value="@Model.PhoneNumber" />
+                                    <input class="form-control form-control-sm" name="PhoneNumber" type="text" maxlength="11" value="@Model.PhoneNumber" />
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 ﻿using TechOnIt.Application.Commands.Users.Management.CreateUser;
+using TechOnIt.Application.Commands.Users.Management.UpdateUser;
 using TechOnIt.Application.Common.Models;
-using TechOnIt.Application.Queries.Users.Dashboard.GetUserInfoByUsername;
+using TechOnIt.Application.Queries.Users.Dashboard.GetUserInfoById;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
 namespace TechOnIt.Admin.WebUI.Areas.Manage.Controllers;
@@ -48,14 +49,21 @@ public class UserController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(string id, CancellationToken cancellationToken)
     {
-        var userViewModel = await _mediator.Send(new GetUserInfoByUsernameQuery()
+        var userViewModel = await _mediator.Send(new GetUserInfoByIdQuery()
         {
-            username = id
+            Id = id
         }, cancellationToken);
         if (userViewModel == null)
         {
             // NotFound
         }
         return View(userViewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromForm] UpdateUserCommand command, CancellationToken stoppingToken)
+    {
+        var updateUserCommandResult = await _mediator.Send(command, stoppingToken);
+        return Redirect("/manage/user/edit/" + command.UserId);
     }
 }

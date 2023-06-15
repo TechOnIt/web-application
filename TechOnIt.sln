@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Desk.WebUI", "src\Presentat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.WebUI", "src\Presentations\Identity.WebUI\Admin.WebUI.csproj", "{B7F5C5D2-3D29-47DD-95E2-FF552DAA7E31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "src\Presentations\Framework\Framework.csproj", "{60B2016A-3F3F-4533-9C29-720B728E3FA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{B7F5C5D2-3D29-47DD-95E2-FF552DAA7E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7F5C5D2-3D29-47DD-95E2-FF552DAA7E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7F5C5D2-3D29-47DD-95E2-FF552DAA7E31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60B2016A-3F3F-4533-9C29-720B728E3FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60B2016A-3F3F-4533-9C29-720B728E3FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60B2016A-3F3F-4533-9C29-720B728E3FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60B2016A-3F3F-4533-9C29-720B728E3FA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +111,7 @@ Global
 		{90707E72-DF6A-4D5B-BDD1-0366E353B791} = {1657E8FF-8204-41A8-B43F-5FA4E518FA1B}
 		{E4DFE766-D45F-42DE-A188-5733E057A913} = {1657E8FF-8204-41A8-B43F-5FA4E518FA1B}
 		{B7F5C5D2-3D29-47DD-95E2-FF552DAA7E31} = {1657E8FF-8204-41A8-B43F-5FA4E518FA1B}
+		{60B2016A-3F3F-4533-9C29-720B728E3FA9} = {1657E8FF-8204-41A8-B43F-5FA4E518FA1B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B6025CF-38B6-4390-8C05-9E134BB37E6E}

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
 namespace TechOnIt.Admin.Api.Areas.Manage.Controllers.v1;
@@ -55,7 +54,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     [Authorize]
-    public async Task<IActionResult> SetPassword([FromBody] SetUserPasswordCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> ResetPassword([FromBody] ResetUserPasswordCommand command, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
         return Ok(result);

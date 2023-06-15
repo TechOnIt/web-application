@@ -1,4 +1,5 @@
 ﻿using TechOnIt.Application.Commands.Users.Management.CreateUser;
+using TechOnIt.Application.Commands.Users.Management.ResetUserPassword;
 using TechOnIt.Application.Commands.Users.Management.UpdateUser;
 using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Queries.Users.Dashboard.GetUserInfoById;
@@ -64,6 +65,13 @@ public class UserController : Controller
     public async Task<IActionResult> Update([FromForm] UpdateUserCommand command, CancellationToken stoppingToken)
     {
         var updateUserCommandResult = await _mediator.Send(command, stoppingToken);
+        return Redirect("/manage/user/edit/" + command.UserId);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ResetPassword([FromForm] ResetUserPasswordCommand command, CancellationToken stoppingToken)
+    {
+        var resetUserPasswordCommandResult = await _mediator.Send(command, stoppingToken);
         return Redirect("/manage/user/edit/" + command.UserId);
     }
 }

@@ -1,11 +1,8 @@
-﻿using TechOnIt.Application.Common.Constants;
-using TechOnIt.Application.Common.Models;
+﻿namespace TechOnIt.Application.Commands.Users.Management.ResetUserPassword;
 
-namespace TechOnIt.Application.Commands.Users.Management.SetUserPassword;
-
-public class SetUserPasswordCommandValidation : BaseFluentValidator<SetUserPasswordCommand>
+public class ResetUserPasswordCommandValidation : BaseFluentValidator<ResetUserPasswordCommand>
 {
-    public SetUserPasswordCommandValidation()
+    public ResetUserPasswordCommandValidation()
     {
         RuleFor(u => u.UserId)
             .NotEmpty()

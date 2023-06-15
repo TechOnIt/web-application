@@ -8,12 +8,19 @@ public class UpdateUserCommandValidator : BaseFluentValidator<UpdateUserCommand>
             .NotEmpty()
             .NotNull();
 
-        RuleFor(u => u.Name)
+        When(u => !string.IsNullOrEmpty(u.Name) && u.Name.Length > 0, () =>
+        {
+            RuleFor(u => u.Name)
+            .MinimumLength(3)
             .MaximumLength(50);
+        });
 
-        RuleFor(u => u.Surname)
-            .MaximumLength(50)
-            .NotEmpty();
+        When(u => !string.IsNullOrEmpty(u.Surname) && u.Surname.Length > 0, () =>
+        {
+            RuleFor(u => u.Surname)
+            .MinimumLength(3)
+            .MaximumLength(50);
+        });
 
         RuleFor(u => u.Email)
             .NotEmpty()

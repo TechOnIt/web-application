@@ -49,7 +49,7 @@
                         <tr>
                             <th>@count.ToString("00")</th>
                             <td>
-                                <a class="nav-link p-0" href="/manage/user/edit/@user.Username">@user.Username</a>
+                                @user.Username
                             </td>
                             <td>
                                 @if (user.FullName is not null)
@@ -72,7 +72,7 @@
                                 @*- Delete button -*@
                                 @*<button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>*@
                                 @*- Edit button -*@
-                                @*<button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>*@
+                                <a href="/manage/user/edit/@user.Id" class="btn btn-sm btn-warning"><i class="fa fa-user-edit"></i></a>
                             </td>
                         </tr>
                         count++;

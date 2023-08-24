@@ -70,12 +70,6 @@ public static class ConfigureServices
             fv.RegisterValidatorsFromAssemblyContaining<BaseFluentValidator<object>>();
         });
 
-        // Register validator's.
-        services
-            // Users.management
-            .AddScoped<IValidator<CreateRoleCommand>, CreateRoleCommandValidator>()
-            ;
-
         return services;
     }
 

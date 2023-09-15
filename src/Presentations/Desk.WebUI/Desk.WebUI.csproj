@@ -26,16 +26,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Application\Application.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Folder Include="Areas\Dashboard\Models\" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <None Include="bundleconfig.json" />
 	  <None Include="compilerconfig.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Framework\Framework.csproj" />
 	</ItemGroup>
 
 </Project>

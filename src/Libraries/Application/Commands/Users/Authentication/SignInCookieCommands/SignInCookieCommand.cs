@@ -66,3 +66,16 @@ public class SignInCookieCommandHandler : IRequestHandler<SignInCookieCommand, b
         return true;
     }
 }
+
+public class SignInCookieCommandValidation : BaseFluentValidator<SignInCookieCommand>
+{
+    public SignInCookieCommandValidation()
+    {
+        RuleFor(u => u.Username)
+            .NotEmpty();
+
+        RuleFor(u => u.Password)
+            .MinimumLength(4)
+            .NotEmpty();
+    }
+}

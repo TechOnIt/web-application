@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TechOnIt.Application.Commands.Roles.Management.CreateRole;
 using TechOnIt.Application.Common.Behaviors;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Application.Common.Frameworks.Middlewares;
@@ -22,6 +21,7 @@ using TechOnIt.Application.Services.AssemblyServices;
 using TechOnIt.Application.Services.Authenticateion;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 using TechOnIt.Application.Services.Authenticateion.StructuresService;
+using TechOnIt.Application.Services.Settings;
 
 namespace TechOnIt.Application;
 
@@ -29,7 +29,8 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<IUnitOfWorks, UnitOfWork>();
+        services.AddScoped<IUnitOfWorks, UnitOfWork>()
+            .AddScoped<ISettingService, SettingService>();
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>))
@@ -69,12 +70,6 @@ public static class ConfigureServices
         {
             fv.RegisterValidatorsFromAssemblyContaining<BaseFluentValidator<object>>();
         });
-
-        // Register validator's.
-        services
-            // Users.management
-            .AddScoped<IValidator<CreateRoleCommand>, CreateRoleCommandValidator>()
-            ;
 
         return services;
     }

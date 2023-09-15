@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Text;
+﻿using System.Text;
 
 namespace TechOnIt.Application.Common.Behaviors
 {
@@ -40,7 +39,7 @@ namespace TechOnIt.Application.Common.Behaviors
             {
                 #region append all errors into an instance of string builder
 
-                var errorBuilder = new StringBuilder();
+                StringBuilder errorBuilder = new();
                 errorBuilder.AppendLine("Invalid command, reasons: ");
 
                 foreach (var error in errors)
@@ -51,7 +50,7 @@ namespace TechOnIt.Application.Common.Behaviors
                 #endregion
 
                 // throw errors as exception
-                throw new Exception(errorBuilder.ToString());
+                throw new ArgumentException(errorBuilder.ToString());
             }
             else
             {

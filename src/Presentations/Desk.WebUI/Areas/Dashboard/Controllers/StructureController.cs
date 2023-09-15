@@ -6,11 +6,13 @@ namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers;
 [Area("Dashboard")]
 public class StructureController : Controller
 {
+    #region Ctor & DI
     private readonly IMediator _mediator;
     public StructureController(IMediator mediator)
     {
         _mediator = mediator;
     }
+    #endregion
 
     [HttpGet]
     public IActionResult Index() => View();

@@ -22,7 +22,7 @@ public class StructureController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _mediator.Send(new GetAllByFilterStructureCommand());
+        var result = await _mediator.Send(new GetAllByFilterStructureQuery());
         return Ok(result);
     }
     #endregion

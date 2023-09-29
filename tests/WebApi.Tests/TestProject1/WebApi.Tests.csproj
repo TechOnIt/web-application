@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Presentations\Admin.Api\Admin.Api.csproj" />
     <ProjectReference Include="..\..\..\src\Presentations\Identity.Api\Admin.Api.csproj" />
   </ItemGroup>
 

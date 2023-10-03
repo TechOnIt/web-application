@@ -1,3 +1,21 @@
+/* Scrollbar Start */
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c8cbcf;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #babec4;
+    }
+
+::-webkit-scrollbar-track {
+    background: var(--bs-body-bg);
+}
+/* Scrollbar legend */
+
 html {
     position: relative;
     min-height: 100%;
@@ -13,6 +31,13 @@ input:-webkit-autofill:active {
 body {
     min-height: 100vh;
 }
+
+    body.home-page-body > main.container {
+        max-width: inherit;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
 
 .bg-dark-noise {
     background-image: url(/assets/images/dark-noise.jpg);
@@ -67,11 +92,11 @@ table tr:hover td.tools {
     position: relative;
 }
 
-.password-control button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 3px 11px;
-    background: unset;
-    border: unset;
-}
+    .password-control button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 3px 11px;
+        background: unset;
+        border: unset;
+    }

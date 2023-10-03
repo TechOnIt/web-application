@@ -9,7 +9,6 @@
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            await Task.Delay(15000);
             return View();
         }
     }

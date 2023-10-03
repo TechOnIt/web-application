@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var bodyClass = ViewData["BodyClass"];
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,8 +10,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @* Fonts *@
+    <link rel="preload" as="style" href="/fonts/barlow/css/barlow.min.css" onload="this.rel='stylesheet'" />
 </head>
-<body class="d-flex flex-column min-vh-100 bg-white-noise">
+<body class="d-flex flex-column min-vh-100 bg-white-noise @bodyClass">
     <partial name="_Header" />
     <main class="container pb-3 h-100" role="main">
         @RenderBody()

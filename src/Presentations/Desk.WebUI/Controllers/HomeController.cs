@@ -4,19 +4,23 @@ namespace TechOnIt.Desk.WebUI.Controllers;
 
 public class HomeController : Controller
 {
+    #region Ctor & DI
+
     private readonly ILogger<HomeController> _logger;
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
     }
 
+    #endregion
+
     [HttpGet]
     public IActionResult Index()
     {
         if (User.Identity is not null && User.Identity.IsAuthenticated)
-            return Redirect("/dashboard/structure");
-        return Redirect("/authentication/signin");
-        //return View();
+            return Redirect("/dashboard");
+        //return Redirect("/authentication/signin");
+        return View();
     }
 
     [HttpGet]

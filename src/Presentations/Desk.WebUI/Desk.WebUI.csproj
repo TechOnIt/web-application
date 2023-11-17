@@ -10,9 +10,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Areas\Dashboard\Models\**" />
 	  <Compile Remove="wwwroot\fonts\barlow\files\**" />
+	  <Content Remove="Areas\Dashboard\Models\**" />
 	  <Content Remove="wwwroot\fonts\barlow\files\**" />
+	  <EmbeddedResource Remove="Areas\Dashboard\Models\**" />
 	  <EmbeddedResource Remove="wwwroot\fonts\barlow\files\**" />
+	  <None Remove="Areas\Dashboard\Models\**" />
 	  <None Remove="wwwroot\fonts\barlow\files\**" />
 	</ItemGroup>
 
@@ -23,10 +27,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.65" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Areas\Dashboard\Models\" />
 	</ItemGroup>
 
 	<ItemGroup>

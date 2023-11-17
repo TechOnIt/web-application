@@ -11,9 +11,19 @@
 
 @await Component.InvokeAsync("HomePageTop")
 
-<div class="d-none d-sm-block text-center">
+<div class="d-none d-sm-block text-center mt-4">
     <h1 class="display-4">Welcome</h1>
     <p>Manage and track users activities and assets in identity panel.</p>
+    <div class="text-center">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a class="btn btn-success rounded-pill" href="/manage/dashboard">Manage</a>
+        }
+        else
+        {
+            <a class="btn btn-success rounded-pill" href="/authentication/signin">Get Started <i class="fa fa-angle-right"></i></a>
+        }
+    </div>
 </div>
 
 <div class="container-fluid py-3 d-sm-none vh-100 d-flex flex-column justify-content-between">

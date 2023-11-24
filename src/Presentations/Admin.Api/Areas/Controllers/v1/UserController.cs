@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
-namespace TechOnIt.Admin.Api.Areas.Manage.Controllers.v1;
+namespace TechOnIt.Admin.Api.Areas.Controllers.v1;
 
 [ApiController]
 [Area("manage")]

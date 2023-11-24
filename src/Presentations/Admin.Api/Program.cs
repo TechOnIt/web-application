@@ -107,18 +107,18 @@ try
         License = license
     };
 
-    //builder.Services.AddSwaggerGen(o =>
-    //{
-    //    o.SwaggerDoc("v1", info);
-    //    o.AddSecurityDefinition("Bearer", securityScheme);
-    //    o.AddSecurityRequirement(securityReq);
-    //});
+    builder.Services.AddSwaggerGen(o =>
+    {
+        o.SwaggerDoc("v1", info);
+        o.AddSecurityDefinition("Bearer", securityScheme);
+        o.AddSecurityRequirement(securityReq);
+    });
 
     #endregion
 
     var app = builder.Build();
-    //app.UseSwagger();
-    //app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     #region HSTS
     if (!app.Environment.IsDevelopment())

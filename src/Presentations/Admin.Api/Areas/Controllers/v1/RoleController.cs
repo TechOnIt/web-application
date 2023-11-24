@@ -3,7 +3,7 @@ using TechOnIt.Application.Commands.Roles.Management.DeleteRole;
 using TechOnIt.Application.Commands.Roles.Management.UpdateRole;
 using TechOnIt.Application.Queries.Roles.GetAllRoles;
 
-namespace TechOnIt.Admin.Api.Areas.Manage.Controllers.v1;
+namespace TechOnIt.Admin.Api.Areas.Controllers.v1;
 
 [Area("manage")]
 [ApiController]

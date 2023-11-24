@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desk", "Desk\Desk.csproj", "{E6D210A8-0BB6-4AE9-AA36-D2089459B121}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechonitAllTests", "TechonitAllTests\TechonitAllTests.csproj", "{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{E6D210A8-0BB6-4AE9-AA36-D2089459B121}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6D210A8-0BB6-4AE9-AA36-D2089459B121}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6D210A8-0BB6-4AE9-AA36-D2089459B121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{519DB740-4628-4817-A590-FC6904C70DE3} = {80E4B311-731D-4B09-B0AF-2B0C48E7442F}
 		{80E4B311-731D-4B09-B0AF-2B0C48E7442F} = {65A0C03D-0E76-46FD-AC06-D031D7271DCB}
 		{E6D210A8-0BB6-4AE9-AA36-D2089459B121} = {1657E8FF-8204-41A8-B43F-5FA4E518FA1B}
+		{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8} = {768E65F1-85E8-4AAD-AEBA-EB43B978F555}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B6025CF-38B6-4390-8C05-9E134BB37E6E}

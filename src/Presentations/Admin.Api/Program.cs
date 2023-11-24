@@ -60,7 +60,7 @@ try
     ConfigureServices(builder);
     builder.Services.AddAuthorization();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    //builder.Services.AddSwaggerGen();
 
     #region swagger authorization
     var securityScheme = new OpenApiSecurityScheme()
@@ -107,18 +107,18 @@ try
         License = license
     };
 
-    builder.Services.AddSwaggerGen(o =>
-    {
-        o.SwaggerDoc("v1", info);
-        o.AddSecurityDefinition("Bearer", securityScheme);
-        o.AddSecurityRequirement(securityReq);
-    });
+    //builder.Services.AddSwaggerGen(o =>
+    //{
+    //    o.SwaggerDoc("v1", info);
+    //    o.AddSecurityDefinition("Bearer", securityScheme);
+    //    o.AddSecurityRequirement(securityReq);
+    //});
 
     #endregion
 
     var app = builder.Build();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    //app.UseSwagger();
+    //app.UseSwaggerUI();
 
     #region HSTS
     if (!app.Environment.IsDevelopment())

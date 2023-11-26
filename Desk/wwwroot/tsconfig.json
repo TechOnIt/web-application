@@ -12,6 +12,8 @@
     //"wwwroot"
   ],
   "include": [
-    "scripts/**/*"
+    "scripts/**/*",
+    "scripts/interfaces/**/*",
+    "scripts/services/**/*"
   ]
 }

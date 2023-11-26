@@ -6,6 +6,7 @@ using TechOnIt.Infrastructure.Persistence.Context;
 using TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 using TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 using TechOnIt.Infrastructure.Repositories.SQL.Reports;
+using TechOnIt.Infrastructure.Repositories.SQL.HeavyTransaction;
 
 namespace TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
@@ -95,14 +96,28 @@ public class UnitOfWork : IUnitOfWorks
 
     #region Report Repository
     private IReportRepository _reportRepository;
-    public IReportRepository ReportRepository 
+    public IReportRepository ReportRepository
     {
         get
         {
-            if(_reportRepository is null)
+            if (_reportRepository is null)
                 _reportRepository = new ReportRepository(_context);
 
             return _reportRepository;
+        }
+    }
+    #endregion
+
+    #region Ado .net
+    private IAdoRepository _adoRepository;
+    public IAdoRepository AdoRepository
+    {
+        get
+        {
+            if (_adoRepository is null)
+                _adoRepository = new AdoRepository();
+
+            return _adoRepository;
         }
     }
     #endregion

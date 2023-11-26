@@ -2,7 +2,7 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "noEmitOnError": true,
-    "removeComments": false,
+    "removeComments": true,
     "sourceMap": true,
     "target": "ES6",
     "outDir": "js"
@@ -12,8 +12,9 @@
     //"wwwroot"
   ],
   "include": [
+    "wwwroot/**/*.ts",
     "scripts/**/*",
     "scripts/interfaces/**/*",
     "scripts/services/**/*"
-  ]
+  ],
 }

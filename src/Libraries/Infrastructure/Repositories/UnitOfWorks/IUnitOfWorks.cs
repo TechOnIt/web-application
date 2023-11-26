@@ -1,5 +1,6 @@
 ﻿using TechOnIt.Infrastructure.Persistence.Context;
 using TechOnIt.Infrastructure.Repositories.SQL.Devices;
+using TechOnIt.Infrastructure.Repositories.SQL.Reports;
 using TechOnIt.Infrastructure.Repositories.SQL.Roles;
 using TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 using TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
@@ -17,4 +18,5 @@ public interface IUnitOfWorks
     IRoleRepository RoleRepository { get; }
     ISensorRepository SensorRepository { get; }
     IDeviceRepositry DeviceRepositry { get; }
+    IReportRepository ReportRepository { get; }
 }

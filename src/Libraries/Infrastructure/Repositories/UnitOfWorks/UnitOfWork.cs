@@ -1,11 +1,11 @@
 ﻿using TechOnIt.Infrastructure.Repositories.SQL.Devices;
 using TechOnIt.Infrastructure.Repositories.SQL.Roles;
 using TechOnIt.Infrastructure.Repositories.SQL.Users;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TechOnIt.Infrastructure.Persistence.Context;
 using TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 using TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
+using TechOnIt.Infrastructure.Repositories.SQL.Reports;
 
 namespace TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
@@ -89,6 +89,20 @@ public class UnitOfWork : IUnitOfWorks
                 _deviceRepositry = new DeviceRepositry(_context);
             }
             return _deviceRepositry;
+        }
+    }
+    #endregion
+
+    #region Report Repository
+    private IReportRepository _reportRepository;
+    public IReportRepository ReportRepository 
+    {
+        get
+        {
+            if(_reportRepository is null)
+                _reportRepository = new ReportRepository(_context);
+
+            return _reportRepository;
         }
     }
     #endregion

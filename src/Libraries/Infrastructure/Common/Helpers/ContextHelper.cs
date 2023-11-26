@@ -12,4 +12,13 @@ public static class ContextHelper
 
         return configuration.GetConnectionString(connectionStringName);
     }
+    public static string GetSectionValue(string sectionName = "Database", string settingFileName = "appsettings.json")
+    {
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile(settingFileName)
+            .Build();
+
+        return configuration.GetSection(sectionName).Value;
+    }
 }

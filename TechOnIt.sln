@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Libra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{80E4B311-731D-4B09-B0AF-2B0C48E7442F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desk", "Desk\Desk.csproj", "{E6D210A8-0BB6-4AE9-AA36-D2089459B121}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desk", "src\Presentations\Desk\Desk.csproj", "{E6D210A8-0BB6-4AE9-AA36-D2089459B121}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechonitAllTests", "TechonitAllTests\TechonitAllTests.csproj", "{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechonitAllTests", "tests\TechonitAllTests\TechonitAllTests.csproj", "{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

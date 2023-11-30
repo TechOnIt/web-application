@@ -3,6 +3,22 @@
 * File include item demo only specific css only
 ******************************************************************************/
 
+::-webkit-scrollbar {
+    width: 9px !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #283144 !important;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #37435b !important;
+    }
+
+::-webkit-scrollbar-track {
+    background: var(--bs-body-bg) !important;
+}
+
 .light-style .menu .app-brand.demo {
   height: 64px;
 }

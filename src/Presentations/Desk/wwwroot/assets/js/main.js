@@ -145,7 +145,6 @@ if (document.getElementById('layout-menu')) {
   };
   // Internationalization (Language Dropdown)
     // ---------------------------------------
-    debugger
   if (typeof i18next !== 'undefined' && typeof i18NextHttpBackend !== 'undefined') {
     i18next
     .use(i18NextHttpBackend)

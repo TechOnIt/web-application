@@ -2,8 +2,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using TechOnIt.Application.Commands.Devices.CreateDevice;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Desk.WebUI.Hubs;
+using TechOnIt.Desk.WebUI.RealTimeServices;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 // Authentication & Authorization
@@ -24,6 +29,14 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SignI
 // https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows
 builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
 builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
+builder.Services.AddHostedService<TcpListenerHandler>();
+builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
+    builder =>
+    {
+        builder.AllowAnyMethod().AllowAnyHeader()
+               .WithOrigins("http://example.com") 
+               .AllowCredentials();
+    }));
 
 ConfigureServices(builder.Services);
 
@@ -77,6 +90,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapHub<SensorHub>("/SensorHub");
 
 app.Run();
 

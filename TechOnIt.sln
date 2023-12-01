@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Desk.Web", "src\Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Web", "src\Presentations\Admin.WebUI\Admin.Web.csproj", "{FDB590D6-F158-461E-9D18-42884CB8F74B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcpMicrosoftServer", "..\..\ReactProject\Backend\TcpMicrosoftServer\TcpMicrosoftServer.csproj", "{BD91A8D5-BFB7-4B5F-A095-72A82135B7A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

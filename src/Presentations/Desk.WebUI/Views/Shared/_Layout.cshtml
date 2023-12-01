@@ -23,6 +23,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/rest.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.9/signalr.min.js"></script> *@
     <script>
         // Direction auto
         $('input[type=text], textarea').keyup(function () {
@@ -34,7 +37,24 @@
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
             mode = 'dark';
         $('body').attr("data-bs-theme", mode);
+
+
+        // signalR
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/SensorHub")
+            .build();
+
+        connection.on("ReceiveReport", function (message) {
+            console.log("Report received:", message);
+            // Update UI here
+        });
+
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+
     </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

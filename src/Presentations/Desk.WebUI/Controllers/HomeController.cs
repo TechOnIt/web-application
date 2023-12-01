@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace TechOnIt.Desk.WebUI.Controllers;
+namespace TechOnIt.Desk.Web.Controllers;
 
 public class HomeController : Controller
 {

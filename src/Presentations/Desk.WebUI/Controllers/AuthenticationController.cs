@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Application.Commands.Users.Authentication.SignInCookieCommands;
 
-namespace TechOnIt.Desk.WebUI.Controllers;
+namespace TechOnIt.Desk.Web.Controllers;
 
 public class AuthenticationController : Controller
 {

@@ -1,1 +1,1 @@
-﻿global using TechOnIt.Desk.WebUI.Areas.Dashboard.Components;
+﻿global using TechOnIt.Desk.Web.Areas.Dashboard.Components;

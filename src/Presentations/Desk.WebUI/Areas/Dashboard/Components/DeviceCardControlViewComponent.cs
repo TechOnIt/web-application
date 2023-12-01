@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Devices;
 
-namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Components;
+namespace TechOnIt.Desk.Web.Areas.Dashboard.Components;
 
 public class DeviceCardControlViewComponent : ViewComponent
 {

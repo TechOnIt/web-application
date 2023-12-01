@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Application.Commands.Structures.Dashboard.GetMyStructures;
 
-namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Components;
+namespace TechOnIt.Desk.Web.Areas.Dashboard.Components;
 
 public class StructureCardListViewComponent : ViewComponent
 {

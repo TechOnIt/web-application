@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Application.Queries.Structures.GetPlacesWithDevicesByStructureId;
 
-namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers;
+namespace TechOnIt.Desk.Web.Areas.Dashboard.Controllers;
 
 [Authorize]
 [Area("Dashboard")]

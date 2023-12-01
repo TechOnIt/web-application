@@ -23,11 +23,15 @@ public class ProfileController : Controller
     #endregion
 
     [HttpGet]
-    public async Task<IActionResult> Index(CancellationToken stoppingToken)
+    public IActionResult Index()
     {
-        var getUserId = await User.GetCurrentUserIdAsync();
-        var userViewModel = await _mediator.Send(new GetUserProfileQuery() { UserId = getUserId.Id }, stoppingToken);
-        return View(userViewModel);
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult Setting()
+    {
+        return View();
     }
 
     [HttpPut]

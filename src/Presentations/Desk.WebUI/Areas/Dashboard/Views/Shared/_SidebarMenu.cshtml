@@ -21,69 +21,29 @@
         <!-- Dashboards -->
         <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bx-tachometer"></i>
                 <div data-i18n="Dashboards">Dashboards</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item active">
-                    <a href="index.html" class="menu-link">
+                    <a asp-area="Dashboard" asp-controller="Overview" asp-action="Index" class="menu-link">
                         <div data-i18n="Overview">Overview</div>
                     </a>
                 </li>
             </ul>
         </li>
 
-        <!-- Layouts -->
+        <!-- Structure -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">طرح‌ها</div>
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Catalogs">Catalogs</div>
             </a>
 
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="layouts-collapsed-menu.html" class="menu-link">
-                        <div data-i18n="Collapsed menu">منوی جمع شده</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-content-navbar.html" class="menu-link">
-                        <div data-i18n="Content navbar">نوار ناوبری محتوا</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-content-navbar-with-sidebar.html" class="menu-link">
-                        <div data-i18n="Content nav + Sidebar">ناوبری محتوا + نوار کناری</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="../horizontal-menu-template" class="menu-link" target="_blank">
-                        <div data-i18n="Horizontal">افقی</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-without-menu.html" class="menu-link">
-                        <div data-i18n="Without menu">بدون منو</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-without-navbar.html" class="menu-link">
-                        <div data-i18n="Without navbar">بدون نوار ناوبری</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-fluid.html" class="menu-link">
-                        <div data-i18n="Fluid">شناور</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-container.html" class="menu-link">
-                        <div data-i18n="Container">دربرگیرنده</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="layouts-blank.html" class="menu-link">
-                        <div data-i18n="Blank">خالی</div>
+                    <a asp-area="Dashboard" asp-controller="Structure" asp-action="Index" class="menu-link">
+                        <div data-i18n="Structures">Structures</div>
                     </a>
                 </li>
             </ul>

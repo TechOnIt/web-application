@@ -138,5 +138,9 @@
   "Apps": "Apps",
   "Components": "Components",
   "Forms": "Forms",
-  "Charts & Maps": "Charts & Maps"
+  "Charts & Maps": "Charts & Maps",
+  "Signout": "Signout",
+  "Overview": "Overview",
+  "Catalog": "Catalog",
+  "Structure": "Structure"
 }

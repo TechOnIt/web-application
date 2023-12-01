@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/sidebar-menu.min.css",
+    "inputFiles": [
+      "wwwroot/css/sidebar-menu.css"
+    ]
+  }
+]

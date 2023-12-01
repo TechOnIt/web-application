@@ -1,0 +1,137 @@
+﻿@model TechOnIt.Application.Common.Models.ViewModels.Users.UserViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+<div class="row">
+    <div class="col-12 col-md-4">
+        @* Display Information *@
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <img class="profile rounded-circle" src="" width="70" height="70" />
+                </div>
+                <div>
+                    <h5 class="fw-bolder">@(Model.FullName is null ? "" : Model.FullName.GetFullName())</h5>
+                </div>
+                <div class="small">
+                    <div class="mt-2">
+                        <label>@Model.Email</label>
+                    </div>
+                    <div class="mt-2">
+                        <label>@Model.PhoneNumber</label>
+                    </div>
+                    <div class="d-flex flex-wrap gap-1 justify-content-center mt-2">
+                        <span class="badge bg-primary">User</span>
+                        <span class="badge bg-primary">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Confirm Email *@
+        @if (!string.IsNullOrEmpty(Model.Email) && Model.ConfirmedEmail is false)
+        {
+            <div class="alert alert-dismissible fade show card mt-4">
+                <div class="card-body">
+                    <h5 class="fw-bold"><i class="fa fa-exclamation-triangle"></i> Verify your email address</h5>
+                    <p class="text-muted small text-justified">We will send you an email containing a one-time link, Open the link to verify your account email.</p>
+                    <div class="d-grid mt-3">
+                        <a class="btn btn-sm btn-outline-primary" href="/dashboard/user/verifyEmail">Verify</a>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @* Confirm Phone Number *@
+        @if (!string.IsNullOrEmpty(Model.PhoneNumber) && Model.ConfirmedPhoneNumber is false)
+        {
+            <div class="alert alert-dismissible fade show card mt-4">
+                <div class="card-body">
+                    <h5 class="fw-bold"><i class="fa fa-exclamation-triangle"></i> Verify your phone number</h5>
+                    <p class="text-muted small text-justified">We will send a one-time code for your phone number, Give us the code to verify your account phone number.</p>
+                    <div class="d-grid mt-3">
+                        <a class="btn btn-sm btn-outline-primary" href="/dashboard/user/verifyPhoneNumber">Send</a>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+    </div>
+    <div class="col-12 col-md-8">
+        @* Update profile *@
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 class="fw-bold mb-4"><i class="fa fa-sticky-note"></i> Account Information</h4>
+                <form method="post" action="/dashboard/user/update">
+                    @* Concurrency Stamp *@
+                    <div class="d-none">
+                        <input type="hidden" value="@Model.ConcurrencyStamp" />
+                    </div>
+                    @* Full Name *@
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form_group field mb-3">
+                                <input id="name" class="form_field" type="text" name="name" placeholder=" " maxlength="50" value="@(Model.FullName is null ? "" : Model.FullName.Name)" />
+                                <label class="form_label" for="name">Name</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form_group field mb-3">
+                                <input id="surname" class="form_field" type="text" name="surname" placeholder=" " maxlength="50" value="@(Model.FullName is null ? "" : Model.FullName.Surname)" />
+                                <label class="form_label" for="surname">Surname</label>
+                            </div>
+                        </div>
+                    </div>
+                    @* Email *@
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form_group field mb-3">
+                                <input id="email" class="form_field" type="text" name="email" placeholder=" " maxlength="100" value="@(Model.Email is null ? "" : Model.Email)" required @(Model.Email is null ? "" : "disabled") />
+                                <label class="form_label" for="email">Email</label>
+                            </div>
+                        </div>
+                    </div>
+                    @* Phone Number *@
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form_group field mb-3">
+                                <input id="phonenumber" class="form_field" type="text" name="phonenumber" placeholder=" " maxlength="11" value="@(Model.PhoneNumber is null ? "" : Model.PhoneNumber)" />
+                                <label class="form_label" for="phonenumber">Phone Number</label>
+                            </div>
+                        </div>
+                    </div>
+                    @* Update Button *@
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mt-4">
+                                <button class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @* Change Password *@
+        <div class="card">
+            <div class="card-body">
+                <h4 class="fw-bold mb-4"><i class="fa fa-lock"></i> Change Password</h4>
+                <form method="post" action="/dashboard/user/changePassword">
+                    <div class="form_group field mb-3">
+                        <input id="oldpassword" class="form_field" type="password" name="OldPassword" placeholder=" " maxlength="30" required />
+                        <label for="oldpassword" class="form_label">Old Password</label>
+                    </div>
+                    <div class="form_group field mb-3">
+                        <input id="newpassword" class="form_field" type="password" name="NewPassword" placeholder=" " maxlength="30" required />
+                        <label for="newpassword" class="form_label">New Password</label>
+                    </div>
+                    <div class="form_group field mb-3">
+                        <input id="confirm-new-password" class="form_field" type="password" name="ConfirmNewPassword" placeholder=" " maxlength="30" required />
+                        <label for="confirm-new-password" class="form_label">Confirm New Password</label>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-primary">Change</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@model IList<TechOnIt.Application.Common.Models.ViewModels.Structures.StructureCardViewModel>
+@{
+    ViewData["Title"] = "Manage structures";
+}
+@* Structure List *@
+<div>
+    @await Component.InvokeAsync(typeof(StructureCardListViewComponent), new { User })
+</div>
+
+<!-- New Structure Modal -->
+<div class="modal fade" id="newStructureModal" tabindex="-1" aria-labelledby="newStructureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newStructureModalLabel">New Structure</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/dashboard/structure/new">
+                <div class="modal-body">
+                    <div class="form_group field mb-3">
+                        <select id="new-structure-type" class="form_field" name="type">
+                            <option value="1">🏘️ Home, Shop, Office</option>
+                            <option value="2">🌱 Aviculture, Garden, Greenhouse</option>
+                            <option value="3">🐥 Agriculture, Livestock, poultry</option>
+                        </select>
+                        <label for="new-structure-type" class="form_label">Type</label>
+                    </div>
+                    <div class="form_group field mb-3">
+                        <input id="new-structure-name" class="form_field" name="name" type="text" placeholder="Name" maxlength="20" required />
+                        <label for="new-structure-name" class="form_label">Name</label>
+                    </div>
+                    <div class="form_group field mb-3">
+                        <textarea id="new-structure-description" class="form_field" name="description" placeholder="Description" maxlength="100"></textarea>
+                        <label for="new-structure-description" class="form_label">Description</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

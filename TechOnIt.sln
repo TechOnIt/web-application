@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desk", "src\Presentations\D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechonitAllTests", "tests\TechonitAllTests\TechonitAllTests.csproj", "{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Desk.WebUI", "src\Presentations\Desk.WebUI\Desk.WebUI.csproj", "{D8957858-EA28-4299-AD34-84A528E1BD83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8957858-EA28-4299-AD34-84A528E1BD83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8957858-EA28-4299-AD34-84A528E1BD83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8957858-EA28-4299-AD34-84A528E1BD83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8957858-EA28-4299-AD34-84A528E1BD83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{80E4B311-731D-4B09-B0AF-2B0C48E7442F} = {65A0C03D-0E76-46FD-AC06-D031D7271DCB}
 		{E6D210A8-0BB6-4AE9-AA36-D2089459B121} = {1657E8FF-8204-41A8-B43F-5FA4E518FA1B}
 		{79C6D3BA-89FD-4FAF-AA35-5F77FBF9C0B8} = {768E65F1-85E8-4AAD-AEBA-EB43B978F555}
+		{D8957858-EA28-4299-AD34-84A528E1BD83} = {1657E8FF-8204-41A8-B43F-5FA4E518FA1B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B6025CF-38B6-4390-8C05-9E134BB37E6E}

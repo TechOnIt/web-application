@@ -1,0 +1,139 @@
+﻿@model TechOnIt.Application.Common.Models.ViewModels.Structures.StructurePlacesWithDevicesViewModel
+@{
+    ViewData["Title"] = @Model.Name + " places";
+}
+
+<div class="row">
+    @* Places *@
+    @if (Model.Places is not null && Model.Places.Count > 0)
+    {
+        <div class="d-flex justify-content-between mb-4">
+            <div class="central">
+                <label class="fw-bold h2">@Model.Name Place's</label>
+            </div>
+            <div class="central">
+                <div class="dropdown">
+                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newPlaceModal">
+                                <i class="fa fa-plus me-2"></i> New place
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @await Component.InvokeAsync(typeof(PlacesWithDevicesControlViewComponent), new { places = Model.Places })
+    }
+    else
+    {
+        @* Places not found *@
+        <div class="col-12 col-md-6 offset-md-3">
+            <img class="w-100 opacity-75" src="~/assets/images/stocks/Shed-pana.svg" />
+        </div>
+        <div class="col-12">
+            <div class="text-center">
+                <label class="h3 fw-bold">No places were found!</label>
+            </div>
+            <div class="d-grid d-sm-block text-center mt-3">
+                <button id="new-place" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newPlaceModal">+ New</button>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- New Place Modal -->
+<div class="modal fade" id="newPlaceModal" tabindex="-1" aria-labelledby="newPlaceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newPlaceModalLabel">New place</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/dashboard/place/new">
+                @* Structure Id *@
+                <input type="hidden" name="StructureId" value="@Model.Id" />
+                <div class="modal-body">
+                    <div class="form_group field mb-3">
+                        <input id="new-place-name" class="form_field" name="Name" type="text" placeholder="Name" maxlength="20" required />
+                        <label for="new-place-name" class="form_label">Name</label>
+                    </div>
+                    <div class="form_group field mb-3">
+                        <textarea id="new-place-description" class="form_field" name="Description" placeholder="Description" maxlength="100"></textarea>
+                        <label for="new-place-description" class="form_label">Description</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- New Device Modal -->
+<div class="modal fade" id="newDeviceModal" tabindex="-1" aria-labelledby="newDeviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newDeviceModalLabel">New device</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/dashboard/device/new">
+                @* Place Id *@
+                <input id="new-device-place-id" type="hidden" name="PlaceId" value="@Model.Id" />
+                <div class="modal-body">
+                    <div class="form_group field mb-3">
+                        <select id="new-device-type" class="form_field" required>
+                            <option value="1">💡 Light, Lamp, LED</option>
+                            <option value="2">🔥 Heater, Warmer</option>
+                            <option value="3">❄️ Cooler, Air conditioner</option>
+                            <option value="4">🌬️ Fan, Chiller</option>
+                        </select>
+                        <label for="new-device-description" class="form_label">Type</label>
+                    </div>
+                    <div class="form_group field mb-3">
+                        <input id="new-device-name" class="form_field" name="Pin" type="number" placeholder="#0 - #255" min="1" max="255" maxlength="3" required />
+                        <label for="new-device-name" class="form_label">Pin</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Device On/Off
+        const toggleDeviceStatus = function (e, deviceId, status) {
+            $(e).prop("disabled", true);
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+            var url = '/dashboard/device/' + status + '?deviceId=' + deviceId;
+            fetch(url, requestOptions)
+                .then(response => response.text())
+                .then(function () {
+                    location.reload();
+                })
+                .catch(error => function () {
+                    console.log('error', error);
+                    $(e).prop("disabled", false);
+                });
+        }
+
+        // New Device Click
+        $(document).on('click', '[data-bs-target="#newDeviceModal"]', function () {
+            $('#newDeviceModal #new-device-place-id').val($(this).attr('data-place-id'));
+        });
+    </script>
+}

@@ -1,0 +1,85 @@
+﻿.form_group {
+  position: relative;
+  padding: 15px 0 0;
+  width: 100%;
+}
+
+.form_field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: var(--bs-body-color);
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+.form_field::placeholder {
+  color: transparent;
+}
+.form_field:placeholder-shown ~ .form_label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  user-select: none !important;
+}
+
+.form_field:disabled {
+  color: #9b9b9b;
+}
+
+.form_label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.form_field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+}
+.form_field:focus ~ .form_label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.form_primary .form_field:focus {
+  border-image: linear-gradient(to right, #075fe1, #48d8f9);
+}
+.form_primary .form_field:focus ~ .form_label {
+  color: #075fe1;
+}
+
+.form_primary .form_field:focus {
+  border-image: linear-gradient(to right, #075fe1, #48d8f9);
+  border-image-slice: 1;
+}
+.form_primary .form_field:focus ~ .form_label {
+  color: #075fe1;
+}
+
+.form_group_sm .form_field {
+  font-size: 1rem !important;
+}
+.form_group_sm .form_label {
+  font-size: 1rem !important;
+}
+.form_group_sm .form_field:focus ~ .form_label {
+  font-size: 1rem !important;
+}
+.form_group_sm:placeholder-shown ~ .form_label {
+  font-size: 1.1rem !important;
+  top: 23px;
+}

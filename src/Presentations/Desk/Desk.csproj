@@ -9,7 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\scripts\common\**" />
+    <Content Remove="wwwroot\scripts\common\**" />
+    <EmbeddedResource Remove="wwwroot\scripts\common\**" />
+    <None Remove="wwwroot\scripts\common\**" />
     <TypeScriptCompile Remove="node_modules\**" />
+    <TypeScriptCompile Remove="wwwroot\scripts\common\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,10 +25,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.7.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\scripts\common\" />
   </ItemGroup>
 
   <ItemGroup>

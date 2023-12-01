@@ -1,4 +1,9 @@
 {
+  "My Profile": "My Profile",
+  "Signout": "Signout",
+  "Overview": "Overview",
+  "Catalog": "Catalog",
+  "Structures": "Structures",
   "Dashboards": "Dashboards",
   "eCommerce": "eCommerce",
   "Layouts": "Layouts",
@@ -138,9 +143,5 @@
   "Apps": "Apps",
   "Components": "Components",
   "Forms": "Forms",
-  "Charts & Maps": "Charts & Maps",
-  "Signout": "Signout",
-  "Overview": "Overview",
-  "Catalog": "Catalog",
-  "Structures": "Structures"
+  "Charts & Maps": "Charts & Maps"
 }

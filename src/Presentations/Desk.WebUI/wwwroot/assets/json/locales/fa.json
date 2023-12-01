@@ -1,4 +1,9 @@
 {
+  "My Profile": "پروفایل من",
+  "Signout": "خروج",
+  "Overview": "نمای کلی",
+  "Catalog": "کاتالوگ",
+  "Structures": "سازه‌ها",
   "Dashboards": "داشبوردها",
   "eCommerce": "تجارت الکترونیک",
   "Layouts": "طرح‌ها",
@@ -138,9 +143,5 @@
   "Apps": "برنامه‌ها",
   "Components": "اجزاء",
   "Forms": "فرم‌ها",
-  "Charts & Maps": "نمودارها و نقشه‌ها",
-  "Signout": "خروج",
-  "Overview": "نمای کلی",
-  "Catalog": "کاتالوگ",
-  "Structures": "سازه‌ها"
+  "Charts & Maps": "نمودارها و نقشه‌ها"
 }

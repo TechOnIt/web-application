@@ -1,7 +1,8 @@
 ﻿using TechOnIt.Application.Queries.Users.Dashboard.GetNewUsersCount;
 
-namespace TechOnIt.Admin.Web.Controllers;
+namespace TechOnIt.Admin.Web.Areas.Manage.Controllers;
 
+[Area("Manage")]
 public class DashboardController : Controller
 {
     #region Ctor

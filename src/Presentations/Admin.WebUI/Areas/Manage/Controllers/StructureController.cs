@@ -1,8 +1,9 @@
 ﻿using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Queries.Structures.GetAllByFilter;
 
-namespace TechOnIt.Admin.Web.Controllers
+namespace TechOnIt.Admin.Web.Areas.Manage.Controllers
 {
+    [Area("Manage")]
     public class StructureController : Controller
     {
         #region Fields

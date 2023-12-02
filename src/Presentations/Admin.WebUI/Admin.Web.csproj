@@ -36,14 +36,6 @@
 		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
-		<Content Update="Views\User\Edit.cshtml">
-		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="Views\User\Index.cshtml">
-		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
 		<Content Update="Views\_ViewImports.cshtml">
 		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -56,19 +48,6 @@
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Views\Dashboard\Index.cshtml" />
-	  <_ContentIncludedByDefault Remove="Views\Role\Index.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <UpToDateCheckInput Remove="Views\Dashboard\Index.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <UpToDateCheckInput Remove="Views\Role\Index.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>

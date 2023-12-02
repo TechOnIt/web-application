@@ -5,8 +5,9 @@ using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Queries.Users.Dashboard.GetUserInfoById;
 using TechOnIt.Application.Queries.Users.GetAllUsers;
 
-namespace TechOnIt.Admin.Web.Controllers;
+namespace TechOnIt.Admin.Web.Areas.Manage.Controllers;
 
+[Area("Manage")]
 public class UserController : Controller
 {
     #region Ctor

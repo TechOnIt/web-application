@@ -3,8 +3,9 @@ using TechOnIt.Application.Commands.Roles.Management.CreateRole;
 using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Queries.Roles.GetAllRoles;
 
-namespace TechOnIt.Admin.Web.Controllers;
+namespace TechOnIt.Admin.Web.Areas.Manage.Controllers;
 
+[Area("Manage")]
 public class RoleController : Controller
 {
     #region Ctor

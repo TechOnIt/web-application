@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Desk.WebUI.Areas.Dashboard.Controllers
+﻿namespace TechOnIt.Desk.Web.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
     public class OverviewController : Controller

@@ -1,8 +1,8 @@
-namespace TechOnIt.Desk.WebUI.Models
+namespace TechOnIt.Desk.Web.Models
 {
     public class ErrorViewModel
     {
-        public string? RequestId { get; set; }
+        public string RequestId { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }

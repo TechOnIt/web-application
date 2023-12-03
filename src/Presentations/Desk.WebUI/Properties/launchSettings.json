@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Desk.WebUI": {
+    "Desk.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

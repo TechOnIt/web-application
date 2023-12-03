@@ -3,7 +3,7 @@ global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
 global using System.Security.Claims;
 global using TechOnIt.Application;
-global using TechOnIt.Desk.WebUI.Models;
+global using TechOnIt.Desk.Web.Models;
 global using TechOnIt.Infrastructure;
 global using TechOnIt.Application.Common.Extentions;
 global using TechOnIt.Domain.Enums;

@@ -44,7 +44,7 @@
   --bs-black-rgb: 38, 60, 85;
   --bs-body-color-rgb: 103, 119, 136;
   --bs-body-bg-rgb: 242, 242, 246;
-  --bs-font-sans-serif: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --bs-font-sans-serif: Barlow,"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   --bs-font-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-root-font-size: 16px;

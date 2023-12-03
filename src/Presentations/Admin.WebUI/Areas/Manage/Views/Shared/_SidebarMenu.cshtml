@@ -26,24 +26,29 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item active">
-                    <a asp-area="Dashboard" asp-controller="Overview" asp-action="Index" class="menu-link">
+                    <a asp-area="Manage" asp-controller="Dashboard" asp-action="Index" class="menu-link">
                         <div data-i18n="Overview">Overview</div>
                     </a>
                 </li>
             </ul>
         </li>
 
-        <!-- Structure -->
+        <!-- Customers -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Catalog">Catalog</div>
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Customers">Customers</div>
             </a>
 
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a asp-area="Dashboard" asp-controller="Structure" asp-action="Index" class="menu-link">
-                        <div data-i18n="Structures">Structures</div>
+                    <a asp-area="Manage" asp-controller="User" asp-action="Index" class="menu-link">
+                        <div data-i18n="Users">Users</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a asp-area="Manage" asp-controller="Role" asp-action="Index" class="menu-link">
+                        <div data-i18n="Roles">Roles</div>
                     </a>
                 </li>
             </ul>

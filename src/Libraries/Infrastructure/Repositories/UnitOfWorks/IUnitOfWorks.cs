@@ -1,5 +1,6 @@
 ﻿using TechOnIt.Infrastructure.Persistence.Context;
 using TechOnIt.Infrastructure.Repositories.SQL.Devices;
+using TechOnIt.Infrastructure.Repositories.SQL.DynamicAccess;
 using TechOnIt.Infrastructure.Repositories.SQL.HeavyTransaction;
 using TechOnIt.Infrastructure.Repositories.SQL.Reports;
 using TechOnIt.Infrastructure.Repositories.SQL.Roles;
@@ -21,4 +22,5 @@ public interface IUnitOfWorks
     IDeviceRepositry DeviceRepositry { get; }
     IReportRepository ReportRepository { get; }
     IAdoRepository AdoRepository { get; }
+    IDynamicAccessRepository DynamicAccessRepository { get; }
 }

@@ -23,6 +23,7 @@ public class User
     public virtual ICollection<Structure>? Structures { get; set; }
     public virtual ICollection<LoginHistory>? LoginHistories { get; set; }
     public virtual ICollection<LogRecord>? LogHistories { get; set; }
+    public virtual ICollection<DynamicAccess> DynamicAccesses { get; set; }
     #endregion
 
     #region Ctor

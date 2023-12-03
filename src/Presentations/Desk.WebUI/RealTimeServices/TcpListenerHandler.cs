@@ -14,18 +14,25 @@ public class TcpListenerHandler : BackgroundService
 
     public TcpListenerHandler(IHubContext<SensorHub> hubContext)
     {
-        _hubContext = hubContext;
+        try
+        {
+            _hubContext = hubContext;
 
-        IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build();
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
 
 
-        connectionCredentials = new SocketConnectionCredentials();
-        configuration.GetSection("RealTime").Bind(connectionCredentials);
-        //_tcpListener = new TcpClient("127.0.0.1", 3000);
-        _tcpListener = new TcpClient(connectionCredentials.IpAddress, connectionCredentials.Port);
+            connectionCredentials = new SocketConnectionCredentials();
+            configuration.GetSection("RealTime").Bind(connectionCredentials);
+            //_tcpListener = new TcpClient("127.0.0.1", 3000);
+            _tcpListener = new TcpClient(connectionCredentials.IpAddress, connectionCredentials.Port);
+        }
+        catch (Exception)
+        {
+
+        }
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)

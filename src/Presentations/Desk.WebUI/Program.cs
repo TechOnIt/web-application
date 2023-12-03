@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using TechOnIt.Application.Commands.Devices.CreateDevice;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Desk.Web.DynamicAccess;
 using TechOnIt.Desk.WebUI.Hubs;
 using TechOnIt.Desk.WebUI.RealTimeServices;
 
@@ -9,8 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSignalR();
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<AreaService>();
 // Authentication & Authorization
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,

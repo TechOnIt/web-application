@@ -40,6 +40,7 @@ public class IdentityContext : DbContext
     public DbSet<LoginHistory> LoginHistories { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<DynamicAccess> DynamicAccesses { get; set; }
     #endregion
 
     #region Defaults

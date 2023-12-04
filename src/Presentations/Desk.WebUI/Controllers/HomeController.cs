@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using TechOnIt.Desk.Web.DynamicAccess;
 
 namespace TechOnIt.Desk.Web.Controllers;
 
@@ -7,9 +8,11 @@ public class HomeController : Controller
     #region Ctor & DI
 
     private readonly ILogger<HomeController> _logger;
-    public HomeController(ILogger<HomeController> logger)
+    private readonly AreaService _areaService;
+    public HomeController(ILogger<HomeController> logger, AreaService areaService)
     {
         _logger = logger;
+        _areaService = areaService;
     }
 
     #endregion
@@ -17,6 +20,9 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+
+        var res = _areaService.GetControllersAndActions();
+
         if (User.Identity is not null && User.Identity.IsAuthenticated)
             return Redirect("/dashboard");
         //return Redirect("/authentication/signin");

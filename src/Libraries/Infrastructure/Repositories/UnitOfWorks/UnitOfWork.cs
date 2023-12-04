@@ -7,6 +7,7 @@ using TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 using TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 using TechOnIt.Infrastructure.Repositories.SQL.Reports;
 using TechOnIt.Infrastructure.Repositories.SQL.HeavyTransaction;
+using TechOnIt.Infrastructure.Repositories.SQL.DynamicAccess;
 
 namespace TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
@@ -129,6 +130,20 @@ public class UnitOfWork : IUnitOfWorks
             _cleanString();
 
         await _context.SaveChangesAsync(stoppingToken);
+    }
+    #endregion
+
+    #region DynamicAccess Repository
+    private IDynamicAccessRepository _dynamicAccessRepository;
+    public IDynamicAccessRepository DynamicAccessRepository
+    {
+        get
+        {
+            if (_dynamicAccessRepository is null)
+                _dynamicAccessRepository = new DynamicAccessRepository(_context);
+
+            return _dynamicAccessRepository;
+        }
     }
     #endregion
 

@@ -25,7 +25,7 @@
     <script src="~/js/site.min.js" asp-append-version="true"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
-    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.9/signalr.min.js"></script> *@
+
     <script>
         // Direction auto
         $('input[type=text], textarea').keyup(function () {
@@ -45,7 +45,8 @@
             .build();
 
         connection.on("ReceiveReport", function (message) {
-            console.log("Report received:", message);
+            console.log(message);
+            alert(message);
             // Update UI here
         });
 

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
+using System.ComponentModel;
 using System.Reflection;
+using System.Text;
 using TechOnIt.Application.Common.Models.DynamicAccess;
 
 namespace TechOnIt.Desk.Web.DynamicAccess;
@@ -9,44 +10,81 @@ namespace TechOnIt.Desk.Web.DynamicAccess;
 public class AreaService
 {
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
-
     public AreaService(IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
     {
         _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
     }
 
-    public List<ControllerInfo> GetControllersAndActions()
+    private List<ControllerInfo> GetAllControllerActionInfo()
     {
-        var controllersActionsList = new List<ControllerInfo>();
+        var controllerActionList = new List<ControllerInfo>();
 
-        var actionDescriptors = _actionDescriptorCollectionProvider.ActionDescriptors.Items;
-        foreach (var action in actionDescriptors.OfType<ControllerActionDescriptor>())
+        var items = _actionDescriptorCollectionProvider.ActionDescriptors.Items;
+        foreach (var actionDescriptor in items)
         {
-            var controllerName = action.ControllerName;
-            var actionName = action.ActionName;
-            var httpMethod = action.MethodInfo.GetCustomAttributes<HttpMethodAttribute>()
-                .SelectMany(attr => attr.HttpMethods)
-                .Distinct()
-                .FirstOrDefault();
-
-            var controllerInfo = controllersActionsList.FirstOrDefault(c => c.Name == controllerName);
-            if (controllerInfo == null)
+            if (actionDescriptor is ControllerActionDescriptor descriptor)
             {
-                controllerInfo = new ControllerInfo
+                string areaName = descriptor.RouteValues.ContainsKey("area") ? descriptor.RouteValues["area"] : string.Empty;
+                string controllerName = descriptor.ControllerName;
+                string actionName = descriptor.ActionName;
+
+                // Considering DisplayNameAttribute for Controller and Action
+                var controllerDisplayName = descriptor.ControllerTypeInfo.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
+                var actionDisplayName = descriptor.MethodInfo.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
+
+                controllerName = controllerDisplayName ?? controllerName;
+                actionName = actionDisplayName ?? actionName;
+
+                // Find existing or create new
+                var existingControllerInfo = controllerActionList
+                    .FirstOrDefault(c => c.Controller == controllerName && c.Area == areaName);
+
+                if (existingControllerInfo != null)
                 {
-                    Name = controllerName,
-                    Actions = new List<ActionInfo>()
-                };
-                controllersActionsList.Add(controllerInfo);
+                    if (!existingControllerInfo.Actions.Contains(actionName))
+                    {
+                        existingControllerInfo.Actions.Add(actionName);
+                    }
+                }
+                else
+                {
+                    controllerActionList.Add(new ControllerInfo
+                    {
+                        Area = areaName,
+                        Controller = controllerName,
+                        Actions = new List<string> { actionName }
+                    });
+                }
             }
-
-            controllerInfo.Actions.Add(new ActionInfo
-            {
-                Name = actionName,
-                HttpMethod = httpMethod ?? "GET" // Default to GET if no attribute is found
-            });
         }
 
-        return controllersActionsList;
+        return controllerActionList;
+    }
+    public async Task<List<string>> GetAreaWithControllersWithActionsAsync(CancellationToken cancellationToken)
+    {
+        List<ControllerInfo> controllerInfos = GetAllControllerActionInfo();
+        StringBuilder sb = new StringBuilder();
+        List<string> AccessablePathes = new List<string>();
+
+        var ControllersEnummerator = controllerInfos.GetEnumerator();
+        while (ControllersEnummerator.MoveNext())
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ControllerInfo currentController = ControllersEnummerator.Current;
+            if (currentController.Actions.Count > 0)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var actionsEnumerator = currentController.Actions.GetEnumerator();
+                while (actionsEnumerator.MoveNext())
+                {
+                    var currentAction = actionsEnumerator.Current;
+                    sb.Append($"{currentController.Area}/{currentController.Controller}/{currentAction}");
+                    AccessablePathes.Add(sb.ToString());
+                    sb.Clear();
+                }
+            }
+        }
+
+        return await Task.FromResult(AccessablePathes);
     }
 }

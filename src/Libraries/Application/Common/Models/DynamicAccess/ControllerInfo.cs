@@ -2,6 +2,7 @@
 
 public class ControllerInfo
 {
-    public string Name { get; set; }
-    public List<ActionInfo> Actions { get; set; }
+    public string Area { get; set; }
+    public string Controller { get; set; }
+    public List<string> Actions { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using TechOnIt.Application.Handlers;
 using TechOnIt.Desk.Web.DynamicAccess;
 
 namespace TechOnIt.Desk.Web.Controllers;
@@ -18,11 +19,8 @@ public class HomeController : Controller
     #endregion
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-
-        var res = _areaService.GetControllersAndActions();
-
         if (User.Identity is not null && User.Identity.IsAuthenticated)
             return Redirect("/dashboard");
         //return Redirect("/authentication/signin");

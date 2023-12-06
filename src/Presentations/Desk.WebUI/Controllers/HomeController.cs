@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using TechOnIt.Application.Handlers;
-using TechOnIt.Desk.Web.DynamicAccess;
+﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Diagnostics;
+using TechOnIt.Application.DesignPatterns.Builder.DynamicAccessBuilder;
 
 namespace TechOnIt.Desk.Web.Controllers;
 
@@ -9,11 +9,11 @@ public class HomeController : Controller
     #region Ctor & DI
 
     private readonly ILogger<HomeController> _logger;
-    private readonly AreaService _areaService;
-    public HomeController(ILogger<HomeController> logger, AreaService areaService)
+    private readonly IActionDescriptorCollectionProvider _provider;
+    public HomeController(ILogger<HomeController> logger, IActionDescriptorCollectionProvider provider)
     {
         _logger = logger;
-        _areaService = areaService;
+        _provider = provider;
     }
 
     #endregion
@@ -21,6 +21,11 @@ public class HomeController : Controller
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
+        var builder = new AreaControllerActionBuilder();
+        var director = new AreaControllerActionDirector(builder);
+        var controllerActions = director.Construct(_provider);
+
+
         if (User.Identity is not null && User.Identity.IsAuthenticated)
             return Redirect("/dashboard");
         //return Redirect("/authentication/signin");

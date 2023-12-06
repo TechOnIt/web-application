@@ -15,7 +15,7 @@ public class AreaService
         _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
     }
 
-    private List<ControllerInfo> GetAllControllerActionInfo()
+    public List<ControllerInfo> GetAllControllerActionInfo()
     {
         var controllerActionList = new List<ControllerInfo>();
 
@@ -59,32 +59,5 @@ public class AreaService
         }
 
         return controllerActionList;
-    }
-    public List<string> GetAreaWithControllersWithActionsAsync(CancellationToken cancellationToken)
-    {
-        List<ControllerInfo> controllerInfos = GetAllControllerActionInfo();
-        StringBuilder sb = new StringBuilder();
-        List<string> AccessablePathes = new List<string>();
-
-        var ControllersEnummerator = controllerInfos.GetEnumerator();
-        while (ControllersEnummerator.MoveNext())
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            ControllerInfo currentController = ControllersEnummerator.Current;
-            if (currentController.Actions.Count > 0)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                var actionsEnumerator = currentController.Actions.GetEnumerator();
-                while (actionsEnumerator.MoveNext())
-                {
-                    var currentAction = actionsEnumerator.Current;
-                    sb.Append($"{currentController.Area}/{currentController.Controller}/{currentAction}");
-                    AccessablePathes.Add(sb.ToString());
-                    sb.Clear();
-                }
-            }
-        }
-
-        return AccessablePathes;
     }
 }

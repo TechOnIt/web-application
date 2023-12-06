@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Security.Claims;
 using System.Security.Principal;
 using TechOnIt.Domain.Entities.StructureAggregate;
+using System.Text;
+using TechOnIt.Application.Common.Models.DynamicAccess;
 
 namespace TechOnIt.Application.Common.Extentions;
 
@@ -50,5 +52,32 @@ public static class IdentityServiceExtentions
     {
         var claimsIdentity = identity as ClaimsIdentity;
         return claimsIdentity?.FindFirstValue(claimType);
+    }
+
+    public static List<string> ConvertAccessableActionsAsString(this List<ControllerInfo> controllerInfos,CancellationToken cancellationToken)
+    {
+        StringBuilder sb = new StringBuilder();
+        List<string> AccessablePathes = new List<string>();
+
+        var ControllersEnummerator = controllerInfos.GetEnumerator();
+        while (ControllersEnummerator.MoveNext())
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ControllerInfo currentController = ControllersEnummerator.Current;
+            if (currentController.Actions.Count > 0)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var actionsEnumerator = currentController.Actions.GetEnumerator();
+                while (actionsEnumerator.MoveNext())
+                {
+                    var currentAction = actionsEnumerator.Current;
+                    sb.Append($"{currentController.Area}/{currentController.Controller}/{currentAction}");
+                    AccessablePathes.Add(sb.ToString());
+                    sb.Clear();
+                }
+            }
+        }
+
+        return AccessablePathes;
     }
 }

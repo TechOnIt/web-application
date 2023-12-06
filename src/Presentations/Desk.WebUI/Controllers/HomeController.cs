@@ -25,6 +25,8 @@ public class HomeController : Controller
         var director = new AreaControllerActionDirector(builder);
         var controllerActions = director.Construct(_provider);
 
+        var res = controllerActions.ConvertAccessableActionsAsString(cancellationToken);
+
 
         if (User.Identity is not null && User.Identity.IsAuthenticated)
             return Redirect("/dashboard");

@@ -12,7 +12,7 @@ public class AreaControllerActionDirector
         _builder = builder;
     }
 
-    public List<string> Construct(IActionDescriptorCollectionProvider provider)
+    public List<ControllerInfo> Construct(IActionDescriptorCollectionProvider provider)
     {
         return _builder.WithProvider(provider).Build();
     }

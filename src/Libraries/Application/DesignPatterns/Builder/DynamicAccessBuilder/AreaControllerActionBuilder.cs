@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+using TechOnIt.Application.Common.Models.DynamicAccess;
 
 namespace TechOnIt.Application.DesignPatterns.Builder.DynamicAccessBuilder;
 
@@ -12,15 +13,13 @@ public class AreaControllerActionBuilder : IAreaControllerActionBuilder
         return this;
     }
 
-    public List<string> Build()
+    public List<ControllerInfo> Build()
     {
         if (_provider == null)
             throw new InvalidOperationException("Action Descriptor Collection Provider is not set.");
 
         var cks = new CancellationTokenSource();
         AreaService service = new AreaService(_provider);
-        return service.GetAreaWithControllersWithActionsAsync(cks.Token);
+        return service.GetAllControllerActionInfo();
     }
-
-
 }

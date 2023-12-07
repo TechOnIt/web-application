@@ -1,4 +1,13 @@
 {
+  "Schedule automations": "Schedule automations",
+  "Examples:": "Examples:",
+  "- Every day at 8:55am.": "- Every day at 8:55am.",
+  "+ Turn on the #36 light.": "+ Turn on the #36 light.",
+  "+ Turn on the #37 light.": "+ Turn on the #37 light.",
+  "- Every 30 minute.": "- Every 30 minute.",
+  "+ Turn on the #51 device.": "+ Turn on the #51 device.",
+  "+ Wait 20 second.": "+ Wait 20 second.",
+  "+ Turn off the #51 device.": "+ Turn off the #51 device.",
   "My Profile": "My Profile",
   "Signout": "Signout",
   "Overview": "Overview",

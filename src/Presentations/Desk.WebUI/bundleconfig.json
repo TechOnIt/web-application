@@ -10,5 +10,11 @@
     "inputFiles": [
       "wwwroot/css/sidebar-menu.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/css/animation.min.css",
+    "inputFiles": [
+      "wwwroot/css/animation.css"
+    ]
   }
 ]

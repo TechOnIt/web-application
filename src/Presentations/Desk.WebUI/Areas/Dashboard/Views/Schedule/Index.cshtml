@@ -17,19 +17,23 @@
     <div class="row">
         <div class="col-md-5">
             <div>
-                <label class="mb-4" data-i18n="Examples:">Examples:</label>
+                <label class="mb-4"><span data-i18n="Examples">Examples</span>:</label>
             </div>
             <div class="ps-md-4">
                 <div class="mb-4">
-                    <h4 class="fw-bold mb-2"><span>-</span> <span data-i18n="Every day at 8:55am">Every day at 8:55am</span></h4>
-                    <p class="mb-1"><span>+</span> <span data-i18n="Turn on the #36 light."></span></p>
-                    <p class="mb-1"><span>+</span> <span data-i18n="Turn on the #37 light."></span></p>
+                    <h4 class="fw-bold mb-2"><span>+</span> <span data-i18n="Every day at 8:55am">Every day at 8:55am</span></h4>
+                    <div class="ps-md-3">
+                        <p class="mb-1"><span>-</span> <span data-i18n="Turn on the #36 light."></span></p>
+                        <p class="mb-1"><span>-</span> <span data-i18n="Turn on the #37 light."></span></p>
+                    </div>
                 </div>
                 <div class="mb-4">
-                    <h4 class="fw-bold mb-2"><span>-</span> <span data-i18n="Every 30 minute"></span></h4>
-                    <p class="mb-1"><span>+</span> <span data-i18n="Turn on the #51 device."></span></p>
-                    <p class="mb-1"><span>+</span> <span data-i18n="Wait 20 second."></span></p>
-                    <p class="mb-1"><span>+</span> <span data-i18n="Turn off the #51 device."></span></p>
+                    <h4 class="fw-bold mb-2"><span>+</span> <span data-i18n="Every 30 minute"></span></h4>
+                    <div class="ps-md-3">
+                        <p class="mb-1"><span>-</span> <span data-i18n="Turn on the #51 device."></span></p>
+                        <p class="mb-1"><span>-</span> <span data-i18n="Wait 20 second."></span></p>
+                        <p class="mb-1"><span>-</span> <span data-i18n="Turn off the #51 device."></span></p>
+                    </div>
                 </div>
                 <div class="mt-5">
                     <button class="btn btn-primary" data-i18n="Create automation" onclick="gotoCreateScheduleSection()">Create automation</button>
@@ -71,18 +75,14 @@
     @* Select a trigger *@
     <div id="trigger-select-section">
         <h5>Select a schedule</h5>
+        @* Every X minute *@
         <div class="card mb-3">
             <div class="card-header px-3 py-2">
                 <div class="d-flex justify-content-between px-3 py-2 w-100">
                     <div class="d-flex align-items-center gap-2">
                         <span>Every</span>
-                        <select class="form-control form-control-sm">
-                            <option>day</option>
-                            <option>week</option>
-                        </select>
-                        <span>at</span>
-                        <button class="btn btn-light p-1 btn-sm"><i class="bx bx-time"></i></button>
-                        <input class="form-control input" placeholder="HH:MM" tabindex="0" type="text" readonly="readonly">
+                        <input id="just-minute-input" class="form-control-sm" type="number" value="5" min="5" max="59" />
+                        <label for="just-minute-input">minute</label>
                     </div>
                     <div>
                         <button class="btn btn-primary btn-icon rounded-circle"><i class="bx bx-plus"></i></button>
@@ -90,17 +90,16 @@
                 </div>
             </div>
         </div>
+        @* Every X hours - and X second *@
         <div class="card mb-3">
             <div class="card-header px-3 py-2">
                 <div class="d-flex justify-content-between px-3 py-2 w-100">
                     <div class="d-flex align-items-center gap-2">
                         <span>Every</span>
-                        <select class="form-control form-control-sm">
-                            <option>day</option>
-                            <option>week</option>
-                        </select>
-                        <span>at</span>
-                        <button class="btn btn-light p-1 btn-sm"><i class="bx bx-time"></i></button>
+                        <input id="hour-input" class="form-control-sm" type="number" value="1" min="1" max="23" />
+                        <label for="hour-input">hours</label>
+                        <input id="minute-input" class="form-control-sm" type="number" value="0" min="0" max="59" />
+                        <label for="minute-input">minute</label>
                     </div>
                     <div>
                         <button class="btn btn-primary btn-icon rounded-circle"><i class="bx bx-plus"></i></button>
@@ -108,24 +107,37 @@
                 </div>
             </div>
         </div>
-        <div class="card mb-3">
-            <div class="card-header px-3 py-2">
-                <div class="d-flex justify-content-between px-3 py-2 w-100">
-                    <div class="d-flex align-items-center gap-2">
-                        <span>Every</span>
-                        <select class="form-control form-control-sm">
-                            <option>day</option>
-                            <option>week</option>
-                        </select>
-                        <span>at</span>
-                        <button class="btn btn-light p-1 btn-sm"><i class="bx bx-time"></i></button>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary btn-icon rounded-circle"><i class="bx bx-plus"></i></button>
-                    </div>
-                </div>
-            </div>
+        @* Every Day/Weekday - at Clock *@
+        @* <div class="card mb-3">
+        <div class="card-header px-3 py-2">
+        <div class="d-flex justify-content-between px-3 py-2 w-100">
+        <div class="d-flex align-items-center gap-2">
+        <span>Every</span>
+        <select class="form-control-sm">
+        <option>day</option>
+        <option>week</option>
+        </select>
+        <button class="btn btn-light p-1 btn-sm"><i class="bx bx-time"></i></button>
+        <div class="d-flex align-items-center gap-1 p-2 border rounded">
+        <span>at</span>
+        <input class="form-control-sm" value="1" type="number" min="1" max="12" style="min-width:50px;" />
+        :
+        <input class="form-control-sm" type="number" value="0" min="0" max="59" style="min-width:50px;" />
+        <select class="form-control-sm text-center" style="min-width:50px">
+        <option selected>am</option>
+        <option>pm</option>
+        </select>
+        <a class="ms-2" href="#" onclick="">
+        <i class="fa fa-times"></i>
+        </a>
         </div>
+        </div>
+        <div>
+        <button class="btn btn-primary btn-icon rounded-circle"><i class="bx bx-plus"></i></button>
+        </div>
+        </div>
+        </div>
+        </div> *@
     </div>
     @* Actions *@
 
@@ -134,8 +146,37 @@
 
 @section scripts {
     <script>
-        // document.addEventListener("DOMContentLoaded", () => {
-        // });
+        // //Listen for the event
+        // document.addEventListener("MyEventType", function (evt) {
+        //     alert(evt.detail);
+        // }, false);
+
+        // //Dispatch an event
+        // var evt = new CustomEvent("MyEventType", { detail: "Any Object Here" });
+        // document.dispatchEvent(evt);
+
+        document.querySelectorAll('input[min],input[max]').forEach((numberInput) => {
+            numberInput.addEventListener("change", (e) => {
+                let input = e.currentTarget;
+                if (!input)
+                    return;
+                let inputValue = input.value;
+                if (!inputValue)
+                    return;
+                // get min value.
+                let minValue = input.getAttribute('min');
+                if (minValue) {
+                    if ((inputValue * 1) < (minValue * 1))
+                        input.value = minValue;
+                }
+                // get max value.
+                let maxValue = input.getAttribute('max');
+                if (maxValue) {
+                    if ((inputValue * 1) > (maxValue * 1))
+                        input.value = maxValue;
+                }
+            });
+        });
 
         const gotoCreateScheduleSection = () => {
             // Hide intro section.
@@ -171,7 +212,6 @@
                 },
             });
         };
-
         const gotoIntroScheduleSection = () => {
             // Hide create new section.
             anime({
@@ -205,6 +245,19 @@
                     });
                 },
             });
+        };
+
+        // Select schedule.
+        let schedule = {};
+        const selectJustMinute = () => {
+            let justMinuteInput = document.getElementById('just-minute-input');
+            if (!justMinuteInput)
+                return;
+            let justMinuteValue = justMinuteInput.value;
+            if (!justMinuteValue)
+                return;
+            schedule.triggerType = 1;
+            schedule.w
         };
     </script>
 }

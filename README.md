@@ -8,7 +8,7 @@
   <p>
     <a href="#" target="_blank"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103" alt="NuGet" /></a>
     <a href="desk.techonit.org" target="_blank"><img src="https://badgen.net/badge/build/passing/orange"/></a>
-       <a href="https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0" target="_blank"><img src="https://badgen.net/badge/.net/7.0/purple"/></a>
+       <a href="https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0" target="_blank"><img src="https://badgen.net/badge/.net/8.0/purple"/></a>
     <a href="desk.techonit.org" target="_blank"><img src="https://badgen.net/badge/version/2.0.0/red"/></a>
     <a href="#" target="_blank"><img src="https://badgen.net/npm/license/lodash"/></a>
     <a href="#buy-me-a-coffee-" target="_blank"><img src="https://badgen.net/badge/icon/buymeacoffee/green?icon=buymeacoffee&label"/></a>
@@ -17,8 +17,8 @@
 </div>
 
 # Technologies
-- [Asp.NET Core 7.0](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0)
-- [Entity Framework Core 7](https://learn.microsoft.com/en-us/ef/core/)
+- [Asp.NET Core 8.0](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-7.0)
+- [Entity Framework Core 8](https://learn.microsoft.com/en-us/ef/core/)
 - [Domain-Driven Design](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/ddd-oriented-microservice)
 - [Clean Architecture](https://github.com/jasontaylordev/CleanArchitecture)
 - [MediatR](https://github.com/jbogard/MediatR)

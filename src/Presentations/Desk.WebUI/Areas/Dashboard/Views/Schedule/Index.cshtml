@@ -2,9 +2,18 @@
     ViewData["Title"] = "Scheduled automations";
 }
 
-<h1 class="fw-bolder" data-i18n="Schedule automations">Schedule automations</h1>
-<hr />
-<div class="container-fluid">
+<div class="container-fluid intro-scheduled-automation">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <span class="h3 fw-bolder mb-0">
+                <span data-i18n="Schedule automations">Schedule automations</span>
+            </span>
+        </div>
+        <div>
+            <button class="btn btn-primary" onclick="gotoCreateScheduleSection()" data-i18n="Create">Create</button>
+        </div>
+    </div>
+    <hr />
     <div class="row">
         <div class="col-md-5">
             <div>
@@ -23,7 +32,7 @@
                     <p class="mb-1"><span>+</span> <span data-i18n="Turn off the #51 device."></span></p>
                 </div>
                 <div class="mt-5">
-                    <button class="btn btn-primary" data-i18n="Create automation"></button>
+                    <button class="btn btn-primary" data-i18n="Create automation" onclick="gotoCreateScheduleSection()">Create automation</button>
                 </div>
             </div>
         </div>
@@ -41,12 +50,161 @@
     </div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid create-schedule-section" style="display:none;opacity:0;">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <span class="h3 fw-bolder mb-0"><span data-i18n="Create a schedule automations">Create a schedule automations</span></span>
+        </div>
+        <div>
+            <button class="btn btn-primary" disabled="disabled">Save</button>
+            <button class="btn btn-secondary" id="cancel-schedule-btn" onclick="gotoIntroScheduleSection()">Cancel</button>
+        </div>
+    </div>
+    <hr />
     @* Trigger *@
-
+    <h5>Trigger</h5>
+    <div class="pt-2 pb-4">
+        <div class="w-100 text-center px-3 py-2 rounded bg-light">
+            <span>Your automation doesn't have a trigger yet. Select a trigger for the automation below.</span>
+        </div>
+    </div>
     @* Select a trigger *@
-
+    <div id="trigger-select-section">
+        <h5>Select a schedule</h5>
+        <div class="card mb-3">
+            <div class="card-header px-3 py-2">
+                <div class="d-flex justify-content-between px-3 py-2 w-100">
+                    <div class="d-flex align-items-center gap-2">
+                        <span>Every</span>
+                        <select class="form-control form-control-sm">
+                            <option>day</option>
+                            <option>week</option>
+                        </select>
+                        <span>at</span>
+                        <button class="btn btn-light p-1 btn-sm"><i class="bx bx-time"></i></button>
+                        <input class="form-control input" placeholder="HH:MM" tabindex="0" type="text" readonly="readonly">
+                    </div>
+                    <div>
+                        <button class="btn btn-primary btn-icon rounded-circle"><i class="bx bx-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header px-3 py-2">
+                <div class="d-flex justify-content-between px-3 py-2 w-100">
+                    <div class="d-flex align-items-center gap-2">
+                        <span>Every</span>
+                        <select class="form-control form-control-sm">
+                            <option>day</option>
+                            <option>week</option>
+                        </select>
+                        <span>at</span>
+                        <button class="btn btn-light p-1 btn-sm"><i class="bx bx-time"></i></button>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary btn-icon rounded-circle"><i class="bx bx-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header px-3 py-2">
+                <div class="d-flex justify-content-between px-3 py-2 w-100">
+                    <div class="d-flex align-items-center gap-2">
+                        <span>Every</span>
+                        <select class="form-control form-control-sm">
+                            <option>day</option>
+                            <option>week</option>
+                        </select>
+                        <span>at</span>
+                        <button class="btn btn-light p-1 btn-sm"><i class="bx bx-time"></i></button>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary btn-icon rounded-circle"><i class="bx bx-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @* Actions *@
 
     @* Add Actions *@
 </div>
+
+@section scripts {
+    <script>
+        // document.addEventListener("DOMContentLoaded", () => {
+        // });
+
+        const gotoCreateScheduleSection = () => {
+            // Hide intro section.
+            anime({
+                targets: '.intro-scheduled-automation',
+                translateX: -20,
+                opacity: 0,
+                begin: (anime) => {
+                    anime.animatables.forEach((element) => {
+                        element.target.style.position = 'block';
+                    });
+                },
+                complete: (anime) => {
+                    anime.animatables.forEach((element) => {
+                        element.target.style.display = 'none';
+                    });
+                },
+            });
+            // Show create new schedule section.
+            anime({
+                targets: '.create-schedule-section',
+                //translateY: -10,
+                opacity: 1,
+                begin: (anime) => {
+                    anime.animatables.forEach((element) => {
+                        element.target.style.display = 'none';
+                    });
+                },
+                complete: (anime) => {
+                    anime.animatables.forEach((element) => {
+                        element.target.style.display = 'block';
+                    });
+                },
+            });
+        };
+
+        const gotoIntroScheduleSection = () => {
+            // Hide create new section.
+            anime({
+                targets: '.create-schedule-section',
+                opacity: 0,
+                begin: (anime) => {
+                    anime.animatables.forEach((element) => {
+                        element.target.style.position = 'block';
+                    });
+                },
+                complete: (anime) => {
+                    anime.animatables.forEach((element) => {
+                        element.target.style.display = 'none';
+                    });
+                },
+            });
+            // Show intro section.
+            anime({
+                targets: '.intro-scheduled-automation',
+                translateX: 10,
+                opacity: 1,
+                begin: (anime) => {
+                    anime.animatables.forEach((element) => {
+                        element.target.style.display = 'none';
+                        element.target.style.translateX = -10;
+                    });
+                },
+                complete: (anime) => {
+                    anime.animatables.forEach((element) => {
+                        element.target.style.display = 'block';
+                    });
+                },
+            });
+        };
+    </script>
+}

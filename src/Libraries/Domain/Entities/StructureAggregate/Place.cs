@@ -2,20 +2,11 @@
 
 namespace TechOnIt.Domain.Entities.StructureAggregate;
 
-public class Place
+public class Place : BaseEntity
 {
-    public Guid Id { get; private set; } = Guid.NewGuid();
     public string Name { get; private set; } = string.Empty;
     public string? Description { get; set; }
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
-    public DateTime? ModifiedAt { get; private set; }
-
-    #region Relations and Foreignkeys
-    public Guid StructureId { get; private set; }
-    public virtual Structure? Structure { get; private set; }
-    public virtual ICollection<RelayEntity>? Devices { get; set; }
-    public virtual ICollection<SensorEntity>? Sensors { get; private set; }
-    #endregion
 
     #region Ctor
     private Place() { }
@@ -24,6 +15,13 @@ public class Place
         SetName(name);
         StructureId = structureId;
     }
+    #endregion
+
+    #region Relations and Foreignkeys
+    public Guid StructureId { get; private set; }
+    public virtual Structure? Structure { get; private set; }
+    public virtual ICollection<RelayEntity>? Relays { get; set; }
+    public virtual ICollection<SensorEntity>? Sensors { get; private set; }
     #endregion
 
     #region Methods

@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Identity;
+﻿using TechOnIt.Domain.Entities.Security;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.Identities;
 

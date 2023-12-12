@@ -30,7 +30,7 @@ public class CreateSensorReportCommandHandler : IRequestHandler<CreateSensorRepo
 
             Task insertResult = Task.Factory
                 .StartNew(() => _unitOfWorks.SensorRepository
-                .AddReportToSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.SensorReport>(), cancellationToken)
+                .AddReportToSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.SensorReportEntity>(), cancellationToken)
             , cancellationToken);
 
             await _mediator.Publish(new SensorReportNotifications());

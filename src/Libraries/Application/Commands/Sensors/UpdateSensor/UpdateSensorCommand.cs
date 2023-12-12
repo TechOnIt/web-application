@@ -32,7 +32,7 @@ public class UpdateSensorCommandHandler : IRequestHandler<UpdateSensorCommand, o
             var updateSensor =
                 Task.Factory
                 .StartNew(() =>
-                _unitOfWorks.SensorRepository.UpdateSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.Sensor>(), cancellationToken)
+                _unitOfWorks.SensorRepository.UpdateSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.SensorEntity>(), cancellationToken)
                 , cancellationToken);
             await updateSensor;
 

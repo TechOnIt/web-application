@@ -45,7 +45,7 @@ public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, o
 
             Task createSensor = Task.Factory
                 .StartNew(() =>
-                _unitOfWorks.SensorRepository.CreateSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.Sensor>(), cancellationToken)
+                _unitOfWorks.SensorRepository.CreateSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.SensorEntity>(), cancellationToken)
             , cancellationToken);
 
             await createSensor;

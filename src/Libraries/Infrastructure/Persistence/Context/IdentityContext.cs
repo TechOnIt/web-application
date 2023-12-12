@@ -4,6 +4,7 @@ using System.Reflection;
 using TechOnIt.Domain.Entities.General;
 using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Security;
 using TechOnIt.Domain.Entities.SensorAggregate;
 using TechOnIt.Domain.Entities.StructureAggregate;
 
@@ -47,8 +48,8 @@ public class IdentityContext : DbContext
     public DbSet<Structure> Structures { get; set; }
     public DbSet<Place> Places { get; set; }
     public DbSet<RelayEntity> Devices { get; set; }
-    public DbSet<Sensor> Sensors { get; set; }
-    public DbSet<SensorReport> SensorReports { get; set; }
+    public DbSet<SensorEntity> Sensors { get; set; }
+    public DbSet<SensorReportEntity> SensorReports { get; set; }
     #endregion
 
     #region Metadata

@@ -1,6 +1,6 @@
-﻿using TechOnIt.Domain.Entities.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TechOnIt.Infrastructure.Persistence.Context;
+using TechOnIt.Domain.Entities.Identity;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Roles;
 

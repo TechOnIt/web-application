@@ -2,9 +2,9 @@
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
-public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
+public class SensorConfiguration : IEntityTypeConfiguration<SensorEntity>
 {
-    public void Configure(EntityTypeBuilder<Sensor> builder)
+    public void Configure(EntityTypeBuilder<SensorEntity> builder)
     {
         builder.ToTable("Sensors", TableSchema.Default);
 

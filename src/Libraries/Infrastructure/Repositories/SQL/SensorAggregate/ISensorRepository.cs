@@ -5,18 +5,18 @@ namespace TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 public interface ISensorRepository
 {
     #region Sensor
-    Task CreateSensorAsync(Sensor sensor, CancellationToken cancellationToken = default);
-    Task<(bool Result, bool IsExists)> UpdateSensorAsync(Sensor sensor, CancellationToken cancellationToken);
+    Task CreateSensorAsync(SensorEntity sensor, CancellationToken cancellationToken = default);
+    Task<(bool Result, bool IsExists)> UpdateSensorAsync(SensorEntity sensor, CancellationToken cancellationToken);
     Task<(bool Result, bool IsExists)> DeleteSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken);
-    Task<Sensor?> GetSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken = default);
-    Task<IList<Sensor>> GetAllSensorsByPlaceIdAsync(Guid placeId, CancellationToken cancellationToken);
-    Task<IList<SensorReport>?> GetSensorReportBySensorIdAsNoTrackingAsync(Guid sensorId, CancellationToken cancellationToken);
-    Task<IList<SensorReport>?> GetSensorReportBySensorIdAsNoTrackingWithTimeFilterAsync(Guid sensorId, DateTime minTime, DateTime maxTime, CancellationToken cancellationToken);
+    Task<SensorEntity?> GetSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken = default);
+    Task<IList<SensorEntity>> GetAllSensorsByPlaceIdAsync(Guid placeId, CancellationToken cancellationToken);
+    Task<IList<SensorReportEntity>?> GetSensorReportBySensorIdAsNoTrackingAsync(Guid sensorId, CancellationToken cancellationToken);
+    Task<IList<SensorReportEntity>?> GetSensorReportBySensorIdAsNoTrackingWithTimeFilterAsync(Guid sensorId, DateTime minTime, DateTime maxTime, CancellationToken cancellationToken);
     #endregion
 
     #region Report
-    Task<IList<SensorReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken = default);
-    Task<SensorReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken = default);
-    Task AddReportToSensorAsync(SensorReport model, CancellationToken cancellationToken);
+    Task<IList<SensorReportEntity>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken = default);
+    Task<SensorReportEntity?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken = default);
+    Task AddReportToSensorAsync(SensorReportEntity model, CancellationToken cancellationToken);
     #endregion
 }

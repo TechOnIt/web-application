@@ -1,6 +1,7 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identity;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
-namespace TechOnIt.Domain.Entities.Identity;
+namespace TechOnIt.Domain.Entities.Security;
 
 public class DynamicAccessEntity
 {
@@ -10,10 +11,10 @@ public class DynamicAccessEntity
     {
         SetPath(path);
 
-        if(userId == Guid.Empty) throw new ArgumentNullException("User id cannot be empty.");
+        if (userId == Guid.Empty) throw new ArgumentNullException("User id cannot be empty.");
         UserId = userId;
 
-        if(roleId == Guid.Empty) throw new ArgumentNullException("Role id cannot be empty.");
+        if (roleId == Guid.Empty) throw new ArgumentNullException("Role id cannot be empty.");
         RoleId = roleId;
     }
     #endregion

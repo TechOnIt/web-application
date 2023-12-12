@@ -29,8 +29,8 @@ internal class UserDataInitializer : IDataInitializer
         Structure newStructure = new ("My Structure", PasswordHash.Parse("123456"), user1.Id, StructureType.Agriculture);
         #region Place
         Place newPlace = new("Hall", newStructure.Id);
-        newPlace.Devices = new List<Device>();
-        newPlace.Devices.Add(new Device(13, DeviceType.Light, newPlace.Id));
+        newPlace.Devices = new List<RelayEntity>();
+        newPlace.Devices.Add(new RelayEntity(13, DeviceType.Light, newPlace.Id));
         newStructure.AddPlace(newPlace);
         
         #endregion
@@ -55,7 +55,7 @@ internal class UserDataInitializer : IDataInitializer
             {
                 if (!await _uow.RoleRepository.IsExistsRoleNameAsync(role))
                 {
-                    var newRole = new Role(role);
+                    var newRole = new RoleEntity(role);
                     await _uow.RoleRepository.CreateRoleAsync(newRole);
                     haveSaveChange = true;
                     await Task.Delay(500);

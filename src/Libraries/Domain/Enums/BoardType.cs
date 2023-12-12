@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Domain.Entities.Board;
+﻿namespace TechOnIt.Domain.Enums;
 
 public enum BoardType
 {

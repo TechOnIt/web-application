@@ -1,8 +1,8 @@
 ﻿namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
-public class DeviceConfiguration : IEntityTypeConfiguration<Device>
+public class DeviceConfiguration : IEntityTypeConfiguration<RelayEntity>
 {
-    public void Configure(EntityTypeBuilder<Device> builder)
+    public void Configure(EntityTypeBuilder<RelayEntity> builder)
     {
         builder.ToTable("Devices", TableSchema.Default);
 

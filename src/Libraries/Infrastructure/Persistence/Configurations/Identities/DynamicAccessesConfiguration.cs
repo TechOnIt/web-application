@@ -2,9 +2,9 @@
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.Identities;
 
-public class DynamicAccessesConfiguration : IEntityTypeConfiguration<DynamicAccess>
+public class DynamicAccessesConfiguration : IEntityTypeConfiguration<DynamicAccessEntity>
 {
-    public void Configure(EntityTypeBuilder<DynamicAccess> builder)
+    public void Configure(EntityTypeBuilder<DynamicAccessEntity> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(a => a.Path).HasColumnType("nvarchar(500)");

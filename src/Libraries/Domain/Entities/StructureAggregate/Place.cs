@@ -13,7 +13,7 @@ public class Place
     #region Relations and Foreignkeys
     public Guid StructureId { get; private set; }
     public virtual Structure? Structure { get; private set; }
-    public virtual ICollection<Device>? Devices { get; set; }
+    public virtual ICollection<RelayEntity>? Devices { get; set; }
     public virtual ICollection<Sensor>? Sensors { get; private set; }
     #endregion
 

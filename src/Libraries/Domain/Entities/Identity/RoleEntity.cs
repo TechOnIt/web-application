@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace TechOnIt.Domain.Entities.Identity;
 
-namespace TechOnIt.Domain.Entities.Identity;
-
-public class Role
+public class RoleEntity
 {
     #region Ctor
-    private Role() { }
+    private RoleEntity() { }
 
-    public Role(string name)
+    public RoleEntity(string name)
     {
         Id = Guid.NewGuid();
         SetName(name);
@@ -31,6 +28,6 @@ public class Role
     #endregion
 
     #region relations
-    public virtual ICollection<UserRole>? UserRoles { get; set; }
+    public virtual ICollection<UserRoleEntity>? UserRoles { get; set; }
     #endregion
 }

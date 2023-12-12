@@ -15,38 +15,38 @@ public class DeviceRepositry : IDeviceRepositry
     }
     #endregion
 
-    public async Task<Device?> FindByIdAsync(Guid deviceId, CancellationToken cancellationToken = default)
+    public async Task<RelayEntity?> FindByIdAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
         var getDevice = await _context.Devices.FirstOrDefaultAsync(a => a.Id == deviceId, cancellationToken);
         if (getDevice is null)
         {
             await Task.CompletedTask;
-            return await Task.FromResult<Device?>(null);
+            return await Task.FromResult<RelayEntity?>(null);
         }
 
         return await Task.FromResult(getDevice);
     }
-    public async Task<Device?> FindByIdAsNoTrackingAsync(Guid deviceId, CancellationToken cancellationToken = default)
+    public async Task<RelayEntity?> FindByIdAsNoTrackingAsync(Guid deviceId, CancellationToken cancellationToken = default)
     {
         var getDevice = await _context.Devices
             .AsNoTracking()
             .FirstOrDefaultAsync(a => a.Id == deviceId, cancellationToken);
 
         if (getDevice is null)
-            return await Task.FromResult<Device?>(null);
+            return await Task.FromResult<RelayEntity?>(null);
 
-        return await Task.FromResult<Device?>(getDevice);
+        return await Task.FromResult<RelayEntity?>(getDevice);
     }
     /// <summary>
     /// Create a new device.
     /// </summary>
     /// <param name="device">Device model object.</param>
-    public async Task CreateAsync(Device device, CancellationToken cancellationToken = default)
+    public async Task CreateAsync(RelayEntity device, CancellationToken cancellationToken = default)
     {
         var result = await _context.Devices.AddAsync(device, cancellationToken);
         await Task.CompletedTask;
     }
-    public async Task UpdateAsync(Device device, CancellationToken cancellationToken)
+    public async Task UpdateAsync(RelayEntity device, CancellationToken cancellationToken)
     {
         if (!cancellationToken.IsCancellationRequested)
             _context.Devices.Update(device);
@@ -66,11 +66,11 @@ public class DeviceRepositry : IDeviceRepositry
             await Task.CompletedTask;
 
         if (!cancellationToken.IsCancellationRequested)
-            _context.Entry<Device>(getDevice).State = EntityState.Deleted;
+            _context.Entry<RelayEntity>(getDevice).State = EntityState.Deleted;
 
         await Task.CompletedTask;
     }
-    public async Task DeleteAsync(Device device, CancellationToken cancellationToken)
+    public async Task DeleteAsync(RelayEntity device, CancellationToken cancellationToken)
     {
         if (!cancellationToken.IsCancellationRequested)
         {
@@ -81,7 +81,7 @@ public class DeviceRepositry : IDeviceRepositry
     }
 
     #region bad method
-    public async Task<IList<Device>> GetAllDevicesAsync(CancellationToken cancellationToken, Func<Device, bool>? filter = null)
+    public async Task<IList<RelayEntity>> GetAllDevicesAsync(CancellationToken cancellationToken, Func<RelayEntity, bool>? filter = null)
     {
         var devices = _context.Devices.AsNoTracking().AsQueryable();
 

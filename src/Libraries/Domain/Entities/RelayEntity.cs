@@ -2,7 +2,7 @@
 
 namespace TechOnIt.Domain.Entities;
 
-public class Device
+public class RelayEntity
 {
     public Guid Id { get; private set; }
     public int Pin { get; private set; }
@@ -15,8 +15,8 @@ public class Device
     #endregion
 
     #region Ctor
-    private Device() { }
-    public Device(int pin, DeviceType type, Guid placeId)
+    private RelayEntity() { }
+    public RelayEntity(int pin, DeviceType type, Guid placeId)
     {
         Id = Guid.NewGuid();
         SetPin(pin);

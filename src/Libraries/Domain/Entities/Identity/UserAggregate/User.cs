@@ -1,4 +1,5 @@
-﻿using TechOnIt.Domain.Entities.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.General;
+using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Domain.Entities.Identity.UserAggregate;
 
@@ -19,11 +20,11 @@ public class User
     public DateTime? LockOutDateTime { get; private set; }
     public byte[] ConcurrencyStamp { get; private set; } = new byte[0];
     #region Relations
-    public virtual ICollection<UserRole>? UserRoles { get; set; }
+    public virtual ICollection<UserRoleEntity>? UserRoles { get; set; }
     public virtual ICollection<Structure>? Structures { get; set; }
     public virtual ICollection<LoginHistory>? LoginHistories { get; set; }
-    public virtual ICollection<LogRecord>? LogHistories { get; set; }
-    public virtual ICollection<DynamicAccess> DynamicAccesses { get; set; }
+    public virtual ICollection<LogEntity>? LogHistories { get; set; }
+    public virtual ICollection<DynamicAccessEntity> DynamicAccesses { get; set; }
     #endregion
 
     #region Ctor

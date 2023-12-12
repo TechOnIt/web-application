@@ -27,7 +27,7 @@ public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, o
     {
         try
         {
-            var model = new Domain.Entities.Device(request.Pin, request.DeviceType, request.PlaceId);
+            var model = new Domain.Entities.RelayEntity(request.Pin, request.DeviceType, request.PlaceId);
             Task createResult = Task.Factory.StartNew(() => _unitOfWorks.DeviceRepositry.CreateAsync(model, cancellationToken), cancellationToken);
             Task.WaitAny(createResult);
 

@@ -2,19 +2,19 @@
 
 namespace TechOnIt.Domain.Entities.Identity;
 
-public class UserRole
+public class UserRoleEntity
 {
     public Guid UserId { get; private set; }
     public Guid RoleId { get; private set; }
 
     #region Relations
     public virtual User? User { get; private set; }
-    public virtual Role? Role { get; private set; }
+    public virtual RoleEntity? Role { get; private set; }
     #endregion
 
     #region Ctor
-    private UserRole() { }
-    public UserRole(Guid userId, Guid roleId)
+    private UserRoleEntity() { }
+    public UserRoleEntity(Guid userId, Guid roleId)
     {
         UserId = userId;
         RoleId = roleId;

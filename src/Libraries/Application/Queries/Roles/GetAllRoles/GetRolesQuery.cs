@@ -22,7 +22,7 @@ public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, PaginatedList
 
     public async Task<PaginatedList<RoleWithUsersCountViewModel>> Handle(GetRolesQuery request, CancellationToken cancellationToken = default)
     {
-        var config = TypeAdapterConfig<Role, RoleWithUsersCountViewModel>.NewConfig()
+        var config = TypeAdapterConfig<RoleEntity, RoleWithUsersCountViewModel>.NewConfig()
             .Map(dest => dest.UsersCount, src => src.UserRoles.Count)
             .Config
             ;

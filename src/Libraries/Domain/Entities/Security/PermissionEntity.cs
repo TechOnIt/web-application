@@ -3,9 +3,9 @@
 /// <summary>
 /// Represents a permission record
 /// </summary>
-public class PermissionRecord
+public class PermissionEntity
 {
-    public PermissionRecord(string systemName)
+    public PermissionEntity(string systemName)
     {
         SystemName = systemName;
     }

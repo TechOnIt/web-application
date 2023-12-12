@@ -27,9 +27,9 @@ public class DeviceViewModel
     public Guid PlaceId { get; set; }
 
     #region explicit casting
-    public static explicit operator Device(DeviceViewModel viewModel)
+    public static explicit operator RelayEntity(DeviceViewModel viewModel)
     {
-        return new Device(viewModel.Pin, viewModel.DeviceType, viewModel.PlaceId);
+        return new RelayEntity(viewModel.Pin, viewModel.DeviceType, viewModel.PlaceId);
     }
     #endregion
 }

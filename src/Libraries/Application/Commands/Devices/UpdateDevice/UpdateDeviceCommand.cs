@@ -32,7 +32,7 @@ public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand, o
         {
             var updateResult =
                 Task.Factory
-                .StartNew(() => _unitOfWorks.DeviceRepositry.UpdateAsync(request.Adapt<Domain.Entities.Device>(), cancellationToken)
+                .StartNew(() => _unitOfWorks.DeviceRepositry.UpdateAsync(request.Adapt<Domain.Entities.RelayEntity>(), cancellationToken)
                 , cancellationToken);
 
             Task.WaitAny(updateResult);

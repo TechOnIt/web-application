@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace TechOnIt.Desk.WebUI.Hubs;
+namespace TechOnIt.Desk.Web.Hubs;
 
 public class SensorHub : Hub
 {

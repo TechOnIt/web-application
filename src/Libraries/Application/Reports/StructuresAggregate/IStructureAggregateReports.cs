@@ -33,6 +33,6 @@ public interface IStructureAggregateReports : IReport
     Task<IList<StructureViewModel>> GetstructuresParallel(CancellationToken cancellationToken);
 
     #region Place
-    Task<StructurePlacesWithDevicesViewModel?> GetStructureWithPlacesAndDevicesByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken);
+    Task<StructurePlacesWithRelayViewModel?> GetStructureWithPlacesAndRelaysByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken);
     #endregion
 }

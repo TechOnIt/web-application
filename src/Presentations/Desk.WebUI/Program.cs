@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
-using TechOnIt.Desk.WebUI.Hubs;
-using TechOnIt.Desk.WebUI.RealTimeServices;
+using TechOnIt.Desk.Web.Hubs;
+using TechOnIt.Desk.Web.RealTimeServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

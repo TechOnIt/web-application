@@ -47,7 +47,7 @@ public class IdentityContext : DbContext
     #region Defaults
     public DbSet<Structure> Structures { get; set; }
     public DbSet<Place> Places { get; set; }
-    public DbSet<RelayEntity> Devices { get; set; }
+    public DbSet<RelayEntity> Relays { get; set; }
     public DbSet<SensorEntity> Sensors { get; set; }
     public DbSet<SensorReportEntity> SensorReports { get; set; }
     #endregion

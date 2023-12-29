@@ -6,7 +6,7 @@ public class RelayEntity
 {
     public Guid Id { get; private set; }
     public int Pin { get; private set; }
-    public DeviceType Type { get; private set; } = DeviceType.Light;
+    public RelayType Type { get; private set; } = RelayType.Light;
     public bool IsHigh { get; set; } = false;
     public byte[] ConcurrencyStamp { get; private set; } = new byte[0];
     #region relations & foreignkeys
@@ -16,7 +16,7 @@ public class RelayEntity
 
     #region Ctor
     private RelayEntity() { }
-    public RelayEntity(int pin, DeviceType type, Guid placeId)
+    public RelayEntity(int pin, RelayType type, Guid placeId)
     {
         Id = Guid.NewGuid();
         SetPin(pin);

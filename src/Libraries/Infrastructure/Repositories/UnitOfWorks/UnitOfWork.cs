@@ -1,5 +1,4 @@
-﻿using TechOnIt.Infrastructure.Repositories.SQL.Devices;
-using TechOnIt.Infrastructure.Repositories.SQL.Roles;
+﻿using TechOnIt.Infrastructure.Repositories.SQL.Roles;
 using TechOnIt.Infrastructure.Repositories.SQL.Users;
 using System.Reflection;
 using TechOnIt.Infrastructure.Persistence.Context;
@@ -8,6 +7,7 @@ using TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 using TechOnIt.Infrastructure.Repositories.SQL.Reports;
 using TechOnIt.Infrastructure.Repositories.SQL.HeavyTransaction;
 using TechOnIt.Infrastructure.Repositories.SQL.DynamicAccess;
+using TechOnIt.Infrastructure.Repositories.SQL.Relays;
 
 namespace TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
@@ -80,17 +80,17 @@ public class UnitOfWork : IUnitOfWorks
     }
     #endregion
 
-    #region DeviceRepository
-    private IDeviceRepositry _deviceRepositry;
-    public IDeviceRepositry DeviceRepositry
+    #region RelayRepository
+    private IRelayRepositry _relayRepositry;
+    public IRelayRepositry RelayRepositry
     {
         get
         {
-            if (_deviceRepositry == null)
+            if (_relayRepositry == null)
             {
-                _deviceRepositry = new DeviceRepositry(_context);
+                _relayRepositry = new RelayRepositry(_context);
             }
-            return _deviceRepositry;
+            return _relayRepositry;
         }
     }
     #endregion

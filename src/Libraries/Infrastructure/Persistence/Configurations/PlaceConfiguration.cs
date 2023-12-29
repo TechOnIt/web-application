@@ -26,17 +26,12 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
             .IsRequired()
             .ValueGeneratedOnAdd()
             .HasColumnType(DataTypes.datetime2);
-        // ModifiedAt
-        builder.Property(b => b.ModifiedAt)
-            .ValueGeneratedOnUpdate()
-            .IsRequired(false)
-            .HasColumnType(DataTypes.datetime2);
         // StructureId
         builder.HasOne(b => b.Structure)
             .WithMany(b => b.Places)
             .HasForeignKey(b => b.StructureId);
         // Devices
-        builder.HasMany(a => a.Devices)
+        builder.HasMany(a => a.Relays)
             .WithOne(a => a.Place)
             .HasForeignKey(a => a.PlaceId);
     }

@@ -1,4 +1,4 @@
-﻿using TechOnIt.Application.Queries.Structures.GetPlacesWithDevicesByStructureId;
+﻿using TechOnIt.Application.Queries.Structures.GetPlacesWithRelaysByStructureId;
 
 namespace TechOnIt.Desk.Web.Areas.Dashboard.Controllers;
 
@@ -21,7 +21,7 @@ public class StructureController : Controller
     [ResponseCache(Duration = 50, Location = ResponseCacheLocation.Client)]
     public async Task<IActionResult> Places([FromQuery] string structureId)
     {
-        var structure = await _mediator.Send(new GetPlacesWithDevicesByStructureIdCommand { StructureId = Guid.Parse(structureId) });
+        var structure = await _mediator.Send(new GetPlacesWithRelaysByStructureIdCommand { StructureId = Guid.Parse(structureId) });
         return View(structure);
     }
 }

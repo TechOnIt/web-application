@@ -45,12 +45,12 @@ public class StructureAggregateReports : IStructureAggregateReports
         return await Task.FromResult(structures);
     }
 
-    public async Task<StructurePlacesWithDevicesViewModel?> GetStructureWithPlacesAndDevicesByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken)
+    public async Task<StructurePlacesWithRelayViewModel?> GetStructureWithPlacesAndRelaysByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken)
         => await _unitOfWorks._context.Structures
         .AsNoTracking()
         .Include(s => s.Places)
-        .ThenInclude(p => p.Devices)
+        .ThenInclude(p => p.Relays)
         .Where(s => s.Id == structureId)
-        .ProjectToType<StructurePlacesWithDevicesViewModel>()
+        .ProjectToType<StructurePlacesWithRelayViewModel>()
         .FirstOrDefaultAsync(cancellationToken);
 }

@@ -4,10 +4,10 @@ using System.Reflection;
 using TechOnIt.Application.Common.Exceptions;
 using TechOnIt.Application.Common.Extentions;
 using TechOnIt.Application.Common.Models;
-using TechOnIt.Application.Common.Models.ViewModels.Devices;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Domain.Entities.StructureAggregate;
+using TechOnIt.Application.Common.Models.ViewModels.Relay;
 
 namespace TechOnIt.Application.Reports.Users;
 
@@ -182,7 +182,7 @@ public class UserReports : IUserReports
             return null;
         }
     }
-    public async Task<IList<DeviceViewModel>?> GetAllDevicesByUserIdAsync(Guid userId)
+    public async Task<IList<RelayViewModel>?> GetAllRelaysByUserIdAsync(Guid userId)
     {
         try
         {
@@ -190,15 +190,15 @@ public class UserReports : IUserReports
                                  join plc in _unitOfWorks._context.Places on str.Id equals plc.StructureId
                                  into place
                                  from pl in place.DefaultIfEmpty()
-                                 join dev in _unitOfWorks._context.Devices on pl.Id equals dev.PlaceId
+                                 join dev in _unitOfWorks._context.Relays on pl.Id equals dev.PlaceId
                                  into device
                                  from de in device.DefaultIfEmpty()
                                  where str.UserId == userId
-                                 select new DeviceViewModel
+                                 select new RelayViewModel
                                  {
                                      Id = de.Id,
                                      Pin = de.Pin,
-                                     DeviceType = de.Type,
+                                     RelayType = de.Type,
                                      IsHigh = de.IsHigh,
                                      PlaceId = de.PlaceId,
 

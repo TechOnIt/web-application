@@ -1,4 +1,4 @@
-﻿@model TechOnIt.Application.Common.Models.ViewModels.Structures.StructurePlacesWithDevicesViewModel
+﻿@model TechOnIt.Application.Common.Models.ViewModels.Structures.StructurePlacesWithRelayViewModel
 @{
     ViewData["Title"] = @Model.Name + " places";
 }
@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        @await Component.InvokeAsync(typeof(PlacesWithDevicesControlViewComponent), new { places = Model.Places })
+        @await Component.InvokeAsync(typeof(PlacesWithRelaysControlViewComponent), new { places = Model.Places })
     }
     else
     {
@@ -75,30 +75,30 @@
     </div>
 </div>
 
-<!-- New Device Modal -->
-<div class="modal fade" id="newDeviceModal" tabindex="-1" aria-labelledby="newDeviceModalLabel" aria-hidden="true">
+<!-- New Relay Modal -->
+<div class="modal fade" id="newRelayModal" tabindex="-1" aria-labelledby="newRelayModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="newDeviceModalLabel">New device</h1>
+                <h1 class="modal-title fs-5" id="newRelayModalLabel">New relay</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/dashboard/device/new">
+            <form method="post" action="/dashboard/relay/new">
                 @* Place Id *@
-                <input id="new-device-place-id" type="hidden" name="PlaceId" value="@Model.Id" />
+                <input id="new-relay-place-id" type="hidden" name="PlaceId" value="@Model.Id" />
                 <div class="modal-body">
                     <div class="form_group field mb-3">
-                        <select id="new-device-type" class="form_field" required>
+                        <select id="new-relay-type" class="form_field" required>
                             <option value="1">💡 Light, Lamp, LED</option>
                             <option value="2">🔥 Heater, Warmer</option>
                             <option value="3">❄️ Cooler, Air conditioner</option>
                             <option value="4">🌬️ Fan, Chiller</option>
                         </select>
-                        <label for="new-device-description" class="form_label">Type</label>
+                        <label for="new-relay-description" class="form_label">Type</label>
                     </div>
                     <div class="form_group field mb-3">
-                        <input id="new-device-name" class="form_field" name="Pin" type="number" placeholder="#0 - #255" min="1" max="255" maxlength="3" required />
-                        <label for="new-device-name" class="form_label">Pin</label>
+                        <input id="new-relay-name" class="form_field" name="Pin" type="number" placeholder="#0 - #255" min="1" max="255" maxlength="3" required />
+                        <label for="new-relay-name" class="form_label">Pin</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -112,14 +112,14 @@
 
 @section Scripts {
     <script>
-        // Device On/Off
-        const toggleDeviceStatus = function (e, deviceId, status) {
+        // Relay On/Off
+        const toggleRelayStatus = function (e, relayId, status) {
             $(e).prop("disabled", true);
             var requestOptions = {
                 method: 'GET',
                 redirect: 'follow'
             };
-            var url = '/dashboard/device/' + status + '?deviceId=' + deviceId;
+            var url = '/dashboard/relay/' + status + '?relayId=' + relayId;
             fetch(url, requestOptions)
                 .then(response => response.text())
                 .then(function () {
@@ -131,9 +131,9 @@
                 });
         }
 
-        // New Device Click
-        $(document).on('click', '[data-bs-target="#newDeviceModal"]', function () {
-            $('#newDeviceModal #new-device-place-id').val($(this).attr('data-place-id'));
+        // New Relay Click
+        $(document).on('click', '[data-bs-target="#newRelayModal"]', function () {
+            $('#newRelayModal #new-relay-place-id').val($(this).attr('data-place-id'));
         });
     </script>
 }

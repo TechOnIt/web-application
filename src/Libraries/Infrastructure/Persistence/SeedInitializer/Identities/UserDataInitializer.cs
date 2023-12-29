@@ -29,8 +29,8 @@ internal class UserDataInitializer : IDataInitializer
         Structure newStructure = new ("My Structure", PasswordHash.Parse("123456"), user1.Id, StructureType.Agriculture);
         #region Place
         Place newPlace = new("Hall", newStructure.Id);
-        newPlace.Devices = new List<RelayEntity>();
-        newPlace.Devices.Add(new RelayEntity(13, DeviceType.Light, newPlace.Id));
+        newPlace.Relays = new List<RelayEntity>();
+        newPlace.Relays.Add(new RelayEntity(13, RelayType.Light, newPlace.Id));
         newStructure.AddPlace(newPlace);
         
         #endregion

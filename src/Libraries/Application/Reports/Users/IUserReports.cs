@@ -2,9 +2,9 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using TechOnIt.Application.Common.Models;
-using TechOnIt.Application.Common.Models.ViewModels.Devices;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
+using TechOnIt.Application.Common.Models.ViewModels.Relay;
 
 namespace TechOnIt.Application.Reports.Users;
 
@@ -50,7 +50,7 @@ public interface IUserReports : IReport
 
     Task<IList<UserViewModel>> GetUsersInRoleAsync(string roleName, Guid? roleId = null);
     Task<IList<StructureViewModel>?> GetUserStructuresByUserIdAsync(Guid userId);
-    Task<IList<DeviceViewModel>?> GetAllDevicesByUserIdAsync(Guid userId);
+    Task<IList<RelayViewModel>?> GetAllRelaysByUserIdAsync(Guid userId);
     PropertyInfo? GetUserProperty(string propertyName);
     Task<IList<UserViewModel>> GetAllUsersAsync();
     IList<UserViewModel> GetAllUsersSync();

@@ -2,8 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using System.Net.Sockets;
 using System.Text;
-using TechOnIt.Desk.WebUI.Hubs;
-namespace TechOnIt.Desk.WebUI.RealTimeServices;
+using TechOnIt.Desk.Web.Hubs;
+
+namespace TechOnIt.Desk.Web.RealTimeServices;
 
 public class TcpListenerHandler : BackgroundService
 {
@@ -37,10 +38,10 @@ public class TcpListenerHandler : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        Task.Run(() => HandleDeviceAsync(), stoppingToken);
+        Task.Run(() => HandleRelayAsync(), stoppingToken);
     }
 
-    private async Task HandleDeviceAsync()
+    private async Task HandleRelayAsync()
     {
         NetworkStream stream = _tcpListener.GetStream();
         while (true)

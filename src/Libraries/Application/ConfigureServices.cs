@@ -13,7 +13,7 @@ using TechOnIt.Application.Common.Behaviors;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Application.Common.Frameworks.Middlewares;
 using TechOnIt.Application.Common.Security.JwtBearer;
-using TechOnIt.Application.Reports.Devices;
+using TechOnIt.Application.Reports.Relays;
 using TechOnIt.Application.Reports.Roles;
 using TechOnIt.Application.Reports.StructuresAggregate;
 using TechOnIt.Application.Reports.Users;
@@ -86,7 +86,7 @@ public static class ConfigureServices
     public static IServiceCollection AddReportServices(this IServiceCollection services)
     {
         services.AddScoped<IUserReports, UserReports>()
-            .AddScoped<IDeviceReport, DeviceReport>()
+            .AddScoped<IRelayReport, RelayReport>()
             .AddScoped<IRoleReports, RoleReports>()
             .AddScoped<IStructureAggregateReports, StructureAggregateReports>();
 

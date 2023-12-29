@@ -17,8 +17,8 @@ public class RelayReport : IRelayReport
         TypeAdapterConfig config = null, CancellationToken cancellationToken = default)
         => await _context.Relays
             .AsNoTracking()
-            .Include(device => device.Place)
-            .Where(device => device.Place.StructureId == structureId)
+            .Include(relay => relay.Place)
+            .Where(relay => relay.Place.StructureId == structureId)
             .ProjectToType<TDestination>(config)
             .ToListAsync(cancellationToken);
 }

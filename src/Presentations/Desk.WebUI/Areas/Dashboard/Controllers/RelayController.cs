@@ -15,22 +15,22 @@ public class RelayController : Controller
     #endregion
 
     [HttpGet]
-    public async Task<IActionResult> On(string deviceId, CancellationToken cancellationToken)
+    public async Task<IActionResult> On(string relayId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new RelayChangeHighStateCommand
         {
-            RelayId = Guid.Parse(deviceId),
+            RelayId = Guid.Parse(relayId),
             IsHigh = true
         }, cancellationToken);
         return Ok();
     }
 
     [HttpGet]
-    public async Task<IActionResult> Off(string deviceId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Off(string relayId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new RelayChangeHighStateCommand
         {
-            RelayId = Guid.Parse(deviceId),
+            RelayId = Guid.Parse(relayId),
             IsHigh = false
         }, cancellationToken);
         return Ok();

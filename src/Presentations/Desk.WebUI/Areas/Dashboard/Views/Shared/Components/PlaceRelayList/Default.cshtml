@@ -5,10 +5,10 @@
 @if (Model is not null && Model.Count > 0)
 {
     <div class="d-flex flex-wrap gap-1">
-        @foreach (var device in Model)
+        @foreach (var relay in Model)
         {
-            @* Device Control *@
-            @await Component.InvokeAsync(typeof(RelayCardControlViewComponent), new { device })
+            @* Relay Control *@
+            @await Component.InvokeAsync(typeof(RelayCardControlViewComponent), new { relay })
         }
     </div>
 }
@@ -16,6 +16,6 @@ else
 {
     @* Device Not Found *@
     <div class="text-center">
-        <p class="text-muted small mt-4">No relays found.</p>
+        <p class="text-muted small mt-4">No items found.</p>
     </div>
 }

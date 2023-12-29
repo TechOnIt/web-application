@@ -4,6 +4,6 @@ namespace TechOnIt.Desk.Web.Areas.Dashboard.Components;
 
 public class RelayCardControlViewComponent : ViewComponent
 {
-    public async Task<IViewComponentResult> InvokeAsync(RelayCardControlViewModel device)
-        => await Task.FromResult(View(device));
+    public async Task<IViewComponentResult> InvokeAsync(RelayCardControlViewModel relay)
+        => await Task.FromResult(View(relay));
 }

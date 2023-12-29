@@ -190,9 +190,9 @@ public class UserReports : IUserReports
                                  join plc in _unitOfWorks._context.Places on str.Id equals plc.StructureId
                                  into place
                                  from pl in place.DefaultIfEmpty()
-                                 join dev in _unitOfWorks._context.Relays on pl.Id equals dev.PlaceId
-                                 into device
-                                 from de in device.DefaultIfEmpty()
+                                 join rel in _unitOfWorks._context.Relays on pl.Id equals rel.PlaceId
+                                 into relay
+                                 from de in relay.DefaultIfEmpty()
                                  where str.UserId == userId
                                  select new RelayViewModel
                                  {

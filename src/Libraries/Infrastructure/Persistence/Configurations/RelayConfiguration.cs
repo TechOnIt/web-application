@@ -4,7 +4,7 @@ public class RelayConfiguration : IEntityTypeConfiguration<RelayEntity>
 {
     public void Configure(EntityTypeBuilder<RelayEntity> builder)
     {
-        builder.ToTable("Devices", TableSchema.Default);
+        builder.ToTable("Relays", TableSchema.Default);
 
         // Id
         builder.HasKey(b => b.Id);

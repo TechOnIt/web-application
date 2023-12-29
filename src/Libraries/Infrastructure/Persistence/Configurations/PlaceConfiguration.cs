@@ -30,7 +30,7 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
         builder.HasOne(b => b.Structure)
             .WithMany(b => b.Places)
             .HasForeignKey(b => b.StructureId);
-        // Devices
+        // Relays
         builder.HasMany(a => a.Relays)
             .WithOne(a => a.Place)
             .HasForeignKey(a => a.PlaceId);

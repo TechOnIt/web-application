@@ -186,7 +186,7 @@ public class UserReports : IUserReports
     {
         try
         {
-            var devices = await (from str in _unitOfWorks._context.Structures
+            var relays = await (from str in _unitOfWorks._context.Structures
                                  join plc in _unitOfWorks._context.Places on str.Id equals plc.StructureId
                                  into place
                                  from pl in place.DefaultIfEmpty()
@@ -203,11 +203,11 @@ public class UserReports : IUserReports
                                      PlaceId = de.PlaceId,
 
                                  }).AsNoTracking().ToListAsync();
-            return devices;
+            return relays;
         }
         catch (ReportExceptions exp)
         {
-            throw new ReportExceptions($"error in geting all user devices by user Id : {exp.UserId}");
+            throw new ReportExceptions($"error in geting all user relays by user Id : {exp.UserId}");
         }
     }
 

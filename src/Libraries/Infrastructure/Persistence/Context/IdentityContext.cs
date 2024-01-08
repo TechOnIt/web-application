@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using TechOnIt.Domain.Entities.Controllers;
 using TechOnIt.Domain.Entities.General;
 using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;

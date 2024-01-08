@@ -1,4 +1,5 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Entities.Controllers;
 using TechOnIt.Domain.Enums;
 
 namespace TechOnIt.Application.Commands.Relays.UpdateRelay;
@@ -31,7 +32,7 @@ public class UpdateRelayCommandHandler : IRequestHandler<UpdateRelayCommand, obj
         {
             var updateResult =
                 Task.Factory
-                .StartNew(() => _unitOfWorks.RelayRepositry.UpdateAsync(request.Adapt<Domain.Entities.RelayEntity>(), cancellationToken)
+                .StartNew(() => _unitOfWorks.RelayRepositry.UpdateAsync(request.Adapt<RelayEntity>(), cancellationToken)
                 , cancellationToken);
 
             Task.WaitAny(updateResult);

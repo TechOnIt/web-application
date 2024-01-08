@@ -1,4 +1,5 @@
-﻿using TechOnIt.Domain.Entities.SensorAggregate;
+﻿using TechOnIt.Domain.Entities.Controllers;
+using TechOnIt.Domain.Entities.SensorAggregate;
 
 namespace TechOnIt.Domain.Entities.StructureAggregate;
 

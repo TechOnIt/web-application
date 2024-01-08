@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities;
+﻿using TechOnIt.Domain.Entities.Controllers;
 using TechOnIt.Domain.Enums;
 
 namespace TechOnIt.Application.Common.Models.ViewModels.Relay;

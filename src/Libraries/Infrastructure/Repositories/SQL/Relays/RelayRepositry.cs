@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TechOnIt.Domain.Entities;
+using TechOnIt.Domain.Entities.Controllers;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Relays;

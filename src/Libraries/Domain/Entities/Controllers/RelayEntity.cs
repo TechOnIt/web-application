@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Domain.Entities.StructureAggregate;
 
-namespace TechOnIt.Domain.Entities;
+namespace TechOnIt.Domain.Entities.Controllers;
 
 public class RelayEntity
 {

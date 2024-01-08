@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities;
+﻿using TechOnIt.Domain.Entities.Controllers;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Relays;
 

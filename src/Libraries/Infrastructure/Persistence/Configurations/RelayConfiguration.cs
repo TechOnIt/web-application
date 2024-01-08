@@ -1,4 +1,6 @@
-﻿namespace TechOnIt.Infrastructure.Persistence.Configurations;
+﻿using TechOnIt.Domain.Entities.Controllers;
+
+namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
 public class RelayConfiguration : IEntityTypeConfiguration<RelayEntity>
 {

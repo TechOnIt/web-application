@@ -63,7 +63,7 @@ public class SignInCookieCommandHandler : IRequestHandler<SignInCookieCommand, R
             new ClaimsPrincipal(new ClaimsIdentity(
             claims, CookieAuthenticationDefaults.AuthenticationScheme)),
             authProperties);
-        return Result.Success();
+        return Result.Ok();
     }
 }
 

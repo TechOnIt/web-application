@@ -18,8 +18,8 @@
 
         #region Methods
 
-        public static Result Success() => new(true, null);
-        public static Result Success<TData>(TData data)
+        public static Result Ok() => new(true, null);
+        public static Result Ok<TData>(TData data)
             => new Result<TData>(true, null, data);
 
         public static Result Fail(string message)
@@ -49,7 +49,7 @@
 
         #region Methods
 
-        public static Result<TData> Success(TData data = default)
+        public static Result<TData> Ok(TData data = default)
             => new(true, null, data);
         public static Result<TData> Fail(string message)
             => new(false, [message]);
@@ -65,7 +65,7 @@
         public static implicit operator Result<TData>(Result result)
             => new(result.IsSuccess, result.Messages);
         public static implicit operator Result<TData>(TData result)
-            => Success(result);
+            => Ok(result);
 
         #endregion
     }

@@ -2,13 +2,13 @@
 
 namespace TechOnIt.Application.Commands.Groups.DeleteGroup;
 
-public class DeleteGroupCommand : IRequest<object>, ICommittableRequest
+public class DeleteGroupCommand : IRequest<Result>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public Guid StructureId { get; set; }
 }
 
-public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, object>
+public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, Result>
 {
     #region constructore
     private readonly IUnitOfWorks _unitOfWorks;
@@ -22,16 +22,21 @@ public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand, obj
 
     #endregion
 
-    public async Task<object> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteGroupCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            bool DeleteGroup = await _unitOfWorks.StructureRepository.DeleteGroupAsync(request.Id, request.StructureId, cancellationToken);
-            if (!DeleteGroup)
-                return ResultExtention.Failed($"can not find group with id : {request.Id}");
+            bool isDeleteSuccess = await _unitOfWorks.StructureRepository.DeleteGroupAsync(request.Id, request.StructureId, cancellationToken);
+            if (!isDeleteSuccess)
+              //return ResultExtention.Failed($"can not find group with id : {request.Id}");
+                return Result.Fail($"can not find group with id : {request.Id}");
+
+            if (!isDeleteSuccess)
+                return Result.Fail();
 
             await _mediator.Publish(new GroupNotifications());
-            return ResultExtention.BooleanResult(DeleteGroup);
+
+            return Result.Ok();
         }
         catch (Exception exp)
         {

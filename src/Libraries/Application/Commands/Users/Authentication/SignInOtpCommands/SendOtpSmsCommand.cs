@@ -24,7 +24,7 @@ public class SignInOtpCommandHandler : IRequestHandler<SendOtpSmsCommand, Result
         if (otpCode.Code is null)
             return Result.Fail(otpCode.Message);
 
-        return Result.Success().WithMessage("sms has been send");
+        return Result.Ok().WithMessage("sms has been send");
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
-using TechOnIt.Domain.Entities.StructureAggregate;
+using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Application.Reports.StructuresAggregate;
 
@@ -32,7 +32,7 @@ public interface IStructureAggregateReports : IReport
     /// <returns>IList<StructureViewModel></returns>
     Task<IList<StructureViewModel>> GetstructuresParallel(CancellationToken cancellationToken);
 
-    #region Place
-    Task<StructurePlacesWithRelayViewModel?> GetStructureWithPlacesAndRelaysByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken);
+    #region Group
+    Task<StructureGroupsWithRelayViewModel?> GetStructureWithGroupsAndRelaysByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken);
     #endregion
 }

@@ -1,7 +1,7 @@
-﻿using TechOnIt.Domain.Entities.Controllers;
+﻿using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Controllers;
 using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.Entities.StructureAggregate;
 using TechOnIt.Domain.ValueObjects;
 using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
@@ -28,11 +28,11 @@ internal class UserDataInitializer : IDataInitializer
         #region Structure
         user1.Structures = new List<Structure>();
         Structure newStructure = new ("My Structure", PasswordHash.Parse("123456"), user1.Id, StructureType.Agriculture);
-        #region Place
-        Place newPlace = new("Hall", newStructure.Id);
-        newPlace.Relays = new List<RelayEntity>();
-        newPlace.Relays.Add(new RelayEntity(13, RelayType.Light, newPlace.Id));
-        newStructure.AddPlace(newPlace);
+        #region Group
+        Group newGroup = new("Hall", newStructure.Id);
+        newGroup.Relays = new List<RelayEntity>();
+        newGroup.Relays.Add(new RelayEntity(13, RelayType.Light, newGroup.Id));
+        newStructure.AddGroup(newGroup);
         
         #endregion
         user1.Structures.Add(newStructure);

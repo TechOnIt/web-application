@@ -1,8 +1,8 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Relay;
 
-namespace TechOnIt.Application.Common.Models.ViewModels.Places;
+namespace TechOnIt.Application.Common.Models.ViewModels.Groups;
 
-public class PlaceWithRelayViewModel
+public class GroupWithRelayViewModel
 {
     public string Id { get; set; }
     public string Name { get; set; }

@@ -1,10 +1,8 @@
-﻿using TechOnIt.Application.Common.Models;
+﻿namespace TechOnIt.Application.Commands.Groups.UpdateGroup;
 
-namespace TechOnIt.Application.Commands.Places.UpdatePlace;
-
-public class UpdatePlaceValidations : BaseFluentValidator<UpdatePlaceCommand>
+public class UpdateGroupValidations : BaseFluentValidator<UpdateGroupCommand>
 {
-    public UpdatePlaceValidations()
+    public UpdateGroupValidations()
     {
         RuleFor(a => a.Id)
             .NotNull()

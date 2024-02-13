@@ -1,17 +1,17 @@
 ﻿using TechOnIt.Domain.Entities.Controllers;
 using TechOnIt.Domain.Entities.SensorAggregate;
 
-namespace TechOnIt.Domain.Entities.StructureAggregate;
+namespace TechOnIt.Domain.Entities.Catalog;
 
-public class Place : BaseEntity
+public class Group : BaseEntity
 {
     public string Name { get; private set; } = string.Empty;
     public string? Description { get; set; }
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
 
     #region Ctor
-    private Place() { }
-    public Place(string name, Guid structureId)
+    private Group() { }
+    public Group(string name, Guid structureId)
     {
         SetName(name);
         StructureId = structureId;
@@ -27,13 +27,13 @@ public class Place : BaseEntity
 
     #region Methods
     /// <summary>
-    /// Set name for place.
+    /// Set name for group.
     /// </summary>
-    /// <param name="name">Place name</param>
+    /// <param name="name">Group name</param>
     public void SetName(string name)
     {
         if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
-            throw new ArgumentNullException("Place name cannot be null.");
+            throw new ArgumentNullException("Group name cannot be null.");
         Name = name;
     }
     #endregion

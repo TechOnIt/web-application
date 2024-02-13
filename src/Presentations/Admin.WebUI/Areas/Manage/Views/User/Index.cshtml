@@ -17,7 +17,7 @@
                 <form method="get" action="/manage/user/index">
                     <div class="input-group">
                         <div class="form-outline">
-                            <input class="form-control" placeholder="Search..." type="search" name="keyword" value="@ViewData["search"]" />
+                            <input class="form-control" groupholder="Search..." type="search" name="keyword" value="@ViewData["search"]" />
                         </div>
                         <button class="btn btn-primary" type="submit">
                             <i class="fas fa-search"></i>
@@ -105,17 +105,17 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="mb-1" for="user-first-name">Name</label>
-                                <input id="user-first-name" class="form-control" name="Name" placeholder="John" />
+                                <input id="user-first-name" class="form-control" name="Name" groupholder="John" />
                             </div>
                             <div class="col-md-6">
                                 <label class="mb-1" for="user-surname">Surname</label>
-                                <input id="user-surname" class="form-control" name="Surname" placeholder="Marston" />
+                                <input id="user-surname" class="form-control" name="Surname" groupholder="Marston" />
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-12 mb-1">
                                 <label class="mb-1" for="user-email">Email</label>
-                                <input id="user-email" class="form-control" name="Email" type="email" placeholder="sample@example.com" maxlength="150" />
+                                <input id="user-email" class="form-control" name="Email" type="email" groupholder="sample@example.com" maxlength="150" />
                             </div>
                             <div class="col-12">
                                 <div class="form-check">
@@ -129,7 +129,7 @@
                         <div class="row mb-3">
                             <div class="col-12 mb-1">
                                 <label class="mb-1" for="userPhoneNumber">Phone Number</label>
-                                <input id="userPhoneNumber" class="form-control" name="PhoneNumber" placeholder="09123456789" maxlength="11" />
+                                <input id="userPhoneNumber" class="form-control" name="PhoneNumber" groupholder="09123456789" maxlength="11" />
                             </div>
                             <div class="col-12">
                                 <div class="form-check">
@@ -143,7 +143,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="mb-1" for="user-password">Password</label>
-                                <input id="user-password" class="form-control" name="Password" type="password" placeholder="a-z, 0-9, *&^%..." maxlength="50" />
+                                <input id="user-password" class="form-control" name="Password" type="password" groupholder="a-z, 0-9, *&^%..." maxlength="50" />
                             </div>
                             <div class="col-md-6">
                                 <label class="mb-1" for="user-password-repeat">Repeat Password</label>

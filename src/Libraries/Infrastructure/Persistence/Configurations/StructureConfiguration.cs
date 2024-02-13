@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
@@ -57,8 +57,8 @@ public class StructureConfiguration : IEntityTypeConfiguration<Structure>
         builder.HasOne(s => s.User)
             .WithMany(s => s.Structures)
             .HasForeignKey(s => s.UserId);
-        // Places
-        builder.HasMany(a => a.Places)
+        // Groups
+        builder.HasMany(a => a.Groups)
             .WithOne(a => a.Structure)
             .HasForeignKey(a => a.StructureId);
     }

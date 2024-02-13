@@ -1,15 +1,15 @@
-﻿@model TechOnIt.Application.Common.Models.ViewModels.Structures.StructurePlacesWithRelayViewModel
+﻿@model TechOnIt.Application.Common.Models.ViewModels.Structures.StructureGroupsWithRelayViewModel
 @{
-    ViewData["Title"] = @Model.Name + " places";
+    ViewData["Title"] = @Model.Name + " groups";
 }
 
 <div class="row">
-    @* Places *@
-    @if (Model.Places is not null && Model.Places.Count > 0)
+    @* Groups *@
+    @if (Model.Groups is not null && Model.Groups.Count > 0)
     {
         <div class="d-flex justify-content-between mb-4">
             <div class="central">
-                <label class="fw-bold h2">@Model.Name Place's</label>
+                <label class="fw-bold h2">@Model.Name Group's</label>
             </div>
             <div class="central">
                 <div class="dropdown">
@@ -18,52 +18,52 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newPlaceModal">
-                                <i class="fa fa-plus me-2"></i> New place
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newGroupModal">
+                                <i class="fa fa-plus me-2"></i> New group
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        @await Component.InvokeAsync(typeof(PlacesWithRelaysControlViewComponent), new { places = Model.Places })
+        @await Component.InvokeAsync(typeof(GroupsWithRelaysControlViewComponent), new { groups = Model.Groups })
     }
     else
     {
-        @* Places not found *@
+        @* Groups not found *@
         <div class="col-12 col-md-6 offset-md-3">
             <img class="w-100 opacity-75" src="~/assets/images/stocks/Shed-pana.svg" />
         </div>
         <div class="col-12">
             <div class="text-center">
-                <label class="h3 fw-bold">No places were found!</label>
+                <label class="h3 fw-bold">No groups were found!</label>
             </div>
             <div class="d-grid d-sm-block text-center mt-3">
-                <button id="new-place" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newPlaceModal">+ New</button>
+                <button id="new-group" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newGroupModal">+ New</button>
             </div>
         </div>
     }
 </div>
 
-<!-- New Place Modal -->
-<div class="modal fade" id="newPlaceModal" tabindex="-1" aria-labelledby="newPlaceModalLabel" aria-hidden="true">
+<!-- New Group Modal -->
+<div class="modal fade" id="newGroupModal" tabindex="-1" aria-labelledby="newGroupModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="newPlaceModalLabel">New place</h1>
+                <h1 class="modal-title fs-5" id="newGroupModalLabel">New group</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/dashboard/place/new">
+            <form method="post" action="/dashboard/group/new">
                 @* Structure Id *@
                 <input type="hidden" name="StructureId" value="@Model.Id" />
                 <div class="modal-body">
                     <div class="form_group field mb-3">
-                        <input id="new-place-name" class="form_field" name="Name" type="text" placeholder="Name" maxlength="20" required />
-                        <label for="new-place-name" class="form_label">Name</label>
+                        <input id="new-group-name" class="form_field" name="Name" type="text" groupholder="Name" maxlength="20" required />
+                        <label for="new-group-name" class="form_label">Name</label>
                     </div>
                     <div class="form_group field mb-3">
-                        <textarea id="new-place-description" class="form_field" name="Description" placeholder="Description" maxlength="100"></textarea>
-                        <label for="new-place-description" class="form_label">Description</label>
+                        <textarea id="new-group-description" class="form_field" name="Description" groupholder="Description" maxlength="100"></textarea>
+                        <label for="new-group-description" class="form_label">Description</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -84,8 +84,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="/dashboard/relay/new">
-                @* Place Id *@
-                <input id="new-relay-place-id" type="hidden" name="PlaceId" value="@Model.Id" />
+                @* Group Id *@
+                <input id="new-relay-group-id" type="hidden" name="GroupId" value="@Model.Id" />
                 <div class="modal-body">
                     <div class="form_group field mb-3">
                         <select id="new-relay-type" class="form_field" required>
@@ -97,7 +97,7 @@
                         <label for="new-relay-description" class="form_label">Type</label>
                     </div>
                     <div class="form_group field mb-3">
-                        <input id="new-relay-name" class="form_field" name="Pin" type="number" placeholder="#0 - #255" min="1" max="255" maxlength="3" required />
+                        <input id="new-relay-name" class="form_field" name="Pin" type="number" groupholder="#0 - #255" min="1" max="255" maxlength="3" required />
                         <label for="new-relay-name" class="form_label">Pin</label>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
 
         // New Relay Click
         $(document).on('click', '[data-bs-target="#newRelayModal"]', function () {
-            $('#newRelayModal #new-relay-place-id').val($(this).attr('data-place-id'));
+            $('#newRelayModal #new-relay-group-id').val($(this).attr('data-group-id'));
         });
     </script>
 }

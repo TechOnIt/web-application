@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using TechOnIt.Domain.Entities.StructureAggregate;
+using TechOnIt.Domain.Entities.Catalog;
 using TechOnIt.Domain.ValueObjects;
 using TechOnIt.Infrastructure.Persistence.Context;
 
@@ -72,62 +72,62 @@ public class StructureRepository : IStructureRepository
     #endregion
 
     #region Common
-    public async Task CreateWithPlacesAsync(Structure structure, IList<Place> places, CancellationToken cancellationToken)
+    public async Task CreateWithGroupsAsync(Structure structure, IList<Group> groups, CancellationToken cancellationToken)
     {
         await _context.Structures.AddAsync(structure, cancellationToken);
-        if (places is not null)
-            structure.AddRangePlace(places);
+        if (groups is not null)
+            structure.AddRangeGroup(groups);
 
         await Task.CompletedTask;
     }
-    public async Task<IList<Place>?> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken)
+    public async Task<IList<Group>?> GetGroupsByStructureIdAsync(Guid structureId, CancellationToken cancellationToken)
     {
         var getstructure = await _context.Structures
-            .Include(p => p.Places)
+            .Include(p => p.Groups)
             .FirstOrDefaultAsync(a => a.Id == structureId, cancellationToken);
 
         if (getstructure is not null)
-            return getstructure.Places as IList<Place>;
+            return getstructure.Groups as IList<Group>;
         else
-            return await Task.FromResult<IList<Place>?>(null);
+            return await Task.FromResult<IList<Group>?>(null);
     }
-    public async Task<Place?> GetPlaceByStructureIdAsync(Guid structorId, Guid placeId, CancellationToken cancellationToken)
+    public async Task<Group?> GetGroupByStructureIdAsync(Guid structorId, Guid groupId, CancellationToken cancellationToken)
     {
-        var place = await _context.Places.FirstOrDefaultAsync(a => a.StructureId == structorId && a.Id == placeId, cancellationToken);
-        if (place is null) return await Task.FromResult<Place?>(null);
+        var group = await _context.Groups.FirstOrDefaultAsync(a => a.StructureId == structorId && a.Id == groupId, cancellationToken);
+        if (group is null) return await Task.FromResult<Group?>(null);
 
-        return await Task.FromResult(place);
+        return await Task.FromResult(group);
     }
     #endregion
 
-    #region Place
-    public async Task<Place?> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken)
-        => await _context.Places.FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken);
-    public async Task<Place?> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken)
-        => await Task.FromResult(await _context.Places.AsNoTracking().FirstOrDefaultAsync(a => a.Id == placeId, cancellationToken));
-    public async Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>>? filter = null)
+    #region Group
+    public async Task<Group?> GetGroupByIdAsync(Guid groupId, CancellationToken cancellationToken)
+        => await _context.Groups.FirstOrDefaultAsync(a => a.Id == groupId, cancellationToken);
+    public async Task<Group?> GetGroupByIdAsyncAsNoTracking(Guid groupId, CancellationToken cancellationToken)
+        => await Task.FromResult(await _context.Groups.AsNoTracking().FirstOrDefaultAsync(a => a.Id == groupId, cancellationToken));
+    public async Task<IList<Group>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Group, bool>>? filter = null)
     {
-        var places = _context.Places.AsNoTracking();
-        if (filter != null) places = places.Where(filter);
-        return await Task.FromResult(await places.ToListAsync(cancellationToken));
+        var groups = _context.Groups.AsNoTracking();
+        if (filter != null) groups = groups.Where(filter);
+        return await Task.FromResult(await groups.ToListAsync(cancellationToken));
     }
-    public async Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken)
+    public async Task CreateGroupAsync(Group group, Guid StructureId, CancellationToken cancellationToken)
     {
-        await _context.Places.AddAsync(place, cancellationToken);
+        await _context.Groups.AddAsync(group, cancellationToken);
         await Task.CompletedTask;
     }
-    public async Task<bool> DeletePlaceAsync(Guid placeId, Guid structureId, CancellationToken cancellationToken)
+    public async Task<bool> DeleteGroupAsync(Guid groupId, Guid structureId, CancellationToken cancellationToken)
     {
-        Place? place = await _context.Places.FirstOrDefaultAsync(a => a.StructureId == structureId && a.Id == placeId, cancellationToken);
-        if (place is null) return false;
+        Group? group = await _context.Groups.FirstOrDefaultAsync(a => a.StructureId == structureId && a.Id == groupId, cancellationToken);
+        if (group is null) return false;
 
-        _context.Places.Remove(place);
+        _context.Groups.Remove(group);
         return true;
     }
-    public async Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken)
+    public async Task UpdateGroupAsync(Guid structureId, Group group, CancellationToken cancellationToken)
     {
         if (!cancellationToken.IsCancellationRequested)
-            _context.Places.Update(place);
+            _context.Groups.Update(group);
 
         await Task.CompletedTask;
     }

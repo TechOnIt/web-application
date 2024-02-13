@@ -1,10 +1,10 @@
 ﻿using TechOnIt.Application.Common.Models;
 
-namespace TechOnIt.Application.Commands.Places.DeletePlace;
+namespace TechOnIt.Application.Commands.Groups.DeleteGroup;
 
-public class DeletePlaceValidations : BaseFluentValidator<DeletePlaceCommand>
+public class DeleteGroupValidations : BaseFluentValidator<DeleteGroupCommand>
 {
-    public DeletePlaceValidations()
+    public DeleteGroupValidations()
     {
         RuleFor(a => a.Id)
             .NotNull()

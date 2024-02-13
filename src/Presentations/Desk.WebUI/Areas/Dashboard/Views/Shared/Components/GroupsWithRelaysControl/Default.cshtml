@@ -1,15 +1,15 @@
-﻿@using TechOnIt.Application.Common.Models.ViewModels.Places;
+﻿@using TechOnIt.Application.Common.Models.ViewModels.Groups;
 @using TechOnIt.Desk.Web.Areas.Dashboard.Components;
-@model IList<PlaceWithRelayViewModel>
+@model IList<GroupWithRelayViewModel>
 
 @if (Model is not null && Model.Count > 0)
 {
-    foreach (var place in Model)
+    foreach (var group in Model)
     {
         <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-            <div class="place-box d-flex justify-content-between">
+            <div class="group-box d-flex justify-content-between">
                 <div class="central">
-                    <label class="place-name h4 mb-0">@place.Name</label>
+                    <label class="group-name h4 mb-0">@group.Name</label>
                 </div>
                 <div class="central">
                     @* More *@
@@ -19,7 +19,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newDeviceModal" data-place-id="@place.Id">
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newDeviceModal" data-group-id="@group.Id">
                                     <i class="fa fa-plus me-2"></i> Add New
                                 </a>
                             </li>
@@ -29,22 +29,22 @@
             </div>
             <hr>
             @* Relays List *@
-            @await Component.InvokeAsync(typeof(PlaceRelayListViewComponent), new { place.Relays })
+            @await Component.InvokeAsync(typeof(GroupRelayListViewComponent), new { group.Relays })
         </div>
     }
 }
 else
 {
-    @* Places not found *@
+    @* Groups not found *@
     <div class="col-12 col-md-6 offset-md-3">
         <img class="w-100 opacity-75" src="~/assets/images/stocks/Shed-pana.svg" />
     </div>
     <div class="col-12">
         <div class="text-center">
-            <label class="h3 fw-bold">No places were found!</label>
+            <label class="h3 fw-bold">No groups were found!</label>
         </div>
         <div class="d-grid d-sm-block text-center mt-3">
-            <button id="new-place" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newPlaceModal">+ New</button>
+            <button id="new-group" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#newGroupModal">+ New</button>
         </div>
     </div>
 }

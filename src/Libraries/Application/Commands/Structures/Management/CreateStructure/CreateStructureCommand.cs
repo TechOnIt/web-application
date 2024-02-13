@@ -1,7 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Domain.Common;
-using TechOnIt.Domain.Enums;
+﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Application.Commands.Structures.Management.CreateStructure;
 

@@ -20,12 +20,12 @@ public class GetAllRelaysByStructureIdQueryHandler : IRequestHandler<GetAllRelay
     {
         try
         {
-            var placeRelays = await _relayReport.GetRelaysByStructureIdNoTrackAsync<GetAllRelaysByStructureIdQueryResponse>(request.StructureId);
+            var groupRelays = await _relayReport.GetRelaysByStructureIdNoTrackAsync<GetAllRelaysByStructureIdQueryResponse>(request.StructureId);
 
-            if (placeRelays is null)
+            if (groupRelays is null)
                 return ResultExtention.NotFound($"cant find relay with structure id : {request.StructureId}");
 
-            return placeRelays;
+            return groupRelays;
         }
         catch (Exception exp)
         {

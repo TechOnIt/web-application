@@ -1,48 +1,48 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Application.Common.Interfaces;
+using TechOnIt.Domain.Entities.Catalog;
 
-namespace TechOnIt.Application.Commands.Places.CreatePlace;
+namespace TechOnIt.Application.Commands.Groups.CreateGroup;
 
-public class CreatePlaceCommand : IRequest<object>, ICommittableRequest
+public class CreateGroupCommand : IRequest<object>, ICommittableRequest
 {
     public Guid Id { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
+    public string? Name { get; set; } = null;
+    public string? Description { get; set; } = null;
     public Guid StuctureId { get; set; }
 }
 
-public class CreatePlaceCommandHandler : IRequestHandler<CreatePlaceCommand, object>
+public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, object>
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
     private readonly IMediator _mediator;
 
-    public CreatePlaceCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
+    public CreateGroupCommandHandler(IUnitOfWorks unitOfWorks, IMediator mediator)
     {
         _unitOfWorks = unitOfWorks;
         _mediator = mediator;
     }
     #endregion
 
-    public async Task<object> Handle(CreatePlaceCommand request, CancellationToken cancellationToken = default)
+    public async Task<object> Handle(CreateGroupCommand request, CancellationToken cancellationToken = default)
     {
         try
         {
             request.Id = request.Id == Guid.Empty ? Guid.NewGuid() : request.Id;
 
-            Task createPlace =
+            Task createGroup =
                 Task.Factory
                 .StartNew(() =>
                 _unitOfWorks.StructureRepository
-                .CreatePlaceAsync(request.Adapt<Place>(), request.StuctureId, cancellationToken)
+                .CreateGroupAsync(request.Adapt<Group>(), request.StuctureId, cancellationToken)
                 , cancellationToken);
 
-            await createPlace;
+            await createGroup;
 
-            if (createPlace.IsFaulted)
+            if (createGroup.IsFaulted)
                 return await Task.FromResult(ResultExtention.Failed($"can not find structore with id : {request.StuctureId}"));
 
-            await _mediator.Publish(new PlaceNotifications());
+            await _mediator.Publish(new GroupNotifications());
 
             return await Task.FromResult(ResultExtention.IdResult(request.Id));
         }

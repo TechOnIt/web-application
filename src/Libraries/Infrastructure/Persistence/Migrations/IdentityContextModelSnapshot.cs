@@ -188,7 +188,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                         .HasMaxLength(4)
                         .HasColumnType("numeric");
 
-                    b.Property<Guid>("PlaceId")
+                    b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
@@ -198,7 +198,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlaceId");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Relays", "dbo");
                 });
@@ -268,7 +268,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Property<int>("Pin")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("PlaceId")
+                    b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
@@ -278,7 +278,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlaceId");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Sensors", "dbo");
                 });
@@ -305,7 +305,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.ToTable("SensorReports", "dbo");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Place", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Group", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -328,7 +328,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StructureId");
 
-                    b.ToTable("Places", "dbo");
+                    b.ToTable("Groups", "dbo");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Structure", b =>
@@ -479,13 +479,13 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.RelayEntity", b =>
                 {
-                    b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Place", "Place")
+                    b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Group", "Group")
                         .WithMany("Relays")
-                        .HasForeignKey("PlaceId")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Place");
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.Security.DynamicAccessEntity", b =>
@@ -509,13 +509,13 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorEntity", b =>
                 {
-                    b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Place", "Place")
+                    b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Group", "Group")
                         .WithMany("Sensors")
-                        .HasForeignKey("PlaceId")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Place");
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorReportEntity", b =>
@@ -529,10 +529,10 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Navigation("Sensor");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Place", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Group", b =>
                 {
                     b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Structure", "Structure")
-                        .WithMany("Places")
+                        .WithMany("Groups")
                         .HasForeignKey("StructureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -613,7 +613,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Navigation("Reports");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Place", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Group", b =>
                 {
                     b.Navigation("Relays");
 
@@ -622,7 +622,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Structure", b =>
                 {
-                    b.Navigation("Places");
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Domain.Enums;
 using TechOnIt.Application.Common.Interfaces;
-using TechOnIt.Domain.Entities.StructureAggregate;
+using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Application.Commands.Structures.Management.UpdateStructure;
 

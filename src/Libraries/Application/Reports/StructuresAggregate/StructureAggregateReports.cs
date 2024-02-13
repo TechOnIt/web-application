@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
+using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Application.Reports.StructuresAggregate;
 
@@ -45,12 +46,12 @@ public class StructureAggregateReports : IStructureAggregateReports
         return await Task.FromResult(structures);
     }
 
-    public async Task<StructurePlacesWithRelayViewModel?> GetStructureWithPlacesAndRelaysByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken)
+    public async Task<StructureGroupsWithRelayViewModel?> GetStructureWithGroupsAndRelaysByIdNoTrackAsync(Guid structureId, CancellationToken cancellationToken)
         => await _unitOfWorks._context.Structures
         .AsNoTracking()
-        .Include(s => s.Places)
+        .Include(s => s.Groups)
         .ThenInclude(p => p.Relays)
         .Where(s => s.Id == structureId)
-        .ProjectToType<StructurePlacesWithRelayViewModel>()
+        .ProjectToType<StructureGroupsWithRelayViewModel>()
         .FirstOrDefaultAsync(cancellationToken);
 }

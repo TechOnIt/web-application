@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using TechOnIt.Domain.Entities.Catalog;
 using TechOnIt.Domain.Entities.Controllers;
 using TechOnIt.Domain.Entities.General;
 using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using TechOnIt.Domain.Entities.Security;
 using TechOnIt.Domain.Entities.SensorAggregate;
-using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Infrastructure.Persistence.Context;
 
@@ -47,7 +47,7 @@ public class IdentityContext : DbContext
 
     #region Defaults
     public DbSet<Structure> Structures { get; set; }
-    public DbSet<Place> Places { get; set; }
+    public DbSet<Group> Groups { get; set; }
     public DbSet<RelayEntity> Relays { get; set; }
     public DbSet<SensorEntity> Sensors { get; set; }
     public DbSet<SensorReportEntity> SensorReports { get; set; }

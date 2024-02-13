@@ -10,7 +10,7 @@ public class UpdateRelayCommand : IRequest<object>, ICommittableRequest
     public int Pin { get; set; }
     public RelayType RelayType { get; set; }
     public bool IsHigh { get; set; }
-    public Guid PlaceId { get; set; }
+    public Guid GroupId { get; set; }
 }
 
 public class UpdateRelayCommandHandler : IRequestHandler<UpdateRelayCommand, object>

@@ -6,8 +6,8 @@ using TechOnIt.Application.Common.Extentions;
 using TechOnIt.Application.Common.Models;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
-using TechOnIt.Domain.Entities.StructureAggregate;
 using TechOnIt.Application.Common.Models.ViewModels.Relay;
+using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Application.Reports.Users;
 
@@ -187,10 +187,10 @@ public class UserReports : IUserReports
         try
         {
             var relays = await (from str in _unitOfWorks._context.Structures
-                                 join plc in _unitOfWorks._context.Places on str.Id equals plc.StructureId
-                                 into place
-                                 from pl in place.DefaultIfEmpty()
-                                 join rel in _unitOfWorks._context.Relays on pl.Id equals rel.PlaceId
+                                 join grp in _unitOfWorks._context.Groups on str.Id equals              grp.StructureId
+                                 into groups
+                                 from pl in groups.DefaultIfEmpty()
+                                 join rel in _unitOfWorks._context.Relays on pl.Id equals               rel.GroupId
                                  into relay
                                  from de in relay.DefaultIfEmpty()
                                  where str.UserId == userId
@@ -200,7 +200,7 @@ public class UserReports : IUserReports
                                      Pin = de.Pin,
                                      RelayType = de.Type,
                                      IsHigh = de.IsHigh,
-                                     PlaceId = de.PlaceId,
+                                     GroupId = de.GroupId,
 
                                  }).AsNoTracking().ToListAsync();
             return relays;

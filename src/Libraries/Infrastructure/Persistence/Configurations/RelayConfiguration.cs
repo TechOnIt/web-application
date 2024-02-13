@@ -32,9 +32,9 @@ public class RelayConfiguration : IEntityTypeConfiguration<RelayEntity>
             .IsConcurrencyToken()
             .ValueGeneratedOnAddOrUpdate()
             .HasColumnType(DataTypes.rowVersion);
-        // PlaceId
-        builder.HasOne(b => b.Place)
+        // GroupId
+        builder.HasOne(b => b.Group)
             .WithMany(b => b.Relays)
-            .HasForeignKey(b => b.PlaceId);
+            .HasForeignKey(b => b.GroupId);
     }
 }

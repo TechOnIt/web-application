@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Domain.Entities.Controllers;
 
@@ -10,18 +10,18 @@ public class RelayEntity
     public bool IsHigh { get; set; } = false;
     public byte[] ConcurrencyStamp { get; private set; } = new byte[0];
     #region relations & foreignkeys
-    public Guid PlaceId { get; private set; }
-    public virtual Place? Place { get; private set; } = null;
+    public Guid GroupId { get; private set; }
+    public virtual Group? Group { get; private set; } = null;
     #endregion
 
     #region Ctor
     private RelayEntity() { }
-    public RelayEntity(int pin, RelayType type, Guid placeId)
+    public RelayEntity(int pin, RelayType type, Guid groupId)
     {
         Id = Guid.NewGuid();
         SetPin(pin);
         Type = type;
-        PlaceId = placeId;
+        GroupId = groupId;
     }
     #endregion
 

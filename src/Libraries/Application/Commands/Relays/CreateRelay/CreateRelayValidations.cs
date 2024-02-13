@@ -6,7 +6,7 @@ public class CreateRelayValidations : BaseFluentValidator<CreateRelayCommand>
 {
     public CreateRelayValidations()
     {
-        RuleFor(a => a.PlaceId)
+        RuleFor(a => a.GroupId)
             .NotNull()
             .NotEmpty()
             ;

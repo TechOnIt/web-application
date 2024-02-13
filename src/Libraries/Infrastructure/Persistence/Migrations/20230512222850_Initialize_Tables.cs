@@ -166,7 +166,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Places",
+                name: "Groups",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -179,9 +179,9 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Places", x => x.Id);
+                    table.PrimaryKey("PK_Groups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Places_Structures_StructureId",
+                        name: "FK_Groups_Structures_StructureId",
                         column: x => x.StructureId,
                         principalSchema: "dbo",
                         principalTable: "Structures",
@@ -199,16 +199,16 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     Type = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)1),
                     IsHigh = table.Column<bool>(type: "bit", nullable: false),
                     ConcurrencyStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    PlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Devices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Devices_Places_PlaceId",
-                        column: x => x.PlaceId,
+                        name: "FK_Devices_Groups_GroupId",
+                        column: x => x.GroupId,
                         principalSchema: "dbo",
-                        principalTable: "Places",
+                        principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -223,16 +223,16 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     Type = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)1),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sensors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sensors_Places_PlaceId",
-                        column: x => x.PlaceId,
+                        name: "FK_Sensors_Groups_GroupId",
+                        column: x => x.GroupId,
                         principalSchema: "dbo",
-                        principalTable: "Places",
+                        principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -260,10 +260,10 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_PlaceId",
+                name: "IX_Devices_GroupId",
                 schema: "dbo",
                 table: "Devices",
-                column: "PlaceId");
+                column: "GroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LoginHistories_UserId",
@@ -284,9 +284,9 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Places_StructureId",
+                name: "IX_Groups_StructureId",
                 schema: "dbo",
-                table: "Places",
+                table: "Groups",
                 column: "StructureId");
 
             migrationBuilder.CreateIndex(
@@ -296,10 +296,10 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                 column: "SensorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sensors_PlaceId",
+                name: "IX_Sensors_GroupId",
                 schema: "dbo",
                 table: "Sensors",
-                column: "PlaceId");
+                column: "GroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Structures_UserId",
@@ -353,7 +353,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                 schema: "identity");
 
             migrationBuilder.DropTable(
-                name: "Places",
+                name: "Groups",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

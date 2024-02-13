@@ -8,7 +8,7 @@ public class UpdateSensorCommand : IRequest<Result<Guid>>, ICommittableRequest
 {
     public Guid Id { get; set; }
     public SensorType? SensorType { get; private set; }
-    public Guid PlaceId { get; set; }
+    public Guid GroupId { get; set; }
 }
 
 public class UpdateSensorCommandHandler : IRequestHandler<UpdateSensorCommand, object>

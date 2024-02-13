@@ -1,12 +1,12 @@
-﻿using TechOnIt.Domain.Entities.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
-public class PlaceConfiguration : IEntityTypeConfiguration<Place>
+public class GroupConfiguration : IEntityTypeConfiguration<Group>
 {
-    public void Configure(EntityTypeBuilder<Place> builder)
+    public void Configure(EntityTypeBuilder<Group> builder)
     {
-        builder.ToTable("Places", TableSchema.Default);
+        builder.ToTable("Groups", TableSchema.Default);
 
         // Id
         builder.HasKey(b => b.Id);
@@ -28,11 +28,11 @@ public class PlaceConfiguration : IEntityTypeConfiguration<Place>
             .HasColumnType(DataTypes.datetime2);
         // StructureId
         builder.HasOne(b => b.Structure)
-            .WithMany(b => b.Places)
+            .WithMany(b => b.Groups)
             .HasForeignKey(b => b.StructureId);
         // Relays
         builder.HasMany(a => a.Relays)
-            .WithOne(a => a.Place)
-            .HasForeignKey(a => a.PlaceId);
+            .WithOne(a => a.Group)
+            .HasForeignKey(a => a.GroupId);
     }
 }

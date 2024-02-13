@@ -1,10 +1,10 @@
 ﻿using TechOnIt.Application.Common.Models;
 
-namespace TechOnIt.Application.Commands.Places.CreatePlace;
+namespace TechOnIt.Application.Commands.Groups.CreateGroup;
 
-public class CreatePlaceValidations : BaseFluentValidator<CreatePlaceCommand>
+public class CreateGroupValidations : BaseFluentValidator<CreateGroupCommand>
 {
-    public CreatePlaceValidations()
+    public CreateGroupValidations()
     {
         RuleFor(x => x.Name)
             .NotEmpty()

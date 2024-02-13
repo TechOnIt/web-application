@@ -61,8 +61,8 @@ public class SensorRepository : ISensorRepository
             .ToListAsync(cancellationToken);
 
 
-    public async Task<IList<SensorEntity>> GetAllSensorsByPlaceIdAsync(Guid placeId, CancellationToken cancellationToken)
-        => await _context.Sensors.AsNoTracking().Where(a => a.PlaceId == placeId).ToListAsync();
+    public async Task<IList<SensorEntity>> GetAllSensorsByGroupIdAsync(Guid groupId, CancellationToken cancellationToken)
+        => await _context.Sensors.AsNoTracking().Where(a => a.GroupId == groupId).ToListAsync();
     #endregion
 
     #region Report

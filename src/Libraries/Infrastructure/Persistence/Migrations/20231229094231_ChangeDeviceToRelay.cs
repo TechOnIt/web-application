@@ -23,7 +23,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
             migrationBuilder.DropColumn(
                 name: "ModifiedAt",
                 schema: "dbo",
-                table: "Places");
+                table: "Groups");
 
             migrationBuilder.DropColumn(
                 name: "PresentationId",
@@ -83,16 +83,16 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     Type = table.Column<byte>(type: "tinyint", nullable: false, defaultValue: (byte)1),
                     IsHigh = table.Column<bool>(type: "bit", nullable: false),
                     ConcurrencyStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    PlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Relays", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Relays_Places_PlaceId",
-                        column: x => x.PlaceId,
+                        name: "FK_Relays_Groups_GroupId",
+                        column: x => x.GroupId,
                         principalSchema: "dbo",
-                        principalTable: "Places",
+                        principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -115,10 +115,10 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                 .Annotation("SqlServer:Clustered", false);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Relays_PlaceId",
+                name: "IX_Relays_GroupId",
                 schema: "dbo",
                 table: "Relays",
-                column: "PlaceId");
+                column: "GroupId");
         }
 
         /// <inheritdoc />
@@ -145,7 +145,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
             migrationBuilder.AddColumn<DateTime>(
                 name: "ModifiedAt",
                 schema: "dbo",
-                table: "Places",
+                table: "Groups",
                 type: "datetime2",
                 nullable: true);
 
@@ -163,7 +163,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ConcurrencyStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     IsHigh = table.Column<bool>(type: "bit", nullable: false),
                     Pin = table.Column<decimal>(type: "numeric(18,0)", maxLength: 4, nullable: false),
@@ -173,19 +173,19 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Devices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Devices_Places_PlaceId",
-                        column: x => x.PlaceId,
+                        name: "FK_Devices_Groups_GroupId",
+                        column: x => x.GroupId,
                         principalSchema: "dbo",
-                        principalTable: "Places",
+                        principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_PlaceId",
+                name: "IX_Devices_GroupId",
                 schema: "dbo",
                 table: "Devices",
-                column: "PlaceId");
+                column: "GroupId");
         }
     }
 }

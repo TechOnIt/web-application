@@ -1,6 +1,6 @@
-﻿using TechOnIt.Domain.Entities.General;
+﻿using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.General;
 using TechOnIt.Domain.Entities.Security;
-using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Domain.Entities.Identity.UserAggregate;
 

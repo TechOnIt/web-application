@@ -1,5 +1,5 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Domain.Enums;
+using TechOnIt.Domain.Entities.Controllers;
 
 namespace TechOnIt.Application.Commands.Relays.CreateRelay;
 
@@ -7,7 +7,7 @@ public class CreateRelayCommand : IRequest<object>, ICommittableRequest
 {
     public int Pin { get; set; }
     public RelayType RelayType { get; set; } = RelayType.Light;
-    public Guid PlaceId { get; set; }
+    public Guid GroupId { get; set; }
 }
 
 public class CreateRelayCommandHandler : IRequestHandler<CreateRelayCommand, object>
@@ -27,7 +27,7 @@ public class CreateRelayCommandHandler : IRequestHandler<CreateRelayCommand, obj
     {
         try
         {
-            var model = new Domain.Entities.RelayEntity(request.Pin, request.RelayType, request.PlaceId);
+            var model = new RelayEntity(request.Pin, request.RelayType, request.GroupId);
             Task createResult = Task.Factory.StartNew(() => _unitOfWorks.RelayRepositry.CreateAsync(model, cancellationToken), cancellationToken);
             Task.WaitAny(createResult);
 

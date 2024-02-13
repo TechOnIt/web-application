@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.StructureAggregate;
+﻿using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Domain.Entities.SensorAggregate;
 
@@ -8,17 +8,17 @@ public class SensorEntity : BaseEntity, ICreateable
     public SensorType Type { get; private set; } = SensorType.Thermometer;
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
     // Relations & Foreignkeys
-    public Guid PlaceId { get; private set; }
-    public virtual Place? Place { get; private set; }
+    public Guid GroupId { get; private set; }
+    public virtual Group? Group { get; private set; }
     public virtual ICollection<SensorReportEntity>? Reports { get; private set; }
 
     #region Ctor
     private SensorEntity() { }
-    public SensorEntity(int pin, SensorType type, Guid placeId)
+    public SensorEntity(int pin, SensorType type, Guid groupId)
     {
         SetPin(pin);
         Type = type;
-        PlaceId = placeId;
+        GroupId = groupId;
     }
     #endregion
 

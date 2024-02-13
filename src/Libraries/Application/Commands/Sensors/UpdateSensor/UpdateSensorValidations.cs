@@ -15,7 +15,7 @@ public class UpdateSensorValidations : BaseFluentValidator<UpdateSensorCommand>
             .NotNull()
             ;
 
-        RuleFor(a => a.PlaceId)
+        RuleFor(a => a.GroupId)
             .NotEmpty()
             .NotNull()
             ;

@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
-namespace TechOnIt.Domain.Entities.StructureAggregate;
+namespace TechOnIt.Domain.Entities.Catalog;
 
 /// <summary>
 /// this class is aggregate root of Structure aggregate
@@ -21,7 +21,7 @@ public class Structure
     #region Relations and Foreign key
     public Guid UserId { get; private set; }
     public virtual User? User { get; private set; }
-    public virtual ICollection<Place>? Places { get; private set; }
+    public virtual ICollection<Group>? Groups { get; private set; }
     #endregion
 
     #region Constructure
@@ -82,38 +82,38 @@ public class Structure
         => ConcurrencyStamp == Encoding.ASCII.GetBytes(concurrencyStamp);
     #endregion
 
-    #region Place Aggregate Methods
+    #region Group Aggregate Methods
     /// <summary>
-    /// Add place for this structure.
+    /// Add group for this structure.
     /// </summary>
-    /// <param name="place">Place object model.</param>
-    public void AddPlace(Place place)
+    /// <param name="group">Group object model.</param>
+    public void AddGroup(Group group)
     {
-        if (Places is null)
-            Places = new List<Place>();
-        Places.Add(place);
+        if (Groups is null)
+            Groups = new List<Group>();
+        Groups.Add(group);
     }
     /// <summary>
-    /// Remove an specific place.
+    /// Remove an specific group.
     /// </summary>
-    /// <param name="place">Place object model you want to remove it.</param>
-    public void RemovePlace(Place place)
+    /// <param name="group">Group object model you want to remove it.</param>
+    public void RemoveGroup(Group group)
     {
-        if (Places is null)
-            throw new ArgumentNullException("Structure dosen't have any places.");
-        Places.Remove(place);
+        if (Groups is null)
+            throw new ArgumentNullException("Structure dosen't have any groups.");
+        Groups.Remove(group);
     }
     /// <summary>
-    /// Add range place to structure.
+    /// Add range group to structure.
     /// </summary>
-    /// <param name="places">List of place object model.</param>
-    public void AddRangePlace(ICollection<Place>? places)
+    /// <param name="groups">List of group object model.</param>
+    public void AddRangeGroup(ICollection<Group>? groups)
     {
-        if (places is null) throw new ArgumentNullException("Places list is null here!");
-        if (Places is null)
-            Places = new List<Place>();
-        foreach (var item in places)
-            Places.Add(item);
+        if (groups is null) throw new ArgumentNullException("Groups list is null here!");
+        if (Groups is null)
+            Groups = new List<Group>();
+        foreach (var item in groups)
+            Groups.Add(item);
     }
     #endregion
 }

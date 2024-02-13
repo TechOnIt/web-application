@@ -6,14 +6,14 @@ using TechOnIt.Application.Reports.Users;
 
 namespace TechOnIt.Application.Commands.Users.Authentication.SignInCookieCommands;
 
-public class SignInCookieCommand : IRequest<bool>
+public class SignInCookieCommand : IRequest<Result>
 {
     public string Username { get; set; }
     public string Password { get; set; }
     public bool IsPersistent { get; set; }
 }
 
-public class SignInCookieCommandHandler : IRequestHandler<SignInCookieCommand, bool>
+public class SignInCookieCommandHandler : IRequestHandler<SignInCookieCommand, Result>
 {
     #region Ctor
     private readonly IUserReports _userReports;
@@ -26,13 +26,13 @@ public class SignInCookieCommandHandler : IRequestHandler<SignInCookieCommand, b
     }
     #endregion
 
-    public async Task<bool> Handle(SignInCookieCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(SignInCookieCommand request, CancellationToken cancellationToken)
     {
         var user = await _userReports.FindByIdentityNoTrackAsync(request.Username, cancellationToken);
         // Check exist.
-        if (user == null) return false;
+        if (user == null) return Result.Fail();
         // Check password.
-        if(user.Password != PasswordHash.Parse(request.Password)) return false;
+        if(user.Password != PasswordHash.Parse(request.Password)) return Result.Fail();
 
         var claims = new List<Claim>
             {
@@ -63,7 +63,7 @@ public class SignInCookieCommandHandler : IRequestHandler<SignInCookieCommand, b
             new ClaimsPrincipal(new ClaimsIdentity(
             claims, CookieAuthenticationDefaults.AuthenticationScheme)),
             authProperties);
-        return true;
+        return Result.Success();
     }
 }
 

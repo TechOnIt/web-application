@@ -27,8 +27,8 @@ public class AuthenticationController : Controller
     public async Task<IActionResult> Signin(SignInCookieCommand command,
         CancellationToken cancellationToken)
     {
-        var isSignedin = await _mediator.Send(command, cancellationToken);
-        if (!isSignedin)
+        var signinResult = await _mediator.Send(command, cancellationToken);
+        if (!signinResult.IsSuccess)
         {
             TempData["signin-summery"] = "Username or password is wrong!";
             return View(command);

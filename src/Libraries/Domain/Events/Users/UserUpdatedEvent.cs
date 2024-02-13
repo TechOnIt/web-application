@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
-namespace TechOnIt.Domain.Events.Identities.Users
+namespace TechOnIt.Domain.Events.Users
 {
     public class UserUpdatedEvent : BaseEvent
     {

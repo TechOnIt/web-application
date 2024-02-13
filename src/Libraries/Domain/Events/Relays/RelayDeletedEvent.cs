@@ -1,10 +1,10 @@
 ﻿using TechOnIt.Domain.Entities.Controllers;
 
-namespace TechOnIt.Domain.Events.Controllers.Relays
+namespace TechOnIt.Domain.Events.Relays
 {
-    public class RelayTurnedOnEvent
+    public class RelayDeletedEvent
     {
-        public RelayTurnedOnEvent(RelayEntity relay)
+        public RelayDeletedEvent(RelayEntity relay)
         {
             Relay = relay;
         }

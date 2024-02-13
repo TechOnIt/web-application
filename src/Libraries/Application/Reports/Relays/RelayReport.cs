@@ -2,7 +2,7 @@
 
 namespace TechOnIt.Application.Reports.Relays;
 
-public class RelayReport : IRelayReport
+public class RelayReport
 {
     #region Ctor
     private readonly IdentityContext _context;

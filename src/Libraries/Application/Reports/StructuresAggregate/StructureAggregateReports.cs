@@ -4,7 +4,7 @@ using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Application.Reports.StructuresAggregate;
 
-public class StructureAggregateReports : IStructureAggregateReports
+public class StructureAggregateReports
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;

@@ -10,8 +10,8 @@ public class GetUserProfileQuery : IRequest<UserViewModel?>
 
 public sealed class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, UserViewModel?>
 {
-    private readonly IUserReports _userReports;
-    public GetUserProfileQueryHandler(IUserReports userReports)
+    private readonly UserReports _userReports;
+    public GetUserProfileQueryHandler(UserReports userReports)
     {
         _userReports = userReports;
     }

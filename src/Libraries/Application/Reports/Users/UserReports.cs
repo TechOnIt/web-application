@@ -1,17 +1,14 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
-using TechOnIt.Application.Common.Exceptions;
-using TechOnIt.Application.Common.Extentions;
-using TechOnIt.Application.Common.Models;
+using TechOnIt.Application.Common.Models.ViewModels.Relay;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
-using TechOnIt.Application.Common.Models.ViewModels.Relay;
 using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Reports.Users;
 
-public class UserReports : IUserReports
+public class UserReports
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -187,22 +184,22 @@ public class UserReports : IUserReports
         try
         {
             var relays = await (from str in _unitOfWorks._context.Structures
-                                 join grp in _unitOfWorks._context.Groups on str.Id equals              grp.StructureId
-                                 into groups
-                                 from pl in groups.DefaultIfEmpty()
-                                 join rel in _unitOfWorks._context.Relays on pl.Id equals               rel.GroupId
-                                 into relay
-                                 from de in relay.DefaultIfEmpty()
-                                 where str.UserId == userId
-                                 select new RelayViewModel
-                                 {
-                                     Id = de.Id,
-                                     Pin = de.Pin,
-                                     RelayType = de.Type,
-                                     IsHigh = de.IsHigh,
-                                     GroupId = de.GroupId,
+                                join grp in _unitOfWorks._context.Groups on str.Id equals grp.StructureId
+                                into groups
+                                from pl in groups.DefaultIfEmpty()
+                                join rel in _unitOfWorks._context.Relays on pl.Id equals rel.GroupId
+                                into relay
+                                from de in relay.DefaultIfEmpty()
+                                where str.UserId == userId
+                                select new RelayViewModel
+                                {
+                                    Id = de.Id,
+                                    Pin = de.Pin,
+                                    RelayType = de.Type,
+                                    IsHigh = de.IsHigh,
+                                    GroupId = de.GroupId,
 
-                                 }).AsNoTracking().ToListAsync();
+                                }).AsNoTracking().ToListAsync();
             return relays;
         }
         catch (ReportExceptions exp)

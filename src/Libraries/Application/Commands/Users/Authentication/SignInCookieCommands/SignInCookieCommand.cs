@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using TechOnIt.Application.Reports.Users;
@@ -16,9 +16,9 @@ public class SignInCookieCommand : IRequest<Result>
 public class SignInCookieCommandHandler : IRequestHandler<SignInCookieCommand, Result>
 {
     #region Ctor
-    private readonly IUserReports _userReports;
+    private readonly UserReports _userReports;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    public SignInCookieCommandHandler(IUserReports userReports,
+    public SignInCookieCommandHandler(UserReports userReports,
         IHttpContextAccessor httpContextAccessor)
     {
         _userReports = userReports;
@@ -32,7 +32,7 @@ public class SignInCookieCommandHandler : IRequestHandler<SignInCookieCommand, R
         // Check exist.
         if (user == null) return Result.Fail();
         // Check password.
-        if(user.Password != PasswordHash.Parse(request.Password)) return Result.Fail();
+        if (user.Password != PasswordHash.Parse(request.Password)) return Result.Fail();
 
         var claims = new List<Claim>
             {

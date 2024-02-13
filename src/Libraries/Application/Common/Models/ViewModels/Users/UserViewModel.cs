@@ -1,6 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-
-namespace TechOnIt.Application.Common.Models.ViewModels.Users;
+﻿namespace TechOnIt.Application.Common.Models.ViewModels.Users;
 
 public class UserViewModel
 {

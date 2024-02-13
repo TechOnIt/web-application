@@ -9,8 +9,8 @@ public class GetAllRelaysByStructureIdQuery : IRequest<object>
 public class GetAllRelaysByStructureIdQueryHandler : IRequestHandler<GetAllRelaysByStructureIdQuery, object>
 {
     #region Ctor
-    private readonly IRelayReport _relayReport;
-    public GetAllRelaysByStructureIdQueryHandler(IRelayReport relayReport)
+    private readonly RelayReport _relayReport;
+    public GetAllRelaysByStructureIdQueryHandler(RelayReport relayReport)
     {
         _relayReport = relayReport;
     }

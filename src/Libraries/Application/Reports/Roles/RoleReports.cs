@@ -1,6 +1,6 @@
 ﻿namespace TechOnIt.Application.Reports.Roles;
 
-public class RoleReports : IRoleReports
+public class RoleReports
 {
     #region Ctors
     private readonly IUnitOfWorks _uow;

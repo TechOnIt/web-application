@@ -11,9 +11,9 @@ public class GetGroupsWithRelaysByStructureIdCommand : IRequest<StructureGroupsW
 public class GetGroupsWithRelaysByStructureIdCommandHandler : IRequestHandler<GetGroupsWithRelaysByStructureIdCommand, StructureGroupsWithRelayViewModel>
 {
     #region Ctor
-    private readonly IStructureAggregateReports _structureReports;
+    private readonly StructureAggregateReports _structureReports;
 
-    public GetGroupsWithRelaysByStructureIdCommandHandler(IStructureAggregateReports structureReports)
+    public GetGroupsWithRelaysByStructureIdCommandHandler(StructureAggregateReports structureReports)
     {
         _structureReports = structureReports;
     }

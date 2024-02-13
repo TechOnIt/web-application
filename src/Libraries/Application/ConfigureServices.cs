@@ -85,10 +85,10 @@ public static class ConfigureServices
 
     public static IServiceCollection AddReportServices(this IServiceCollection services)
     {
-        services.AddScoped<IUserReports, UserReports>()
-            .AddScoped<IRelayReport, RelayReport>()
-            .AddScoped<IRoleReports, RoleReports>()
-            .AddScoped<IStructureAggregateReports, StructureAggregateReports>();
+        services.AddScoped<UserReports>()
+            .AddScoped<RelayReport>()
+            .AddScoped<RoleReports>()
+            .AddScoped<StructureAggregateReports>();
 
         return services;
     }

@@ -1,5 +1,4 @@
-﻿global using FluentResults;
-global using FluentValidation;
+﻿global using FluentValidation;
 global using Mapster;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;
@@ -10,8 +9,8 @@ global using TechOnIt.Application.Common.Extentions;
 global using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 global using TechOnIt.Application.Common.Interfaces;
 global using TechOnIt.Application.Common.Models;
+global using TechOnIt.Domain.Common;
 global using TechOnIt.Domain.Entities.Identity;
 global using TechOnIt.Domain.Enums;
 global using TechOnIt.Domain.ValueObjects;
 global using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
-global using TechOnIt.Domain.Common;

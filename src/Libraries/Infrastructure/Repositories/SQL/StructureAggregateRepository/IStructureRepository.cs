@@ -25,7 +25,7 @@ public interface IStructureRepository
     #region Group
     Task<Group?> GetGroupByIdAsync(Guid groupId, CancellationToken cancellationToken = default);
     Task<Group?> GetGroupByIdAsyncAsNoTracking(Guid groupId, CancellationToken cancellationToken = default);
-    Task<IList<Group>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Group, bool>> filter = null);
+    Task<IList<Group>> GetAllGroupsByFilterAsync(CancellationToken cancellationToken, Expression<Func<Group, bool>> filter = null);
     Task CreateGroupAsync(Group group, Guid StructureId, CancellationToken cancellationToken = default);
     Task UpdateGroupAsync(Guid structureId, Group group, CancellationToken cancellationToken = default);
     Task<bool> DeleteGroupAsync(Guid groupId, Guid structureId, CancellationToken cancellationToken);

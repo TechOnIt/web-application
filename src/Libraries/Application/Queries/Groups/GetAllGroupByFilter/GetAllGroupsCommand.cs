@@ -20,7 +20,7 @@ public class GetAllGroupsByFilterQueryHandler : IRequestHandler<GetAllGroupsComm
     {
         try
         {
-            var allGroups = _unitOfWorks.StructureRepository.GetAllPlcaesByFilterAsync(cancellationToken);
+            var allGroups = _unitOfWorks.StructureRepository.GetAllGroupsByFilterAsync(cancellationToken);
             var result = allGroups.Adapt<IList<GroupViewModel>>();
             return ResultExtention.ListResult(result);
         }

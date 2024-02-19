@@ -3,6 +3,7 @@ using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Desk.Web.Hubs;
 using TechOnIt.Desk.Web.RealTimeServices;
+using TechOnIt.Infrastructure.Common.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,6 +83,9 @@ app.UseResponseCaching();
 // Auth
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Initialize database seed.
+await app.InitializeDatabaseAsync(builder);
 
 // Endpoints
 app.MapControllerRoute(

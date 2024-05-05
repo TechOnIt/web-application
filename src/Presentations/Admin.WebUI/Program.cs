@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Infrastructure.Common.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,10 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("v1/swagger.json", "Admin Api v1");
 });
 app.UseSwagger();
+
+// Initialize database seed.
+await app.InitializeDatabaseAsync(builder);
+
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");

@@ -2,31 +2,34 @@
 
 namespace TechOnIt.Application.Queries.Groups.GetAllGroupByFilter;
 
-public class GetAllGroupsCommand : IRequest<object>
+public class GetAllGroupByFilterQuery : PaginatedSearchWithSize, IRequest<Result>
 {
 }
 
-public class GetAllGroupsByFilterQueryHandler : IRequestHandler<GetAllGroupsCommand, object>
+public class GetAllGroupsByFilterQueryHandler : IRequestHandler<GetAllGroupByFilterQuery, Result>
 {
-    #region constructor
+    #region DI
+
     private readonly IUnitOfWorks _unitOfWorks;
     public GetAllGroupsByFilterQueryHandler(IUnitOfWorks unitOfWorks)
     {
         _unitOfWorks = unitOfWorks;
     }
+
     #endregion
 
-    public async Task<object> Handle(GetAllGroupsCommand request, CancellationToken cancellationToken = default)
+    public async Task<Result> Handle(GetAllGroupByFilterQuery request,
+        CancellationToken cancellationToken = default)
     {
         try
         {
             var allGroups = _unitOfWorks.StructureRepository.GetAllGroupsByFilterAsync(cancellationToken);
             var result = allGroups.Adapt<IList<GroupViewModel>>();
-            return ResultExtention.ListResult(result);
+            return Result.Ok(result);
         }
         catch (Exception exp)
         {
-            throw new Exception(exp.Message);
+            return Result.Fail(exp.Message);
         }
     }
 }

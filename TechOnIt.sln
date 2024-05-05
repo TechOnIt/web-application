@@ -23,9 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Desk.Web", "src\Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Web", "src\Presentations\Admin.WebUI\Admin.Web.csproj", "{FDB590D6-F158-461E-9D18-42884CB8F74B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcpMicrosoftServer", "..\..\ReactProject\Backend\TcpMicrosoftServer\TcpMicrosoftServer.csproj", "{BD91A8D5-BFB7-4B5F-A095-72A82135B7A6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frameworks", "src\Presentations\Frameworks\Frameworks.csproj", "{6A99B4C3-B621-4826-9823-01656BB2B855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frameworks", "src\Presentations\Frameworks\Frameworks.csproj", "{6A99B4C3-B621-4826-9823-01656BB2B855}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

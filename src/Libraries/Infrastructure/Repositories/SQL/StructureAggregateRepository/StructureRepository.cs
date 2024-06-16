@@ -105,7 +105,7 @@ public class StructureRepository : IStructureRepository
         => await _context.Groups.FirstOrDefaultAsync(a => a.Id == groupId, cancellationToken);
     public async Task<Group?> GetGroupByIdAsyncAsNoTracking(Guid groupId, CancellationToken cancellationToken)
         => await Task.FromResult(await _context.Groups.AsNoTracking().FirstOrDefaultAsync(a => a.Id == groupId, cancellationToken));
-    public async Task<IList<Group>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Group, bool>>? filter = null)
+    public async Task<IList<Group>> GetAllGroupsByFilterAsync(CancellationToken cancellationToken, Expression<Func<Group, bool>>? filter = null)
     {
         var groups = _context.Groups.AsNoTracking();
         if (filter != null) groups = groups.Where(filter);

@@ -23,7 +23,7 @@ public class GetAllGroupsByFilterQueryHandler : IRequestHandler<GetAllGroupByFil
     {
         try
         {
-            var allGroups = await _unitOfWorks.StructureRepository.GetAllPlcaesByFilterAsync(cancellationToken);
+            var allGroups = _unitOfWorks.StructureRepository.GetAllGroupsByFilterAsync(cancellationToken);
             var result = allGroups.Adapt<IList<GroupViewModel>>();
             return Result.Ok(result);
         }

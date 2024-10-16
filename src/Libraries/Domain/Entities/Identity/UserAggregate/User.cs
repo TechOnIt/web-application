@@ -19,7 +19,7 @@ public class User
     public bool IsDeleted { get; private set; } = false;
     public short MaxFailCount { get; private set; } = 0;
     public DateTime? LockOutDateTime { get; private set; }
-    public byte[] ConcurrencyStamp { get; private set; } = new byte[0];
+    public byte[] ConcurrencyStamp { get; private set; } = [];
     #region Relations
     public virtual ICollection<UserRoleEntity>? UserRoles { get; set; }
     public virtual ICollection<Structure>? Structures { get; set; }

@@ -11,9 +11,9 @@ public class GetMyStructuresCardCommand : IRequest<IList<StructureCardViewModel>
 public class GetMyStructuresCardCommandHandler : IRequestHandler<GetMyStructuresCardCommand, IList<StructureCardViewModel>>
 {
     #region Ctor
-    private readonly IStructureAggregateReports _structureReports;
+    private readonly StructureAggregateReports _structureReports;
 
-    public GetMyStructuresCardCommandHandler(IStructureAggregateReports structureReports)
+    public GetMyStructuresCardCommandHandler(StructureAggregateReports structureReports)
     {
         _structureReports = structureReports;
     }

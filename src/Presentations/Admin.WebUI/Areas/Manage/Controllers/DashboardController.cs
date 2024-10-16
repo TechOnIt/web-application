@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Queries.Users.Dashboard.GetNewUsersCount;
-
-namespace TechOnIt.Admin.WebUI.Areas.Manage.Controllers;
+﻿namespace TechOnIt.Admin.Web.Areas.Manage.Controllers;
 
 [Area("Manage")]
 public class DashboardController : Controller
@@ -15,9 +13,8 @@ public class DashboardController : Controller
     #endregion
 
     [HttpGet]
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public IActionResult Index()
     {
-        var result = await _mediator.Send(new GetNewUsersCountCommand(), cancellationToken);
-        return View(result);
+        return View();
     }
 }

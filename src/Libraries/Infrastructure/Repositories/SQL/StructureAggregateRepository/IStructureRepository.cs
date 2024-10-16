@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using TechOnIt.Domain.Entities.StructureAggregate;
+using TechOnIt.Domain.Entities.Catalog;
 using TechOnIt.Domain.ValueObjects;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
@@ -17,17 +17,17 @@ public interface IStructureRepository
     #endregion
 
     #region Common
-    Task CreateWithPlacesAsync(Structure structure, IList<Place> places, CancellationToken cancellationToken = default);
-    Task<IList<Place>?> GetPlacesByStructureIdAsync(Guid structureId, CancellationToken cancellationToken = default);
-    Task<Place?> GetPlaceByStructureIdAsync(Guid structorId, Guid placeId, CancellationToken cancellationToken);
+    Task CreateWithGroupsAsync(Structure structure, IList<Group> groups, CancellationToken cancellationToken = default);
+    Task<IList<Group>?> GetGroupsByStructureIdAsync(Guid structureId, CancellationToken cancellationToken = default);
+    Task<Group?> GetGroupByStructureIdAsync(Guid structorId, Guid groupId, CancellationToken cancellationToken);
     #endregion
 
-    #region Place
-    Task<Place?> GetPlaceByIdAsync(Guid placeId, CancellationToken cancellationToken = default);
-    Task<Place?> GetPlaceByIdAsyncAsNoTracking(Guid placeId, CancellationToken cancellationToken = default);
-    Task<IList<Place>> GetAllPlcaesByFilterAsync(CancellationToken cancellationToken, Expression<Func<Place, bool>> filter = null);
-    Task CreatePlaceAsync(Place place, Guid StructureId, CancellationToken cancellationToken = default);
-    Task UpdatePlaceAsync(Guid structureId, Place place, CancellationToken cancellationToken = default);
-    Task<bool> DeletePlaceAsync(Guid placeId, Guid structureId, CancellationToken cancellationToken);
+    #region Group
+    Task<Group?> GetGroupByIdAsync(Guid groupId, CancellationToken cancellationToken = default);
+    Task<Group?> GetGroupByIdAsyncAsNoTracking(Guid groupId, CancellationToken cancellationToken = default);
+    Task<IList<Group>> GetAllGroupsByFilterAsync(CancellationToken cancellationToken, Expression<Func<Group, bool>> filter = null);
+    Task CreateGroupAsync(Group group, Guid StructureId, CancellationToken cancellationToken = default);
+    Task UpdateGroupAsync(Guid structureId, Group group, CancellationToken cancellationToken = default);
+    Task<bool> DeleteGroupAsync(Guid groupId, Guid structureId, CancellationToken cancellationToken);
     #endregion
 }

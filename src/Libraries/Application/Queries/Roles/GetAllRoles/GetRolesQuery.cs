@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Exceptions;
-using TechOnIt.Application.Common.Models;
-using TechOnIt.Application.Common.Models.ViewModels.Roles;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Roles;
 using TechOnIt.Application.Reports.Roles;
 
 namespace TechOnIt.Application.Queries.Roles.GetAllRoles;
@@ -12,9 +10,9 @@ public class GetRolesQuery : PaginatedSearchWithSize, IRequest<PaginatedList<Rol
 public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, PaginatedList<RoleWithUsersCountViewModel>>
 {
     #region Ctor
-    private readonly IRoleReports _roleReports;
+    private readonly RoleReports _roleReports;
 
-    public GetRolesQueryHandler(IRoleReports roleReports)
+    public GetRolesQueryHandler(RoleReports roleReports)
     {
         _roleReports = roleReports;
     }
@@ -22,7 +20,7 @@ public class GetRolesQueryHandler : IRequestHandler<GetRolesQuery, PaginatedList
 
     public async Task<PaginatedList<RoleWithUsersCountViewModel>> Handle(GetRolesQuery request, CancellationToken cancellationToken = default)
     {
-        var config = TypeAdapterConfig<Role, RoleWithUsersCountViewModel>.NewConfig()
+        var config = TypeAdapterConfig<RoleEntity, RoleWithUsersCountViewModel>.NewConfig()
             .Map(dest => dest.UsersCount, src => src.UserRoles.Count)
             .Config
             ;

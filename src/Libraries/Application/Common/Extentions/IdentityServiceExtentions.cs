@@ -1,10 +1,10 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Infrastructure.Common.Notifications.Results;
-using TechOnIt.Application.Common.Enums.IdentityService;
-using System.Globalization;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Security.Principal;
-using TechOnIt.Domain.Entities.StructureAggregate;
+using System.Text;
+using TechOnIt.Application.Common.Enums.IdentityService;
+using TechOnIt.Application.Common.Models.DynamicAccess;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Infrastructure.Common.Notifications.Results;
 
 namespace TechOnIt.Application.Common.Extentions;
 
@@ -34,7 +34,7 @@ public static class IdentityServiceExtentions
 
         return (SigInStatus.Succeeded, SucceededValidations);
     }
-    
+
     public static bool IsSendSuccessfully(this SendStatus status)
         => status == SendStatus.Successeded ? true : false;
 
@@ -50,5 +50,32 @@ public static class IdentityServiceExtentions
     {
         var claimsIdentity = identity as ClaimsIdentity;
         return claimsIdentity?.FindFirstValue(claimType);
+    }
+
+    public static List<string> ConvertAccessableActionsAsString(this List<ControllerInfo> controllerInfos, CancellationToken cancellationToken)
+    {
+        StringBuilder sb = new StringBuilder();
+        List<string> AccessablePathes = new List<string>();
+
+        var ControllersEnummerator = controllerInfos.GetEnumerator();
+        while (ControllersEnummerator.MoveNext())
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ControllerInfo currentController = ControllersEnummerator.Current;
+            if (currentController.Actions.Count > 0)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var actionsEnumerator = currentController.Actions.GetEnumerator();
+                while (actionsEnumerator.MoveNext())
+                {
+                    var currentAction = actionsEnumerator.Current;
+                    sb.Append($"{currentController.Area}/{currentController.Controller}/{currentAction}");
+                    AccessablePathes.Add(sb.ToString());
+                    sb.Clear();
+                }
+            }
+        }
+
+        return AccessablePathes;
     }
 }

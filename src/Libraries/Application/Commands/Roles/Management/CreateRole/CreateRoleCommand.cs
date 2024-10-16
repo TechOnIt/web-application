@@ -25,7 +25,7 @@ public class CreateRoleCommandHanlder : IRequestHandler<CreateRoleCommand, objec
             if(await _unitOfWorks.RoleRepository.IsExistsRoleNameAsync(request.Name, cancellationToken) == true)
                 return Result.Fail("Duplicate: role name already exists in system");
 
-            Role newRole = new Role(request.Name);
+            RoleEntity newRole = new RoleEntity(request.Name);
             await _unitOfWorks.RoleRepository.CreateRoleAsync(newRole, cancellationToken);
             return ResultExtention.IdResult(newRole.Id);
         }

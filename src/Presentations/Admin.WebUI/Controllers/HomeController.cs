@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace TechOnIt.Admin.WebUI.Controllers
+namespace TechOnIt.Admin.Web.Controllers
 {
     public class HomeController : Controller
     {

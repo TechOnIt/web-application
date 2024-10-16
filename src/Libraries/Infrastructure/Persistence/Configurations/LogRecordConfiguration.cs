@@ -1,8 +1,10 @@
-﻿namespace TechOnIt.Infrastructure.Persistence.Configurations;
+﻿using TechOnIt.Domain.Entities.General;
 
-public class LogRecordConfiguration : IEntityTypeConfiguration<LogRecord>
+namespace TechOnIt.Infrastructure.Persistence.Configurations;
+
+public class LogRecordConfiguration : IEntityTypeConfiguration<LogEntity>
 {
-    public void Configure(EntityTypeBuilder<LogRecord> builder)
+    public void Configure(EntityTypeBuilder<LogEntity> builder)
     {
         builder.ToTable("Logs", TableSchema.Metadata);
 
@@ -21,11 +23,6 @@ public class LogRecordConfiguration : IEntityTypeConfiguration<LogRecord>
         builder.Property(l => l.LevelId)
             .HasColumnType(DataTypes.tinyint)
             .HasDefaultValue(LogLevelType.Information);
-
-        // PresentationId
-        builder.Property(l => l.PresentationId)
-            .HasColumnType(DataTypes.tinyint)
-            .HasDefaultValue(PresentationAssembly.None);
 
         // FullMessage
         builder.Property(l => l.FullMessage)

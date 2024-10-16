@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
+using TechOnIt.Domain.Entities.Catalog;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.Entities.StructureAggregate;
 
 namespace TechOnIt.Application.Common.Extentions;
 

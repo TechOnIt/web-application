@@ -17,45 +17,56 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.Device", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.General.LogEntity", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
-                    b.Property<byte[]>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<bool>("IsHigh")
-                        .HasColumnType("bit");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Pin")
-                        .HasMaxLength(4)
-                        .HasColumnType("numeric");
+                    b.Property<string>("FullMessage")
+                        .HasColumnType("nvarchar(4000)");
 
-                    b.Property<Guid>("PlaceId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("IpAddress")
+                        .HasColumnType("varchar(15)");
 
-                    b.Property<int>("Type")
+                    b.Property<byte>("LevelId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint")
-                        .HasDefaultValue(1);
+                        .HasDefaultValue((byte)20);
+
+                    b.Property<string>("ReferrerUrl")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ShortMessage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlaceId");
+                    b.HasIndex("ShortMessage");
 
-                    b.ToTable("Devices", "dbo");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Logs", "metadata");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.Role", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.RoleEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -144,7 +155,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.ToTable("Users", "identity");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserRole", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserRoleEntity", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -159,71 +170,25 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.ToTable("UserRole_Mapping", "identity");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.LogRecord", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FullMessage")
-                        .HasColumnType("nvarchar(4000)");
-
-                    b.Property<string>("IpAddress")
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<byte>("LevelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint")
-                        .HasDefaultValue((byte)20);
-
-                    b.Property<byte>("PresentationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint")
-                        .HasDefaultValue((byte)0);
-
-                    b.Property<string>("ReferrerUrl")
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ShortMessage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ShortMessage");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Logs", "metadata");
-                });
-
-            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.Sensor", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.RelayEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnUpdate()
-                        .HasColumnType("datetime2");
+                    b.Property<byte[]>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<bool>("IsHigh")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("Pin")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Pin")
+                        .HasMaxLength(4)
+                        .HasColumnType("numeric");
 
-                    b.Property<Guid>("PlaceId")
+                    b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Type")
@@ -233,12 +198,92 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlaceId");
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("Relays", "dbo");
+                });
+
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Security.DynamicAccessEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("Path", "UserId")
+                        .IsUnique()
+                        .HasDatabaseName("User_Path_UIX");
+
+                    SqlServerIndexBuilderExtensions.IsClustered(b.HasIndex("Path", "UserId"), false);
+
+                    b.ToTable("DynamicAccesses");
+                });
+
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Security.PermissionEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SystemName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions", "identity");
+                });
+
+            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Pin")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValue(1);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Sensors", "dbo");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorReport", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorReportEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -260,7 +305,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.ToTable("SensorReports", "dbo");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Place", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Group", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -271,10 +316,6 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -287,7 +328,7 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StructureId");
 
-                    b.ToTable("Places", "dbo");
+                    b.ToTable("Groups", "dbo");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Structure", b =>
@@ -331,15 +372,13 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.ToTable("Structures", "dbo");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.Device", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.General.LogEntity", b =>
                 {
-                    b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Place", "Place")
-                        .WithMany("Devices")
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("TechOnIt.Domain.Entities.Identity.UserAggregate.User", "User")
+                        .WithMany("LogHistories")
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Place");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserAggregate.LoginHistory", b =>
@@ -419,9 +458,9 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Navigation("Password");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserRole", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserRoleEntity", b =>
                 {
-                    b.HasOne("TechOnIt.Domain.Entities.Identity.Role", "Role")
+                    b.HasOne("TechOnIt.Domain.Entities.Identity.RoleEntity", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -438,29 +477,50 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.LogRecord", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.RelayEntity", b =>
                 {
+                    b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Group", "Group")
+                        .WithMany("Relays")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Security.DynamicAccessEntity", b =>
+                {
+                    b.HasOne("TechOnIt.Domain.Entities.Identity.RoleEntity", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TechOnIt.Domain.Entities.Identity.UserAggregate.User", "User")
-                        .WithMany("LogHistories")
-                        .HasForeignKey("UserId");
+                        .WithMany("DynamicAccesses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.Sensor", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorEntity", b =>
                 {
-                    b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Place", "Place")
+                    b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Group", "Group")
                         .WithMany("Sensors")
-                        .HasForeignKey("PlaceId")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Place");
+                    b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorReport", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorReportEntity", b =>
                 {
-                    b.HasOne("TechOnIt.Domain.Entities.SensorAggregate.Sensor", "Sensor")
+                    b.HasOne("TechOnIt.Domain.Entities.SensorAggregate.SensorEntity", "Sensor")
                         .WithMany("Reports")
                         .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -469,10 +529,10 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Navigation("Sensor");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Place", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Group", b =>
                 {
                     b.HasOne("TechOnIt.Domain.Entities.StructureAggregate.Structure", "Structure")
-                        .WithMany("Places")
+                        .WithMany("Groups")
                         .HasForeignKey("StructureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -530,13 +590,15 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.Role", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.RoleEntity", b =>
                 {
                     b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.Identity.UserAggregate.User", b =>
                 {
+                    b.Navigation("DynamicAccesses");
+
                     b.Navigation("LogHistories");
 
                     b.Navigation("LoginHistories");
@@ -546,21 +608,21 @@ namespace TechOnIt.Infrastructure.Persistence.Migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.Sensor", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.SensorAggregate.SensorEntity", b =>
                 {
                     b.Navigation("Reports");
                 });
 
-            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Place", b =>
+            modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Group", b =>
                 {
-                    b.Navigation("Devices");
+                    b.Navigation("Relays");
 
                     b.Navigation("Sensors");
                 });
 
             modelBuilder.Entity("TechOnIt.Domain.Entities.StructureAggregate.Structure", b =>
                 {
-                    b.Navigation("Places");
+                    b.Navigation("Groups");
                 });
 #pragma warning restore 612, 618
         }

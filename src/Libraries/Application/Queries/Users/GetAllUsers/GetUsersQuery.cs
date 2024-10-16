@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Exceptions;
-using TechOnIt.Application.Common.Models;
-using TechOnIt.Application.Common.Models.ViewModels.Users;
+﻿using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Reports.Users;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
@@ -13,8 +11,8 @@ public class GetUsersQuery : PaginatedSearch, IRequest<PaginatedList<UserViewMod
 public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList<UserViewModel>>
 {
     #region Ctor
-    private readonly IUserReports _userReports;
-    public GetUsersQueryHandler(IUserReports userReports)
+    private readonly UserReports _userReports;
+    public GetUsersQueryHandler(UserReports userReports)
     {
         _userReports = userReports;
     }

@@ -1,21 +1,18 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using TechOnIt.Application.Commands.Users.Authentication.SignInCookieCommands;
+﻿using TechOnIt.Application.Commands.Users.Authentication.SignInCookieCommands;
 
-namespace TechOnIt.Desk.WebUI.Controllers;
+namespace TechOnIt.Desk.Web.Controllers;
 
 public class AuthenticationController : Controller
 {
-    #region Ctor
-    private readonly IMediator _mediator;
-    private readonly IHttpContextAccessor _httpContext;
+    #region DI / Ctor
 
-    public AuthenticationController(IMediator mediator,
-        IHttpContextAccessor httpContext)
+    private readonly IMediator _mediator;
+
+    public AuthenticationController(IMediator mediator)
     {
         _mediator = mediator;
-        _httpContext = httpContext;
     }
+
     #endregion
 
     [HttpGet]
@@ -27,10 +24,11 @@ public class AuthenticationController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Signin(SignInCookieCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Signin(SignInCookieCommand command,
+        CancellationToken cancellationToken)
     {
-        var isSignedin = await _mediator.Send(command, cancellationToken);
-        if (!isSignedin)
+        var signinResult = await _mediator.Send(command, cancellationToken);
+        if (!signinResult.IsSuccess)
         {
             TempData["signin-summery"] = "Username or password is wrong!";
             return View(command);
@@ -38,14 +36,4 @@ public class AuthenticationController : Controller
         return Redirect("/dashboard/structure");
     }
 
-    [HttpGet]
-    [Authorize]
-    public async Task<IActionResult> Signout()
-    {
-        if (_httpContext.HttpContext is not null)
-            await _httpContext.HttpContext
-                .SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-        return Redirect("/");
-    }
 }

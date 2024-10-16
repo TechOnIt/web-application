@@ -1,44 +1,69 @@
-﻿<div class="menu-fixed sidebar-menu vh-100 bg-body-tertiary" style="touch-action: none; user-select: none;">
-    @* Brand Logo *@
-    <div class="d-block d-sm-none pt-5">
-        <div class="pt-4"></div>
+﻿<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+        <a href="/dashboard" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                <img src="~/assets/images/logo/logo.svg" />
+            </span>
+            <span class="app-brand-text demo menu-text fw-bold ms-2">Techonit</span>
+        </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+            <i class="bx menu-toggle-icon d-none d-xl-block fs-4 align-middle"></i>
+            <i class="bx bx-x d-block d-xl-none bx-sm align-middle"></i>
+        </a>
     </div>
-    <div class="d-none d-sm-block mb-3">
-        <div class="text-center py-2">
-            <a class="navbar-brand m-0" href="/">
-                <div class="d-flex justify-content-center">
-                    <img src="~/assets/images/logo/logo.svg" height="40" width="30" />
-                    <label class="ellipsis-text extra h5 ms-2 central">Techonit</label>
-                </div>
+    <div class="menu-divider mt-0"></div>
+    <div class="menu-inner-shadow"></div>
+    <ul class="menu-inner py-1">
+        <!-- Dashboards -->
+        <li class="menu-item active open">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-tachometer"></i>
+                <div data-i18n="Dashboards">Dashboards</div>
             </a>
-        </div>
-    </div>
-    <div class="pr-4 pr-sm-0 pl-4 pl-sm-0">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="/dashboard">
-                    <div class="nav-icon">
-                        <i class="fa fa-tachometer-alt"></i>
-                    </div>
-                    <div class="extra">Overview</div>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/dashboard/structure">
-                    <div class="nav-icon">
-                        <i class="far fa-home"></i>
-                    </div>
-                    <div class="extra ms-2">Structures</div>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="/dashboard/profile">
-                    <div class="nav-icon">
-                        <i class="far fa-user"></i>
-                    </div>
-                    <div class="extra ms-2">Profile</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
+            <ul class="menu-sub">
+                <li class="menu-item active">
+                    <a asp-area="Dashboard" asp-controller="Overview" asp-action="Index" class="menu-link">
+                        <div data-i18n="Overview">Overview</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Catalog -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Catalog">Catalog</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Dashboard" asp-controller="Structure" asp-action="Index" class="menu-link">
+                        <div data-i18n="Structures">Structures</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a asp-area="Dashboard" asp-controller="Group" asp-action="Index" class="menu-link">
+                        <div data-i18n="Groups">Groups</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Automation -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-bot"></i>
+                <div data-i18n="Automation">Automation</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a asp-area="Dashboard" asp-controller="Schedule" asp-action="Index" class="menu-link">
+                        <div data-i18n="Scheduled">Scheduled</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</aside>

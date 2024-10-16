@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCookieCommands;
 
-namespace TechOnIt.Admin.WebUI.Controllers;
+namespace TechOnIt.Admin.Web.Controllers;
 
 public class AuthenticationController : Controller
 {
@@ -27,8 +27,8 @@ public class AuthenticationController : Controller
     [HttpPost]
     public async Task<IActionResult> Signin(SignInCookieCommand command, CancellationToken cancellationToken)
     {
-        var isSignedin = await _mediator.Send(command, cancellationToken);
-        if (!isSignedin)
+        var signinResult = await _mediator.Send(command, cancellationToken);
+        if (!signinResult.IsSuccess)
             return View();
         return Redirect("/");
     }

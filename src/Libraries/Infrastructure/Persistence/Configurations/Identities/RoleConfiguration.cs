@@ -2,9 +2,9 @@
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.Identities;
 
-public class RoleConfiguration : IEntityTypeConfiguration<Role>
+public class RoleConfiguration : IEntityTypeConfiguration<RoleEntity>
 {
-    public void Configure(EntityTypeBuilder<Role> builder)
+    public void Configure(EntityTypeBuilder<RoleEntity> builder)
     {
         builder.ToTable("Roles", TableSchema.Identity);
         // Id

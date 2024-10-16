@@ -2,9 +2,9 @@
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
-public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
+public class SensorConfiguration : IEntityTypeConfiguration<SensorEntity>
 {
-    public void Configure(EntityTypeBuilder<Sensor> builder)
+    public void Configure(EntityTypeBuilder<SensorEntity> builder)
     {
         builder.ToTable("Sensors", TableSchema.Default);
 
@@ -32,13 +32,13 @@ public class SensorConfiguration : IEntityTypeConfiguration<Sensor>
             .IsRequired()
             .ValueGeneratedOnUpdate()
             .HasColumnType(DataTypes.datetime2);
-        // PlaceId
-        builder.Property(b => b.PlaceId)
+        // GroupId
+        builder.Property(b => b.GroupId)
             .IsRequired();
-        // Place
-        builder.HasOne(s => s.Place)
+        // Group
+        builder.HasOne(s => s.Group)
             .WithMany(s => s.Sensors)
-            .HasForeignKey(s => s.PlaceId);
+            .HasForeignKey(s => s.GroupId);
         // Reports
         builder.HasMany(a => a.Reports)
             .WithOne(a => a.Sensor)

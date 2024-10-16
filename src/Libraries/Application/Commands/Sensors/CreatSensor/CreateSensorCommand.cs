@@ -21,7 +21,7 @@ public class CreateSensorCommand : IRequest<object>, ICommittableRequest
         set { _sensorId = value; }
     }
     public SensorType? SensorType { get; private set; }
-    public Guid PlaceId { get; set; }
+    public Guid GroupId { get; set; }
 }
 
 public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, object>
@@ -45,7 +45,7 @@ public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, o
 
             Task createSensor = Task.Factory
                 .StartNew(() =>
-                _unitOfWorks.SensorRepository.CreateSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.Sensor>(), cancellationToken)
+                _unitOfWorks.SensorRepository.CreateSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.SensorEntity>(), cancellationToken)
             , cancellationToken);
 
             await createSensor;

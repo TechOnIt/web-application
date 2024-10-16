@@ -1,4 +1,4 @@
-namespace TechOnIt.Admin.WebUI.Models
+namespace TechOnIt.Admin.Web.Models
 {
     public class ErrorViewModel
     {

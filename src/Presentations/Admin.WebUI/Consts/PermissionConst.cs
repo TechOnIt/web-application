@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Admin.WebUI.Consts;
+﻿namespace TechOnIt.Admin.Web.Consts;
 
 internal static class PermissionConst
 {

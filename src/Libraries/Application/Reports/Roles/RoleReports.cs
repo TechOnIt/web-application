@@ -1,6 +1,6 @@
 ﻿namespace TechOnIt.Application.Reports.Roles;
 
-public class RoleReports : IRoleReports
+public class RoleReports
 {
     #region Ctors
     private readonly IUnitOfWorks _uow;
@@ -26,6 +26,6 @@ public class RoleReports : IRoleReports
                 .Where(role => role.Name.Contains(paginatedSearch.Keyword))
                 .AsQueryable();
         #endregion
-        return await query.PaginatedListAsync<Role, TDestination>(paginatedSearch.Page, paginatedSearch.PageSize, config, cancellationToken);
+        return await query.PaginatedListAsync<RoleEntity, TDestination>(paginatedSearch.Page, paginatedSearch.PageSize, config, cancellationToken);
     }
 }

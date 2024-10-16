@@ -14,7 +14,7 @@ public class SensorRepository : ISensorRepository
     #endregion
 
     #region sensor
-    public async Task CreateSensorAsync(Sensor sensor, CancellationToken cancellationToken)
+    public async Task CreateSensorAsync(SensorEntity sensor, CancellationToken cancellationToken)
     {
         await _context.Sensors.AddAsync(sensor, cancellationToken);
         await Task.CompletedTask;
@@ -29,7 +29,7 @@ public class SensorRepository : ISensorRepository
         _context.Sensors.Remove(sensor);
         return (true, true);
     }
-    public async Task<Sensor?> GetSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken)
+    public async Task<SensorEntity?> GetSensorByIdAsync(Guid sensorId, CancellationToken cancellationToken)
     {
         var sensor = await _context.Sensors
             .AsNoTracking()
@@ -37,7 +37,7 @@ public class SensorRepository : ISensorRepository
 
         return await Task.FromResult(sensor);
     }
-    public async Task<(bool Result, bool IsExists)> UpdateSensorAsync(Sensor sensor, CancellationToken cancellationToken)
+    public async Task<(bool Result, bool IsExists)> UpdateSensorAsync(SensorEntity sensor, CancellationToken cancellationToken)
     {
         var findSensor = await _context.Sensors.FindAsync(sensor.Id, cancellationToken);
         if (findSensor is null)
@@ -47,13 +47,13 @@ public class SensorRepository : ISensorRepository
         _context.Sensors.Update(findSensor);
         return (true, true);
     }
-    public async Task<IList<SensorReport>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
-    => await Task.FromResult<IList<SensorReport>?>(await _context.SensorReports.Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken));
+    public async Task<IList<SensorReportEntity>?> GetSensorReportBySensorIdAsync(Guid sensorId, CancellationToken cancellationToken)
+    => await Task.FromResult<IList<SensorReportEntity>?>(await _context.SensorReports.Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken));
 
-    public async Task<IList<SensorReport>?> GetSensorReportBySensorIdAsNoTrackingAsync(Guid sensorId, CancellationToken cancellationToken)
+    public async Task<IList<SensorReportEntity>?> GetSensorReportBySensorIdAsNoTrackingAsync(Guid sensorId, CancellationToken cancellationToken)
     => await _context.SensorReports.AsNoTracking().Where(a => a.SensorId == sensorId).ToListAsync(cancellationToken);
 
-    public async Task<IList<SensorReport>?> GetSensorReportBySensorIdAsNoTrackingWithTimeFilterAsync(Guid sensorId, DateTime minTime, DateTime maxTime, CancellationToken cancellationToken)
+    public async Task<IList<SensorReportEntity>?> GetSensorReportBySensorIdAsNoTrackingWithTimeFilterAsync(Guid sensorId, DateTime minTime, DateTime maxTime, CancellationToken cancellationToken)
         => await _context
             .SensorReports
             .AsNoTracking()
@@ -61,14 +61,14 @@ public class SensorRepository : ISensorRepository
             .ToListAsync(cancellationToken);
 
 
-    public async Task<IList<Sensor>> GetAllSensorsByPlaceIdAsync(Guid placeId, CancellationToken cancellationToken)
-        => await _context.Sensors.AsNoTracking().Where(a => a.PlaceId == placeId).ToListAsync();
+    public async Task<IList<SensorEntity>> GetAllSensorsByGroupIdAsync(Guid groupId, CancellationToken cancellationToken)
+        => await _context.Sensors.AsNoTracking().Where(a => a.GroupId == groupId).ToListAsync();
     #endregion
 
     #region Report
-    public async Task<SensorReport?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken)
+    public async Task<SensorReportEntity?> FindRepoprtByIdAsync(Guid reportId, CancellationToken cancellationToken)
         => await Task.FromResult(await _context.SensorReports.FirstOrDefaultAsync(a => a.Id == reportId, cancellationToken));
-    public async Task AddReportToSensorAsync(SensorReport model, CancellationToken cancellationToken)
+    public async Task AddReportToSensorAsync(SensorReportEntity model, CancellationToken cancellationToken)
     {
         var sensor = await _context.Sensors.FirstOrDefaultAsync(a => a.Id == model.SensorId);
 

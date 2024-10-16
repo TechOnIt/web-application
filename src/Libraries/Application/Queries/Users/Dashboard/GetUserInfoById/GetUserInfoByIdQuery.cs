@@ -11,9 +11,9 @@ public class GetUserInfoByIdQuery : IRequest<UserViewModel?>
 public class GetUserInfoByUsernameQueryHandler : IRequestHandler<GetUserInfoByIdQuery, UserViewModel?>
 {
     #region Ctor
-    private readonly IUserReports _userReports;
+    private readonly UserReports _userReports;
 
-    public GetUserInfoByUsernameQueryHandler(IUserReports userReports)
+    public GetUserInfoByUsernameQueryHandler(UserReports userReports)
     {
         _userReports = userReports;
     }

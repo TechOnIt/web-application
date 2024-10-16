@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "ES6",
+    "outDir": "js"
+  },
+  "exclude": [
+    "node_modules"
+    //"wwwroot"
+  ],
+  "include": [
+    "wwwroot/**/*.ts",
+    "scripts/**/*",
+    "scripts/interfaces/**/*",
+    "scripts/services/**/*"
+  ],
+}

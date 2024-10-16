@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Admin.WebUI": {
+    "Admin.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

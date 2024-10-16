@@ -1,6 +1,7 @@
-﻿using TechOnIt.Domain.Entities.Identity;
+﻿using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Controllers;
+using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.Entities.StructureAggregate;
 using TechOnIt.Domain.ValueObjects;
 using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
@@ -27,11 +28,11 @@ internal class UserDataInitializer : IDataInitializer
         #region Structure
         user1.Structures = new List<Structure>();
         Structure newStructure = new ("My Structure", PasswordHash.Parse("123456"), user1.Id, StructureType.Agriculture);
-        #region Place
-        Place newPlace = new("Hall", newStructure.Id);
-        newPlace.Devices = new List<Device>();
-        newPlace.Devices.Add(new Device(13, DeviceType.Light, newPlace.Id));
-        newStructure.AddPlace(newPlace);
+        #region Group
+        Group newGroup = new("Hall", newStructure.Id);
+        newGroup.Relays = new List<RelayEntity>();
+        newGroup.Relays.Add(new RelayEntity(13, RelayType.Light, newGroup.Id));
+        newStructure.AddGroup(newGroup);
         
         #endregion
         user1.Structures.Add(newStructure);
@@ -55,7 +56,7 @@ internal class UserDataInitializer : IDataInitializer
             {
                 if (!await _uow.RoleRepository.IsExistsRoleNameAsync(role))
                 {
-                    var newRole = new Role(role);
+                    var newRole = new RoleEntity(role);
                     await _uow.RoleRepository.CreateRoleAsync(newRole);
                     haveSaveChange = true;
                     await Task.Delay(500);

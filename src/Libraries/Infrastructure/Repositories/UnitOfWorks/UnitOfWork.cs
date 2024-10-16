@@ -1,11 +1,13 @@
-﻿using TechOnIt.Infrastructure.Repositories.SQL.Devices;
-using TechOnIt.Infrastructure.Repositories.SQL.Roles;
+﻿using TechOnIt.Infrastructure.Repositories.SQL.Roles;
 using TechOnIt.Infrastructure.Repositories.SQL.Users;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TechOnIt.Infrastructure.Persistence.Context;
 using TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 using TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
+using TechOnIt.Infrastructure.Repositories.SQL.Reports;
+using TechOnIt.Infrastructure.Repositories.SQL.HeavyTransaction;
+using TechOnIt.Infrastructure.Repositories.SQL.DynamicAccess;
+using TechOnIt.Infrastructure.Repositories.SQL.Relays;
 
 namespace TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
@@ -78,17 +80,45 @@ public class UnitOfWork : IUnitOfWorks
     }
     #endregion
 
-    #region DeviceRepository
-    private IDeviceRepositry _deviceRepositry;
-    public IDeviceRepositry DeviceRepositry
+    #region RelayRepository
+    private IRelayRepositry _relayRepositry;
+    public IRelayRepositry RelayRepositry
     {
         get
         {
-            if (_deviceRepositry == null)
+            if (_relayRepositry == null)
             {
-                _deviceRepositry = new DeviceRepositry(_context);
+                _relayRepositry = new RelayRepositry(_context);
             }
-            return _deviceRepositry;
+            return _relayRepositry;
+        }
+    }
+    #endregion
+
+    #region Report Repository
+    private IReportRepository _reportRepository;
+    public IReportRepository ReportRepository
+    {
+        get
+        {
+            if (_reportRepository is null)
+                _reportRepository = new ReportRepository(_context);
+
+            return _reportRepository;
+        }
+    }
+    #endregion
+
+    #region Ado .net
+    private IAdoRepository _adoRepository;
+    public IAdoRepository AdoRepository
+    {
+        get
+        {
+            if (_adoRepository is null)
+                _adoRepository = new AdoRepository();
+
+            return _adoRepository;
         }
     }
     #endregion
@@ -100,6 +130,20 @@ public class UnitOfWork : IUnitOfWorks
             _cleanString();
 
         await _context.SaveChangesAsync(stoppingToken);
+    }
+    #endregion
+
+    #region DynamicAccess Repository
+    private IDynamicAccessRepository _dynamicAccessRepository;
+    public IDynamicAccessRepository DynamicAccessRepository
+    {
+        get
+        {
+            if (_dynamicAccessRepository is null)
+                _dynamicAccessRepository = new DynamicAccessRepository(_context);
+
+            return _dynamicAccessRepository;
+        }
     }
     #endregion
 

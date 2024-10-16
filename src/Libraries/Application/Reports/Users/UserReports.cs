@@ -1,17 +1,14 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
-using TechOnIt.Application.Common.Exceptions;
-using TechOnIt.Application.Common.Extentions;
-using TechOnIt.Application.Common.Models;
-using TechOnIt.Application.Common.Models.ViewModels.Devices;
+using TechOnIt.Application.Common.Models.ViewModels.Relay;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
-using TechOnIt.Domain.Entities.StructureAggregate;
+using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Reports.Users;
 
-public class UserReports : IUserReports
+public class UserReports
 {
     #region constructor
     private readonly IUnitOfWorks _unitOfWorks;
@@ -182,32 +179,32 @@ public class UserReports : IUserReports
             return null;
         }
     }
-    public async Task<IList<DeviceViewModel>?> GetAllDevicesByUserIdAsync(Guid userId)
+    public async Task<IList<RelayViewModel>?> GetAllRelaysByUserIdAsync(Guid userId)
     {
         try
         {
-            var devices = await (from str in _unitOfWorks._context.Structures
-                                 join plc in _unitOfWorks._context.Places on str.Id equals plc.StructureId
-                                 into place
-                                 from pl in place.DefaultIfEmpty()
-                                 join dev in _unitOfWorks._context.Devices on pl.Id equals dev.PlaceId
-                                 into device
-                                 from de in device.DefaultIfEmpty()
-                                 where str.UserId == userId
-                                 select new DeviceViewModel
-                                 {
-                                     Id = de.Id,
-                                     Pin = de.Pin,
-                                     DeviceType = de.Type,
-                                     IsHigh = de.IsHigh,
-                                     PlaceId = de.PlaceId,
+            var relays = await (from str in _unitOfWorks._context.Structures
+                                join grp in _unitOfWorks._context.Groups on str.Id equals grp.StructureId
+                                into groups
+                                from pl in groups.DefaultIfEmpty()
+                                join rel in _unitOfWorks._context.Relays on pl.Id equals rel.GroupId
+                                into relay
+                                from de in relay.DefaultIfEmpty()
+                                where str.UserId == userId
+                                select new RelayViewModel
+                                {
+                                    Id = de.Id,
+                                    Pin = de.Pin,
+                                    RelayType = de.Type,
+                                    IsHigh = de.IsHigh,
+                                    GroupId = de.GroupId,
 
-                                 }).AsNoTracking().ToListAsync();
-            return devices;
+                                }).AsNoTracking().ToListAsync();
+            return relays;
         }
         catch (ReportExceptions exp)
         {
-            throw new ReportExceptions($"error in geting all user devices by user Id : {exp.UserId}");
+            throw new ReportExceptions($"error in geting all user relays by user Id : {exp.UserId}");
         }
     }
 

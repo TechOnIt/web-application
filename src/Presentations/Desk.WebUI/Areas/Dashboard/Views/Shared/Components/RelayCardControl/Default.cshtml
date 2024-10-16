@@ -1,0 +1,19 @@
+﻿@using TechOnIt.Application.Common.Models.ViewModels.Relay;
+@model RelayCardControlViewModel
+
+@{
+    string relayIcon = "far fa-lightbulb";
+
+    if (Model.RelayType == TechOnIt.Domain.Enums.RelayType.Light)
+        relayIcon = Model.IsHigh ? "fa fa-lightbulb-on" : "far fa-lightbulb";
+    if (Model.RelayType == TechOnIt.Domain.Enums.RelayType.Heater)
+        relayIcon = Model.IsHigh ? "fa fa-temperature-high" : "far fa-temperature-high";
+    if (Model.RelayType == TechOnIt.Domain.Enums.RelayType.Cooler)
+        relayIcon = Model.IsHigh ? "fa fa-snowflake" : "fa fa-snowflake";
+    if (Model.RelayType == TechOnIt.Domain.Enums.RelayType.Fan)
+        relayIcon = Model.IsHigh ? "fa fa-fan" : "far fa-fan";
+}
+
+<button class="relay-control btn btn-lg @(Model.IsHigh ? "btn-primary":"btn-outline-primary")" onclick="toggleRelayStatus(this,'@Model.Id', '@(Model.IsHigh ? "off":"on")')" type="button" data-bs-toggle="tooltip" data-bs-title="Pin: #@Model.Pin">
+    <i class="@relayIcon"></i>
+</button>

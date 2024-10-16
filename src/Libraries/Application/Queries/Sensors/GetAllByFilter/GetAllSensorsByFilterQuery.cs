@@ -4,7 +4,7 @@ namespace TechOnIt.Application.Queries.Sensors.GetAllByFilter;
 
 public class GetAllSensorsByFilterQuery : IRequest<object>
 {
-    public Guid PlaceId { get; set; }
+    public Guid GroupId { get; set; }
 }
 
 public class GetAllSensorsByFilterQueryHandler : IRequestHandler<GetAllSensorsByFilterQuery, object>
@@ -22,7 +22,7 @@ public class GetAllSensorsByFilterQueryHandler : IRequestHandler<GetAllSensorsBy
     {
         try
         {
-            var allSensors = await _unitOfWorks.SensorRepository.GetAllSensorsByPlaceIdAsync(request.PlaceId,cancellationToken);
+            var allSensors = await _unitOfWorks.SensorRepository.GetAllSensorsByGroupIdAsync(request.GroupId,cancellationToken);
             var result = allSensors.Adapt<IList<SensorViewModel>>();
             return ResultExtention.ListResult(result);
         }

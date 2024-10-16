@@ -10,7 +10,7 @@ namespace TechOnIt.Application.Commands.Sensors.CreatSensor
                 .NotNull()
                 ;
 
-            RuleFor(a => a.PlaceId)
+            RuleFor(a => a.GroupId)
                 .NotEmpty()
                 .NotNull()
                 ;

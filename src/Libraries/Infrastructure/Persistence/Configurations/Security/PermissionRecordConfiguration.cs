@@ -2,9 +2,9 @@
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.Security;
 
-public class PermissionRecordConfiguration : IEntityTypeConfiguration<PermissionRecord>
+public class PermissionRecordConfiguration : IEntityTypeConfiguration<PermissionEntity>
 {
-    public void Configure(EntityTypeBuilder<PermissionRecord> builder)
+    public void Configure(EntityTypeBuilder<PermissionEntity> builder)
     {
         builder.ToTable("Permissions", TableSchema.Identity);
 

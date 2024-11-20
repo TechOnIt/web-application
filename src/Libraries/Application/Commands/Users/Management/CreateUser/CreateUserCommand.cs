@@ -1,5 +1,4 @@
-﻿using TechOnIt.Application.Common.Interfaces;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
 
 namespace TechOnIt.Application.Commands.Users.Management.CreateUser;
 

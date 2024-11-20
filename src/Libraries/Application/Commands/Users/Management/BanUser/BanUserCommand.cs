@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Users.Management.BanUser;
 

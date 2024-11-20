@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Interfaces;
-
-namespace TechOnIt.Application.Commands.Users.Management.RemoveUserAccount
+﻿namespace TechOnIt.Application.Commands.Users.Management.RemoveUserAccount
 {
     public class RemoveUserAccountCommand : IRequest<object>, ICommittableRequest
     {

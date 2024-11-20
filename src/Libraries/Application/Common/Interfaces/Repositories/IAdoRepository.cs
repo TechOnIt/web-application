@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Infrastructure.Repositories.SQL.HeavyTransaction;
+﻿namespace TechOnIt.Application.Common.Interfaces.Repositories;
 
 public interface IAdoRepository
 {

@@ -1,6 +1,4 @@
-﻿using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
-
-namespace TechOnIt.Application.Events.ProductNotifications;
+﻿namespace TechOnIt.Application.Events.ProductNotifications;
 
 public class GroupNotifications : INotification
 {
@@ -17,8 +15,8 @@ public class GroupSmsNotificationHandler : INotificationHandler<GroupNotificatio
 public class GroupEmailNotificationHandler : INotificationHandler<GroupNotifications>
 {
     #region constructor
-    private readonly ISmtpEmailService emailService;
-    public GroupEmailNotificationHandler(ISmtpEmailService emailService)
+    private readonly ISmtpEmailSender emailService;
+    public GroupEmailNotificationHandler(ISmtpEmailSender emailService)
     {
         this.emailService = emailService;
     }

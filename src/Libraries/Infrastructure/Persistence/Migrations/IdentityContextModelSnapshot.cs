@@ -10,8 +10,8 @@ using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AppDbContext))]
+    partial class IAppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

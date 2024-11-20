@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Interfaces;
-
-namespace TechOnIt.Application.Commands.Roles.Management.UpdateRole;
+﻿namespace TechOnIt.Application.Commands.Roles.Management.UpdateRole;
 
 public class UpdateRoleCommand : IRequest<object>, ICommittableRequest
 {

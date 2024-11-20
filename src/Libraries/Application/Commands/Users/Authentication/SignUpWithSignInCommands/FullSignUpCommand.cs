@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
-using TechOnIt.Application.Common.Interfaces;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using Microsoft.AspNetCore.Http;

@@ -11,7 +11,7 @@ using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20230512222850_Initialize_Tables")]
     partial class Initialize_Tables
     {

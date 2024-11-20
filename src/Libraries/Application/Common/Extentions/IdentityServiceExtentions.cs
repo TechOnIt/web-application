@@ -2,9 +2,9 @@
 using System.Security.Principal;
 using System.Text;
 using TechOnIt.Application.Common.Enums.IdentityService;
+using TechOnIt.Application.Common.Interfaces.Clients.Notifications;
 using TechOnIt.Application.Common.Models.DynamicAccess;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Infrastructure.Common.Notifications.Results;
 
 namespace TechOnIt.Application.Common.Extentions;
 

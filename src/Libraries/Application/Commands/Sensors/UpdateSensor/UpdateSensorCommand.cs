@@ -1,6 +1,5 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
 using TechOnIt.Domain.Enums;
-using TechOnIt.Application.Common.Interfaces;
 
 namespace TechOnIt.Application.Commands.Sensors.UpdateSensor;
 

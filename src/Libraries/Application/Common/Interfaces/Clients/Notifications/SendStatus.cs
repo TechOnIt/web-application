@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Domain.Common;
 
-namespace TechOnIt.Infrastructure.Common.Notifications.Results;
+namespace TechOnIt.Application.Common.Interfaces.Clients.Notifications;
 
 public class SendStatus : Enumeration
 {

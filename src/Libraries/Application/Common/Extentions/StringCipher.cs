@@ -1,13 +1,13 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace TechOnIt.Infrastructure.Common.Extentions;
+namespace TechOnIt.Application.Common.Extentions;
 
 public static class StringCipher
 {
     private static string EncryptionKey = "a2787f19-0522-4e4a-8479-1f63f3dc631a";
 
-    public static string Encrypt(this string clearText, string? salt = null)
+    public static string Encrypt(this string clearText, string salt = null)
     {
         byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
         using (Aes encryptor = Aes.Create())
@@ -29,7 +29,7 @@ public static class StringCipher
         return clearText;
     }
 
-    public static string Decrypt(this string cipherText, string? salt = null)
+    public static string Decrypt(this string cipherText, string salt = null)
     {
         cipherText = cipherText.Replace(" ", "+");
         byte[] cipherBytes = Convert.FromBase64String(cipherText);

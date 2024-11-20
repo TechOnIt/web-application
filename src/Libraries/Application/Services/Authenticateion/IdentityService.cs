@@ -6,23 +6,21 @@ using TechOnIt.Application.Common.Security.JwtBearer;
 using TechOnIt.Application.Services.AssemblyServices;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Infrastructure.Common.Extentions;
-using TechOnIt.Infrastructure.Common.Notifications.KaveNegarSms;
-using TechOnIt.Infrastructure.Common.Notifications.Results;
 
 namespace TechOnIt.Application.Services.Authenticateion;
 
 public class IdentityService : IIdentityService
 {
     #region DI & Ctor
+
     private readonly IUnitOfWorks _unitOfWorks;
     private readonly IDistributedCache _distributedCache;
-    private readonly IKaveNegarSmsService _kavenegarAuthService;
+    private readonly ISmsSender _kavenegarAuthService;
     private readonly IJwtService _jwtService;
     private readonly IAppSettingsService<AppSettingDto> _appSetting;
 
     public IdentityService(IUnitOfWorks unitOfWorks,
-        IKaveNegarSmsService kavenegarAuthService,
+        ISmsSender kavenegarAuthService,
         IDistributedCache distributedCache,
         IJwtService jwtService,
         IAppSettingsService<AppSettingDto> appSetting)
@@ -33,9 +31,11 @@ public class IdentityService : IIdentityService
         _jwtService = jwtService;
         _appSetting = appSetting;
     }
+
     #endregion
 
     #region Sign-In
+
     /// <summary>
     /// Generate otp and send sms for user phone number.
     /// </summary>
@@ -147,9 +147,11 @@ public class IdentityService : IIdentityService
 
         return (accessToken, SigInStatus.Succeeded);
     }
+    
     #endregion
 
     #region Sign-Up
+
     public async Task<(string? Code, SigInStatus Status)> SignUpAndSendOtpCode(User user,
         CancellationToken cancellationToken = default)
     {
@@ -200,11 +202,11 @@ public class IdentityService : IIdentityService
 
     public async Task<AccessToken?> RegularSingUpAsync(User user, CancellationToken cancellationToken)
     {
-        bool preventDuplicate = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber,cancellationToken);
+        bool preventDuplicate = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber, cancellationToken);
         if (!preventDuplicate)
         {
             Task createUser = Task
-                .Factory.StartNew(()=> 
+                .Factory.StartNew(() =>
                 _unitOfWorks.UserRepository.CreateAsync(user, cancellationToken),
                 cancellationToken);
 
@@ -220,9 +222,11 @@ public class IdentityService : IIdentityService
 
         return await Task.FromResult<AccessToken?>(null);
     }
+    
     #endregion
 
     #region Privates
+
     private async Task<AccessToken?> GetUserAccessToken(User user, CancellationToken cancellationToken)
     {
         AccessToken accessToken = new();
@@ -262,5 +266,6 @@ public class IdentityService : IIdentityService
 
         return accessToken;
     }
+    
     #endregion
 }

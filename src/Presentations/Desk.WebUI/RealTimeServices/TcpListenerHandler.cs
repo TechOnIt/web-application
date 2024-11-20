@@ -43,6 +43,8 @@ public class TcpListenerHandler : BackgroundService
 
     private async Task HandleRelayAsync()
     {
+        if (_tcpListener is null)
+            return;
         NetworkStream stream = _tcpListener.GetStream();
         while (true)
         {

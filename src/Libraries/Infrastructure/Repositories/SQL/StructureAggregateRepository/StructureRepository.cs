@@ -1,16 +1,13 @@
-﻿using System.Linq.Expressions;
-using TechOnIt.Domain.Entities.Catalog;
-using TechOnIt.Domain.ValueObjects;
-using TechOnIt.Infrastructure.Persistence.Context;
+﻿using TechOnIt.Domain.Entities.Catalog;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
 
 public class StructureRepository : IStructureRepository
 {
     #region constructor
-    private readonly IdentityContext _context;
+    private readonly IAppDbContext _context;
 
-    public StructureRepository(IdentityContext context)
+    public StructureRepository(IAppDbContext context)
     {
         _context = context;
     }

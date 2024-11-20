@@ -1,7 +1,4 @@
-﻿using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
-using TechOnIt.Application.Common.DTOs.Settings;
-using TechOnIt.Application.Common.Extentions;
-using TechOnIt.Application.Common.Models;
+﻿using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Application.Services.AssemblyServices;
 
 namespace TechOnIt.Application.Events.IdentityNotifications.Authentication;
@@ -49,10 +46,10 @@ public class SignUpUserSmsNotificationsHandler : INotificationHandler<SignUpUser
 public class SignUpUserEmailNotificationsHandler : INotificationHandler<SignUpUserNotifications>
 {
     #region constructor
-    private readonly ISmtpEmailService _smtpEmailService;
+    private readonly ISmtpEmailSender _smtpEmailService;
     private readonly IAppSettingsService<AppSettingDto> _appSettingsService;
     private readonly IUnitOfWorks _unitOfWorks;
-    public SignUpUserEmailNotificationsHandler(ISmtpEmailService smtpEmailService, IAppSettingsService<AppSettingDto> appSettingsService, IUnitOfWorks unitOfWorks)
+    public SignUpUserEmailNotificationsHandler(ISmtpEmailSender smtpEmailService, IAppSettingsService<AppSettingDto> appSettingsService, IUnitOfWorks unitOfWorks)
     {
         _smtpEmailService = smtpEmailService;
         _appSettingsService = appSettingsService;

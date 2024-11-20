@@ -1,12 +1,10 @@
-﻿using TechOnIt.Infrastructure.Persistence.Context;
+﻿namespace TechOnIt.Infrastructure.Repositories.SQL.Reports;
 
-namespace TechOnIt.Infrastructure.Repositories.SQL.Reports;
-
-public class ReportRepository: IReportRepository
+public class ReportRepository : IReportRepository
 {
-    private readonly IdentityContext _context;
+    private readonly IAppDbContext _context;
 
-    public ReportRepository(IdentityContext context)
+    public ReportRepository(IAppDbContext context)
     {
         _context = context;
     }
@@ -17,13 +15,13 @@ public class ReportRepository: IReportRepository
         return await _context.Set<T>().FromSqlRaw(sql).FirstOrDefaultAsync();
     }
 
-    public async Task<T> GetByIdAsync<T>(Guid id,string tableName) where T : class
+    public async Task<T> GetByIdAsync<T>(Guid id, string tableName) where T : class
     {
         var sql = $"SELECT * FROM {tableName} WHERE Id = {id}";
         return await _context.Set<T>().FromSqlRaw(sql).FirstOrDefaultAsync();
     }
 
-    public async Task<T> GetByIdAsync<T>(Guid id,string tableName, string[] columnNames) where T : class
+    public async Task<T> GetByIdAsync<T>(Guid id, string tableName, string[] columnNames) where T : class
     {
         var columns = string.Join(", ", columnNames);
         var sql = $"SELECT {columns} FROM {tableName} WHERE Id = {id}";
@@ -72,7 +70,7 @@ public class ReportRepository: IReportRepository
         return (await _context.Database.ExecuteSqlRawAsync(sql)) == 1;
     }
 
-    public async Task<bool> ExistsAsync<T>(Guid id,string tableName) where T : class
+    public async Task<bool> ExistsAsync<T>(Guid id, string tableName) where T : class
     {
         var sql = $"SELECT CASE WHEN EXISTS (SELECT * FROM {tableName} WHERE Id = {id}) THEN 1 ELSE 0 END";
         return (await _context.Database.ExecuteSqlRawAsync(sql)) == 1;
@@ -104,7 +102,7 @@ public class ReportRepository: IReportRepository
         return await _context.Set<T>().FromSqlRaw(sql).ToListAsync();
     }
 
-    public async Task<List<T>> SelectSpecificColumnsAsync<T>(string tableName,string[] columnNames) where T : class
+    public async Task<List<T>> SelectSpecificColumnsAsync<T>(string tableName, string[] columnNames) where T : class
     {
         var columns = string.Join(", ", columnNames);
         var sql = $"SELECT {columns} FROM {tableName}";

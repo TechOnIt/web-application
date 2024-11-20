@@ -1,4 +1,4 @@
-﻿using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
+﻿using TechOnIt.Application.Common.Interfaces.Clients.Notifications;
 
 namespace TechOnIt.Application.Events.ProductNotifications;
 
@@ -17,8 +17,8 @@ public class SensorReportSmsNotificationsHandler : INotificationHandler<SensorRe
 public class SensorReportEmailNotificationsHandler : INotificationHandler<SensorReportNotifications>
 {
     #region Ctor
-    private readonly ISmtpEmailService _emailService;
-    public SensorReportEmailNotificationsHandler(ISmtpEmailService emailService)
+    private readonly ISmtpEmailSender _emailService;
+    public SensorReportEmailNotificationsHandler(ISmtpEmailSender emailService)
     {
         _emailService = emailService;
     }

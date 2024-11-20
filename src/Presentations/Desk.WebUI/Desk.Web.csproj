@@ -11,13 +11,18 @@
 
 	<ItemGroup>
 	  <Compile Remove="Areas\Dashboard\Models\**" />
+	  <Compile Remove="Scheduler\**" />
 	  <Compile Remove="wwwroot\fonts\barlow\files\**" />
 	  <Content Remove="Areas\Dashboard\Models\**" />
+	  <Content Remove="Scheduler\**" />
 	  <Content Remove="wwwroot\fonts\barlow\files\**" />
 	  <EmbeddedResource Remove="Areas\Dashboard\Models\**" />
+	  <EmbeddedResource Remove="Scheduler\**" />
 	  <EmbeddedResource Remove="wwwroot\fonts\barlow\files\**" />
 	  <None Remove="Areas\Dashboard\Models\**" />
+	  <None Remove="Scheduler\**" />
 	  <None Remove="wwwroot\fonts\barlow\files\**" />
+	  <TypeScriptCompile Remove="Scheduler\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -2016,10 +2021,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Libraries\Application\Application.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <TypeScriptCompile Include="wwwroot\scripts\app.ts" />
 	  <TypeScriptCompile Include="wwwroot\scripts\interfaces\IHttpService.ts" />
 	  <TypeScriptCompile Include="wwwroot\scripts\services\HttpService.ts" />
@@ -2033,7 +2034,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Scheduler\Jobs\" />
+	  <ProjectReference Include="..\Frameworks\Frameworks.csproj" />
 	</ItemGroup>
 
 </Project>

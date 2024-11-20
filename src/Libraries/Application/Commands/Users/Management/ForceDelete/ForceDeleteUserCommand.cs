@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Interfaces;
-
-namespace TechOnIt.Application.Commands.Users.Management.ForceDelete;
+﻿namespace TechOnIt.Application.Commands.Users.Management.ForceDelete;
 
 public class ForceDeleteUserCommand : IRequest<object>, ICommittableRequest
 {

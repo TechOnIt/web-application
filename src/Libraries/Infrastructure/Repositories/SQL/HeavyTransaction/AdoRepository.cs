@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using TechOnIt.Application.Common.Interfaces.Repositories;
 using TechOnIt.Infrastructure.Common.Helpers;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.HeavyTransaction;

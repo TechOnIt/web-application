@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Domain.Entities.Security;
 
-namespace TechOnIt.Infrastructure.Repositories.SQL.DynamicAccess;
+namespace TechOnIt.Application.Common.Interfaces.Repositories;
 
 public interface IDynamicAccessRepository
 {

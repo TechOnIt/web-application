@@ -29,8 +29,7 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<IUnitOfWorks, UnitOfWork>()
-            .AddScoped<ISettingService, SettingService>();
+        services.AddScoped<ISettingService, SettingService>();
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidateCommandBehavior<,>))

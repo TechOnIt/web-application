@@ -1,16 +1,13 @@
 ﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Users;
 
 internal sealed class UserRepository : IUserRepository
 {
     #region Constructor
-    private readonly IdentityContext _context;
+    private readonly IAppDbContext _context;
 
-    public UserRepository(IdentityContext context)
+    public UserRepository(IAppDbContext context)
     {
         _context = context;
     }

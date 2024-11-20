@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Interfaces;
-
-namespace TechOnIt.Application.Commands.Roles.Management.DeleteRole;
+﻿namespace TechOnIt.Application.Commands.Roles.Management.DeleteRole;
 
 public class DeleteRoleCommand : IRequest<object>, ICommittableRequest
 {

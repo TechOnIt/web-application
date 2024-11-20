@@ -1,22 +1,24 @@
-﻿using TechOnIt.Infrastructure.Repositories.SQL.Roles;
-using TechOnIt.Infrastructure.Repositories.SQL.Users;
-using System.Reflection;
-using TechOnIt.Infrastructure.Persistence.Context;
+﻿using System.Reflection;
+using TechOnIt.Application.Common.Extentions;
+using TechOnIt.Application.Common.Interfaces;
+using TechOnIt.Application.Common.Interfaces.Repositories;
+using TechOnIt.Infrastructure.Repositories.SQL.DynamicAccess;
+using TechOnIt.Infrastructure.Repositories.SQL.HeavyTransaction;
+using TechOnIt.Infrastructure.Repositories.SQL.Relays;
+using TechOnIt.Infrastructure.Repositories.SQL.Reports;
+using TechOnIt.Infrastructure.Repositories.SQL.Roles;
 using TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 using TechOnIt.Infrastructure.Repositories.SQL.StructureAggregateRepository;
-using TechOnIt.Infrastructure.Repositories.SQL.Reports;
-using TechOnIt.Infrastructure.Repositories.SQL.HeavyTransaction;
-using TechOnIt.Infrastructure.Repositories.SQL.DynamicAccess;
-using TechOnIt.Infrastructure.Repositories.SQL.Relays;
+using TechOnIt.Infrastructure.Repositories.SQL.Users;
 
 namespace TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
 public class UnitOfWork : IUnitOfWorks
 {
     #region constructor
-    public IdentityContext _context { get; }
+    public IAppDbContext _context { get; }
 
-    public UnitOfWork(IdentityContext context)
+    public UnitOfWork(IAppDbContext context)
     {
         _context = context;
     }

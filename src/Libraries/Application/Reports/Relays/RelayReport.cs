@@ -1,13 +1,11 @@
-﻿using TechOnIt.Infrastructure.Persistence.Context;
-
-namespace TechOnIt.Application.Reports.Relays;
+﻿namespace TechOnIt.Application.Reports.Relays;
 
 public class RelayReport
 {
     #region Ctor
-    private readonly IdentityContext _context;
+    private readonly IAppDbContext _context;
 
-    public RelayReport(IdentityContext context)
+    public RelayReport(IAppDbContext context)
     {
         _context = context;
     }

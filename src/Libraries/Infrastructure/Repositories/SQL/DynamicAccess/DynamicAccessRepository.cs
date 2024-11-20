@@ -1,12 +1,13 @@
-﻿using TechOnIt.Domain.Entities.Security;
+﻿using TechOnIt.Application.Common.Interfaces.Repositories;
+using TechOnIt.Domain.Entities.Security;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.DynamicAccess;
 
 public class DynamicAccessRepository : IDynamicAccessRepository
 {
-    private readonly IdentityContext _context;
-    public DynamicAccessRepository(IdentityContext context)
+    private readonly IAppDbContext _context;
+    public DynamicAccessRepository(IAppDbContext context)
     {
         _context = context;
     }

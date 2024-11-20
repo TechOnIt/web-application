@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Application\Application.csproj" />
+    <ProjectReference Include="..\..\Libraries\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\Libraries\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

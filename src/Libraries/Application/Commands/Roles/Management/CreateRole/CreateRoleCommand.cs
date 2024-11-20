@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Interfaces;
-
-namespace TechOnIt.Application.Commands.Roles.Management.CreateRole;
+﻿namespace TechOnIt.Application.Commands.Roles.Management.CreateRole;
 
 public class CreateRoleCommand : IRequest<object>, ICommittableRequest
 {

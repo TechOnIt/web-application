@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace TechOnIt.Infrastructure.Common.Extentions;
+namespace TechOnIt.Application.Common.Extentions;
 
 public static class CryptoTransformExtention
 {

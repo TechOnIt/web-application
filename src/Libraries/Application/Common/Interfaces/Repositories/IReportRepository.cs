@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Infrastructure.Repositories.SQL.Reports;
+﻿namespace TechOnIt.Application.Common.Interfaces.Repositories;
 
 public interface IReportRepository
 {

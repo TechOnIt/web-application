@@ -3,7 +3,7 @@ using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
 using TechOnIt.Desk.Web.Hubs;
 using TechOnIt.Desk.Web.RealTimeServices;
-using TechOnIt.Infrastructure.Common.Extentions;
+using TechOnIt.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,11 +35,13 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
     builder =>
     {
         builder.AllowAnyMethod().AllowAnyHeader()
-               .WithOrigins("http://example.com") 
+               .WithOrigins("http://example.com")
                .AllowCredentials();
     }));
 
-ConfigureServices(builder.Services);
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddFluentValidationServices();
 
 builder.Services.AddResponseCaching();
 
@@ -85,6 +87,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Initialize database seed.
+app.ApplyMigrationToSQL();
 await app.InitializeDatabaseAsync(builder);
 
 // Endpoints
@@ -97,10 +100,3 @@ app.MapControllerRoute(
 app.MapHub<SensorHub>("/SensorHub");
 
 app.Run();
-
-void ConfigureServices(IServiceCollection services)
-{
-    builder.Services.AddInfrastructureServices();
-    builder.Services.AddApplicationServices();
-    builder.Services.AddFluentValidationServices();
-}

@@ -1,9 +1,9 @@
-﻿using TechOnIt.Domain.Entities.Catalog;
+﻿using TechOnIt.Application.Common.Interfaces;
+using TechOnIt.Domain.Entities.Catalog;
 using TechOnIt.Domain.Entities.Controllers;
 using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using TechOnIt.Domain.ValueObjects;
-using TechOnIt.Infrastructure.Repositories.UnitOfWorks;
 
 namespace TechOnIt.Infrastructure.Persistence.SeedInitializer.Identities;
 

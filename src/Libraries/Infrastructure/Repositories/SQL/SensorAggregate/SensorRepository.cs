@@ -6,8 +6,8 @@ namespace TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;
 public class SensorRepository : ISensorRepository
 {
     #region Ctor
-    private readonly IdentityContext _context;
-    public SensorRepository(IdentityContext context)
+    private readonly IAppDbContext _context;
+    public SensorRepository(IAppDbContext context)
     {
         _context = context;
     }

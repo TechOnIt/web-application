@@ -1,4 +1,4 @@
-﻿using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
+﻿using TechOnIt.Application.Common.Interfaces.Clients.Notifications;
 
 namespace TechOnIt.Application.Events.ProductNotifications
 {
@@ -17,8 +17,8 @@ namespace TechOnIt.Application.Events.ProductNotifications
     public class SensorEmailNotifications : INotificationHandler<SensorNotifications>
     {
         #region constructor
-        private readonly ISmtpEmailService emailService;
-        public SensorEmailNotifications(ISmtpEmailService emailService)
+        private readonly ISmtpEmailSender emailService;
+        public SensorEmailNotifications(ISmtpEmailSender emailService)
         {
             this.emailService = emailService;
         }

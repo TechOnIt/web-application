@@ -1,15 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using TechOnIt.Domain.Entities.Identity;
 using TechOnIt.Infrastructure.Persistence.Context;
-using TechOnIt.Domain.Entities.Identity;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Roles;
 
 public sealed class RoleRepository : IRoleRepository
 {
     #region DI & Ctor's
-    private readonly IdentityContext _context;
+    private readonly IAppDbContext _context;
 
-    public RoleRepository(IdentityContext context)
+    public RoleRepository(IAppDbContext context)
     {
         _context = context;
     }

@@ -1,6 +1,4 @@
-﻿using TechOnIt.Application.Common.Interfaces;
-
-namespace TechOnIt.Application.Commands.Structures.Management.DeleteStructure;
+﻿namespace TechOnIt.Application.Commands.Structures.Management.DeleteStructure;
 
 public class DeleteStructureCommand : IRequest<object>, ICommittableRequest
 {

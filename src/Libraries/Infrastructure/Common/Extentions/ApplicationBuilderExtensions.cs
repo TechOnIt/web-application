@@ -23,7 +23,7 @@ public static class ApplicationBuilderExtensions
         await using var scope = app.Services
             .GetRequiredService<IServiceScopeFactory>()
             .CreateAsyncScope();
-        var dbContext = scope.ServiceProvider.GetService<IdentityContext>(); //Service locator
+        var dbContext = scope.ServiceProvider.GetService<AppDbContext>(); //Service locator
 
         await dbContext!.Database.MigrateAsync();
 

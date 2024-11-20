@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
-using TechOnIt.Infrastructure.Common.Notifications.Results;
+using TechOnIt.Application.Common.Interfaces.Clients.Notifications;
 
 namespace TechOnIt.Infrastructure.Common.Notifications.KaveNegarSms;
 
-public class KaveNegarSmsService : IKaveNegarSmsService
+public class KaveNegarSmsService : ISmsSender
 {
     private readonly string baseUrl = "https://api.kavenegar.com/v1/73747A513546793546684D586E6E33504334774C354C43704338436D583338354D624378395237304263383D/sms";
 

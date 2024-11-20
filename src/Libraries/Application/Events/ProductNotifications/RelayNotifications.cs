@@ -1,6 +1,4 @@
-﻿using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
-
-namespace TechOnIt.Application.Events.ProductNotifications
+﻿namespace TechOnIt.Application.Events.ProductNotifications
 {
     public class RelayNotifications : INotification
     {
@@ -17,8 +15,8 @@ namespace TechOnIt.Application.Events.ProductNotifications
     public class RelayEmailNotificationsHandler : INotificationHandler<RelayNotifications>
     {
         #region constructor
-        private readonly ISmtpEmailService emailService;
-        public RelayEmailNotificationsHandler(ISmtpEmailService emailService)
+        private readonly ISmtpEmailSender emailService;
+        public RelayEmailNotificationsHandler(ISmtpEmailSender emailService)
         {
             this.emailService = emailService;
         }

@@ -1,9 +1,9 @@
 ﻿using System.Net.Mail;
-using TechOnIt.Infrastructure.Common.Notifications.Results;
+using TechOnIt.Application.Common.Interfaces.Clients.Notifications;
 
 namespace TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
 
-public class SmtpEmailService : ISmtpEmailService
+public class SmtpEmailService : ISmtpEmailSender
 {
     /// <summary>
     /// Send bulk email to multy addresses.

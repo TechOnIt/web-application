@@ -1,4 +1,4 @@
-﻿using TechOnIt.Infrastructure.Common.Notifications.SmtpClientEmail;
+﻿using TechOnIt.Application.Common.Interfaces.Clients.Notifications;
 
 namespace TechOnIt.Application.Events.ProductNotifications;
 
@@ -17,8 +17,8 @@ public class StructureEmailNotifications : INotificationHandler<StructureNotific
 public class StructureSmsNotifications : INotificationHandler<StructureNotifications>
 {
     #region constructor
-    private readonly ISmtpEmailService emailService;
-    public StructureSmsNotifications(ISmtpEmailService emailService)
+    private readonly ISmtpEmailSender emailService;
+    public StructureSmsNotifications(ISmtpEmailSender emailService)
     {
         this.emailService = emailService;
     }

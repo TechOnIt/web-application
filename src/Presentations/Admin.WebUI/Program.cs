@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
-using TechOnIt.Infrastructure.Common.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 

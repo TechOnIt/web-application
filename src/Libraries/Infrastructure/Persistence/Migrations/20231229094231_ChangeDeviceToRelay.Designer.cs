@@ -11,7 +11,7 @@ using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20231229094231_ChangeDeviceToRelay")]
     partial class ChangeDeviceToRelay
     {

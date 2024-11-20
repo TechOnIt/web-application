@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TechOnIt.Domain.Entities.Controllers;
+﻿using TechOnIt.Domain.Entities.Controllers;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Relays;
@@ -7,9 +6,9 @@ namespace TechOnIt.Infrastructure.Repositories.SQL.Relays;
 public class RelayRepositry : IRelayRepositry
 {
     #region Ctor
-    private readonly IdentityContext _context;
+    private readonly IAppDbContext _context;
 
-    public RelayRepositry(IdentityContext context)
+    public RelayRepositry(IAppDbContext context)
     {
         _context = context;
     }

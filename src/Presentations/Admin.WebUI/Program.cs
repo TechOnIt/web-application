@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
 using TechOnIt.Application.Common.DTOs.Settings;
+using TechOnIt.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,9 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SignI
 builder.Services.Configure<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
 builder.Services.ConfigureWritable<AppSettingDto>(builder.Configuration.GetSection("SiteSettings"));
 
-ConfigureServices(builder.Services);
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddFluentValidationServices();
 
 // Add PWA service
 builder.Services.AddProgressiveWebApp();
@@ -83,10 +86,5 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.Run();
-void ConfigureServices(IServiceCollection services)
-{
-    builder.Services.AddInfrastructureServices();
-    builder.Services.AddApplicationServices();
-    builder.Services.AddFluentValidationServices();
-}
+
+await app.RunAsync();

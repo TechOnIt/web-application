@@ -4,11 +4,11 @@ namespace TechOnIt.Domain.Events.Groups
 {
     public class GroupDeletedEvent : BaseEvent
     {
-        public GroupDeletedEvent(Group group)
+        public GroupDeletedEvent(GroupEntity group)
         {
             Group = group;
         }
 
-        public Group Group { get; set; }
+        public GroupEntity Group { get; set; }
     }
 }

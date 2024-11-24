@@ -34,7 +34,7 @@ public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, obj
                 Task.Factory
                 .StartNew(() =>
                 _unitOfWorks.StructureRepository
-                .CreateGroupAsync(request.Adapt<Group>(), request.StuctureId, cancellationToken)
+                .CreateGroupAsync(request.Adapt<GroupEntity>(), request.StuctureId, cancellationToken)
                 , cancellationToken);
 
             await createGroup;

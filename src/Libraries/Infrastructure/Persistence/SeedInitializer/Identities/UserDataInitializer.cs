@@ -24,10 +24,10 @@ internal class UserDataInitializer : IDataInitializer
         user1.ConfirmEmail();
         user1.ConfirmPhoneNumber();
         #region Structure
-        user1.Structures = new List<Structure>();
-        Structure newStructure = new("My Structure", PasswordHash.Parse("123456"), user1.Id, StructureType.Agriculture);
+        user1.Structures = new List<StructureEntity>();
+        StructureEntity newStructure = new("My Structure", PasswordHash.Parse("123456"), user1.Id, StructureType.Agriculture);
         #region Group
-        Group newGroup = new("Hall", newStructure.Id);
+        GroupEntity newGroup = new("Hall", newStructure.Id);
         newGroup.Relays = new List<RelayEntity>();
         newGroup.Relays.Add(new RelayEntity(13, RelayType.Light, newGroup.Id));
         newStructure.AddGroup(newGroup);

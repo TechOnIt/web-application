@@ -2,9 +2,9 @@
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
-public class StructureConfiguration : IEntityTypeConfiguration<Structure>
+public class StructureConfiguration : IEntityTypeConfiguration<StructureEntity>
 {
-    public void Configure(EntityTypeBuilder<Structure> builder)
+    public void Configure(EntityTypeBuilder<StructureEntity> builder)
     {
         builder.ToTable("Structures", TableSchema.Default);
 

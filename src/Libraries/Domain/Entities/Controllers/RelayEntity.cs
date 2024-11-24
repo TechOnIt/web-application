@@ -11,7 +11,7 @@ public class RelayEntity
     public byte[] ConcurrencyStamp { get; private set; } = new byte[0];
     #region relations & foreignkeys
     public Guid GroupId { get; private set; }
-    public virtual Group? Group { get; private set; } = null;
+    public virtual GroupEntity? Group { get; private set; } = null;
     #endregion
 
     #region Ctor

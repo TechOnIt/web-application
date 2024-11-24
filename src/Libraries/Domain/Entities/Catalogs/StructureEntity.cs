@@ -5,7 +5,7 @@ namespace TechOnIt.Domain.Entities.Catalogs;
 /// <summary>
 /// this class is aggregate root of Structure aggregate
 /// </summary>
-public class Structure
+public class StructureEntity
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     public string Name { get; private set; } = string.Empty;
@@ -21,12 +21,12 @@ public class Structure
     #region Relations and Foreign key
     public Guid UserId { get; private set; }
     public virtual UserEntity? User { get; private set; }
-    public virtual ICollection<Group>? Groups { get; private set; }
+    public virtual ICollection<GroupEntity>? Groups { get; private set; }
     #endregion
 
     #region Constructure
-    private Structure() { }
-    public Structure(string name, PasswordHash password, Guid userId, StructureType type)
+    private StructureEntity() { }
+    public StructureEntity(string name, PasswordHash password, Guid userId, StructureType type)
     {
         SetName(name);
         SetPassword(password);
@@ -87,17 +87,17 @@ public class Structure
     /// Add group for this structure.
     /// </summary>
     /// <param name="group">Group object model.</param>
-    public void AddGroup(Group group)
+    public void AddGroup(GroupEntity group)
     {
         if (Groups is null)
-            Groups = new List<Group>();
+            Groups = new List<GroupEntity>();
         Groups.Add(group);
     }
     /// <summary>
     /// Remove an specific group.
     /// </summary>
     /// <param name="group">Group object model you want to remove it.</param>
-    public void RemoveGroup(Group group)
+    public void RemoveGroup(GroupEntity group)
     {
         if (Groups is null)
             throw new ArgumentNullException("Structure dosen't have any groups.");
@@ -107,11 +107,11 @@ public class Structure
     /// Add range group to structure.
     /// </summary>
     /// <param name="groups">List of group object model.</param>
-    public void AddRangeGroup(ICollection<Group>? groups)
+    public void AddRangeGroup(ICollection<GroupEntity>? groups)
     {
         if (groups is null) throw new ArgumentNullException("Groups list is null here!");
         if (Groups is null)
-            Groups = new List<Group>();
+            Groups = new List<GroupEntity>();
         foreach (var item in groups)
             Groups.Add(item);
     }

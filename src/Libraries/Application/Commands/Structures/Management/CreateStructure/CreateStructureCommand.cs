@@ -38,7 +38,7 @@ public class CreateStructureCommandHandler : IRequestHandler<CreateStructureComm
             // Convert int to structure enumeration.
             StructureType structureType = Enumeration.FromValue<StructureType>(request.Type);
             // Create new structure object.
-            var newStructure = new Structure(request.Name, structurePasswordHash, request.UserId, structureType);
+            var newStructure = new StructureEntity(request.Name, structurePasswordHash, request.UserId, structureType);
             await _unitOfWorks.StructureRepository.CreateAsync(newStructure, cancellationToken);
 
             await _mediator.Publish(new StructureNotifications(), cancellationToken);

@@ -22,15 +22,15 @@ public class AppDbContext : DbContext, IAppDbContext
 
     #region Identity
     public DbSet<UserEntity> Users => Set<UserEntity>();
-    public DbSet<LoginHistory> LoginHistories => Set<LoginHistory>();
+    public DbSet<LoginActivityEntity> LoginHistories => Set<LoginActivityEntity>();
     public DbSet<RoleEntity> Roles => Set<RoleEntity>();
     public DbSet<UserRoleEntity> UserRoles => Set<UserRoleEntity>();
     public DbSet<DynamicAccessEntity> DynamicAccesses => Set<DynamicAccessEntity>();
     #endregion
 
     #region Defaults
-    public DbSet<Structure> Structures { get; set; }
-    public DbSet<Group> Groups { get; set; }
+    public DbSet<StructureEntity> Structures { get; set; }
+    public DbSet<GroupEntity> Groups { get; set; }
     public DbSet<RelayEntity> Relays { get; set; }
     public DbSet<SensorEntity> Sensors { get; set; }
     public DbSet<SensorReportEntity> SensorReports { get; set; }

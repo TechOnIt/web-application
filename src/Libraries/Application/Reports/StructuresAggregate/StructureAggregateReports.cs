@@ -22,10 +22,10 @@ public class StructureAggregateReports
         .ProjectToType<StructureCardViewModel>()
         .ToListAsync(cancellationToken);
 
-    public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<Structure, bool>> filter, CancellationToken cancellationToken = default)
+    public async Task<IList<StructureViewModel>> GetStructuresByFilterAsync(Expression<Func<StructureEntity, bool>> filter, CancellationToken cancellationToken = default)
     {
-        IQueryable<Structure> query = _unitOfWorks._context.Structures;
-        List<Structure> result = await query.AsNoTracking().Where(filter).ToListAsync(cancellationToken);
+        IQueryable<StructureEntity> query = _unitOfWorks._context.Structures;
+        List<StructureEntity> result = await query.AsNoTracking().Where(filter).ToListAsync(cancellationToken);
 
         return result.Adapt<IList<StructureViewModel>>();
     }

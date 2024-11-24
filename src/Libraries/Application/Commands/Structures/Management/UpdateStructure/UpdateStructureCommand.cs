@@ -26,7 +26,7 @@ public class UpdatetructureCommandHandler : IRequestHandler<UpdateStructureComma
     {
         try
         {
-            var model = request.Adapt<Structure>();
+            var model = request.Adapt<StructureEntity>();
             var updateResult = await _unitOfWorks.StructureRepository.UpdateAsync(model,cancellationToken);
 
             if (!updateResult)

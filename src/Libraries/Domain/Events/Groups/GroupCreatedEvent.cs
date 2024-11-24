@@ -4,11 +4,11 @@ namespace TechOnIt.Domain.Events.Groups
 {
     public class GroupCreatedEvent : BaseEvent
     {
-        public GroupCreatedEvent(Group group)
+        public GroupCreatedEvent(GroupEntity group)
         {
             Group = group;
         }
 
-        public Group Group { get; set; }
+        public GroupEntity Group { get; set; }
     }
 }

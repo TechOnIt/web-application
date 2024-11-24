@@ -4,11 +4,11 @@ namespace TechOnIt.Domain.Events.Structures
 {
     public class StructureCreatedEvent : BaseEvent
     {
-        public StructureCreatedEvent(Structure structure)
+        public StructureCreatedEvent(StructureEntity structure)
         {
             Structure = structure;
         }
 
-        public Structure Structure { get; set; }
+        public StructureEntity Structure { get; set; }
     }
 }

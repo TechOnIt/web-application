@@ -33,7 +33,7 @@ public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand, obj
             Task updateGroup =
                 Task.Factory
                 .StartNew(() =>
-                _unitOfWorks.StructureRepository.UpdateGroupAsync(request.StuctureId, request.Adapt<Group>())
+                _unitOfWorks.StructureRepository.UpdateGroupAsync(request.StuctureId, request.Adapt<GroupEntity>())
                 , cancellationToken);
 
             await updateGroup;

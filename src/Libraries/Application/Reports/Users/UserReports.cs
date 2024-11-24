@@ -165,7 +165,7 @@ public class UserReports
             if (user == null)
                 return null;
 
-            Expression<Func<Structure, bool>> getStructures = a => a.UserId == user.Id;
+            Expression<Func<StructureEntity, bool>> getStructures = a => a.UserId == user.Id;
             var cancellationSource = new CancellationToken();
 
             var structures = await _unitOfWorks.StructureRepository.GetAllByFilterAsync(cancellationSource, getStructures);

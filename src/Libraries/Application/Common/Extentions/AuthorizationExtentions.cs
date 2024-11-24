@@ -44,7 +44,7 @@ public static class AuthorizationExtentions
     }
 
 
-    public static async Task<IEnumerable<Claim>> GetClaims(this Structure structure)
+    public static async Task<IEnumerable<Claim>> GetClaims(this StructureEntity structure)
     {
         IList<Claim> claims = new List<Claim>
         {
@@ -56,7 +56,7 @@ public static class AuthorizationExtentions
         return await Task.FromResult(claims);
     }
 
-    public static async Task<IEnumerable<Claim>> GetIdAsClaim(this Structure structure)
+    public static async Task<IEnumerable<Claim>> GetIdAsClaim(this StructureEntity structure)
     {
         IList<Claim> claims = new List<Claim>
         {

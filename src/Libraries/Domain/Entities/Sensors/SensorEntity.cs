@@ -9,7 +9,7 @@ public class SensorEntity : BaseEntity, ICreateable
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
     // Relations & Foreignkeys
     public Guid GroupId { get; private set; }
-    public virtual Group? Group { get; private set; }
+    public virtual GroupEntity? Group { get; private set; }
     public virtual ICollection<SensorReportEntity>? Reports { get; private set; }
 
     #region Ctor

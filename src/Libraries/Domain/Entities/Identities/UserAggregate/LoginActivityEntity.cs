@@ -1,6 +1,6 @@
 ﻿namespace TechOnIt.Domain.Entities.Identities.UserAggregate;
 
-public class LoginHistory
+public class LoginActivityEntity
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     public IPv4? Ip { get; private set; }
@@ -12,8 +12,8 @@ public class LoginHistory
     #endregion
 
     #region Ctor
-    private LoginHistory() { }
-    public LoginHistory(IPv4 ip, Guid userId)
+    private LoginActivityEntity() { }
+    public LoginActivityEntity(IPv4 ip, Guid userId)
     {
         Ip = ip;
         UserId = userId;

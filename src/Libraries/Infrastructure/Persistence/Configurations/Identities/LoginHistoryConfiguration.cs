@@ -2,9 +2,9 @@
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.Identities;
 
-public class LoginHistoryConfiguration : IEntityTypeConfiguration<LoginHistory>
+public class LoginHistoryConfiguration : IEntityTypeConfiguration<LoginActivityEntity>
 {
-    public void Configure(EntityTypeBuilder<LoginHistory> builder)
+    public void Configure(EntityTypeBuilder<LoginActivityEntity> builder)
     {
         builder.ToTable("LoginHistories", TableSchema.Identity);
 

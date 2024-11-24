@@ -3,15 +3,15 @@ using TechOnIt.Domain.Entities.Sensors;
 
 namespace TechOnIt.Domain.Entities.Catalogs;
 
-public class Group : BaseEntity
+public class GroupEntity : BaseEntity
 {
     public string Name { get; private set; } = string.Empty;
     public string? Description { get; set; }
     public DateTime CreatedAt { get; private set; } = DateTime.Now;
 
     #region Ctor
-    private Group() { }
-    public Group(string name, Guid structureId)
+    private GroupEntity() { }
+    public GroupEntity(string name, Guid structureId)
     {
         SetName(name);
         StructureId = structureId;
@@ -20,7 +20,7 @@ public class Group : BaseEntity
 
     #region Relations and Foreignkeys
     public Guid StructureId { get; private set; }
-    public virtual Structure? Structure { get; private set; }
+    public virtual StructureEntity? Structure { get; private set; }
     public virtual ICollection<RelayEntity>? Relays { get; set; }
     public virtual ICollection<SensorEntity>? Sensors { get; private set; }
     #endregion

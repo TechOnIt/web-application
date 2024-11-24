@@ -2,9 +2,9 @@
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations;
 
-public class GroupConfiguration : IEntityTypeConfiguration<Group>
+public class GroupConfiguration : IEntityTypeConfiguration<GroupEntity>
 {
-    public void Configure(EntityTypeBuilder<Group> builder)
+    public void Configure(EntityTypeBuilder<GroupEntity> builder)
     {
         builder.ToTable("Groups", TableSchema.Default);
 

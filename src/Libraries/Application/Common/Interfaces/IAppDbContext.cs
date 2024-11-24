@@ -17,7 +17,7 @@ namespace TechOnIt.Application.Common.Interfaces
         #region Identity
 
         DbSet<UserEntity> Users { get; }
-        DbSet<LoginHistory> LoginHistories { get; }
+        DbSet<LoginActivityEntity> LoginHistories { get; }
         DbSet<RoleEntity> Roles { get; }
         DbSet<UserRoleEntity> UserRoles { get; }
         DbSet<DynamicAccessEntity> DynamicAccesses { get; }
@@ -26,8 +26,8 @@ namespace TechOnIt.Application.Common.Interfaces
 
         #region Defaults
 
-        DbSet<Structure> Structures { get; }
-        DbSet<Group> Groups { get; }
+        DbSet<StructureEntity> Structures { get; }
+        DbSet<GroupEntity> Groups { get; }
         DbSet<RelayEntity> Relays { get; }
         DbSet<SensorEntity> Sensors { get; }
         DbSet<SensorReportEntity> SensorReports { get; }

@@ -22,8 +22,8 @@ public class UserEntity
     public byte[] ConcurrencyStamp { get; private set; } = [];
     #region Relations
     public virtual ICollection<UserRoleEntity>? UserRoles { get; set; }
-    public virtual ICollection<Structure>? Structures { get; set; }
-    public virtual ICollection<LoginHistory>? LoginHistories { get; set; }
+    public virtual ICollection<StructureEntity>? Structures { get; set; }
+    public virtual ICollection<LoginActivityEntity>? LoginHistories { get; set; }
     public virtual ICollection<LogEntity>? LogHistories { get; set; }
     public virtual ICollection<DynamicAccessEntity> DynamicAccesses { get; set; }
     #endregion
@@ -123,11 +123,11 @@ public class UserEntity
     public bool IsConcurrencyStampValidate(string concurrencyStamp)
         => ConcurrencyStamp == Encoding.ASCII.GetBytes(concurrencyStamp);
     #region Login History Aggregate
-    public IList<LoginHistory> GetLoginHistories()
+    public IList<LoginActivityEntity> GetLoginHistories()
         => LoginHistories.ToList();
-    public void AddLoginHistory(LoginHistory loginHistory)
+    public void AddLoginHistory(LoginActivityEntity loginHistory)
         => LoginHistories.Add(loginHistory);
-    public void DeleteLoginHistory(LoginHistory loginHistory)
+    public void DeleteLoginHistory(LoginActivityEntity loginHistory)
         => LoginHistories.Remove(loginHistory);
     #endregion
     #endregion

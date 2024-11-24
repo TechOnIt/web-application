@@ -38,7 +38,7 @@ public class StructureService : IStructureService
     }
 
     #region Privates
-    private async Task<StructureAccessToken?> GetStructureAccessToken(Structure structure, CancellationToken cancellationToken)
+    private async Task<StructureAccessToken?> GetStructureAccessToken(StructureEntity structure, CancellationToken cancellationToken)
     {
         StructureAccessToken accessToken = new();
         try

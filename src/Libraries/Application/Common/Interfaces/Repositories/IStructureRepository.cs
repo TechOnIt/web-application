@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Catalogs;
 using TechOnIt.Domain.ValueObjects;
 
 namespace TechOnIt.Application.Common.Interfaces.Repositories;

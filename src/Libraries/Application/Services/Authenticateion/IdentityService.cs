@@ -5,7 +5,7 @@ using TechOnIt.Application.Common.Models.ViewModels.Users.Authentication;
 using TechOnIt.Application.Common.Security.JwtBearer;
 using TechOnIt.Application.Services.AssemblyServices;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Application.Services.Authenticateion;
 
@@ -152,7 +152,7 @@ public class IdentityService : IIdentityService
 
     #region Sign-Up
 
-    public async Task<(string? Code, SigInStatus Status)> SignUpAndSendOtpCode(User user,
+    public async Task<(string? Code, SigInStatus Status)> SignUpAndSendOtpCode(UserEntity user,
         CancellationToken cancellationToken = default)
     {
         bool canRegister = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber);
@@ -200,7 +200,7 @@ public class IdentityService : IIdentityService
         return (accessToken, "welcome !");
     }
 
-    public async Task<AccessToken?> RegularSingUpAsync(User user, CancellationToken cancellationToken)
+    public async Task<AccessToken?> RegularSingUpAsync(UserEntity user, CancellationToken cancellationToken)
     {
         bool preventDuplicate = await _unitOfWorks.UserRepository.IsExistsByPhoneNumberAsync(user.PhoneNumber, cancellationToken);
         if (!preventDuplicate)
@@ -227,7 +227,7 @@ public class IdentityService : IIdentityService
 
     #region Privates
 
-    private async Task<AccessToken?> GetUserAccessToken(User user, CancellationToken cancellationToken)
+    private async Task<AccessToken?> GetUserAccessToken(UserEntity user, CancellationToken cancellationToken)
     {
         AccessToken accessToken = new();
         try

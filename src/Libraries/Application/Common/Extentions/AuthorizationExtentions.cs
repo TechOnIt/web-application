@@ -1,12 +1,12 @@
 ﻿using System.Security.Claims;
-using TechOnIt.Domain.Entities.Catalog;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Catalogs;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Application.Common.Extentions;
 
 public static class AuthorizationExtentions
 {
-    public static async Task<IEnumerable<Claim>> GetClaims(this User user)
+    public static async Task<IEnumerable<Claim>> GetClaims(this UserEntity user)
     {
         IList<Claim> claims = new List<Claim>
         {
@@ -33,7 +33,7 @@ public static class AuthorizationExtentions
 
         return await Task.FromResult(claims);
     }
-    public static async Task<IEnumerable<Claim>> GetIdAsClaim(this User user)
+    public static async Task<IEnumerable<Claim>> GetIdAsClaim(this UserEntity user)
     {
         IList<Claim> claims = new List<Claim>
         {

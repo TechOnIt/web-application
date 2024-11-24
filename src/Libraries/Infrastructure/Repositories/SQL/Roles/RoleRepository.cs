@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Identity;
+﻿using TechOnIt.Domain.Entities.Identities;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.Roles;

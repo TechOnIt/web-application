@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.General;
+﻿using TechOnIt.Domain.Entities.Generals;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations;
 

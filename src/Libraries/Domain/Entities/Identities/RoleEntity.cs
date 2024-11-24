@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Domain.Entities.Identity;
+﻿namespace TechOnIt.Domain.Entities.Identities;
 
 public class RoleEntity
 {

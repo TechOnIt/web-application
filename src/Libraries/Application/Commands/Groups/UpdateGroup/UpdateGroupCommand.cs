@@ -1,5 +1,5 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
-using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Catalogs;
 
 namespace TechOnIt.Application.Commands.Groups.UpdateGroup;
 

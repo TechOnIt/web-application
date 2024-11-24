@@ -1,4 +1,6 @@
-﻿namespace TechOnIt.Application.Reports.Roles;
+﻿using TechOnIt.Domain.Entities.Identities;
+
+namespace TechOnIt.Application.Reports.Roles;
 
 public class RoleReports
 {

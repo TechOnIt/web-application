@@ -10,7 +10,7 @@ global using TechOnIt.Application.Common.Frameworks.ApiResultFrameWork;
 global using TechOnIt.Application.Common.Interfaces;
 global using TechOnIt.Application.Common.Models;
 global using TechOnIt.Domain.Common;
-global using TechOnIt.Domain.Entities.Identity;
+global using TechOnIt.Domain.Entities.Identities;
 global using TechOnIt.Domain.Enums;
 global using TechOnIt.Domain.ValueObjects;
 global using TechOnIt.Application.Common.Interfaces.Clients.Notifications;

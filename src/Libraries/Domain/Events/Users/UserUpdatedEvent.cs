@@ -1,14 +1,14 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Domain.Events.Users
 {
     public class UserUpdatedEvent : BaseEvent
     {
-        public UserUpdatedEvent(User user)
+        public UserUpdatedEvent(UserEntity user)
         {
             User = user;
         }
 
-        public User User { get; }
+        public UserEntity User { get; }
     }
 }

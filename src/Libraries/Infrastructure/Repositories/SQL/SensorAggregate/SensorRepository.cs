@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.SensorAggregate;
+﻿using TechOnIt.Domain.Entities.Sensors;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.SensorAggregate;

@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Structures.Authentication;
 using TechOnIt.Application.Common.Security.JwtBearer;
-using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Catalogs;
 
 namespace TechOnIt.Application.Services.Authenticateion.StructuresService;
 

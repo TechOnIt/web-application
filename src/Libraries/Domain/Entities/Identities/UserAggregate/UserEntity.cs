@@ -1,10 +1,10 @@
-﻿using TechOnIt.Domain.Entities.Catalog;
-using TechOnIt.Domain.Entities.General;
-using TechOnIt.Domain.Entities.Security;
+﻿using TechOnIt.Domain.Entities.Catalogs;
+using TechOnIt.Domain.Entities.Generals;
+using TechOnIt.Domain.Entities.Securities;
 
-namespace TechOnIt.Domain.Entities.Identity.UserAggregate;
+namespace TechOnIt.Domain.Entities.Identities.UserAggregate;
 
-public class User
+public class UserEntity
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     public string Username { get; private set; } = string.Empty;
@@ -29,14 +29,14 @@ public class User
     #endregion
 
     #region Ctor
-    User() { }
-    public User(string email, string phoneNumber)
+    UserEntity() { }
+    public UserEntity(string email, string phoneNumber)
     {
         GenerateNewId();
         SetEmail(email);
         SetPhoneNumber(phoneNumber);
     }
-    public User(string phoneNumber)
+    public UserEntity(string phoneNumber)
     {
         GenerateNewId();
         SetPhoneNumber(phoneNumber);

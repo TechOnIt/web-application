@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using TechOnIt.Application.Common.Models;
-using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Catalogs;
 using TechOnIt.Domain.Entities.Controllers;
-using TechOnIt.Domain.Entities.General;
-using TechOnIt.Domain.Entities.Identity;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.Entities.Security;
-using TechOnIt.Domain.Entities.SensorAggregate;
+using TechOnIt.Domain.Entities.Generals;
+using TechOnIt.Domain.Entities.Identities;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
+using TechOnIt.Domain.Entities.Securities;
+using TechOnIt.Domain.Entities.Sensors;
 
 namespace TechOnIt.Infrastructure.Persistence.Context;
 
@@ -21,7 +21,7 @@ public class AppDbContext : DbContext, IAppDbContext
     #region DbSet
 
     #region Identity
-    public DbSet<User> Users => Set<User>();
+    public DbSet<UserEntity> Users => Set<UserEntity>();
     public DbSet<LoginHistory> LoginHistories => Set<LoginHistory>();
     public DbSet<RoleEntity> Roles => Set<RoleEntity>();
     public DbSet<UserRoleEntity> UserRoles => Set<UserRoleEntity>();

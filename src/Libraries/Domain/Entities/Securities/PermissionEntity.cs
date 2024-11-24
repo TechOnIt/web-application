@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Domain.Entities.Security;
+﻿namespace TechOnIt.Domain.Entities.Securities;
 
 /// <summary>
 /// Represents a permission record

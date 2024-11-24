@@ -1,6 +1,6 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Users;
 using TechOnIt.Application.Reports.Users;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Application.Queries.Users.GetAllUsers;
 
@@ -24,7 +24,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
         try
         {
             #region Map Config
-            var mapConfig = TypeAdapterConfig<User, UserViewModel>.NewConfig()
+            var mapConfig = TypeAdapterConfig<UserEntity, UserViewModel>.NewConfig()
             .Map(dest => dest.ConcurrencyStamp, src => src.ConcurrencyStamp)
             .Map(dest => dest.RegisteredDateTime, src => src.RegisteredAt.ToString("yyyy/MM/dd HH:mm:ss")).Config;
             #endregion

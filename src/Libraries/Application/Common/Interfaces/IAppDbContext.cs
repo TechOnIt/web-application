@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
-using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Catalogs;
 using TechOnIt.Domain.Entities.Controllers;
-using TechOnIt.Domain.Entities.General;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.Entities.Security;
-using TechOnIt.Domain.Entities.SensorAggregate;
+using TechOnIt.Domain.Entities.Generals;
+using TechOnIt.Domain.Entities.Identities;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
+using TechOnIt.Domain.Entities.Securities;
+using TechOnIt.Domain.Entities.Sensors;
 
 namespace TechOnIt.Application.Common.Interfaces
 {
@@ -15,7 +16,7 @@ namespace TechOnIt.Application.Common.Interfaces
 
         #region Identity
 
-        DbSet<User> Users { get; }
+        DbSet<UserEntity> Users { get; }
         DbSet<LoginHistory> LoginHistories { get; }
         DbSet<RoleEntity> Roles { get; }
         DbSet<UserRoleEntity> UserRoles { get; }

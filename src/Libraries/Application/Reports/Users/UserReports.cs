@@ -3,8 +3,8 @@ using System.Reflection;
 using TechOnIt.Application.Common.Models.ViewModels.Relay;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
 using TechOnIt.Application.Common.Models.ViewModels.Users;
-using TechOnIt.Domain.Entities.Catalog;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Catalogs;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Application.Reports.Users;
 
@@ -41,7 +41,7 @@ public class UserReports
         .FirstOrDefaultAsync(cancellationToken)
         ;
 
-    public async Task<User?> FindByIdentityNoTrackAsync(string identity, CancellationToken cancellationToken)
+    public async Task<UserEntity?> FindByIdentityNoTrackAsync(string identity, CancellationToken cancellationToken)
         => await _unitOfWorks._context.Users
         .AsNoTracking()
         .FirstOrDefaultAsync(u => u.Email == identity || u.PhoneNumber == identity || u.Username == identity, cancellationToken);
@@ -69,11 +69,11 @@ public class UserReports
         return users.Adapt<IList<UserViewModel>>();
     }
 
-    public async Task<IList<UserViewModel>> GetByConditionAsync(Expression<Func<User, bool>> filter = null,
-        Func<IQueryable, IOrderedQueryable<User>> orderBy = null,
-    params Expression<Func<User, object>>[] includes)
+    public async Task<IList<UserViewModel>> GetByConditionAsync(Expression<Func<UserEntity, bool>> filter = null,
+        Func<IQueryable, IOrderedQueryable<UserEntity>> orderBy = null,
+    params Expression<Func<UserEntity, object>>[] includes)
     {
-        IQueryable<User> query = _unitOfWorks._context.Users;
+        IQueryable<UserEntity> query = _unitOfWorks._context.Users;
         foreach (var include in includes)
         {
             query = query.Include(include);
@@ -116,13 +116,13 @@ public class UserReports
         // Execute, pagination and type to project.
         return await query
             .AsNoTracking()
-            .PaginatedListAsync<User, TDestination>(paginatedSearch.Page, paginatedSearch.PageSize, config, cancellationToken);
+            .PaginatedListAsync<UserEntity, TDestination>(paginatedSearch.Page, paginatedSearch.PageSize, config, cancellationToken);
     }
 
     public async Task<IList<UserViewModel>> GetUsersInRoleAsync(string roleName, Guid? roleId = null)
     {
-        IQueryable<User> query = null;
-        IList<User> users = new List<User>();
+        IQueryable<UserEntity> query = null;
+        IList<UserEntity> users = new List<UserEntity>();
 
         if (roleId == null)
         {
@@ -212,7 +212,7 @@ public class UserReports
     {
         // get all public static properties of MyClass type
         PropertyInfo[] propertyInfos;
-        propertyInfos = typeof(User)
+        propertyInfos = typeof(UserEntity)
             .GetProperties(BindingFlags.Public | BindingFlags.Static);
         // sort properties by name
         Array.Sort(propertyInfos,

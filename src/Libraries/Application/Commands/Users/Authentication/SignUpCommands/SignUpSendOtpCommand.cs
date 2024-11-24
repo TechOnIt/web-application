@@ -1,5 +1,5 @@
 ﻿using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Application.Commands.Users.Authentication.SignUpCommands;
 
@@ -25,7 +25,7 @@ public class SignUpSendOtpCommandHandler : IRequestHandler<SignUpSendOtpCommand,
         try
         {
             // Signup with phone number and password
-            var newUser = new User(phoneNumber: request.Phonenumber);
+            var newUser = new UserEntity(phoneNumber: request.Phonenumber);
             // Set password for user.
             newUser.SetPassword(new PasswordHash(request.Password));
 

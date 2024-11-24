@@ -1,4 +1,5 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Entities.Sensors;
 using TechOnIt.Domain.Enums;
 
 namespace TechOnIt.Application.Commands.Sensors.UpdateSensor;
@@ -31,7 +32,7 @@ public class UpdateSensorCommandHandler : IRequestHandler<UpdateSensorCommand, o
             var updateSensor =
                 Task.Factory
                 .StartNew(() =>
-                _unitOfWorks.SensorRepository.UpdateSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.SensorEntity>(), cancellationToken)
+                _unitOfWorks.SensorRepository.UpdateSensorAsync(request.Adapt<SensorEntity>(), cancellationToken)
                 , cancellationToken);
             await updateSensor;
 

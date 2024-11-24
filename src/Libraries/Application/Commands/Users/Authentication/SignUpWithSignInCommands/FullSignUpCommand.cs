@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using TechOnIt.Application.Services.Authenticateion.AuthenticateionContracts;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
 using Microsoft.AspNetCore.Http;
 using TechOnIt.Application.Commands.Users.Authentication.SignInCommands;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Application.Commands.Users.Authentication.SignUpWithSignInCommands;
 
@@ -35,7 +35,7 @@ public class FullSignUpCommandHandler : IRequestHandler<FullSignUpCommand, objec
     {
         try
         {
-            User newUser = new User(request.Username);
+            UserEntity newUser = new UserEntity(request.Username);
             newUser.SetPassword(new PasswordHash(request.Password));
 
             var singUpResult = await _identityService.RegularSingUpAsync(newUser, cancellationToken);

@@ -1,10 +1,10 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.Identities;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<UserEntity> builder)
     {
         builder.ToTable("Users", TableSchema.Identity);
 

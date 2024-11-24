@@ -1,6 +1,6 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
-namespace TechOnIt.Domain.Entities.Catalog;
+namespace TechOnIt.Domain.Entities.Catalogs;
 
 /// <summary>
 /// this class is aggregate root of Structure aggregate
@@ -20,7 +20,7 @@ public class Structure
 
     #region Relations and Foreign key
     public Guid UserId { get; private set; }
-    public virtual User? User { get; private set; }
+    public virtual UserEntity? User { get; private set; }
     public virtual ICollection<Group>? Groups { get; private set; }
     #endregion
 

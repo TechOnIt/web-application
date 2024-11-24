@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Application.Commands.Users.Management.CreateUser;
 
@@ -27,7 +27,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, objec
 
         try
         {
-            var newUser = new User(request.Email, request.PhoneNumber);
+            var newUser = new UserEntity(request.Email, request.PhoneNumber);
             newUser.SetPassword(new PasswordHash(request.Password));
             newUser.SetFullName(new FullName(request.Name, request.Surname));
 

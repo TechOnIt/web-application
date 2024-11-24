@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Domain.Entities.Board;
+﻿namespace TechOnIt.Domain.Entities.Boards;
 
 public class BoardEntity : BaseEntity
 {

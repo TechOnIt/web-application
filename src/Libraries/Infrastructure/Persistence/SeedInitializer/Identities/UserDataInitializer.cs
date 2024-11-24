@@ -1,9 +1,7 @@
-﻿using TechOnIt.Application.Common.Interfaces;
-using TechOnIt.Domain.Entities.Catalog;
+﻿using TechOnIt.Domain.Entities.Catalogs;
 using TechOnIt.Domain.Entities.Controllers;
-using TechOnIt.Domain.Entities.Identity;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
-using TechOnIt.Domain.ValueObjects;
+using TechOnIt.Domain.Entities.Identities;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Infrastructure.Persistence.SeedInitializer.Identities;
 
@@ -20,26 +18,26 @@ internal class UserDataInitializer : IDataInitializer
 
     public async Task InitializeDataAsync()
     {
-        User user1 = new(email: "rezaahmadidvlp@gmail.com", phoneNumber: "09058089095");
+        UserEntity user1 = new(email: "rezaahmadidvlp@gmail.com", phoneNumber: "09058089095");
         user1.SetFullName(new FullName("Reza", "Ahmadi"));
         user1.SetPassword(PasswordHash.Parse("123456"));
         user1.ConfirmEmail();
         user1.ConfirmPhoneNumber();
         #region Structure
         user1.Structures = new List<Structure>();
-        Structure newStructure = new ("My Structure", PasswordHash.Parse("123456"), user1.Id, StructureType.Agriculture);
+        Structure newStructure = new("My Structure", PasswordHash.Parse("123456"), user1.Id, StructureType.Agriculture);
         #region Group
         Group newGroup = new("Hall", newStructure.Id);
         newGroup.Relays = new List<RelayEntity>();
         newGroup.Relays.Add(new RelayEntity(13, RelayType.Light, newGroup.Id));
         newStructure.AddGroup(newGroup);
-        
+
         #endregion
         user1.Structures.Add(newStructure);
         #endregion
         await CreateUserAsync(user1, new string[] { "Admin" });
 
-        User user2 = new(email: "ashnoori@gmail.com", phoneNumber: "09124133486");
+        UserEntity user2 = new(email: "ashnoori@gmail.com", phoneNumber: "09124133486");
         user2.SetFullName(new FullName("Ashkan", "Noori"));
         user2.SetPassword(PasswordHash.Parse("123456"));
         user2.ConfirmEmail();
@@ -47,7 +45,7 @@ internal class UserDataInitializer : IDataInitializer
         await CreateUserAsync(user2, new string[] { "Admin" });
     }
 
-    private async Task CreateUserAsync(User newUser, string[]? roles = null)
+    private async Task CreateUserAsync(UserEntity newUser, string[]? roles = null)
     {
         bool haveSaveChange = false;
         if (roles != null)

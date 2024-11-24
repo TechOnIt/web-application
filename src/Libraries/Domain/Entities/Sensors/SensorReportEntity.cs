@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Domain.Entities.SensorAggregate;
+﻿namespace TechOnIt.Domain.Entities.Sensors;
 
 public class SensorReportEntity : BaseEntity
 {

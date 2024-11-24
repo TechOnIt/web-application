@@ -1,5 +1,5 @@
 ﻿using TechOnIt.Domain.Enums;
-using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Catalogs;
 
 namespace TechOnIt.Application.Commands.Structures.Management.UpdateStructure;
 

@@ -1,5 +1,5 @@
 ﻿using TechOnIt.Application.Common.Interfaces.Repositories;
-using TechOnIt.Domain.Entities.Security;
+using TechOnIt.Domain.Entities.Securities;
 using TechOnIt.Infrastructure.Persistence.Context;
 
 namespace TechOnIt.Infrastructure.Repositories.SQL.DynamicAccess;

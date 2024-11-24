@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Catalog;
+﻿using TechOnIt.Domain.Entities.Catalogs;
 
 namespace TechOnIt.Domain.Events.Structures
 {

@@ -1,6 +1,6 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
-namespace TechOnIt.Domain.Entities.General;
+namespace TechOnIt.Domain.Entities.Generals;
 
 public class LogEntity
 {
@@ -75,6 +75,6 @@ public class LogEntity
     #endregion
 
     #region RelationShip
-    public virtual User? User { get; set; }
+    public virtual UserEntity? User { get; set; }
     #endregion
 }

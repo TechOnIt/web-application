@@ -1,4 +1,5 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Entities.Sensors;
 
 namespace TechOnIt.Application.Commands.SensorReports.CreateSensorReport;
 
@@ -30,7 +31,7 @@ public class CreateSensorReportCommandHandler : IRequestHandler<CreateSensorRepo
 
             Task insertResult = Task.Factory
                 .StartNew(() => _unitOfWorks.SensorRepository
-                .AddReportToSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.SensorReportEntity>(), cancellationToken)
+                .AddReportToSensorAsync(request.Adapt<SensorReportEntity>(), cancellationToken)
             , cancellationToken);
 
             await _mediator.Publish(new SensorReportNotifications());

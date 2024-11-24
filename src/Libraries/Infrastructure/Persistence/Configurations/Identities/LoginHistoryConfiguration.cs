@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Infrastructure.Persistence.Configurations.Identities;
 

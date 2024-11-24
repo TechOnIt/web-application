@@ -1,6 +1,6 @@
-﻿using TechOnIt.Domain.Entities.Catalog;
+﻿using TechOnIt.Domain.Entities.Catalogs;
 
-namespace TechOnIt.Domain.Entities.SensorAggregate;
+namespace TechOnIt.Domain.Entities.Sensors;
 
 public class SensorEntity : BaseEntity, ICreateable
 {
@@ -46,7 +46,7 @@ public class SensorEntity : BaseEntity, ICreateable
     /// <param name="newReport">Sensor object model.</param>
     public void AddReport(SensorReportEntity newReport)
     {
-        if(Reports is null)
+        if (Reports is null)
             throw new ArgumentNullException("Sensor reports list is null.");
         Reports.Add(newReport);
     }

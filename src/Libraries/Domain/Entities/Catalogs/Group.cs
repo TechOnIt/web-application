@@ -1,7 +1,7 @@
 ﻿using TechOnIt.Domain.Entities.Controllers;
-using TechOnIt.Domain.Entities.SensorAggregate;
+using TechOnIt.Domain.Entities.Sensors;
 
-namespace TechOnIt.Domain.Entities.Catalog;
+namespace TechOnIt.Domain.Entities.Catalogs;
 
 public class Group : BaseEntity
 {

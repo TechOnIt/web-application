@@ -1,5 +1,6 @@
 ﻿using TechOnIt.Application.Common.Models.ViewModels.Roles;
 using TechOnIt.Application.Reports.Roles;
+using TechOnIt.Domain.Entities.Identities;
 
 namespace TechOnIt.Application.Queries.Roles.GetAllRoles;
 

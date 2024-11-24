@@ -1,4 +1,5 @@
 ﻿using TechOnIt.Application.Events.ProductNotifications;
+using TechOnIt.Domain.Entities.Sensors;
 
 namespace TechOnIt.Application.Commands.Sensors.CreatSensor;
 
@@ -42,7 +43,7 @@ public class CreateSensorCommandHandler : IRequestHandler<CreateSensorCommand, o
 
             Task createSensor = Task.Factory
                 .StartNew(() =>
-                _unitOfWorks.SensorRepository.CreateSensorAsync(request.Adapt<Domain.Entities.SensorAggregate.SensorEntity>(), cancellationToken)
+                _unitOfWorks.SensorRepository.CreateSensorAsync(request.Adapt<SensorEntity>(), cancellationToken)
             , cancellationToken);
 
             await createSensor;

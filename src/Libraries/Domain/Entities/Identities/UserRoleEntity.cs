@@ -1,6 +1,6 @@
-﻿using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
-namespace TechOnIt.Domain.Entities.Identity;
+namespace TechOnIt.Domain.Entities.Identities;
 
 public class UserRoleEntity
 {
@@ -8,7 +8,7 @@ public class UserRoleEntity
     public Guid RoleId { get; private set; }
 
     #region Relations
-    public virtual User? User { get; private set; }
+    public virtual UserEntity? User { get; private set; }
     public virtual RoleEntity? Role { get; private set; }
     #endregion
 

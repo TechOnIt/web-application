@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Board;
+﻿using TechOnIt.Domain.Entities.Boards;
 
 namespace TechOnIt.Domain.Events.Boards
 {

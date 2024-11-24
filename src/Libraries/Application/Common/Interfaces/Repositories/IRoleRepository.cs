@@ -1,4 +1,4 @@
-﻿using TechOnIt.Domain.Entities.Identity;
+﻿using TechOnIt.Domain.Entities.Identities;
 
 namespace TechOnIt.Application.Common.Interfaces.Repositories;
 

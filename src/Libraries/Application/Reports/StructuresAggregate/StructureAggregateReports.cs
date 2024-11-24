@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using TechOnIt.Application.Common.Models.ViewModels.Structures;
-using TechOnIt.Domain.Entities.Catalog;
+using TechOnIt.Domain.Entities.Catalogs;
 
 namespace TechOnIt.Application.Reports.StructuresAggregate;
 

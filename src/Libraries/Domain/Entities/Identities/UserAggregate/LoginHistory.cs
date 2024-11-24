@@ -1,4 +1,4 @@
-﻿namespace TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿namespace TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 public class LoginHistory
 {
@@ -8,7 +8,7 @@ public class LoginHistory
 
     #region Relations
     public Guid UserId { get; private set; }  // Foreign key
-    public virtual User? User { get; private set; }
+    public virtual UserEntity? User { get; private set; }
     #endregion
 
     #region Ctor

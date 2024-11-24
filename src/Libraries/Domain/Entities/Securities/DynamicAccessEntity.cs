@@ -1,7 +1,7 @@
-﻿using TechOnIt.Domain.Entities.Identity;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
+﻿using TechOnIt.Domain.Entities.Identities;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
-namespace TechOnIt.Domain.Entities.Security;
+namespace TechOnIt.Domain.Entities.Securities;
 
 public class DynamicAccessEntity
 {
@@ -26,7 +26,7 @@ public class DynamicAccessEntity
     public Guid RoleId { get; private set; } = Guid.Empty;
 
     #region Relations
-    public virtual User? User { get; private set; }
+    public virtual UserEntity? User { get; private set; }
     public virtual RoleEntity? Role { get; private set; }
     #endregion
 

@@ -4,7 +4,7 @@ using System.Text;
 using TechOnIt.Application.Common.Enums.IdentityService;
 using TechOnIt.Application.Common.Interfaces.Clients.Notifications;
 using TechOnIt.Application.Common.Models.DynamicAccess;
-using TechOnIt.Domain.Entities.Identity.UserAggregate;
+using TechOnIt.Domain.Entities.Identities.UserAggregate;
 
 namespace TechOnIt.Application.Common.Extentions;
 
@@ -18,7 +18,7 @@ public static class IdentityServiceExtentions
     const string SucceededValidations = "Welcome !";
     #endregion
 
-    public static (SigInStatus Status, string message) GetUserSignInStatusResultWithMessage(this User user, string password = "")
+    public static (SigInStatus Status, string message) GetUserSignInStatusResultWithMessage(this UserEntity user, string password = "")
     {
         if (user == null)
             return (SigInStatus.NotFound, NotFound);
